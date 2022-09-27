@@ -21,5 +21,5 @@ clean:
 export: 
 	git add *
 	git commit -a -m "`date`"
-	git push origin master
+	git push origin main
 	
