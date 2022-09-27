@@ -1,1 +1,0 @@
-{"entries":[],"options":{"chapters":true},"headings":["cartpole-balancing-task","creating-the-model","experience-replay-memory","dqn-agent","init__-initializing-the-agent","act-action-selection","train-training-loop","update-training-the-value-network","test","reward-scaling"]}

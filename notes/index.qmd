@@ -16,7 +16,7 @@ Exercises are provided in the form of Jupyter notebooks, allowing to implement i
 
 1. **Introduction**
     1. [Introduction](notes/1.1-Introduction.qmd)
-    2. [Math basics](notes/1.2-Math.qmd)
+    2. [Math basics (optional)](notes/1.2-Math.qmd)
 2. **Tabular RL**
     1. [Bandits](notes/2.1-Bandits.qmd)
     2. [Markov Decision Processes](notes/2.2-MDP.qmd)
@@ -59,9 +59,20 @@ Notebooks and videos are in the [List of Exercises](exercises/Content.qmd). Belo
 
 1. [Introduction to Python](exercises/1-Python-solution.ipynb)
 2. [Numpy and Matplotlib](exercises/2-Numpy-solution.ipynb)
+3. [Sampling](exercises/3-Sampling-solution.ipynb)
+4. [Bandits - part 1](exercises/4-Bandits-solution.ipynb)
+5. [Bandits - part 2](exercises/5-Bandits2-solution.ipynb)
+6. [Dynamic programming](exercises/6-DP-solution.ipynb)
 
 :::
 ::: {.column width=50%}
+
+7. [Gym](exercises/7-Gym-solution.ipynb)
+8. [Monte Carlo control](exercises/8-MonteCarlo-solution.ipynb)
+9. [Temporal Difference](exercises/9-TD-solution.ipynb)
+10. [Eligibility traces](exercises/10-Eligibilitytraces-solution.ipynb)
+11. [Keras](exercises/11-Keras-solution.ipynb)
+12. [DQN](exercises/12-DQN-solution.ipynb)
 
 :::
 :::

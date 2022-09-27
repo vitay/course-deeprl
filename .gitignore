@@ -1,2 +1,4 @@
 docs/notes/img
+slides/.quarto
+notes/.quarto
 *.DS_Store
