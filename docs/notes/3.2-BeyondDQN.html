@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - 11&nbsp; Beyond DQN</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/3.3-PG.html" rel="next">
+<link href="../notes/3.1-DQN.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Beyond DQN</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.3-DP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.6-FA.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.7-NN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#distributional-learning-categorical-dqn" id="toc-distributional-learning-categorical-dqn" class="nav-link active" data-scroll-target="#distributional-learning-categorical-dqn">Distributional learning : Categorical DQN</a>
+  <ul class="collapse">
+  <li><a href="#why-learning-distributions-of-returns" id="toc-why-learning-distributions-of-returns" class="nav-link" data-scroll-target="#why-learning-distributions-of-returns">Why learning distributions of returns?</a></li>
+  <li><a href="#categorical-learning" id="toc-categorical-learning" class="nav-link" data-scroll-target="#categorical-learning">Categorical learning</a></li>
+  <li><a href="#distributional-bellman-target" id="toc-distributional-bellman-target" class="nav-link" data-scroll-target="#distributional-bellman-target">Distributional Bellman target</a></li>
+  <li><a href="#categorical-dqn" id="toc-categorical-dqn" class="nav-link" data-scroll-target="#categorical-dqn">Categorical DQN</a></li>
+  </ul></li>
+  <li><a href="#noisy-dqn" id="toc-noisy-dqn" class="nav-link" data-scroll-target="#noisy-dqn">Noisy DQN</a></li>
+  <li><a href="#rainbow-network" id="toc-rainbow-network" class="nav-link" data-scroll-target="#rainbow-network">Rainbow network</a></li>
+  <li><a href="#distributed-learning" id="toc-distributed-learning" class="nav-link" data-scroll-target="#distributed-learning">Distributed learning</a>
+  <ul class="collapse">
+  <li><a href="#gorila---general-reinforcement-learning-architecture" id="toc-gorila---general-reinforcement-learning-architecture" class="nav-link" data-scroll-target="#gorila---general-reinforcement-learning-architecture">Gorila - General Reinforcement Learning Architecture</a></li>
+  <li><a href="#ape-x" id="toc-ape-x" class="nav-link" data-scroll-target="#ape-x">Ape-X</a></li>
+  </ul></li>
+  <li><a href="#recurrent-dqn" id="toc-recurrent-dqn" class="nav-link" data-scroll-target="#recurrent-dqn">Recurrent DQN</a>
+  <ul class="collapse">
+  <li><a href="#drqn-deep-recurrent-q-network" id="toc-drqn-deep-recurrent-q-network" class="nav-link" data-scroll-target="#drqn-deep-recurrent-q-network">DRQN: Deep Recurrent Q-network</a></li>
+  <li><a href="#r2d2-recurrent-replay-distributed-dqn" id="toc-r2d2-recurrent-replay-distributed-dqn" class="nav-link" data-scroll-target="#r2d2-recurrent-replay-distributed-dqn">R2D2: Recurrent Replay Distributed DQN</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Beyond DQN</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Slides: <a href="../slides/3.2-BeyondDQN.html" target="_blank">html</a> <a href="../slides/pdf/3.2-BeyondDQN.pdf" target="_blank">pdf</a></p>
+<section id="distributional-learning-categorical-dqn" class="level2">
+<h2 class="anchored" data-anchor-id="distributional-learning-categorical-dqn">Distributional learning : Categorical DQN</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/PrpYGb8p4tI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<section id="why-learning-distributions-of-returns" class="level3">
+<h3 class="anchored" data-anchor-id="why-learning-distributions-of-returns">Why learning distributions of returns?</h3>
+<p>Until now, we have only cared about the <strong>expectation</strong> of the returns, i.e.&nbsp;their mean value:</p>
+<p><span class="math display">V^\pi(s) = \mathbb{E}_\pi [R_t | s_t = s]</span></p>
+<p><span class="math display">Q^\pi(s, a) = \mathbb{E}_\pi [R_t | s_t = s, a_t = a]</span></p>
+<p>We select actions with the highest <strong>expected return</strong>, which makes sense <strong>on the long term</strong>.</p>
+<p>Suppose we have two actions <span class="math inline">a_1</span> and <span class="math inline">a_2</span>, which provide different returns with the same probability:</p>
+<ul>
+<li><span class="math inline">R(a_1) = \{100, 200\}</span></li>
+<li><span class="math inline">R(a_2) = \{-100, 400\}</span></li>
+</ul>
+<p>Their Q-value is the same: <span class="math inline">Q(a_1) = Q(a_2) = 150</span>, so if you play them an <strong>infinity</strong> of times, they are both optimal. But suppose that, after learning, you can only try a <strong>single</strong> action. Which one do you chose? RL does not distinguish safe from risky actions.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/distributional-example.svg" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>The trip by train from Leipzig to Chemnitz takes 1 hour if everything goes well. Once a week on average, the train will get stuck on the way for 30 minutes. The expected duration of the trip is 1h + 1/5*30 = 1h06. But in practice it takes either 1h or 1h30, never 1h06. If driving by car always takes 1h15, it might be worth it if you have an urgent appointment that day.</p>
+</div>
+</div>
+</section>
+<section id="categorical-learning" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-learning">Categorical learning</h3>
+<p>The idea of <strong>distributional RL</strong> is to learn the <strong>distribution of returns</strong> <span class="math inline">\mathcal{Z}^\pi</span> directly instead of its expectation:</p>
+<p><span class="math display">R_t \sim \mathcal{Z}^\pi(s_t, a_t)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/distributionallearning.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Distribution of returns for a given state.</figcaption><p></p>
+</figure>
+</div>
+<p>Note that we can always obtain the Q-values back:</p>
+<p><span class="math display">Q^\pi(s, a) = \mathbb{E}_\pi [\mathcal{Z}^\pi(s, a)]</span></p>
+<p>In categorical DQN <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>, they model the distribution of returns as a <strong>discrete probability distribution</strong>: the <strong>categorical</strong> or <strong>multinouilli</strong> distribution. One first needs to identify the minimum and maximum returns <span class="math inline">R_\text{min}</span> and <span class="math inline">R_\text{max}</span> possible in the problem. One then splits the range <span class="math inline">[R_\text{min}, R_\text{max}]</span> in <span class="math inline">n</span> <strong>discrete bins</strong> centered on the atoms <span class="math inline">\{z_i\}_{i=1}^N</span>.</p>
+<p>The probability that the return obtained the action <span class="math inline">(s, a)</span> lies in the bin of the atom <span class="math inline">z_i</span> is noted <span class="math inline">p_i(s, a)</span>. It can be approximated by a neural network <span class="math inline">F</span> with parameters <span class="math inline">\theta</span>, using a <strong>softmax output layer</strong>:</p>
+<p><span class="math display">
+    p_i(s, a; \theta) = \frac{\exp F_i(s, a; \theta)}{\sum_{j=1}^{n} \exp F_j(s, a; \theta)}
+</span></p>
+<p>The <span class="math inline">n</span> probabilities <span class="math inline">\{p_i(s, a; \theta)\}_{i=1}^N</span> completely define the parameterized distribution <span class="math inline">\mathcal{Z}_\theta(s, a)</span>.</p>
+<p><span class="math display">\mathcal{Z}_\theta(s, a) = \sum_a p_i(s, a; \theta) \,\delta_{z_i}</span></p>
+<p>where <span class="math inline">\delta_{z_i}</span>is a Dirac distribution centered on the atom <span class="math inline">z_i</span>. The Q-value of an action can be obtained by:</p>
+<p><span class="math display">
+    Q_\theta(s, a) = \mathbb{E} [\mathcal{Z}_\theta(s, a)] = \sum_{i=1}^{n} p_i(s, a; \theta) \, z_i
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/categorical-dqn.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption">Categorical DQN outputs the distribution of returns for each action using a softmax output layer. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+</figure>
+</div>
+<p>The only thing we need is a neural network <span class="math inline">\theta</span> returning for each action <span class="math inline">a</span> in the state <span class="math inline">s</span> a discrete probability distribution <span class="math inline">\mathcal{Z}_\theta(s, a)</span> instead of a single Q-value <span class="math inline">Q_\theta(s, a)</span>. The NN uses a <strong>softmax activation function</strong> for each action. Action selection is similar to DQN: we first compute the <span class="math inline">Q_\theta(s, a)</span> and apply greedy / <span class="math inline">\epsilon</span>-greedy / softmax over the actions.</p>
+<p><span class="math display">
+    Q_\theta(s, a) = \sum_{i=1}^{n} p_i(s, a; \theta) \, z_i
+</span></p>
+<p>The number <span class="math inline">n</span> of atoms for each action should be big enough to represent the range of returns. A number that works well with Atari games is <span class="math inline">n=51</span>: Categorical DQN is often noted <strong>C51</strong>.</p>
+</section>
+<section id="distributional-bellman-target" class="level3">
+<h3 class="anchored" data-anchor-id="distributional-bellman-target">Distributional Bellman target</h3>
+<p>How do we learn the distribution of returns <span class="math inline">\mathcal{Z}_\theta(s, a)</span> of parameters <span class="math inline">\{p_i(s, a; \theta)\}_{i=1}^N</span>? In Q-learning, we minimize the mse between the prediction <span class="math inline">Q_\theta(s, a)</span> and the <strong>target</strong>:</p>
+<p><span class="math display">\mathcal{T} \, Q_\theta(s, a) = r + \gamma \, Q_\theta(s', a')</span></p>
+<p>where <span class="math inline">\mathcal{T}</span> is the Bellman operator.</p>
+<p><span class="math display">\min_\theta (\mathcal{T} \, Q_\theta(s, a) - Q_\theta(s, a))^2</span></p>
+<p>We do the same here: we apply the <strong>Bellman operator</strong> on the distribution <span class="math inline">\mathcal{Z}_\theta(s, a)</span>.</p>
+<p><span class="math display">\mathcal{T} \, \mathcal{Z}_\theta(s, a) = r(s, a) + \gamma \, \mathcal{Z}_\theta(s', a')</span></p>
+<p>We then minimize the statistical “distance” between the distributions <span class="math inline">\mathcal{Z}_\theta(s, a)</span> and <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span>.</p>
+<p><span class="math display">\min_\theta \text{KL}(\mathcal{T} \, \mathcal{Z}_\theta(s, a) || \mathcal{Z}_\theta(s, a))</span></p>
+<p>Let’s note <span class="math inline">P^\pi \, \mathcal{Z}</span> the return distribution of the greedy action in the next state <span class="math inline">\mathcal{Z}_\theta(s', a')</span>.</p>
+<p>Multiplying the returns by the discount factor <span class="math inline">\gamma &lt; 1</span> <strong>shrinks</strong> the return distribution (its support gets smaller). The <strong>atoms</strong> <span class="math inline">z_i</span> of <span class="math inline">\mathcal{Z}_\theta(s', a')</span> now have the position <span class="math inline">\gamma \, z_i</span>, but the probabilities stay the same.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/distributional_bellman1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">Multiplying the returns by <span class="math inline">\gamma &lt; 1</span> shrinks the supports of the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+</figure>
+</div>
+<p>Adding a reward <span class="math inline">r</span> <strong>translates</strong> the distribution. The probabilities do not change, but the new position of the atoms is:</p>
+<p><span class="math display">z'_i = r + \gamma \, z_i</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/distributional_bellman2.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">Adding the reward translates the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+</figure>
+</div>
+<p>But now we have a problem: the atoms <span class="math inline">z'_i</span> of <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> do not match with the atoms <span class="math inline">z_i</span> of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. We need to <strong>interpolate</strong> the target distribution to compare it with the predicted distribution.</p>
+<p>We need to apply a <strong>projection</strong> <span class="math inline">\Phi</span> so that the bins of <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> are the same as the ones of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. The formula sounds complicated, but it is basically a linear interpolation:</p>
+<p><span class="math display">
+    (\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a))_i = \sum_{j=1}^n \big [1 - \frac{| [\mathcal{T}\, z_j]_{R_\text{min}}^{R_\text{max}} - z_i|}{\Delta z} \big ]_0^1 \, p_j (s', a'; \theta)
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/distributional_bellman3.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">The Bellman target distribution <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> must be projected to match the support of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+</figure>
+</div>
+<p>We now have two distributions <span class="math inline">\mathcal{Z}_\theta(s, a)</span> and <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> sharing the same support. We now want to have the prediction <span class="math inline">\mathcal{Z}_\theta(s, a)</span> close from the target <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span>. These are probability distributions, not numbers, so we cannot use the mse. We instead minimize the <strong>Kullback-Leibler (KL) divergence</strong> between the two distributions.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Kullback-Leibler (KL) divergence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s consider a parameterized discrete distribution <span class="math inline">X_\theta</span> and a discrete target distribution <span class="math inline">T</span>. The KL divergence between the two distributions is:</p>
+<p><span class="math display">\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, \frac{X_\theta}{T}]</span></p>
+<p>It can be rewritten as the sum of the <strong>cross-entropy</strong> and the entropy of <span class="math inline">T</span>:</p>
+<p><span class="math display">\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, X_\theta + T \, \log T] = H(X_\theta, T) - H(T)</span></p>
+<p>As <span class="math inline">T</span> does not depend on <span class="math inline">\theta</span>, the gradient of the KL divergence w.r.t to <span class="math inline">\theta</span> is the same as the gradient of the cross-entropy.</p>
+<p><span class="math display">\nabla_\theta \, \text{KL}(X_\theta || T) = \nabla_\theta \,  \mathbb{E}_T [- T \, \log \, X_\theta]</span></p>
+<p><strong>Minimizing the KL divergence is the same as minimizing the cross-entropy.</strong> Neural networks with a softmax output layer and the cross-entropy loss function can do that.</p>
+</div>
+</div>
+</section>
+<section id="categorical-dqn" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-dqn">Categorical DQN</h3>
+<p>The categorical DQN algorithm follows the main lines of DQN, with the additional step of prohecting the distributions:</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Categorical DQN
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Initialize distributional value network <span class="math inline">Z_{\theta}</span> and target network <span class="math inline">Z_{\theta'}</span>.</p></li>
+<li><p>Initialize experience replay memory <span class="math inline">\mathcal{D}</span> of maximal size <span class="math inline">N</span>.</p></li>
+<li><p>for <span class="math inline">t \in [0, T_\text{total}]</span>:</p>
+<ul>
+<li><p>Select an action <span class="math inline">a_t</span> based on <span class="math inline">Q_\theta(s_t, a)</span>, observe <span class="math inline">s_{t+1}</span> and <span class="math inline">r_{t+1}</span>.</p></li>
+<li><p>Store <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1})</span> in the experience replay memory.</p></li>
+<li><p>Every <span class="math inline">T_\text{train}</span> steps:</p>
+<ul>
+<li><p>Sample a minibatch <span class="math inline">\mathcal{D}_s</span> randomly from <span class="math inline">\mathcal{D}</span>.</p></li>
+<li><p>For each transition <span class="math inline">(s_k, a_k, r_k, s'_k)</span> in the minibatch:</p>
+<ul>
+<li>Select the greedy action in the next state using the target network:</li>
+</ul>
+<p><span class="math display">a'_k = \text{argmax}_a \, Q_{\theta'}(s'_k, a) = \text{argmax}_a \, \mathbb{E}[Z_{\theta'}(s'_k, a)]</span></p>
+<ul>
+<li>Apply the Bellman operator on the distribution of the next greedy action:</li>
+</ul>
+<p><span class="math display">TZ_k = r_k + \gamma \, Z_{\theta'}(s'_k, a'_k)</span></p>
+<ul>
+<li>Project this distribution to the support of <span class="math inline">Z_\theta(s_k, a_k)</span>.</li>
+</ul>
+<p><span class="math display">\mathbf{t}_k = \text{Projection}(TZ_k, Z_\theta(s_k, a_k))</span></p></li>
+<li><p>Update the value network <span class="math inline">Q_{\theta}</span> on <span class="math inline">\mathcal{D}_s</span> to minimize the cross-entropy:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[ - \mathbf{t}_k \, \log Z_\theta(s_k, a_k)]</span></p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<p>In practice, the computation of the cross-entropy loss is described in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/categorical-dqn-algo.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Computation of the cross-entropy loss in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>Having the full distribution of returns allow to deal with <strong>uncertainty</strong>. For certain actions in critical states, one could get a high return (killing an enemy) or no return (death). The distribution reflects that the agent is not certain of the goodness of the action. Expectations would not provide this information.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/categorical_dqn_animation.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The distribution of returns for each action allows to estimate the uncertainty. Source: <a href="https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning" class="uri">https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning</a></figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/categorical-dqn-results1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">C51 outperforms both DQN and humans on Atari games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/categorical-dqn-results2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">C51 outperforms double DQN on most games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/yFBwyPuO2Vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/d1yz4PNFUjI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>Other variants of distributional learning include:</p>
+<ul>
+<li><strong>QR-DQN</strong> Distributional Reinforcement Learning with Quantile Regression <span class="citation" data-cites="Dabney2017">(<a href="../references.html#ref-Dabney2017" role="doc-biblioref">Dabney et al., 2017</a>)</span>.</li>
+<li><strong>IQN</strong> Implicit Quantile Networks for Distributional Reinforcement Learning <span class="citation" data-cites="Dabney2018">(<a href="../references.html#ref-Dabney2018" role="doc-biblioref">Dabney et al., 2018</a>)</span>.</li>
+<li><strong>The Reactor:</strong> A fast and sample-efficient Actor-Critic agent for Reinforcement Learning <span class="citation" data-cites="Gruslys2017">(<a href="../references.html#ref-Gruslys2017" role="doc-biblioref">Gruslys et al., 2017</a>)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="noisy-dqn" class="level2">
+<h2 class="anchored" data-anchor-id="noisy-dqn">Noisy DQN</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/2u8eSXkW5mg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>DQN and its variants rely on <span class="math inline">\epsilon</span>-greedy action selection over the Q-values to <strong>explore</strong>. The exploration parameter <span class="math inline">\epsilon</span> is <strong>annealed</strong> during training to reach a final minimal value. It is preferred to <strong>softmax</strong> action selection, where <span class="math inline">\tau</span> scales with the unknown Q-values. The problem is that it is a global exploration mechanism: well-learned states do not need as much exploration as poorly explored ones.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/epsilonschedule.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">The exploration parameter <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span> is <strong>annealed</strong> during learning to solve the exploration/exploitation trade-off. Source: <a href="https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg" class="uri">https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg</a></figcaption><p></p>
+</figure>
+</div>
+<p><span class="math inline">\epsilon</span>-greedy and softmax add <strong>exploratory noise</strong> to the output of DQN: The Q-values predict a greedy action, but another action is taken. What about adding noise to the <strong>parameters</strong> (weights and biases) of the DQN, what would change the greedy action everytime? Controlling the level of noise inside the neural network indirectly controls the exploration level.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/ddpg-parameternoise.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Instead of adding noise to the output (greedy action), we could add noise to the parameters of the neural network. Source: <a href="https://openai.com/blog/better-exploration-with-parameter-noise/" class="uri">https://openai.com/blog/better-exploration-with-parameter-noise/</a></figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A very similar idea was proposed by OpenAI at the same ICLR conference: <span class="citation" data-cites="Plappert2018">(<a href="../references.html#ref-Plappert2018" role="doc-biblioref">Plappert et al., 2018</a>)</span></p>
+</div>
+</div>
+<p>Parameter noise builds on the idea of <strong>Bayesian deep learning</strong>. Instead of learning a single value of the parameters:</p>
+<p><span class="math display">y = \theta_1 \, x + \theta_0</span></p>
+<p>we learn the <strong>distribution</strong> of the parameters, for example by assuming they come from a normal distribution:</p>
+<p><span class="math display">\theta \sim \mathcal{N}(\mu_\theta, \sigma_\theta^2)</span></p>
+<p>For each new input, we <strong>sample</strong> a value for the parameter:</p>
+<p><span class="math display">\theta = \mu_\theta + \sigma_\theta \, \epsilon</span></p>
+<p>with <span class="math inline">\epsilon \sim \mathcal{N}(0, 1)</span> a random variable. The prediction <span class="math inline">y</span> will vary for the same input depending on the variances:</p>
+<p><span class="math display">y = (\mu_{\theta_1} + \sigma_{\theta_1} \, \epsilon_1) \, x + \mu_{\theta_0} + \sigma_{\theta_0} \, \epsilon_0</span></p>
+<p>The mean and variance of each parameter can be learned through backpropagation!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/noisydqn.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Bayesian deep learning learns a distribution of weights. Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption><p></p>
+</figure>
+</div>
+<p>As the random variables <span class="math inline">\epsilon_i \sim \mathcal{N}(0, 1)</span> are not correlated with anything, the variances <span class="math inline">\sigma_\theta^2</span> should decay to 0. The variances <span class="math inline">\sigma_\theta^2</span> represent the <strong>uncertainty</strong> about the prediction <span class="math inline">y</span>.</p>
+<p>Applied to DQN, this means that a state which has not been visited very often will have a high uncertainty: The predicted Q-values will change a lot between two evaluations, so the greedy action might change: <strong>exploration</strong>. Conversely, a well-explored state will have a low uncertainty: The greedy action stays the same: <strong>exploitation</strong>.</p>
+<p>Noisy DQN <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span> uses <strong>greedy action selection</strong> over noisy Q-values. The level of exploration is <strong>learned</strong> by the network on a per-state basis. No need for scheduling! <strong>Parameter noise</strong> improves the performance of <span class="math inline">\epsilon</span>-greedy-based methods, including DQN, dueling DQN, A3C, DDPG (see later), etc.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/noisydqn2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Noisy networks outperform their <span class="math inline">\epsilon</span>-soft variants. Source: <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="rainbow-network" class="level2">
+<h2 class="anchored" data-anchor-id="rainbow-network">Rainbow network</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/Buesu_jGg8Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>We have seen various improvements over a few years (2013-2017):</p>
+<ul>
+<li>Original DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta'}(s', a')) - Q_\theta(s, a))^2]</span></p>
+<ul>
+<li>Double DQN <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]</span></p>
+<ul>
+<li>Prioritized Experience Replay <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span></li>
+</ul>
+<p><span class="math display">P(k) = \frac{(|\delta_k| + \epsilon)^\alpha}{\sum_k (|\delta_k| + \epsilon)^\alpha}</span></p>
+<ul>
+<li>Dueling DQN <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span></li>
+</ul>
+<p><span class="math display">Q_\theta(s, a) = V_\alpha(s) + A_\beta(s, a)</span></p>
+<ul>
+<li>Categorical DQN <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[ - \mathbf{t}_k \, \log Z_\theta(s_k, a_k)]</span></p>
+<ul>
+<li>NoisyNet <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span></li>
+</ul>
+<p><span class="math display">\theta = \mu_\theta + \sigma_\theta \, \epsilon</span></p>
+<p>Which of these improvements should we use?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/rainbow-results1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">The Rainbow network combines all DQN improvements and outperforms each of them. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>Answer: all of them. The <strong>rainbow network</strong> <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span> combines :</p>
+<ul>
+<li>double dueling DQN with PER.</li>
+<li>categorical learning of return distributions.</li>
+<li>parameter noise for exploration.</li>
+<li>n-step return (n=3) for the bias/variance trade-off:</li>
+</ul>
+<p><span class="math display">R_t = \sum_{k=0}^{n-1} \gamma^k \, r_{t+k+1} + \gamma^n \max_a Q(s_{t+n}, a)</span></p>
+<p>and outperforms any of the single improvements.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/rainbow-results2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Ablation studies on the Rainbow network. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>Most of these mechanisms are necessary to achieve optimal performance (<strong>ablation studies</strong>). n-step returns, PER and distributional learning are the most critical. Interestingly, double Q-learning does not have a huge effect on the Rainbow network: The other mechanisms (especially distributional learning) already ensure that Q-values are not over-estimated.</p>
+<p>You can find good implementations of Rainbow DQN on all major frameworks, for example on <code>rllib</code>:</p>
+<p><a href="https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn" class="uri">https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn</a></p>
+</section>
+<section id="distributed-learning" class="level2">
+<h2 class="anchored" data-anchor-id="distributed-learning">Distributed learning</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/W468iYOpCsE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<section id="gorila---general-reinforcement-learning-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="gorila---general-reinforcement-learning-architecture">Gorila - General Reinforcement Learning Architecture</h3>
+<p>The DQN value network <span class="math inline">Q_\theta(s, a)</span> has two jobs:</p>
+<ul>
+<li><strong>actor:</strong> it interacts with the environment to sample <span class="math inline">(s, a, r, s')</span> transitions.</li>
+<li><strong>learner:</strong> it learns from minibatches out of the replay memory.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/gorila1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">The DQN value network is both an actor and a learner, as it needs to sequentially select actions and learn from the replay memory. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: <strong>computational bottleneck</strong>. DQN cannot benefit from <strong>parallel computing</strong>: multi-core CPU, clusters of CPU/GPU, etc.</p>
+<p>The Gorila framework <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span> splits DQN into <strong>multiple actors</strong> and <strong>multiple learners</strong>. Each actor (or worker) <strong>interacts</strong> with its copy of the environment and stores transitions in a distributed replay buffer. Each learner samples minibatches from the replay buffer and computes <strong>gradients</strong> w.r.t the DQN loss. The parameter server (<strong>master network</strong>) applies the gradients on the parameters and frequently <strong>synchronizes</strong> the actors and learners.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/gorila2.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">The Gorila framework uses multiple actors to collect transitions and store them in the ERM. The learners sample the ERM and compute the gradients of the DQN loss function. The parameter servers collect the gradients and synchronize the parameters of the actors and learners. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>Gorila allows to train DQN on parallel hardware (e.g.&nbsp;clusters of GPU) as long as the environment can be copied (simulation).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/gorila-results1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">The Gorila framework allows to slightly improve the performance of DQN on Atari games… Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/gorila-results2.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">… but that performance is achieved in a much smaller wall-clock time. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="ape-x" class="level3">
+<h3 class="anchored" data-anchor-id="ape-x">Ape-X</h3>
+<p>With more experience, Deepmind realized that a single learner is better. Distributed SGD (computing gradients with different learners) is not very efficient. What matters is collecting transitions very quickly (multiple workers) but using <strong>prioritized experience replay</strong> to learn from the most interesting ones.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img/apex.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Using 360 workers (1 per CPU core), Ape-X <span class="citation" data-cites="Horgan2018">(<a href="../references.html#ref-Horgan2018" role="doc-biblioref">Horgan et al., 2018</a>)</span> reaches super-human performance for a fraction of the wall-clock training time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img/apex-results.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>The multiple parallel workers can collect much more frames, leading to the better performance. The learner uses n-step returns and the double dueling DQN network architecture, so it is not much different from Rainbow DQN internally.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img/apex-results2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="recurrent-dqn" class="level2">
+<h2 class="anchored" data-anchor-id="recurrent-dqn">Recurrent DQN</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/DOltPe7XGMA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<section id="drqn-deep-recurrent-q-network" class="level3">
+<h3 class="anchored" data-anchor-id="drqn-deep-recurrent-q-network">DRQN: Deep Recurrent Q-network</h3>
+<p>Atari games are POMDP: each frame is a <strong>partial observation</strong>, not a Markov state. One cannot infer the velocity of the ball from a single frame.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/drqn3.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Most Atari games have frames which do not respect the Markov property. Source: <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>The trick used by DQN and its variants is to <strong>stack</strong> the last four frames and provide them as inputs to the CNN. The last 4 frames have (almost) the Markov property.</p>
+<p>The alternative is to use a <strong>recurrent neural network</strong> (e.g.&nbsp;LSTM) to encode the <strong>history</strong> of single frames.</p>
+<p><span class="math display">
+    \mathbf{h}_t = f(W_x \times \mathbf{x}_t + W_h \times \mathbf{h}_{t-1} + \mathbf{b})
+</span></p>
+<p>The output at time <span class="math inline">t</span> depends on the whole history of inputs <span class="math inline">(\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t)</span>.</p>
+<p>Using the output of a LSTM as a state, we make sure that we have the Markov property, RL will work:</p>
+<p><span class="math display">
+    P(\mathbf{h}_{t+1} | \mathbf{h}_t) = P(\mathbf{h}_{t+1} | \mathbf{h}_t, \mathbf{h}_{t-1}, \ldots, \mathbf{h}_0)
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/drqn-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Value-based network with a LSTM layer before the Q-value output layer. Source: <a href="https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/" class="uri">https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/</a></figcaption><p></p>
+</figure>
+</div>
+<p>For the neural network, it is just a matter of adding a LSTM layer before the output layer. The convolutional layers are <strong>feature extractors</strong> for the LSTM layer. The loss function does not change: backpropagation (through time) all along.</p>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/drqn-architecture2.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">DRQN architecture <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>The only problem is that RNNs are trained using truncated <strong>backpropagation through time</strong> (BPTT). One needs to provide a partial history of <span class="math inline">T = 10</span> inputs to the network in order to learn one output:</p>
+<p><span class="math display">(\mathbf{x}_{t-T}, \mathbf{x}_{t-T+1}, \ldots, \mathbf{x}_t)</span></p>
+<p>The <strong>experience replay memory</strong> should therefore not contain single transitions <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1})</span>, but a partial history of transitions.</p>
+<p><span class="math display">(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})</span></p>
+<p>Using a LSTM layer helps on certain games, where temporal dependencies are longer that 4 frames, but impairs on others.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/drqn4.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">DRQN performance compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>Beware: LSTMs are extremely slow to train (but not to use). Stacking frames is still a reasonable option in many cases.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/drqn5.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Training and inference times of DRQN compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="r2d2-recurrent-replay-distributed-dqn" class="level3">
+<h3 class="anchored" data-anchor-id="r2d2-recurrent-replay-distributed-dqn">R2D2: Recurrent Replay Distributed DQN</h3>
+<p>R2D2 <span class="citation" data-cites="Kapturowski2019">(<a href="../references.html#ref-Kapturowski2019" role="doc-biblioref">Kapturowski et al., 2019</a>)</span> builds on Ape-X and DRQN:</p>
+<ul>
+<li>double dueling DQN with n-step returns (n=5) and prioritized experience replay.</li>
+<li>256 actors, 1 learner.</li>
+<li>1 LSTM layer after the convolutional stack.</li>
+</ul>
+<p>In addition to solving practical problems with LSTMs (initial state at the beginning of an episode), it became the state of the art on Atari-57 until November 2019…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/r2d2-results.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Bellemare2017" class="csl-entry" role="doc-biblioentry">
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A <span>Distributional Perspective</span> on <span>Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1707.06887">http://arxiv.org/abs/1707.06887</a>.
+</div>
+<div id="ref-Dabney2018" class="csl-entry" role="doc-biblioentry">
+Dabney, W., Ostrovski, G., Silver, D., and Munos, R. (2018). Implicit <span>Quantile Networks</span> for <span>Distributional Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1806.06923">http://arxiv.org/abs/1806.06923</a> [Accessed November 26, 2019].
+</div>
+<div id="ref-Dabney2017" class="csl-entry" role="doc-biblioentry">
+Dabney, W., Rowland, M., Bellemare, M. G., and Munos, R. (2017). Distributional <span>Reinforcement Learning</span> with <span>Quantile Regression</span>. Available at: <a href="http://arxiv.org/abs/1710.10044">http://arxiv.org/abs/1710.10044</a> [Accessed June 28, 2019].
+</div>
+<div id="ref-Fortunato2017" class="csl-entry" role="doc-biblioentry">
+Fortunato, M., Azar, M. G., Piot, B., Menick, J., Osband, I., Graves, A., et al. (2017). Noisy <span>Networks</span> for <span>Exploration</span>. Available at: <a href="http://arxiv.org/abs/1706.10295">http://arxiv.org/abs/1706.10295</a> [Accessed March 2, 2020].
+</div>
+<div id="ref-Gruslys2017" class="csl-entry" role="doc-biblioentry">
+Gruslys, A., Dabney, W., Azar, M. G., Piot, B., Bellemare, M., and Munos, R. (2017). The <span>Reactor</span>: <span>A</span> fast and sample-efficient <span>Actor-Critic</span> agent for <span>Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1704.04651">http://arxiv.org/abs/1704.04651</a>.
+</div>
+<div id="ref-Hausknecht2015" class="csl-entry" role="doc-biblioentry">
+Hausknecht, M., and Stone, P. (2015). Deep <span>Recurrent Q-Learning</span> for <span>Partially Observable MDPs</span>. Available at: <a href="http://arxiv.org/abs/1507.06527">http://arxiv.org/abs/1507.06527</a>.
+</div>
+<div id="ref-Hessel2017" class="csl-entry" role="doc-biblioentry">
+Hessel, M., Modayil, J., van Hasselt, H., Schaul, T., Ostrovski, G., Dabney, W., et al. (2017). Rainbow: <span>Combining Improvements</span> in <span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1710.02298">http://arxiv.org/abs/1710.02298</a>.
+</div>
+<div id="ref-Horgan2018" class="csl-entry" role="doc-biblioentry">
+Horgan, D., Quan, J., Budden, D., Barth-Maron, G., Hessel, M., van Hasselt, H., et al. (2018). Distributed <span>Prioritized Experience Replay</span>. Available at: <a href="http://arxiv.org/abs/1803.00933">http://arxiv.org/abs/1803.00933</a> [Accessed December 14, 2019].
+</div>
+<div id="ref-Kapturowski2019" class="csl-entry" role="doc-biblioentry">
+Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. in, 19. Available at: <a href="https://openreview.net/pdf?id=r1lyTjAqYX">https://openreview.net/pdf?id=r1lyTjAqYX</a>.
+</div>
+<div id="ref-Mnih2013" class="csl-entry" role="doc-biblioentry">
+Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing <span>Atari</span> with <span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1312.5602">http://arxiv.org/abs/1312.5602</a>.
+</div>
+<div id="ref-Nair2015" class="csl-entry" role="doc-biblioentry">
+Nair, A., Srinivasan, P., Blackwell, S., Alcicek, C., Fearon, R., De Maria, A., et al. (2015). Massively <span>Parallel Methods</span> for <span>Deep Reinforcement Learning</span>. Available at: <a href="https://arxiv.org/pdf/1507.04296.pdf">https://arxiv.org/pdf/1507.04296.pdf</a>.
+</div>
+<div id="ref-Plappert2018" class="csl-entry" role="doc-biblioentry">
+Plappert, M., Houthooft, R., Dhariwal, P., Sidor, S., Chen, R. Y., Chen, X., et al. (2018). Parameter <span>Space Noise</span> for <span>Exploration</span>. Available at: <a href="http://arxiv.org/abs/1706.01905">http://arxiv.org/abs/1706.01905</a> [Accessed December 18, 2019].
+</div>
+<div id="ref-Schaul2015" class="csl-entry" role="doc-biblioentry">
+Schaul, T., Quan, J., Antonoglou, I., and Silver, D. (2015). Prioritized <span>Experience Replay</span>. Available at: <a href="http://arxiv.org/abs/1511.05952">http://arxiv.org/abs/1511.05952</a>.
+</div>
+<div id="ref-vanHasselt2015" class="csl-entry" role="doc-biblioentry">
+van Hasselt, H., Guez, A., and Silver, D. (2015). Deep <span>Reinforcement Learning</span> with <span class="nocase">Double Q-learning</span>. Available at: <a href="http://arxiv.org/abs/1509.06461">http://arxiv.org/abs/1509.06461</a>.
+</div>
+<div id="ref-Wang2016" class="csl-entry" role="doc-biblioentry">
+Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling <span>Network Architectures</span> for <span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1511.06581">http://arxiv.org/abs/1511.06581</a> [Accessed November 21, 2019].
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/3.1-DQN.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Deep Q-Learning (DQN)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/3.3-PG.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-title">Policy gradient (PG)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

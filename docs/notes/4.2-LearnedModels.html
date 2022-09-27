@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - 18&nbsp; Learned world models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/4.3-AlphaGo.html" rel="next">
+<link href="../notes/4.1-MB.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Learned world models</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.3-DP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.6-FA.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.7-NN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#i2a---imagination-augmented-agents" id="toc-i2a---imagination-augmented-agents" class="nav-link active" data-scroll-target="#i2a---imagination-augmented-agents">I2A - Imagination-augmented agents</a></li>
+  <li><a href="#temporal-difference-models---tdm" id="toc-temporal-difference-models---tdm" class="nav-link" data-scroll-target="#temporal-difference-models---tdm">Temporal difference models - TDM</a></li>
+  <li><a href="#world-models" id="toc-world-models" class="nav-link" data-scroll-target="#world-models">World models</a></li>
+  <li><a href="#deep-planning-network---planet" id="toc-deep-planning-network---planet" class="nav-link" data-scroll-target="#deep-planning-network---planet">Deep Planning Network - PlaNet</a></li>
+  <li><a href="#dreamer" id="toc-dreamer" class="nav-link" data-scroll-target="#dreamer">Dreamer</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Learned world models</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Slides: <a href="../slides/4.2-LearnedModels.html" target="_blank">html</a> <a href="../slides/pdf/4.2-LearnedModels.pdf" target="_blank">pdf</a></p>
+<p>There are two families of model-based algorithms using a learned transition model:</p>
+<ul>
+<li><strong>Model-based augmented model-free</strong> (MBMF) are inspired from Dyna-Q: the model <strong>generates</strong> imaginary transitions/rollouts that are used to train a model-free algorithm.
+<ul>
+<li>NAF: Normalized advantage functions <span class="citation" data-cites="Gu2016">(<a href="../references.html#ref-Gu2016" role="doc-biblioref">Gu et al., 2016</a>)</span></li>
+<li>I2A: Imagination-augmented agents <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span></li>
+<li>MBVE: model-based value estimation <span class="citation" data-cites="Feinberg2018">(<a href="../references.html#ref-Feinberg2018" role="doc-biblioref">Feinberg et al., 2018</a>)</span></li>
+</ul></li>
+<li><strong>Model-based planning</strong> methods are inspired from MPC: the learned model is used to <strong>plan</strong> actions that maximize the RL objective.
+<ul>
+<li>TDM: Temporal difference models <span class="citation" data-cites="Pong2018">(<a href="../references.html#ref-Pong2018" role="doc-biblioref">Pong et al., 2018</a>)</span></li>
+<li>World models <span class="citation" data-cites="Ha2018">(<a href="../references.html#ref-Ha2018" role="doc-biblioref">Ha and Schmidhuber, 2018</a>)</span></li>
+<li>PlaNet <span class="citation" data-cites="Hafner2019">(<a href="../references.html#ref-Hafner2019" role="doc-biblioref">Hafner et al., 2019</a>)</span></li>
+<li>Dreamer <span class="citation" data-cites="Hafner2020">(<a href="../references.html#ref-Hafner2020" role="doc-biblioref">Hafner et al., 2020</a>)</span></li>
+</ul></li>
+</ul>
+<section id="i2a---imagination-augmented-agents" class="level2">
+<h2 class="anchored" data-anchor-id="i2a---imagination-augmented-agents">I2A - Imagination-augmented agents</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/liTOxOByPpg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>I2A <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span> is a <strong>model-based augmented model-free method</strong>: it trains a MF algorithm (A3C) with the help of <strong>rollouts</strong> generated by a MB model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/i2a-sokoban.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Sokoban. Source <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>They showcase their algorithm on the puzzle environment <strong>Sokoban</strong>, where you need to move boxes to specified locations. Sokoban is a quite hard game, as actions are irreversible (you can get stuck) and the solution requires many actions (sparse rewards). MF methods are bad at this game as they learn through trials-and-(many)-errors.</p>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/fg8QImlvB-k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>The <strong>model</strong> learns to predict the next frame and the next reward based on the four last frames and the chosen action.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/i2a-model.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">I2A model. Source <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>It is a <strong>convolutional autoencoder</strong>, taking additionally an action <span class="math inline">a</span> as input and predicting the next reward. It can be pretrained using a random policy, and later fine-tuned during training.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/i2a-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">I2A architecture. Source <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>The <strong>imagination core</strong> is composed of the environment model <span class="math inline">M(s, a)</span> and a <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span>. As Sokoban is a POMDP (partially observable), the notation uses <strong>observation</strong> <span class="math inline">o_t</span> instead of states <span class="math inline">s_t</span>, but it does not really matter here. The <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span> is a simple and fast policy. It does not have to be the trained policy <span class="math inline">\pi</span>. It could even be a random policy, or a pretrained policy using for example A3C directly. In I2A, it is a <strong>distilled policy</strong> from the trained policy <span class="math inline">\pi</span> (see later). Take home message: given the current observation <span class="math inline">o_t</span> and a policy <span class="math inline">\hat{\pi}</span>, we can predict the next observation <span class="math inline">\hat{o}_{t+1}</span> and the next reward <span class="math inline">\hat{r}_{t+1}</span>.</p>
+<p>The <strong>imagination rollout module</strong> uses the imagination core to predict iteratively the next <span class="math inline">\tau</span> frames and rewards using the current frame <span class="math inline">o_t</span> and the rollout policy:</p>
+<p><span class="math display">o_t \rightarrow \hat{o}_{t+1} \rightarrow \hat{o}_{t+2} \rightarrow \ldots \rightarrow \hat{o}_{t+\tau}</span></p>
+<p>The <span class="math inline">\tau</span> frames and rewards are passed <strong>backwards</strong> to a convolutional LSTM (from <span class="math inline">t+\tau</span> to <span class="math inline">t</span>) which produces an embedding / encoding of the rollout. The output of the imagination rollout module is a vector <span class="math inline">e_i</span> (the final state of the LSTM) representing the whole rollout, including the (virtually) obtained rewards. Note that because of the stochasticity of the rollout policy <span class="math inline">\hat{\pi}</span>, different rollouts can lead to different encoding vectors.</p>
+<p>For the current observation <span class="math inline">o_t</span>, we then generate one <strong>rollout</strong> per possible action (5 in Sokoban):</p>
+<ul>
+<li>What would happen if I do action 1?</li>
+<li>What would happen if I do action 2?</li>
+<li>etc.</li>
+</ul>
+<p>The resulting vectors are concatenated to the output of <strong>model-free</strong> path (a convolutional neural network taking the current observation as input). Altogether, we have a huge NN with weights <span class="math inline">\theta</span> (model, encoder, MF path) producing an input <span class="math inline">s_t</span> to the <strong>A3C</strong> module.</p>
+<p>We can then learn the policy <span class="math inline">\pi</span> and value function <span class="math inline">V</span> based on this input to maximize the returns:</p>
+<p><span class="math display">\nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (\sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_t)) ]</span></p>
+<p><span class="math display">\mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[(\sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_t))^2]</span></p>
+<p>The complete architecture may seem complex, but everything is differentiable so we can apply backpropagation and train the network <strong>end-to-end</strong> using multiple workers. It is the A3C algorithm (MF), but <strong>augmented</strong> by MB rollouts, i.e.&nbsp;with explicit information about the future.</p>
+<p>The <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span> is trained using <strong>policy distillation</strong> of the trained policy <span class="math inline">\pi</span> <span class="citation" data-cites="Rusu2016">(<a href="../references.html#ref-Rusu2016" role="doc-biblioref">Rusu et al., 2016</a>)</span>. The small rollout policy network with weights <span class="math inline">\hat{\theta}</span> tries to copy the outputs <span class="math inline">\pi(s, a)</span> of the bigger policy network (A3C). This is a supervised learning task: just minimize the KL divergence between the two policies:</p>
+<p><span class="math display">\mathcal{L}(\hat{\theta}) = \mathbb{E}_{s, a} [D_\text{KL}(\hat{\pi}(s, a) || \pi(s, a))]</span></p>
+<p>As the network is smaller, it won’t be as good as <span class="math inline">\pi</span>, but its learning objective is easier.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/policydistillation.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Policy distillation. Source <span class="citation" data-cites="Rusu2016">(<a href="../references.html#ref-Rusu2016" role="doc-biblioref">Rusu et al., 2016</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Distral : distill and transfer learning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Distillation can be used to ensure generalization over different environments <span class="citation" data-cites="Teh2017">(<a href="../references.html#ref-Teh2017" role="doc-biblioref">Teh et al., 2017</a>)</span>. Each learning algorithms learns its own task, but tries not to diverge too much from a <strong>shared policy</strong>, which turns out to be good at all tasks.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/distral.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Distral architecture. Source <span class="citation" data-cites="Teh2017">(<a href="../references.html#ref-Teh2017" role="doc-biblioref">Teh et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Unsurprisingly, I2A performs better than A3C on Sokoban. The deeper the rollout, the better.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/i2a-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">I2A results on Sokoban. Source <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>The model does not even have to be perfect: the MF path can compensate for imperfections.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/i2a-results2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">I2A results on Sokoban. Source <span class="citation" data-cites="Weber2017">(<a href="../references.html#ref-Weber2017" role="doc-biblioref">Weber et al., 2017</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/llwAwE7ItdM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="temporal-difference-models---tdm" class="level2">
+<h2 class="anchored" data-anchor-id="temporal-difference-models---tdm">Temporal difference models - TDM</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/Qedw02mDtrs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>One problem with model-based planning is the <strong>discretization time step</strong> (difference between <span class="math inline">t</span> and <span class="math inline">t+1</span>). It is determined by the action rate: how often a different action <span class="math inline">a_t</span> has to be taken. In robotics, it could be below the millisecond, leading to very long trajectories in terms of steps.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/tdm-mb-bike-plan-small.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Planning a path from Berkeley to the Golden Gate bridge has a very long horizon. Source: <a href="https://bairblog.github.io/2018/04/26/tdm/" class="uri">https://bairblog.github.io/2018/04/26/tdm/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>If you want to go from Berkeley to the Golden State bridge with your bike, planning over leg movements will be very expensive (long horizon). A solution is <strong>multiple steps ahead planning</strong>. Instead of learning a one-step model:</p>
+<p><span class="math display">s_{t+1} = f_\theta(s_t, a_t)</span></p>
+<p>one learns to predict the state achieved in <span class="math inline">T</span> steps using the current policy:</p>
+<p><span class="math display">s_{t+ T} = f_\theta(s_t, a_t, \pi)</span></p>
+<p>Planning and acting occur at different time scales.</p>
+<p>A problem with RL in general is how to define the <strong>reward function</strong>. If you goal is to travel from Berkeley to the Golden State bridge, which reward function should you use? * +1 at the bridge, 0 otherwise (sparse). * +100 at the bridge, -1 otherwise (sparse). * minus the distance to the bridge (dense).</p>
+<p><strong>Goal-conditioned RL</strong> defines the reward function using the distance between the achieved state <span class="math inline">s_{t+1}</span> and a <strong>goal state</strong> <span class="math inline">s_g</span>:</p>
+<p><span class="math display">r(s_t, a_t, s_{t+1}) = - || s_{t+1} - s_g ||</span></p>
+<p>An action is good if it brings the agent closer to its goal. The Euclidean distance works well for the biking example (e.g.&nbsp;using a GPS), but the metric can be adapted to the task.</p>
+<p>One advantage is that you can learn multiple “tasks” at the same time with a single policy, not the only one hard-coded in the reward function. Another advantage is that it makes a better use of exploration by learning from mistakes: <strong>hindsight experience replay</strong> (HER, <span class="citation" data-cites="Andrychowicz2017">(<a href="../references.html#ref-Andrychowicz2017" role="doc-biblioref">Andrychowicz et al., 2017</a>)</span>).</p>
+<p>If your goal is to reach <span class="math inline">s_g</span> but the agent generates a trajectory landing in <span class="math inline">s_{g'}</span>, you can learn that this trajectory is good way to reach <span class="math inline">s_{g'}</span>! In football, if you try to score a goal but end up doing a pass to a teammate, you can learn that this was a bad shot <strong>and</strong> a good pass. HER is a model-based method: you implicitly learn a model of the environment by knowing how to reach any position.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/HER.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Hindsight experience replay allows to learn even from mistakes. Source: <a href="https://openai.com/blog/ingredients-for-robotics-research/" class="uri">https://openai.com/blog/ingredients-for-robotics-research/</a></figcaption><p></p>
+</figure>
+</div>
+<p>Exploration never fails: you always learn to do something, even if this was not your original goal. The principle of HER can be used in all model-free methods: DQN, DDPG, etc.</p>
+<p>Using the goal-conditioned reward function <span class="math inline">r(s_t, a_t, s_{t+1}) = - || s_{t+1} - s_g ||</span>, how can we learn? TDM introduces goal-conditioned Q-value with a horizon <span class="math inline">T</span>: <span class="math inline">Q(s, a, s_g, T)</span>. The Q-value of an action should denote <strong>how close</strong> we will be from the goal <span class="math inline">s_g</span> in <span class="math inline">T</span> steps. If we can estimate these Q-values, we can use a planning algorithm such as MPC to find the action that will bring us closer to the goal easily:</p>
+<p><span class="math display">a^* = \text{arg}\max_{a_t} \, r(s_{t+T}, a_{t+T}, s_{t+T + 1})</span></p>
+<p>This corresponds to planning <span class="math inline">T</span> steps ahead; which action should I do now in order to be close to the goal in <span class="math inline">T</span> steps?</p>
+<p><img src="../slides/img/tdm-steps1.jpeg" class="img-fluid" data-fig-align="center"> <img src="../slides/img/tdm-steps2.jpeg" class="img-fluid" data-fig-align="center" alt="Source: https://bairblog.github.io/2018/04/26/tdm/"></p>
+<p>If the horizon <span class="math inline">T</span> is well chosen, we only need to plan over a small number of intermediary positions, not over each possible action. TDM is model-free on each subgoal, but model-based on the whole trajectory.</p>
+<p>How can we learn the goal-conditioned Q-values <span class="math inline">Q(s, a, s_g, T)</span> with a <strong>model</strong>? TDM introduces a recursive relationship for the Q-values:</p>
+<p><span class="math display">\begin{aligned}
+    Q(s, a, s_g, T) &amp;= \begin{cases}
+        \mathbb{E}_{s'} [r(s, a, s')] \; \text{if} \; T=0\\
+        &amp;\\
+        \mathbb{E}_{s'} [\max_a \, Q(s', a, s_g, T-1)] \; \text{otherwise.}\\
+        \end{cases} \\
+        &amp;\\
+        &amp;= \mathbb{E}_{s'} [r(s, a, s') \, \mathbb{1}(T=0) + \max_a \, Q(s', a, s_g, T-1) \, \mathbb{1}(T\neq 0)]\\
+\end{aligned}</span></p>
+<p>If we plan over <span class="math inline">T=0</span> steps, i.e.&nbsp;immediately after the action <span class="math inline">(s, a)</span>, the Q-value is the remaining distance to the goal from the next state <span class="math inline">s'</span>. Otherwise, it is the Q-value of the greedy action in the next state <span class="math inline">s'</span> with an horizon <span class="math inline">T-1</span> (one step shorter). This allows to learn the Q-values from <strong>single transitions</strong> <span class="math inline">(s_t, a_t, s_{t+1})</span>: * with <span class="math inline">T=0</span>, the target is the remaining distance to the goal. * with <span class="math inline">T&gt;0</span>, the target is the Q-value of the next action at a shorter horizon.</p>
+<p>The critic learns to minimize the prediction error <strong>off-policy</strong>:</p>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s_t, a_t, s_{t+1} \in \mathcal{D}} [(r(s_t, a_t, s_{t+1}) \, \mathbb{1}(T=0) + \max_a \, Q(s_{t+1}, a, s_g, T-1) \, \mathbb{1}(T\neq 0) - Q(s_t, a_t, s_g, T))^2]</span></p>
+<p>This is a model-free Q-learning-like update rule, that can be learned by any off-policy value-based algorithm (DQN, DDPG) and an experience replay memory. The cool trick is that, with a single transition <span class="math inline">(s_t, a_t, s_{t+1})</span>, you can train the critic with: * different horizons <span class="math inline">T</span>, e.g.&nbsp;between 0 and <span class="math inline">T_\text{max}</span>. * different goals <span class="math inline">s_g</span>. You can sample any achievable state as a goal, including the “true” <span class="math inline">s_{t+T}</span> (hindsight).</p>
+<p>You do not only learn to reach <span class="math inline">s_g</span>, but any state! TDM learns a lot of information from a single transition, so it has a very good sample complexity.</p>
+<p>TDM learns to break long trajectories into finite horizons (model-based planning) by learning model-free (Q-learning updates). The critic learns how good an action (s, a) is order to reach a state <span class="math inline">s_g</span> in <span class="math inline">T</span> steps.</p>
+<p><span class="math display">Q(s, a, s_g, T) = \mathbb{E}_{s'} [r(s, a, s') \, \mathbb{1}(T=0) + \max_a \, Q(s', a, s_g, T-1) \, \mathbb{1}(T\neq 0)]</span></p>
+<p>The actor uses MPC planning to iteratively select actions that bring us closer to the goal in <span class="math inline">T</span> steps:</p>
+<p><span class="math display">a_t = \text{arg}\max_{a} \, Q(s_{t}, a, s_{g}, T)</span></p>
+<p>The argmax can be estimated via sampling. TDM is a model-based method in disguise: it does predict the next state directly, but how much closer it will be to the goal via Q-learning.</p>
+<p>For problems where the model is easy to learn, the performance of TDM is on par with model-based methods (MPC).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/tdm-results1.gif" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">TDM learns control problems which are easy for MB algorithms. Source: <a href="https://bairblog.github.io/2018/04/26/tdm/" class="uri">https://bairblog.github.io/2018/04/26/tdm/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>Model-free methods have a much higher sample complexity. TDM learns much more from single transitions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/tdm-results2.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">TDM learns control problems which are easy for MB algorithms. Source: <a href="https://bairblog.github.io/2018/04/26/tdm/" class="uri">https://bairblog.github.io/2018/04/26/tdm/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>For problems where the model is complex to learn, the performance of TDM is on par with model-free methods (DDPG).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/tdm-results3.gif" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">TDM learns control problems which are easy for MF algorithms. Source: <a href="https://bairblog.github.io/2018/04/26/tdm/" class="uri">https://bairblog.github.io/2018/04/26/tdm/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>Model-based methods suffer from model imprecision on long horizons. TDM plans over shorter horizons <span class="math inline">T</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/tdm-results4.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">TDM learns control problems which are easy for MF algorithms. Source: <a href="https://bairblog.github.io/2018/04/26/tdm/" class="uri">https://bairblog.github.io/2018/04/26/tdm/</a>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="world-models" class="level2">
+<h2 class="anchored" data-anchor-id="world-models">World models</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/O1Qt23Eg8MM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>The core idea of <strong>world models</strong> <span class="citation" data-cites="Ha2018">(<a href="../references.html#ref-Ha2018" role="doc-biblioref">Ha and Schmidhuber, 2018</a>)</span> is to explicitly separate the <strong>world model</strong> (what will happen next) from the <strong>controller</strong> (how to act). Deep RL NN are usually small, as rewards do not contain enough information to train huge networks.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/wm-overview.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Architecture of world models. Source: <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>A huge <strong>world model</strong> can be efficiently trained by supervised or unsupervised methods. A small <strong>controller</strong> should not need too many trials if its input representations are good.</p>
+<p>The vision module <span class="math inline">V</span> is trained as a <strong>variational autoencoder</strong> (VAE) on single frames of the game. The latent vector <span class="math inline">\mathbf{z}_t</span> contains a compressed representation of the frame <span class="math inline">\mathbf{o}_t</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/wm-vae.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Vision module. Source: <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>The sequence of latent representations <span class="math inline">\mathbf{z}_0, \ldots \mathbf{z}_t</span> in a game is fed to a LSTM layer together with the actions <span class="math inline">a_t</span> to compress what happens over time. A <strong>Mixture Density Network</strong> (MDN) is used to predict the <strong>distribution</strong> of the next latent representations <span class="math inline">P(\mathbf{z}_{t+1} | a_t, \mathbf{h}_t, \ldots \mathbf{z}_t)</span>.</p>
+<p>The RNN-MDN architecture <span class="citation" data-cites="Ha2017">(<a href="../references.html#ref-Ha2017" role="doc-biblioref">Ha and Eck, 2017</a>)</span> has been used successfully in the past for sequence generation problems such as generating handwriting and sketches (Sketch-RNN, see <a href="https://magenta.tensorflow.org/sketch-rnn-demo" class="uri">https://magenta.tensorflow.org/sketch-rnn-demo</a> for demos).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/wm-mdn_rnn.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Memory module. Source: <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>The last step is the <strong>controller</strong>. It takes a latent representation <span class="math inline">\mathbf{z}_t</span> and the current hidden state of the LSTM <span class="math inline">\mathbf{h}_t</span> as inputs and selects an action <strong>linearly</strong>:</p>
+<p><span class="math display">a_t = \text{tanh}(W \, [\mathbf{z}_t, \mathbf{h}_t ] + b)</span></p>
+<p>A RL actor cannot get simpler as that…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/wm-schematic.svg" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Controller. Source: <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>The controller is not even trained with RL: it uses a genetic algorithm, the Covariance-Matrix Adaptation Evolution Strategy (CMA-ES), to find the output weights that maximize the returns. The world model is trained by classical supervised learning using a random agent before learning.</p>
+<p>Refer <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a> to see the model in action.</p>
+<p><strong>Algorithm:</strong></p>
+<ol type="1">
+<li><p>Collect 10,000 rollouts from a random policy.</p></li>
+<li><p>Train VAE (V) to encode each frame into a latent vector <span class="math inline">\mathbf{z} \in \mathcal{R}^{32}</span>.</p></li>
+<li><p>Train MDN-RNN (M) to model <span class="math inline">P(\mathbf{z}_{t+1} | a_t, \mathbf{h}_t, \ldots \mathbf{z}_t)</span>.</p></li>
+<li><p>Evolve Controller (C) to maximize the expected cumulative reward of a rollout.</p></li>
+</ol>
+<p>The <strong>world model</strong> V+M is learned <strong>offline</strong> with a random agent, using unsupervised learning. The <strong>controller</strong> C has few weights (1000) and can be trained by evolutionary algorithms, not even RL. The network can even learn by playing entirely in its <strong>own imagination</strong> as the world model can be applied on itself and predict all future frames. It just need to additionally predict the reward. The learned policy can then be transferred to the real environment.</p>
+</section>
+<section id="deep-planning-network---planet" class="level2">
+<h2 class="anchored" data-anchor-id="deep-planning-network---planet">Deep Planning Network - PlaNet</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/h77PXNDgHD0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>PlaNet <span class="citation" data-cites="Hafner2019">(<a href="../references.html#ref-Hafner2019" role="doc-biblioref">Hafner et al., 2019</a>)</span> extends the idea of World models by learning the model together with the policy (<strong>end-to-end</strong>). It learns a <strong>latent dynamics model</strong> that takes the past observations <span class="math inline">o_t</span> into account (needed for POMDPs):</p>
+<p><span class="math display">s_{t}, r_{t+1}, \hat{o}_t = f(o_t, a_t, s_{t-1})</span></p>
+<p>and plans in the latent space using multiple rollouts:</p>
+<p><span class="math display">a_t = \text{arg}\max_a \mathbb{E}[R(s_t, a, s_{t+1}, \ldots)]</span></p>
+<p>The latent dynamics model is a sequential variational autoencoder learning concurrently:</p>
+<ol type="1">
+<li>An <strong>encoder</strong> from the observation <span class="math inline">o_t</span> to the latent space <span class="math inline">s_t</span>: <span class="math inline">q(s_t | o_t)</span>.</li>
+<li>A <strong>decoder</strong> from the latent space to the reconstructed observation <span class="math inline">\hat{o}_t</span>: <span class="math inline">p(\hat{o}_t | s_t)</span>.</li>
+<li>A <strong>transition model</strong> to predict the next latent representation given an action: <span class="math inline">p(s_{t+1} | s_t, a_t)</span>.</li>
+<li>A <strong>reward model</strong> predicting the immediate reward: <span class="math inline">p(r_t | s_t)</span>.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/planet-model.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Latent dynamics model of PlaNet <span class="citation" data-cites="Hafner2019">(<a href="../references.html#ref-Hafner2019" role="doc-biblioref">Hafner et al., 2019</a>)</span>. Source: <a href="https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html" class="uri">https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>The loss function to train this <strong>recurrent state-space model</strong> (RSSM), with a deterministic component in the transition model (RNN) and stochastic components is not shown here.</p>
+<p>Training sequences <span class="math inline">(o_1, a_1, o_2, \ldots, o_T)</span> can be generated <strong>off-policy</strong> (e.g.&nbsp;from demonstrations) or on-policy.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-model.gif" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Latent dynamics model of PlaNet <span class="citation" data-cites="Hafner2019">(<a href="../references.html#ref-Hafner2019" role="doc-biblioref">Hafner et al., 2019</a>)</span>. Source: <a href="https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html" class="uri">https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>From a single observation <span class="math inline">o_t</span> encoded into <span class="math inline">s_t</span>, 10000 rollouts are generated using <strong>random sampling</strong>. A belief over action sequences is updated using the <strong>cross-entropy method</strong> (CEM) in order to restrict the search. The first action of the sequence with the highest estimated return (reward model) is executed. At the next time step, planning starts from scratch: Model Predictive Control. There is no actor in PlaNet, only a transition model used for planning.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/planet-planning.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Planning module of PlaNet <span class="citation" data-cites="Hafner2019">(<a href="../references.html#ref-Hafner2019" role="doc-biblioref">Hafner et al., 2019</a>)</span>. Source: <a href="https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html" class="uri">https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>Planet learns continuous image-based control problems in 2000 episodes, where D4PG needs 50 times more.</p>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/tZk1eof_VNA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>The latent dynamics model can learn 6 control tasks <strong>at the same time</strong>. As there is no actor, but only a planner, the same network can control all agents!</p>
+</section>
+<section id="dreamer" class="level2">
+<h2 class="anchored" data-anchor-id="dreamer">Dreamer</h2>
+<p>Dreamer <span class="citation" data-cites="Hafner2020">(<a href="../references.html#ref-Hafner2020" role="doc-biblioref">Hafner et al., 2020</a>)</span> extends the idea of PlaNet by additionally <strong>training an actor</strong> instead of using a MPC planner. The latent dynamics model is the same RSSM architecture. Training a “model-free” actor on imaginary rollouts instead of MPC planning should reduce the computational time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-principle.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Architecture of Dreamer. Source: <a href="https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html" class="uri">https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>The behavior module learns to predict the value of a state <span class="math inline">V_\varphi(s)</span> and the policy <span class="math inline">\pi_\theta(s)</span> (actor-critic). It is trained <strong>in imagination</strong> in the latent space using the reward model for the immediate rewards (to compute returns) and the transition model for the next states.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-actor.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Training of the actor-critic behaviour module is end-to-end using a single rollout. Source: <a href="https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html" class="uri">https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>The current observation <span class="math inline">o_t</span> is encoded into a state <span class="math inline">s_t</span>, the actor selects an action <span class="math inline">a_t</span>, the transition model predicts <span class="math inline">s_{t+1}</span>, the reward model predicts <span class="math inline">r_{t+1}</span>, the critic predicts <span class="math inline">V_\varphi(s_t)</span>. At the end of the sequence, we apply <strong>backpropagation-through-time</strong> to train the actor and the critic.</p>
+<p>The <strong>critic</strong> <span class="math inline">V_\varphi(s_t)</span> is trained on the imaginary sequence <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1}, \ldots, s_T)</span> to minimize the prediction error with the <span class="math inline">\lambda</span>-return:</p>
+<p><span class="math display">R^\lambda_t = (1  - \lambda) \, \sum_{n=1}^{T-t-1} \lambda^{n-1} \, R^n_t + \lambda^{T-t-1} \, R_t</span></p>
+<p>The <strong>actor</strong> <span class="math inline">\pi_\theta(s_t, a_t)</span> is trained on the sequence to maximize the sum of the value of the future states:</p>
+<p><span class="math display">\mathcal{J}(\theta) = \mathbb{E}_{s_t, a_t \sim \pi_\theta} [\sum_{t'=t}^T V_\varphi(s_{t'})]</span></p>
+<p>The main advantage of training an actor is that we need only one rollout when training it: backpropagation maximizes the expected returns. When acting, we just need to encode the history of the episode in the latent space, and the actor becomes model-free!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Overview of Dreamer. Source: <a href="https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html" class="uri">https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>Dreamer beats model-free and model-based methods on 20 continuous control tasks.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-results.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Dreamer on several continuous control tasks. Source: <a href="https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html" class="uri">https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Performance of Dreamer. Source: <a href="https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html" class="uri">https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html</a>.</figcaption><p></p>
+</figure>
+</div>
+<p>It also learns Atari and Deepmind lab video games, sometimes on par with Rainbow or IMPALA!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-resultsatari.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Dreamer on Atari and DML games. Source: <a href="https://dreamrl.github.io/" class="uri">https://dreamrl.github.io/</a>.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dreamer-resultsatari.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Performance of Dreamer. Source: <a href="https://dreamrl.github.io/l" class="uri">https://dreamrl.github.io/l</a>.</figcaption><p></p>
+</figure>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Andrychowicz2017" class="csl-entry" role="doc-biblioentry">
+Andrychowicz, M., Wolski, F., Ray, A., Schneider, J., Fong, R., Welinder, P., et al. (2017). Hindsight <span>Experience Replay</span>. Available at: <a href="http://arxiv.org/abs/1707.01495">http://arxiv.org/abs/1707.01495</a>.
+</div>
+<div id="ref-Feinberg2018" class="csl-entry" role="doc-biblioentry">
+Feinberg, V., Wan, A., Stoica, I., Jordan, M. I., Gonzalez, J. E., and Levine, S. (2018). Model-<span>Based Value Estimation</span> for <span>Efficient Model-Free Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1803.00101">http://arxiv.org/abs/1803.00101</a>.
+</div>
+<div id="ref-Gu2016" class="csl-entry" role="doc-biblioentry">
+Gu, S., Lillicrap, T., Sutskever, I., and Levine, S. (2016). Continuous <span>Deep Q-Learning</span> with <span class="nocase">Model-based Acceleration</span>. Available at: <a href="http://arxiv.org/abs/1603.00748">http://arxiv.org/abs/1603.00748</a>.
+</div>
+<div id="ref-Ha2017" class="csl-entry" role="doc-biblioentry">
+Ha, D., and Eck, D. (2017). A <span>Neural Representation</span> of <span>Sketch Drawings</span>. Available at: <a href="http://arxiv.org/abs/1704.03477">http://arxiv.org/abs/1704.03477</a> [Accessed January 17, 2021].
+</div>
+<div id="ref-Ha2018" class="csl-entry" role="doc-biblioentry">
+Ha, D., and Schmidhuber, J. (2018). World <span>Models</span>. doi:<a href="https://doi.org/10.5281/zenodo.1207631">10.5281/zenodo.1207631</a>.
+</div>
+<div id="ref-Hafner2020" class="csl-entry" role="doc-biblioentry">
+Hafner, D., Lillicrap, T., Ba, J., and Norouzi, M. (2020). Dream to <span>Control</span>: <span>Learning Behaviors</span> by <span>Latent Imagination</span>. Available at: <a href="http://arxiv.org/abs/1912.01603">http://arxiv.org/abs/1912.01603</a> [Accessed March 24, 2020].
+</div>
+<div id="ref-Hafner2019" class="csl-entry" role="doc-biblioentry">
+Hafner, D., Lillicrap, T., Fischer, I., Villegas, R., Ha, D., Lee, H., et al. (2019). Learning <span>Latent Dynamics</span> for <span>Planning</span> from <span>Pixels</span>. Available at: <a href="http://arxiv.org/abs/1811.04551">http://arxiv.org/abs/1811.04551</a> [Accessed January 24, 2020].
+</div>
+<div id="ref-Pong2018" class="csl-entry" role="doc-biblioentry">
+Pong, V., Gu, S., Dalal, M., and Levine, S. (2018). Temporal <span>Difference Models</span>: <span>Model-Free Deep RL</span> for <span>Model-Based Control</span>. Available at: <a href="http://arxiv.org/abs/1802.09081">http://arxiv.org/abs/1802.09081</a>.
+</div>
+<div id="ref-Rusu2016" class="csl-entry" role="doc-biblioentry">
+Rusu, A. A., Colmenarejo, S. G., Gulcehre, C., Desjardins, G., Kirkpatrick, J., Pascanu, R., et al. (2016). Policy <span>Distillation</span>. Available at: <a href="http://arxiv.org/abs/1511.06295">http://arxiv.org/abs/1511.06295</a> [Accessed January 26, 2020].
+</div>
+<div id="ref-Teh2017" class="csl-entry" role="doc-biblioentry">
+Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al. (2017). Distral: <span>Robust Multitask Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1707.04175">http://arxiv.org/abs/1707.04175</a> [Accessed January 26, 2020].
+</div>
+<div id="ref-Weber2017" class="csl-entry" role="doc-biblioentry">
+Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-<span>Augmented Agents</span> for <span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1707.06203">http://arxiv.org/abs/1707.06203</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/4.1-MB.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Model-based RL</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/4.3-AlphaGo.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-title">AlphaGo</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

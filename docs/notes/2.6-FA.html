@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - 8&nbsp; Function approximation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/2.7-NN.html" rel="next">
+<link href="../notes/2.5-TD.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Function approximation</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.3-DP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.6-FA.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.7-NN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#limits-of-tabular-rl" id="toc-limits-of-tabular-rl" class="nav-link active" data-scroll-target="#limits-of-tabular-rl">Limits of tabular RL</a></li>
+  <li><a href="#function-approximation" id="toc-function-approximation" class="nav-link" data-scroll-target="#function-approximation">Function approximation</a>
+  <ul class="collapse">
+  <li><a href="#feature-vectors" id="toc-feature-vectors" class="nav-link" data-scroll-target="#feature-vectors">Feature vectors</a></li>
+  <li><a href="#state-value-approximation" id="toc-state-value-approximation" class="nav-link" data-scroll-target="#state-value-approximation">State value approximation</a></li>
+  <li><a href="#action-value-approximation" id="toc-action-value-approximation" class="nav-link" data-scroll-target="#action-value-approximation">Action value approximation</a></li>
+  </ul></li>
+  <li><a href="#feature-construction" id="toc-feature-construction" class="nav-link" data-scroll-target="#feature-construction">Feature construction</a>
+  <ul class="collapse">
+  <li><a href="#linear-features" id="toc-linear-features" class="nav-link" data-scroll-target="#linear-features">Linear features</a></li>
+  <li><a href="#polynomial-features" id="toc-polynomial-features" class="nav-link" data-scroll-target="#polynomial-features">Polynomial features</a></li>
+  <li><a href="#fourier-transforms" id="toc-fourier-transforms" class="nav-link" data-scroll-target="#fourier-transforms">Fourier transforms</a></li>
+  <li><a href="#discrete-coding" id="toc-discrete-coding" class="nav-link" data-scroll-target="#discrete-coding">Discrete coding</a></li>
+  <li><a href="#coarse-coding" id="toc-coarse-coding" class="nav-link" data-scroll-target="#coarse-coding">Coarse coding</a></li>
+  <li><a href="#tile-coding" id="toc-tile-coding" class="nav-link" data-scroll-target="#tile-coding">Tile coding</a></li>
+  <li><a href="#radial-basis-functions-rbf" id="toc-radial-basis-functions-rbf" class="nav-link" data-scroll-target="#radial-basis-functions-rbf">Radial-basis functions (RBF)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Function approximation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Slides: <a href="../slides/2.6-FunctionApproximation.html" target="_blank">html</a> <a href="../slides/pdf/2.6-FunctionApproximation.pdf" target="_blank">pdf</a></p>
+<section id="limits-of-tabular-rl" class="level2">
+<h2 class="anchored" data-anchor-id="limits-of-tabular-rl">Limits of tabular RL</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/el6F6Drem88" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>All the methods seen so far belong to <strong>tabular RL</strong>. Q-learning necessitates to store in a <strong>Q-table</strong> one Q-value per state-action pair <span class="math inline">(s, a)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/qtable.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Tabular Q-learning. Source: <a href="https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677" class="uri">https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677</a></figcaption><p></p>
+</figure>
+</div>
+<p>If a state has never been visited during learning, the Q-values will still be at their initial value (0.0), no policy can be derived.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/tabular-generalization.svg" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">In high-dimensional state spaces (e.g.&nbsp;images), tabular RL cannot generalize between close states.</figcaption><p></p>
+</figure>
+</div>
+<p>Similar states likely have the same optimal action: we want to be able to <strong>generalize</strong> the policy between states. For most realistic problems, the size of the Q-table becomes quickly untractable. If you use black-and-white 256x256 images as inputs, you have <span class="math inline">2^{256 * 256} = 10^{19728}</span> possible states! <strong>Tabular RL</strong> is therefore limited to toy problems.</p>
+<p>Tabular RL also only works for small <strong>discrete action spaces</strong>. Robots have <strong>continuous action spaces</strong>, where the actions are changes in <strong>joint angles</strong> or <strong>torques</strong>. A joint angle could for example take any value in <span class="math inline">[0, \pi]</span>. A solution would be to <strong>discretize</strong> the action space (one action per degree), but we would fall into the <strong>curse of dimensionality</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/cursedimensionality.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">Curse of dimensionality. Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption><p></p>
+</figure>
+</div>
+<p>The more degrees of freedom, the more discrete actions, the more entries in the Q-table… Tabular RL cannot deal with continuous action spaces, unless we approximate the policy with an <strong>actor-critic</strong> architecture.</p>
+</section>
+<section id="function-approximation" class="level2">
+<h2 class="anchored" data-anchor-id="function-approximation">Function approximation</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/cATgUO0QBes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<section id="feature-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="feature-vectors">Feature vectors</h3>
+<p>Let’s represent a state <span class="math inline">s</span> by a vector of <span class="math inline">d</span> <strong>features</strong> <span class="math inline">\phi(s) = [\phi_1(s), \phi_2(s), \ldots, \phi_d(s)]^T</span>. For the cartpole, the feature vector would be:</p>
+<p><span class="math display"> \phi(s) = \begin{bmatrix}x \\ \dot{x} \\ \theta \\ \dot{\theta} \end{bmatrix}</span></p>
+<p>where <span class="math inline">x</span> is the position, <span class="math inline">\theta</span> the angle, <span class="math inline">\dot{x}</span> and <span class="math inline">\dot{\theta}</span> their derivatives. We are able to represent <strong>any state</strong> <span class="math inline">s</span> of the cartpole problem using these four variables.</p>
+<p>For more complex problems, the feature vector should include all the necessary information (Markov property). Example of breakout:</p>
+<p><span class="math display">
+    \phi(s) = \begin{bmatrix}
+        x \, \text{position of the paddle} \\
+        x \, \text{position of the ball} \\
+        y \, \text{position of the ball} \\
+        x \, \text{speed of the ball} \\
+        y \, \text{speed of the position} \\
+        \text{presence of brick 1} \\
+        \text{presence of brick 2} \\
+        \vdots \\
+    \end{bmatrix}
+</span></p>
+<p>In deep RL, we will <strong>learn</strong> these feature vectors, but let’s suppose for now that we have them.</p>
+<p>Note that we can always fall back to the tabular case using <strong>one-hot encoding</strong> of the states:</p>
+<p><span class="math display">
+\phi(s_1) = \begin{bmatrix}1\\0\\0\\ \ldots\\ 0\end{bmatrix} \qquad
+\phi(s_2) = \begin{bmatrix}0\\1\\0\\ \ldots\\ 0\end{bmatrix}\qquad
+\phi(s_3) = \begin{bmatrix}0\\0\\1\\ \ldots\\ 0\end{bmatrix} \qquad \ldots
+</span></p>
+<p>But the idea is that we can represent states with much less values than the number of states:</p>
+<p><span class="math display">d \ll |\mathcal{S}|</span></p>
+<p>We can also represent <strong>continuous state spaces</strong> with feature vectors, as in cartpole.</p>
+</section>
+<section id="state-value-approximation" class="level3">
+<h3 class="anchored" data-anchor-id="state-value-approximation">State value approximation</h3>
+<p>In <strong>state value approximation</strong>, we want to approximate the state value function <span class="math inline">V^\pi(s)</span> with a <strong>parameterized function</strong> <span class="math inline">V_\varphi(s)</span>:</p>
+<p><span class="math display">V_\varphi(s) \approx V^\pi(s)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/functionapproximation-state.svg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">State value approximation.</figcaption><p></p>
+</figure>
+</div>
+<p>The parameterized function can have any form. Its has a set of parameters <span class="math inline">\varphi</span> used to transform the feature vector <span class="math inline">\phi(s)</span> into an approximated value <span class="math inline">V_\varphi(s)</span>.</p>
+<p>The simplest function approximator (FA) is the <strong>linear approximator</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/functionapproximation-state-linear.svg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Linear state value approximation.</figcaption><p></p>
+</figure>
+</div>
+<p>The approximated value is a linear combination of the features:</p>
+<p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
+<p>The <strong>weight vector</strong> <span class="math inline">\mathbf{w} = [w_1, w_2, \ldots, w_d]^T</span>is the set of parameters <span class="math inline">\varphi</span> of the function. A linear approximator is a single <strong>artificial neuron</strong> (linear regression) without a bias.</p>
+<p>Regardless the form of the function approximator, we want to find the parameters <span class="math inline">\varphi</span> making the approximated values <span class="math inline">V_\varphi(s)</span> as close as possible from the true values <span class="math inline">V^\pi(s)</span> for all states <span class="math inline">s</span>.</p>
+<p>This is a <strong>regression</strong> problem, so we want to minimize the <strong>mean-square error</strong> between the two quantities:</p>
+<p><span class="math display"> \min_\varphi \mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2]</span></p>
+<p>The <strong>loss function</strong> <span class="math inline">\mathcal{L}(\varphi)</span> is minimal when the predicted values are close to the true ones on average over the state space.</p>
+<p>Let’s suppose for now that we know the true state values <span class="math inline">V^\pi(s)</span> for all states and that the parametrized function is <strong>differentiable</strong>. We can find the minimum of the loss function by applying <strong>gradient descent</strong> (GD) iteratively:</p>
+<p><span class="math display">
+    \Delta \varphi = - \eta \, \nabla_\varphi \mathcal{L}(\varphi)
+</span></p>
+<p><span class="math inline">\nabla_\varphi \mathcal{L}(\varphi)</span> is the gradient of the loss function w.r.t to the parameters <span class="math inline">\varphi</span>.</p>
+<p><span class="math display">
+    \nabla_\varphi \mathcal{L}(\varphi) = \begin{bmatrix}
+        \frac{\partial \mathcal{L}(\varphi)}{\partial \varphi_1} \\
+        \frac{\partial \mathcal{L}(\varphi)}{\partial \varphi_2} \\
+        \ldots \\
+        \frac{\partial \mathcal{L}(\varphi)}{\partial \varphi_K} \\
+    \end{bmatrix}
+</span></p>
+<p>When applied repeatedly, GD converges to a local minimum of the loss function.</p>
+<p>In order to minimize the mean square error, we will iteratively modify the parameters <span class="math inline">\varphi</span> according to:</p>
+<p><span class="math display">
+\begin{aligned}
+    \Delta \varphi = \varphi_{k+1} - \varphi_n &amp; = - \eta \, \nabla_\varphi \mathcal{L}(\varphi) \\
+    &amp;\\
+    &amp; = - \eta \, \nabla_\varphi \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2] \\
+    &amp;\\
+    &amp; = \mathbb{E}_{s \in \mathcal{S}} [- \eta \, \nabla_\varphi  (V^\pi(s) - V_\varphi(s))^2] \\
+    &amp;\\
+    &amp; = \mathbb{E}_{s \in \mathcal{S}} [\eta \,  (V^\pi(s) - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)] \\
+\end{aligned}
+</span></p>
+<p>As it would be too slow to compute the expectation on the whole state space (<strong>batch algorithm</strong>), we will sample the quantity:</p>
+<p><span class="math display">\delta_\varphi = \eta \,  (V^\pi(s) - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)</span></p>
+<p>and update the parameters with <strong>stochastic gradient descent</strong> (SGD).</p>
+<p>If we sample <span class="math inline">K</span> states <span class="math inline">s_i</span> from the state space, we get:</p>
+<p><span class="math display">
+    \Delta \varphi = \eta \,  \frac{1}{K} \sum_{k=1}^K (V^\pi(s_k) - V_\varphi(s_k)) \, \nabla_\varphi V_\varphi(s_k)
+</span></p>
+<p>We can also sample a single state <span class="math inline">s</span> (online algorithm):</p>
+<p><span class="math display">
+    \Delta \varphi = \eta \, (V^\pi(s) - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)
+</span></p>
+<p>Unless stated otherwise, we will sample single states in this section, but beware that the parameter updates will be noisy (high variance).</p>
+<p>The approximated value is a linear combination of the features:</p>
+<p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
+<p>The weights are updated using stochastic gradient descent:</p>
+<p><span class="math display">
+    \Delta \mathbf{w} = \eta \, (V^\pi(s) - V_\varphi(s)) \, \phi(s)
+</span></p>
+<p>This is the <strong>delta learning rule</strong> of linear regression and classification, with <span class="math inline">\phi(s)</span> being the input vector and <span class="math inline">V^\pi(s) - V_\varphi(s)</span> the prediction error.</p>
+<p>The rule can be used with any function approximator, we only need to be able to differentiate it:</p>
+<p><span class="math display">
+    \Delta \varphi = \eta \, (V^\pi(s) - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)
+</span></p>
+<p>The problem is that we do not know <span class="math inline">V^\pi(s)</span>, as it is what we are trying to estimate. We can replace <span class="math inline">V^\pi(s)</span> by a sampled estimate using Monte-Carlo or TD:</p>
+<ul>
+<li><strong>Monte-Carlo</strong> function approximation:</li>
+</ul>
+<p><span class="math display">
+    \Delta \varphi = \eta \, (R_t - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)
+</span></p>
+<ul>
+<li><strong>Temporal Difference</strong> function approximation:</li>
+</ul>
+<p><span class="math display">
+    \Delta \varphi = \eta \, (r_{t+1} + \gamma \, V_\varphi(s') - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)
+</span></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Gradient Monte Carlo Algorithm for value estimation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Initialize the parameter <span class="math inline">\varphi</span> to 0 or randomly.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ol type="1">
+<li>Generate an episode according to the current policy <span class="math inline">\pi</span> until a terminal state <span class="math inline">s_T</span> is reached.</li>
+</ol>
+<p><span class="math display">
+      \tau = (s_o, a_o, r_ 1, s_1, a_1, \ldots, s_T)
+  </span></p>
+<ol start="2" type="1">
+<li><p>For all encountered states <span class="math inline">s_0, s_1, \ldots, s_{T-1}</span>:</p>
+<ol type="1">
+<li><p>Compute the return <span class="math inline">R_t = \sum_k \gamma^k r_{t+k+1}</span> .</p></li>
+<li><p>Update the parameters using function approximation:</p></li>
+</ol>
+<p><span class="math display">
+     \Delta \varphi = \eta \, (R_t - V_\varphi(s_t)) \, \nabla_\varphi V_\varphi(s_t)
+</span></p></li>
+</ol></li>
+</ul>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Semi-gradient Temporal Difference Algorithm for value estimation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Initialize the parameter <span class="math inline">\varphi</span> to 0 or randomly.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p>Start from an initial state <span class="math inline">s_0</span>.</p></li>
+<li><p><strong>foreach</strong> step <span class="math inline">t</span> of the episode:</p>
+<ul>
+<li><p>Select <span class="math inline">a_t</span> using the current policy <span class="math inline">\pi</span> in state <span class="math inline">s_t</span>.</p></li>
+<li><p>Observe <span class="math inline">r_{t+1}</span> and <span class="math inline">s_{t+1}</span>.</p></li>
+<li><p>Update the parameters using function approximation:</p></li>
+</ul>
+<p><span class="math display">
+      \Delta \varphi = \eta \, (r_{t+1} + \gamma \, V_\varphi(s_{t+1}) - V_\varphi(s_t)) \, \nabla_\varphi V_\varphi(s_t)
+  </span></p>
+<ul>
+<li><strong>if</strong> <span class="math inline">s_{t+1}</span> is terminal: <strong>break</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<p>As in tabular RL, Gradient Monte-Carlo has no bias (real returns) but a high variance. Semi-gradient TD has less variance, but a significant bias as <span class="math inline">V_\varphi(s_{t+1})</span> is initially wrong. You can never trust these estimates completely.</p>
+<p>Note that for Temporal Difference, we actually want to minimize the TD reward-prediction error for all states, i.e.&nbsp;the surprise:</p>
+<p><span class="math display">\mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (r_{t+1} + \gamma \, V_\varphi(s') - V_\varphi(s))^2]= \mathbb{E}_{s \in \mathcal{S}} [ \delta_t^2]</span></p>
+</section>
+<section id="action-value-approximation" class="level3">
+<h3 class="anchored" data-anchor-id="action-value-approximation">Action value approximation</h3>
+<p>Q-values can be approximated by a parameterized function <span class="math inline">Q_\theta(s, a)</span> in the same manner. There are basically two options for the structure of the function approximator:</p>
+<ul>
+<li>The FA takes a feature vector for both the state <span class="math inline">s</span> and the action <span class="math inline">a</span> (which can be continuous) as inputs, and outputs a single Q-value <span class="math inline">Q_\theta(s ,a)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/functionapproximation-action1.svg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Action value approximation for a single action.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>The FA takes a feature vector for the state <span class="math inline">s</span> as input, and outputs one Q-value <span class="math inline">Q_\theta(s ,a)</span> per possible action (the action space must be discrete).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/functionapproximation-action2.svg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Action value approximation for all actions.</figcaption><p></p>
+</figure>
+</div>
+<p>In both cases, we minimize the mse between the true value <span class="math inline">Q^\pi(s, a)</span> and the approximated value <span class="math inline">Q_\theta(s, a)</span>.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Q-learning with function approximation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Initialize the parameters <span class="math inline">\theta</span>.</p></li>
+<li><p><strong>while</strong> True:</p>
+<ul>
+<li><p>Start from an initial state <span class="math inline">s_0</span>.</p></li>
+<li><p><strong>foreach</strong> step <span class="math inline">t</span> of the episode:</p>
+<ul>
+<li><p>Select <span class="math inline">a_{t}</span> using the behavior policy <span class="math inline">b</span> (e.g.&nbsp;derived from <span class="math inline">\pi</span>).</p></li>
+<li><p>Take <span class="math inline">a_t</span>, observe <span class="math inline">r_{t+1}</span> and <span class="math inline">s_{t+1}</span>.</p></li>
+<li><p>Update the parameters <span class="math inline">\theta</span>:</p></li>
+</ul>
+<p><span class="math display">\Delta \theta = \eta \, (r_{t+1} + \gamma \, \max_a Q_\theta(s_{t+1}, a) - Q_\theta(s_t, a_t)) \, \nabla_\theta Q_\theta(s_t, a_t)</span></p>
+<ul>
+<li>Improve greedily the learned policy:</li>
+</ul>
+<p><span class="math display">\pi(s_t, a) = \text{Greedy}(Q_\theta(s_t, a))</span></p>
+<ul>
+<li><strong>if</strong> <span class="math inline">s_{t+1}</span> is terminal: <strong>break</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-construction" class="level2">
+<h2 class="anchored" data-anchor-id="feature-construction">Feature construction</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/t39QwC_5vXI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<section id="linear-features" class="level3">
+<h3 class="anchored" data-anchor-id="linear-features">Linear features</h3>
+<p>Before we dive into deep RL (i.e.&nbsp;RL with non-linear FA), let’s see how we can design good <strong>feature vectors</strong> for linear function approximation. The problem with deep NN is that they need a lot of samples to converge, what worsens the fundamental problem of RL: <strong>sample efficiency</strong>. By engineering the right features, we could use linear approximators, which converge much faster. The convergence of linear FA is <strong>guaranteed</strong>, not (always) non-linear ones.</p>
+<p>Why do we need to choose features? For the cartpole, the feature vector <span class="math inline">\phi(s)</span> could be:</p>
+<p><span class="math display"> \phi(s) = \begin{bmatrix}x \\ \dot{x} \\ \theta \\ \dot{\theta} \end{bmatrix}</span></p>
+<p>where <span class="math inline">x</span> is the position, <span class="math inline">\theta</span> the angle, <span class="math inline">\dot{x}</span> and <span class="math inline">\dot{\theta}</span> their derivatives. Can we predict the value of a state <strong>linearly</strong>?</p>
+<p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
+<p>This answer is no, as a high angular velocity <span class="math inline">\dot{\theta}</span> is good when the pole is horizontal (going up) but bad if the pole is vertical (will not stop). The value would depends linearly on something like <span class="math inline">\dot{\theta} \, \sin \theta</span>, which is a non-linear combination of features.</p>
+<p>Let’s suppose we have a simple problem where the state <span class="math inline">s</span> is represented by two continuous variables <span class="math inline">x</span> and <span class="math inline">y</span>. The true value function <span class="math inline">V^\pi(s)</span> is a non-linear function of <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-data.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">State values <span class="math inline">V^\pi(s)</span> for a two-dimensional state space.</figcaption><p></p>
+</figure>
+</div>
+<p>If we apply linear FA directly on the feature vector <span class="math inline">[x, y]</span>, we catch the tendency of <span class="math inline">V^\pi(s)</span> but we make a lot of bad predictions: <strong>high bias</strong> (underfitting).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-linear.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Linear approximation of the state value function.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="polynomial-features" class="level3">
+<h3 class="anchored" data-anchor-id="polynomial-features">Polynomial features</h3>
+<p>To introduce non-linear relationships between continuous variables, a simple method is to construct the feature with <strong>polynomials</strong> of the variables.</p>
+<p>Example with polynomials of order 2:</p>
+<p><span class="math display">
+    \phi(s) = \begin{bmatrix}1 &amp; x &amp; y &amp; x\, y &amp; x^2 &amp; y^2 \end{bmatrix}^T
+</span></p>
+<p>We transform the two input variables <span class="math inline">x</span> and <span class="math inline">y</span> into a vector with 6 elements. The 1 (order 0) is there to learn the offset / bias.</p>
+<p>Example with polynomials of order 3:</p>
+<p><span class="math display">
+    \phi(s) = \begin{bmatrix}1 &amp; x &amp; y &amp; x\, y &amp; x^2 &amp; y^2 &amp; x^2 \, y &amp; x \, y^2 &amp; x^3 &amp; y^3\end{bmatrix}^T
+</span></p>
+<p>We then just need to apply linear FA on these feature vectors (<strong>polynomial regression</strong>).</p>
+<p><span class="math display">
+    V_\varphi(s) = w_0 + w_1 \, x + w_2 \, y + w_3 \, x \, y + w_4 \, x^2 + w_5 \, y^2 + \ldots
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-polynomial2.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Polynomial approximation of the state value function with order 2.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-polynomial6.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Polynomial approximation of the state value function with order 6.</figcaption><p></p>
+</figure>
+</div>
+<p>The higher the degree of the polynomial, the better the fit, but the number of features grows exponentially. This adds to the computational complexity and leads to <strong>overfitting</strong>: if we only sample some states, high-order polynomials will not interpolate correctly.</p>
+</section>
+<section id="fourier-transforms" class="level3">
+<h3 class="anchored" data-anchor-id="fourier-transforms">Fourier transforms</h3>
+<p>Instead of approximating a state variable <span class="math inline">x</span> by a polynomial:</p>
+<p><span class="math display">
+    V_\varphi(s) = w_0 + w_1 \, x + w_2 \, x^2 + w_3 \, x^3 + \ldots
+</span></p>
+<p>we could also use its <strong>Fourier decomposition</strong> (here DCT, discrete cosine transform):</p>
+<p><span class="math display">
+    V_\varphi(s) = w_0 + w_1 \, \cos(\pi \, x) + w_2 \, \cos( 2 \, \pi \, x) + w_3 \, \cos(3 \, \pi \, x) + \ldots
+</span></p>
+<p>The Fourier theorem tells us that, if we take enough frequencies, we can reconstruct the signal <span class="math inline">V_\varphi(s)</span> perfectly.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-fourier1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Fourier transform in 1D. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>It is just a change of basis, the problem stays a linear regression to find <span class="math inline">w_0, w_1, w_2</span>, etc.</p>
+<p>Fourier transforms can be applied on multivariate functions as well.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-fourier2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Fourier transform in 2D. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-fourier3.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Comparison of polynomial and Fourier features. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>A Fourier basis tends to work better than a polynomial basis. The main problem is that the number of features increases very fast with the number of input dimensions and the desired precision (higher-order polynomials, more frequencies).</p>
+</section>
+<section id="discrete-coding" class="level3">
+<h3 class="anchored" data-anchor-id="discrete-coding">Discrete coding</h3>
+<p>An obvious solution for continuous state variables is to <strong>discretize</strong> the input space. The input space is divided into a grid of non-overlapping <strong>tiles</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-tile1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Linear approximation of the state value function using discrete coding.</figcaption><p></p>
+</figure>
+</div>
+<p>The feature vector is a <strong>binary</strong> vector with a 1 when the input is inside a tile, 0 otherwise.</p>
+<p><span class="math display">\phi(s) = \begin{bmatrix}0 &amp; 0 &amp; \ldots &amp; 0 &amp; 1 &amp; 0 &amp; \ldots &amp; 0 \\ \end{bmatrix}^T</span></p>
+<p>This ensures <strong>generalization</strong> inside a tile: you only need a couple of samples inside a tile to know the mean value of all the states. Drawbacks: the value function is step-like (discontinuous), the correct size of a tile is not known, we fall into the <strong>curse of dimensionality</strong>.</p>
+</section>
+<section id="coarse-coding" class="level3">
+<h3 class="anchored" data-anchor-id="coarse-coding">Coarse coding</h3>
+<p>A more efficient solution is <strong>coarse coding</strong>. The tiles (rectangles, circles, or what you need) need to <strong>overlap</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-tile2.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Coarse coding uses overlapping tiles. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>A state <span class="math inline">s</span> is encoded by a <strong>binary vector</strong>, but with several 1, for each tile it belongs.</p>
+<p><span class="math display">\phi(s) = \begin{bmatrix}0 &amp; 1 &amp; 0 &amp; \ldots &amp; 1 &amp; 1 &amp; 0 &amp; \ldots &amp; 0 \\ \end{bmatrix}^T</span></p>
+<p>This allows generalization inside a tile, but also <strong>across tiles</strong>. The size and shape of the <strong>“receptive field”</strong> influences the generalization properties.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-tile4.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">The overlap between tiles defines the generalization. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="tile-coding" class="level3">
+<h3 class="anchored" data-anchor-id="tile-coding">Tile coding</h3>
+<p>A simple way to ensure that tiles overlap is to use several regular grids with an <strong>offset</strong>. Each tiling will be <strong>coarse</strong>, but the location of a state will be quite precise as it may belong to many tiles.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-tile3.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Tile coding. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>This helps against the curse of dimensionality: high precision, but the number of tiles does not grow exponentially.</p>
+</section>
+<section id="radial-basis-functions-rbf" class="level3">
+<h3 class="anchored" data-anchor-id="radial-basis-functions-rbf">Radial-basis functions (RBF)</h3>
+<p>The feature vector in tile coding is a binary vector: there will be <strong>discontinuous jumps</strong> in the approximated value function when moving between tiles. We can use <strong>radial-basis functions</strong> (RBF) such as Gaussians to map the state space.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/featurecoding-rbf.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Radial-basis functions.</figcaption><p></p>
+</figure>
+</div>
+<p>We set a set of centers <span class="math inline">\{c_i\}_{i=1}^K</span> in the input space on a regular grid (or randomly). Each element of the feature vector will be a Gaussian function of the distance between the state <span class="math inline">s</span> and one center:</p>
+<p><span class="math display">\phi_i(s) = \exp \frac{-(s - c_i)^2}{2\, \sigma_i^2}</span></p>
+<p>The approximated value function now represents <strong>continuously</strong> the states:</p>
+<p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \sum_{i=1}^d w_i \, \exp \frac{-(s - c_i)^2}{2\, \sigma_i^2}</span></p>
+<p>If you have enough centers and they overlap sufficiently, you can even <strong>decode</strong> the original state perfectly:</p>
+<p><span class="math display">\hat{s} = \sum_{i=1}^d \phi_i(s) \, c_i</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Summary of function approximation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/functionapproximation-state.svg" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<p>In FA, we project the state information into a <strong>feature space</strong> to get a better representation. We then apply a linear approximation algorithm to estimate the value function:</p>
+<p><span class="math display">V_\varphi(s) = \mathbf{w}^T \, \phi(s)</span></p>
+<p>The linear FA is trained using some variant of gradient decent:</p>
+<p><span class="math display">\Delta \mathbf{w} = \eta \, (V^\pi(s) - V_\varphi(s)) \, \phi(s)</span></p>
+<p><strong>Deep neural networks</strong> are the most powerful function approximators in supervised learning. Do they also work with RL?</p>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Sutton1998" class="csl-entry" role="doc-biblioentry">
+Sutton, R. S., and Barto, A. G. (1998). <em>Reinforcement <span>Learning</span>: <span>An</span> introduction</em>. <span>Cambridge, MA</span>: <span>MIT press</span>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/2.5-TD.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Temporal Difference learning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/2.7-NN.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-title">Deep learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

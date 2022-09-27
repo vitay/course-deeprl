@@ -1,0 +1,108 @@
+---
+title: Deep Reinforcement Learning
+subtitle: Foreword
+
+author: Julien Vitay
+institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
+date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
+
+---
+
+# Dr. habil. Julien Vitay - <julien.vitay@informatik.tu-chemnitz.de>
+
+::: {.columns}
+::: {.column width=50%}
+
+
+**Background**
+
+* 2002: Master in Electrical Engineering (Supélec).
+
+* 2006: Ph.D in Computer Science (Inria).
+
+    * Emergence of sensorimotor function on a distributed numerical substrate.
+
+* Postdoc in Psychology (Münster).
+
+* 2011: lecturer at TU Chemnitz:
+
+    * Habilitation in 2017:
+
+        * On the role of dopamine in motivated behavior: a neuro-computational approach.
+
+    * Courses: machine learning, computer vision, deep RL.
+
+:::
+::: {.column width=50%}
+
+
+**Research**
+
+* Computational neuroscience
+
+    * Dopamine, biological reinforcement learning
+
+    * Basal Ganglia, decision-making
+
+    * Cerebellum, motor control
+
+    * Hippocampus, memory
+
+* Machine learning
+
+    * Reservoir computing
+
+    * Successor representations
+
+    * Graph neural networks
+
+    * Deep reinforcement learning
+
+:::
+:::
+
+
+* Erasmus coordinator:  <https://www.tu-chemnitz.de/informatik/international/erasmus.php.en>
+
+# Course description
+
+* **Neurocomputing** (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.
+
+* The content is available for everybody, but the exam is reserved for:
+
+    * Master Neurorobotik.
+
+    * Master Informatik (Multi-Agent systems)
+
+    * Master angewandte Informatik (Themenschwerpunkte Informatik I/II).
+
+    * Master Data Science.
+
+
+
+# Course description
+
+* One lecture and one exercise.
+
+* All materials are at:
+
+<https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/notes>
+
+
+* Written exam, 90 minutes, 5 credit points, but possibility of oral exams.
+
+* Registration and forum on OPAL: 
+
+<https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457>.
+
+
+# Exercises
+
+* Exercises : programming in Python the algorithms seen in the course (using tensorflow, keras, scikit-learn).
+
+* The first exercises are a tutorial on Python and Numpy (common with Neurocomputing and CV).
+
+* Exercises are there to better understand the algorithms and learn to use the modern tools.
+
+* There will be no programming question at the exam, but some may be related to the exercises.
+

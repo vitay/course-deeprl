@@ -1,0 +1,961 @@
+---
+title: Deep Reinforcement Learning
+subtitle: Beyond DQN
+
+author: Julien Vitay
+institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
+date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
+
+resources: pdf/3.2-BeyondDQN.pdf
+---
+
+
+# 1 - Distributional learning : Categorical DQN
+
+![](img/paper-c51.png)
+
+::: footer
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+# Distributional learning
+
+* Until now, we have only cared about the **expectation** of the returns, i.e. their mean value:
+
+$$V^\pi(s) = \mathbb{E}_\pi [R_t | s_t = s]$$
+
+$$Q^\pi(s, a) = \mathbb{E}_\pi [R_t | s_t = s, a_t = a]$$
+
+* We select actions with the highest **expected return**, which makes sense **on the long term**.
+
+* Suppose we have two actions $a_1$ and $a_2$, which provide different returns with the same probability:
+
+    * $R(a_1) = \{100, 200\}$ 
+
+    * $R(a_2) = \{-100, 400\}$ 
+
+* Their Q-value is the same: $Q(a_1) = Q(a_2) = 150$, so if you play them an **infinity** of times, they are both optimal.
+
+* But suppose that, after learning, you can only try a **single** action. Which one do you chose? 
+
+* RL does not distinguish safe from risky actions.
+
+
+
+# Distributional learning
+
+
+
+* The trip by train from Leipzig to Chemnitz takes 1 hour if everything goes well.
+
+* Once a week on average, the train will get stuck on the way for 30 minutes.
+
+* The expected duration of the trip is 1h + 1/5*30 = 1h06.
+
+* But in practice it takes either 1h or 1h30, never 1h06.
+
+* If driving by car always takes 1h15, it might be worth it if you have an urgent appointment that day.
+
+
+![](img/distributional-example.svg){width=70%}
+
+
+# Distributional learning
+
+* The idea of **distributional RL** is to learn the **distribution of returns** $\mathcal{Z}^\pi$ directly instead of its expectation:
+
+$$R_t \sim \mathcal{Z}^\pi(s_t, a_t)$$
+
+![](img/distributionallearning.png)
+
+* Note that we can always obtain the Q-values back:
+
+$$Q^\pi(s, a) = \mathbb{E}_\pi [\mathcal{Z}^\pi(s, a)]$$
+
+
+# Categorical DQN
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/distributionallearning.png)
+
+:::
+::: {.column width=50%}
+
+
+* In categorical DQN (Bellemare et al., 2017), we model the distribution of returns as a **discrete probability distribution**.
+
+    * **categorical** or **multinouilli** distribution.
+
+
+* We first need to identify the minimum and maximum returns $R_\text{min}$ and $R_\text{max}$ possible in the problem.
+
+* We then split the range $[R_\text{min}, R_\text{max}]$ in $n$ **discrete bins** centered on the atoms $\{z_i\}_{i=1}^n$.
+
+:::
+:::
+
+
+* The probability that the return obtained the action $(s, a)$ lies in the bin of the atom $z_i$ is noted $p_i(s, a)$.
+
+* It can be approximated by a neural network $F$ with parameters $\theta$, using a **softmax output layer**: 
+
+$$
+    p_i(s, a; \theta) = \frac{\exp F_i(s, a; \theta)}{\sum_{j=1}^{n} \exp F_j(s, a; \theta)}
+$$
+
+::: footer
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+
+# Categorical DQN
+
+![](img/distributionallearning.png){width=40%}
+
+* The $n$ probabilities $\{p_i(s, a; \theta)\}_{i=1}^n$ completely define the parameterized distribution $\mathcal{Z}_\theta(s, a)$.
+
+$$\mathcal{Z}_\theta(s, a) = \sum_a p_i(s, a; \theta) \,\delta_{z_i}$$
+
+
+where $\delta_{z_i}$ is a Dirac distribution centered on the atom $z_i$.
+
+* The Q-value of an action can be obtained by:
+
+$$
+    Q_\theta(s, a) = \mathbb{E} [\mathcal{Z}_\theta(s, a)] = \sum_{i=1}^{n} p_i(s, a; \theta) \, z_i
+$$
+
+# Categorical DQN
+
+::: {.columns}
+::: {.column width=25%}
+
+![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/categorical-dqn.png)
+
+:::
+::: {.column width=75%}
+
+* The only thing we need is a neural network $\theta$ returning for each action $a$ in the state $s$ a discrete probability distribution $\mathcal{Z}_\theta(s, a)$ instead of a single Q-value $Q_\theta(s, a)$.
+
+* The NN uses a **softmax activation function** for each action.
+
+* Action selection is similar to DQN: we first compute the $Q_\theta(s, a)$ and apply greedy / $\epsilon$-greedy / softmax over the actions.
+
+$$
+    Q_\theta(s, a) = \sum_{i=1}^{n} p_i(s, a; \theta) \, z_i
+$$
+
+* The number $n$ of atoms for each action should be big enough to represent the range of returns. 
+
+* A number that works well with Atari games is $n=51$:
+
+    * Categorical DQN is often noted **C51**.
+
+:::
+:::
+
+
+
+# Categorical DQN
+
+* How do we learn the distribution of returns $\mathcal{Z}_\theta(s, a)$ of parameters $\{p_i(s, a; \theta)\}_{i=1}^n$?
+
+* In Q-learning, we minimize the mse between the prediction $Q_\theta(s, a)$ and the **target**:
+
+$$\mathcal{T} \, Q_\theta(s, a) = r + \gamma \, Q_\theta(s', a')$$
+
+where $\mathcal{T}$ is the Bellman operator.
+
+$$\min_\theta (\mathcal{T} \, Q_\theta(s, a) - Q_\theta(s, a))^2$$
+
+* We do the same here: 
+
+    * we apply the **Bellman operator** on the distribution $\mathcal{Z}_\theta(s, a)$.
+
+    $$\mathcal{T} \, \mathcal{Z}_\theta(s, a) = r(s, a) + \gamma \, \mathcal{Z}_\theta(s', a')$$
+
+    * we then minimize the statistical "distance" between the distributions $\mathcal{Z}_\theta(s, a)$ and $\mathcal{T} \, \mathcal{Z}_\theta(s, a)$.
+
+    $$\min_\theta \text{KL}(\mathcal{T} \, \mathcal{Z}_\theta(s, a) || \mathcal{Z}_\theta(s, a))$$
+
+
+# Categorical DQN
+
+* Let's note $P^\pi \, \mathcal{Z}$ the return distribution of the greedy action in the next state $\mathcal{Z}_\theta(s', a')$.
+
+* Multiplying the returns by the discount factor $\gamma < 1$ **shrinks** the return distribution (its support gets smaller).
+
+* The **atoms** $z_i$ of $\mathcal{Z}_\theta(s', a')$ now have the position $\gamma \, z_i$, but the probabilities stay the same.
+
+![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman1.png)
+
+
+
+# Categorical DQN
+
+* Adding a reward $r$ **translates** the distribution. The new position of the atoms is:
+
+$$z'_i = r + \gamma \, z_i$$
+
+* The corresponding probabilities have not changed.
+
+![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman2.png)
+
+
+
+# Categorical DQN
+
+* But now we have a problem: the atoms $z'_i$ of $\mathcal{T} \, \mathcal{Z}_\theta(s, a)$ do not match with the atoms $z_i$ of $\mathcal{Z}_\theta(s, a)$.
+
+* We need to **interpolate** the target distribution to compare it with the predicted distribution. 
+
+![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman3.png)
+
+
+
+# Categorical DQN
+
+* We need to apply a **projection** $\Phi$ so that the bins of $\mathcal{T} \, \mathcal{Z}_\theta(s, a)$ are the same as the ones of $\mathcal{Z}_\theta(s, a)$.
+
+* The formula sounds complicated, but it is basically a linear interpolation:
+
+$$
+    (\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a))_i = \sum_{j=1}^n \big [1 - \frac{| [\mathcal{T}\, z_j]_{R_\text{min}}^{R_\text{max}} - z_i|}{\Delta z} \big ]_0^1 \, p_j (s', a'; \theta)
+$$
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/distributionallearning2.png)
+
+:::
+::: {.column width=50%}
+
+
+![](img/distributionallearning3.png)
+
+:::
+:::
+
+
+
+# Categorical DQN
+
+![](img/distributionallearning3.png)
+
+* We now have two distributions $\mathcal{Z}_\theta(s, a)$ and $\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)$ sharing the same support.
+
+* We now want to have the prediction $\mathcal{Z}_\theta(s, a)$ close from the target $\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)$.
+
+* These are probability distributions, not numbers, so we cannot use the mse.
+
+* We instead minimize the **Kullback-Leibler (KL) divergence** between the two distributions. 
+
+
+# Kullback-Leibler (KL) divergence 
+
+* Let's consider a parameterized discrete distribution $X_\theta$ and a discrete target distribution $T$.
+
+* The KL divergence between the two distributions is:
+
+$$\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, \frac{X_\theta}{T}]$$
+
+
+* It can be rewritten as the sum of the **cross-entropy** and the entropy of $T$:
+
+
+$$\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, X_\theta + T \, \log T] = H(X_\theta, T) - H(T)$$
+
+* As $T$ does not depend on $\theta$, the gradient of the KL divergence w.r.t to $\theta$ is the same as the gradient of the cross-entropy.
+
+
+$$\nabla_\theta \, \text{KL}(X_\theta || T) = \nabla_\theta \,  \mathbb{E}_T [- T \, \log \, X_\theta]$$
+
+* **Minimizing the KL divergence is the same as minimizing the cross-entropy.**
+
+* Neural networks with a softmax output layer and the cross-entropy loss function can do that.
+
+# Cross-entropy
+
+* In supervised learning, the targets $\mathbf{t}$ are fixed **one-hot encoded vectors**.
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}} [ - \mathbf{t} \, \log \mathbf{y} ]$$
+
+* But it could be any target distribution, as long as $\mathbf{t}$ and $\mathbf{y}$ share the same support.
+
+![](img/crossentropy-animation.gif){width=60%}
+
+
+
+# Reminder: DQN
+
+* Initialize value network $Q_{\theta}$ and target network $Q_{\theta'}$.
+
+* Initialize experience replay memory $\mathcal{D}$ of maximal size $N$.
+
+* for $t \in [0, T_\text{total}]$:
+
+    * Select an action $a_t$ based on $Q_\theta(s_t, a)$, observe $s_{t+1}$ and $r_{t+1}$.
+
+    * Store $(s_t, a_t, r_{t+1}, s_{t+1})$ in the experience replay memory.
+
+    * Every $T_\text{train}$ steps:
+
+        * Sample a minibatch $\mathcal{D}_s$ randomly from $\mathcal{D}$.
+
+        * For each transition $(s_k, a_k, r_k, s'_k)$ in the minibatch:
+
+            * Compute the target value $t_k = r_k + \gamma \, \max_{a'} Q_{\theta'}(s'_k, a')$ using the target network.
+
+        * Update the value network $Q_{\theta}$ on $\mathcal{D}_s$ to minimize:
+
+        $$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[(t_k - Q_\theta(s_k, a_k))^2]$$
+
+    * Every $T_\text{target}$ steps:
+
+        * Update target network: $\theta' \leftarrow \theta$.
+
+
+# Categorical DQN
+
+* Initialize distributional value network $Z_{\theta}$ and target network $Z_{\theta'}$, experience replay memory $\mathcal{D}$.
+
+* Every $T_\text{train}$ steps:
+
+    * Sample a minibatch $\mathcal{D}_s$ randomly from $\mathcal{D}$.
+
+    * For each transition $(s_k, a_k, r_k, s'_k)$ in the minibatch:
+
+        * Select the greedy action in the next state using the target network:
+
+        $$a'_k = \text{argmax}_a \, \mathbb{E}[Z_{\theta'}(s'_k, a)]$$
+
+        * Apply the Bellman operator on the distribution of the next greedy action:
+
+        $$TZ_k = r_k + \gamma \, Z_{\theta'}(s'_k, a'_k)$$
+
+        * Project this distribution to the support of $Z_\theta(s_k, a_k)$.
+
+        $$\mathbf{t}_k = \text{Projection}(TZ_k, Z_\theta(s_k, a_k))$$
+
+    * Update the value network $Q_{\theta}$ on $\mathcal{D}_s$ to minimize the cross-entropy:
+
+    $$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[ - \mathbf{t}_k \, \log Z_\theta(s_k, a_k)]$$
+
+
+
+# Categorical DQN
+
+![](img/categorical-dqn-algo.png){width=70%}
+
+
+::: footer
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+
+# Categorical DQN
+
+![](img/categorical-dqn-example.png)
+
+
+::: footer
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+
+# Categorical DQN
+
+* Having the full distribution of returns allow to deal with **uncertainty**.
+
+* For certain actions in critical states, one could get a high return (killing an enemy) or no return (death).
+
+* The distribution reflects that the agent is not certain of the goodness of the action. Expectations would not provide this information.
+
+![Source: <https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning>](img/categorical_dqn_animation.gif)
+
+
+
+# Categorical DQN
+
+![](img/categorical-dqn-results1.png)
+
+
+::: footer
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+# Categorical DQN
+
+![](img/categorical-dqn-results2.png)
+
+
+::: footer
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+# Categorical DQN
+
+{{< youtube yFBwyPuO2Vg >}}
+
+# Categorical DQN
+
+{{< youtube d1yz4PNFUjI >}}
+
+# Other variants of distributional learning
+
+* **QR-DQN:** Dabney, W., Rowland, M., Bellemare, M. G., and Munos, R. (2017). Distributional Reinforcement Learning with Quantile Regression. arXiv:1710.10044
+
+* **IQN:** Dabney, W., Ostrovski, G., Silver, D., and Munos, R. (2018). Implicit Quantile Networks for Distributional Reinforcement Learning. arXiv:1806.06923.
+
+* **The Reactor:** Gruslys, A., Dabney, W., Azar, M. G., Piot, B., Bellemare, M., and Munos, R. (2017). The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning. arXiv:1704.04651.
+
+# 2 - Noisy DQN
+
+![](img/paper-noisynet.png)
+
+::: footer
+Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
+:::
+
+# Noisy DQN
+
+
+* DQN and its variants rely on $\epsilon$-greedy action selection over the Q-values to **explore**.
+
+* The exploration parameter $\epsilon$ is **annealed** during training to reach a final minimal value.
+
+* It is preferred to **softmax** action selection, where $\tau$ scales with the unknown Q-values.
+
+* The problem is that it is a global exploration mechanism: well-learned states do not need as much exploration as poorly explored ones. 
+
+
+
+![Source: <https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg>](img/epsilonschedule.jpg)
+
+
+
+
+# Noisy DQN
+
+::: {.columns}
+::: {.column width=50%}
+
+
+* $\epsilon$-greedy and softmax add **exploratory noise** to the output of DQN: 
+
+    * The Q-values predict a greedy action, but another action is taken.
+
+* What about adding noise to the **parameters** (weights and biases) of the DQN, what would change the greedy action everytime?
+
+* Controlling the level of noise inside the neural network indirectly controls the exploration level.
+
+:::
+::: {.column width=50%}
+
+
+![Source: <https://openai.com/blog/better-exploration-with-parameter-noise/>](img/ddpg-parameternoise.png)
+
+:::
+:::
+
+
+* Note: a very similar idea was proposed by OpenAI at the same ICLR conference:
+
+> Plappert, M., Houthooft, R., Dhariwal, P., Sidor, S., Chen, R. Y., Chen, X., et al. (2018). Parameter Space Noise for Exploration. arXiv:1706.01905.
+
+
+
+# Noisy DQN
+
+::: {.columns}
+::: {.column width=70%}
+
+* Parameter noise builds on the idea of **Bayesian deep learning**.
+
+* Instead of learning a single value of the parameters:
+
+$$y = \theta_1 \, x + \theta_0$$
+
+we learn the **distribution** of the parameters, for example by assuming they come from a normal distribution:
+
+$$\theta \sim \mathcal{N}(\mu_\theta, \sigma_\theta^2)$$
+
+* For each new input, we **sample** a value for the parameter:
+
+$$\theta = \mu_\theta + \sigma_\theta \, \epsilon$$
+
+with $\epsilon \sim \mathcal{N}(0, 1)$ a random variable.
+
+
+:::
+::: {.column width=30%}
+
+![Source: <https://ericmjl.github.io/bayesian-deep-learning-demystified>](img/noisydqn.png)
+
+
+:::
+:::
+
+
+* The prediction $y$ will vary for the same input depending on the variances:
+
+$$y = (\mu_{\theta_1} + \sigma_{\theta_1} \, \epsilon_1) \, x + \mu_{\theta_0} + \sigma_{\theta_0} \, \epsilon_0$$
+
+* The mean and variance of each parameter can be learned through backpropagation!
+
+
+# Noisy DQN
+
+::: {.columns}
+::: {.column width=70%}
+
+* Probabilistic weights:
+
+$$\theta \sim \mathcal{N}(\mu_\theta, \sigma_\theta^2)$$
+
+* As the random variables $\epsilon_i  \sim \mathcal{N}(0, 1)$ are not correlated with anything, the variances $\sigma_\theta^2$ should decay to 0.
+
+* The variances $\sigma_\theta^2$ represent the **uncertainty** about the prediction $y$.
+
+* Applied to DQN, this means that a state which has not been visited very often will have a high uncertainty:
+
+    * The predicted Q-values will change a lot between two evaluations.
+
+    * The greedy action might change: **exploration**.
+
+* Conversely, a well-explored state will have a low uncertainty:
+
+    * The greedy action stays the same: **exploitation**.
+
+:::
+::: {.column width=30%}
+
+![Source: <https://ericmjl.github.io/bayesian-deep-learning-demystified>](img/noisydqn.png)
+
+
+:::
+:::
+
+
+# Noisy DQN
+
+* Noisy DQN uses **greedy action selection** over noisy Q-values.
+
+* The level of exploration is **learned** by the network on a per-state basis. No need for scheduling!
+
+* **Parameter noise** improves the performance of $\epsilon$-greedy-based methods, including DQN, dueling DQN, A3C, DDPG (see later), etc.
+
+![](img/noisydqn2.png)
+
+
+::: footer
+Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
+:::
+
+
+# 3 - Rainbow network
+
+![](img/paper-rainbow.png)
+
+::: footer
+Hessel  et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
+:::
+
+# Raindow network
+
+We have seen various improvements over a few years (2013-2017):
+
+* Original DQN (Mnih et al., 2013)
+
+$$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta'}(s', a')) - Q_\theta(s, a))^2]$$
+
+* Double DQN (van Hasselt, Guez and Silver, 2015)
+
+$$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]$$
+
+::: {.columns}
+::: {.column width=50%}
+
+
+* Prioritized Experience Replay (Schaul et al., 2015)
+
+$$P(k) = \frac{(|\delta_k| + \epsilon)^\alpha}{\sum_k (|\delta_k| + \epsilon)^\alpha}$$
+
+* Dueling DQN (Wang et al., 2016)
+
+$$Q_\theta(s, a) = V_\alpha(s) + A_\beta(s, a)$$
+
+:::
+::: {.column width=50%}
+
+
+* Categorical DQN (Bellemare, Dabney and Munos, 2017)
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[ - \mathbf{t}_k \, \log Z_\theta(s_k, a_k)]$$
+
+* NoisyNet (Fortunato et al.,  2017)
+
+$$\theta = \mu_\theta + \sigma_\theta \, \epsilon$$
+
+:::
+:::
+
+
+Which of these improvements should we use? 
+
+
+# Rainbow network
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/rainbow-results1.png)
+
+
+:::
+::: {.column width=50%}
+
+
+* Answer: all of them.
+
+* The **rainbow network** combines :
+
+    * double dueling DQN with PER.
+
+    * categorical learning of return distributions.
+
+    * parameter noise for exploration.
+
+    * n-step return (n=3) for the bias/variance trade-off:
+
+    $$R_t = \sum_{k=0}^{n-1} \gamma^k r_{t+k+1} + \gamma^n \,  \max_a Q(s_{t+n}, a)$$
+
+* It outperforms any of the single improvements.
+
+:::
+:::
+
+
+::: footer
+Hessel et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
+:::
+
+# Rainbow network
+
+::: {.columns}
+::: {.column width=50%}
+
+ 
+![](img/rainbow-results2.png)
+
+
+:::
+::: {.column width=50%}
+
+
+* Most of these mechanisms are necessary to achieve optimal performance (**ablation studies**).
+
+* n-step returns, PER and distributional learning are the most critical.
+
+* Interestingly, double Q-learning does not have a huge effect on the Rainbow network:
+
+    * The other mechanisms (especially distributional learning) already ensure that Q-values are not over-estimated.
+
+* You can find good implementations of Rainbow DQN on all major frameworks, for example on `rllib`:
+
+<https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn>
+
+:::
+:::
+
+
+::: footer
+Hessel et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
+:::
+
+# 4 - Gorila - General Reinforcement Learning Architecture
+
+![](img/paper-gorila.png)
+
+::: footer
+Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+# Gorila
+
+::: {.columns}
+::: {.column width=40%}
+
+* The DQN value network $Q_\theta(s, a)$ has two jobs:
+
+    * **actor:** it interacts with the environment to sample $(s, a, r, s')$ transitions.
+
+    * **learner:** it learns from minibatches out of the replay memory.
+
+:::
+::: {.column width=60%}
+
+![](img/gorila1.png)
+
+:::
+:::
+
+
+* The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: **computational bottleneck**.
+
+* DQN cannot benefit from **parallel computing**: multi-core CPU, clusters of CPU/GPU, etc.
+
+
+::: footer
+Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+# Gorila
+
+* The Gorila framework splits DQN into **multiple actors** and **multiple learners**.
+
+* Each actor (or worker) **interacts** with its copy of the environment and stores transitions in a distributed replay buffer.
+
+* Each learner samples minibatches from the replay buffer and computes **gradients** w.r.t the DQN loss.
+
+* The parameter server (**master network**) applies the gradients on the parameters and frequently **synchronizes** the actors and learners.
+
+![](img/gorila2.png){width=75%}
+
+::: footer
+Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+
+# Gorila
+
+* Gorila allows to train DQN on parallel hardware (e.g. clusters of GPU) as long as the environment can be copied (simulation).
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/gorila-results1.png)
+
+
+::: footer
+Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+:::
+::: {.column width=50%}
+
+
+* The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).
+
+![](img/gorila-results2.png){width=80%}
+
+:::
+:::
+
+
+# Ape-X
+
+* With more experience, Deepmind realized that a single learner is better. Distributed SGD (computing gradients with different learners) is not very efficient.
+
+* What matters is collecting transitions very quickly (multiple workers) but using **prioritized experience replay** to learn from the most interesting ones.
+
+![](img/apex.png)
+
+::: footer
+Horgan et al. (2018). Distributed Prioritized Experience Replay. arXiv:180300933
+:::
+
+# Ape-X
+
+* Using 360 workers (1 per CPU core), Ape-X reaches super-human performance for a fraction of the wall-clock training time.
+
+![](img/apex-results.png){width=80%}
+
+::: footer
+Horgan et al. (2018). Distributed Prioritized Experience Replay. arXiv:180300933
+:::
+
+# Ape-X
+
+* The multiple parallel workers can collect much more frames, leading to the better performance.
+
+* The learner uses n-step returns and the double dueling DQN network architecture, so it is not much different from Rainbow DQN internally.
+
+![](img/apex-results2.png)
+
+::: footer
+Horgan et al. (2018). Distributed Prioritized Experience Replay. arXiv:180300933
+:::
+
+# 5 - DRQN: Deep Recurrent Q-network
+
+![](img/paper-drqn.png)
+
+::: footer
+Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+:::
+
+# DRQN: Deep Recurrent Q-network
+
+* Atari games are POMDP: each frame is a **partial observation**, not a Markov state.
+
+* One cannot infer the velocity of the ball from a single frame.
+
+![](img/drqn3.png){width=60%}
+
+
+::: footer
+Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+:::
+
+
+# DRQN: Deep Recurrent Q-network
+
+
+![Source: <https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc>](img/DQNBreakoutBlocks.png){width=70%}
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/drqn1.png)
+
+:::
+::: {.column width=50%}
+
+
+* The trick used by DQN and its variants is to **stack** the last four frames and provide them as inputs to the CNN.
+
+* The last 4 frames have (almost) the Markov property.
+
+:::
+:::
+
+
+# DRQN: Deep Recurrent Q-network
+
+![](img/RNN-unrolled.png){width=80%}
+
+::: {.columns}
+::: {.column width=40%}
+
+
+![Source: <https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc>](img/drqn2.png){width=70%}
+
+:::
+::: {.column width=60%}
+
+
+* The alternative is to use a **recurrent neural network** (e.g. LSTM) to encode the **history** of single frames.
+
+$$
+    \mathbf{h}_t = f(W_x \times \mathbf{x}_t + W_h \times \mathbf{h}_{t-1} + \mathbf{b})
+$$
+
+* The output at time $t$ depends on the whole history of inputs $(\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t)$.
+
+:::
+:::
+
+
+* Using the output of a LSTM as a state, we make sure that we have the Markov property, RL will work:
+
+$$
+    P(\mathbf{h}_{t+1} | \mathbf{h}_t) = P(\mathbf{h}_{t+1} | \mathbf{h}_t, \mathbf{h}_{t-1}, \ldots, \mathbf{h}_0)
+$$
+
+
+# DRQN: Deep Recurrent Q-network
+
+![Source: <https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/>](img/drqn-architecture.png)
+
+* For the neural network, it is just a matter of adding a LSTM layer before the output layer. 
+
+* The convolutional layers are **feature extractors** for the LSTM layer.
+
+* The loss function does not change: backpropagation (through time) all along.
+
+$$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]$$ 
+
+
+
+# DRQN: Deep Recurrent Q-network
+
+![](img/drqn-architecture2.png)
+
+::: footer
+Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+:::
+
+# DRQN: Deep Recurrent Q-network
+
+![](img/RNN-unrolled.png){width=80%}
+
+* The only problem is that RNNs are trained using truncated **backpropagation through time** (BPTT).
+
+* One needs to provide a partial history of $T = 10$ inputs to the network in order to learn one output:
+
+$$(\mathbf{x}_{t-T}, \mathbf{x}_{t-T+1}, \ldots, \mathbf{x}_t)$$
+
+* The **experience replay memory** should not contain single transitions $(s_t, a_t, r_{t+1}, s_{t+1})$, but a partial history of transitions.
+
+$$(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})$$
+
+
+
+# DRQN: Deep Recurrent Q-network
+
+* Using a LSTM layer helps on certain games, where temporal dependencies are longer that 4 frames, but impairs on others.
+
+![](img/drqn4.png){width=60%}
+
+
+::: footer
+Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+:::
+
+# DRQN: Deep Recurrent Q-network
+
+* Beware: LSTMs are extremely slow to train (but not to use).
+
+* Stacking frames is still a reasonable option.
+
+![](img/drqn5.png){width=60%}
+
+
+::: footer
+Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+:::
+
+
+# 6 - R2D2: Recurrent Replay Distributed DQN
+
+![](img/paper-r2d2.png)
+
+::: footer
+Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. ICLR.
+:::
+
+# R2D2: Recurrent Replay Distributed DQN
+
+* R2D2 builds on Ape-X and DRQN:
+
+    * double dueling DQN with n-step returns (n=5) and prioritized experience replay.
+    * 256 actors, 1 learner.
+    * 1 LSTM layer after the convolutional stack.
+
+* Additionally solving practical problems with LSTMs (initial state), it became the state of the art on Atari-57 until November 2019...
+
+![](img/r2d2-results.png){width=80%}
+
+::: footer
+Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. ICLR.
+:::
+

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - 5&nbsp; Dynamic Programming</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/2.4-MC.html" rel="next">
+<link href="../notes/2.2-MDP.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Dynamic Programming</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.3-DP.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.6-FA.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.7-NN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#policy-iteration" id="toc-policy-iteration" class="nav-link active" data-scroll-target="#policy-iteration">Policy iteration</a>
+  <ul class="collapse">
+  <li><a href="#policy-evaluation" id="toc-policy-evaluation" class="nav-link" data-scroll-target="#policy-evaluation">Policy evaluation</a></li>
+  <li><a href="#iterative-policy-evaluation" id="toc-iterative-policy-evaluation" class="nav-link" data-scroll-target="#iterative-policy-evaluation">Iterative policy evaluation</a></li>
+  <li><a href="#policy-improvement" id="toc-policy-improvement" class="nav-link" data-scroll-target="#policy-improvement">Policy improvement</a></li>
+  <li><a href="#policy-iteration-1" id="toc-policy-iteration-1" class="nav-link" data-scroll-target="#policy-iteration-1">Policy iteration</a></li>
+  <li><a href="#gridworld-example" id="toc-gridworld-example" class="nav-link" data-scroll-target="#gridworld-example">Gridworld example</a></li>
+  </ul></li>
+  <li><a href="#value-iteration" id="toc-value-iteration" class="nav-link" data-scroll-target="#value-iteration">Value iteration</a></li>
+  <li><a href="#comparison-of-policy--and-value-iteration" id="toc-comparison-of-policy--and-value-iteration" class="nav-link" data-scroll-target="#comparison-of-policy--and-value-iteration">Comparison of Policy- and Value-iteration</a></li>
+  <li><a href="#asynchronous-dynamic-programming" id="toc-asynchronous-dynamic-programming" class="nav-link" data-scroll-target="#asynchronous-dynamic-programming">Asynchronous dynamic programming</a></li>
+  <li><a href="#curse-of-dimensionality" id="toc-curse-of-dimensionality" class="nav-link" data-scroll-target="#curse-of-dimensionality">Curse of dimensionality</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Dynamic Programming</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Slides: <a href="../slides/2.3-DP.html" target="_blank">html</a> <a href="../slides/pdf/2.3-DP.pdf" target="_blank">pdf</a></p>
+<section id="policy-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="policy-iteration">Policy iteration</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/9LS_pD728yo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<section id="policy-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="policy-evaluation">Policy evaluation</h3>
+<p>Remember the Bellman equation for the state <span class="math inline">s</span> and a fixed policy <span class="math inline">\pi</span>:</p>
+<p><span class="math display">
+      V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
+</span></p>
+<p>Let’s note <span class="math inline">\mathcal{P}_{ss'}^\pi</span> the transition probability between <span class="math inline">s</span> and <span class="math inline">s'</span> (dependent on the policy <span class="math inline">\pi</span>) and <span class="math inline">\mathcal{R}_{s}^\pi</span> the expected reward in <span class="math inline">s</span> (also dependent):</p>
+<p><span class="math display">
+  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a)
+</span></p>
+<p><span class="math display">
+  \mathcal{R}_{s}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \ r(s, a, s')
+</span></p>
+<p>The Bellman equation becomes:</p>
+<p><span class="math display">
+      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+</span></p>
+<p>As we have a fixed policy during the evaluation (Markov Reward Process), the Bellman equation is simplified.</p>
+<p>Let’s now put the Bellman equations in a matrix-vector form.</p>
+<p><span class="math display">
+      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+</span></p>
+<p>We first define the <strong>vector of state values</strong> <span class="math inline">\mathbf{V}^\pi</span>:</p>
+<p><span class="math display">
+  \mathbf{V}^\pi = \begin{bmatrix}
+      V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
+  \end{bmatrix}
+</span></p>
+<p>and the <strong>vector of expected reward</strong> <span class="math inline">\mathcal{R}^\pi</span>:</p>
+<p><span class="math display">
+  \mathcal{R}^\pi = \begin{bmatrix}
+      \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
+  \end{bmatrix}
+</span></p>
+<p>The <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}^\pi</span> is defined as:</p>
+<p><span class="math display">
+  \mathcal{P}^\pi = \begin{bmatrix}
+      \mathcal{P}_{s_1 s_1}^\pi &amp; \mathcal{P}_{s_1 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_1 s_n}^\pi \\
+      \mathcal{P}_{s_2 s_1}^\pi &amp; \mathcal{P}_{s_2 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_2 s_n}^\pi \\
+      \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+      \mathcal{P}_{s_n s_1}^\pi &amp; \mathcal{P}_{s_n s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_n s_n}^\pi \\
+  \end{bmatrix}
+</span></p>
+<p>You can simply check that:</p>
+<p><span class="math display">
+  \begin{bmatrix}
+      V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
+  \end{bmatrix} =
+  \begin{bmatrix}
+      \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
+  \end{bmatrix}
+  + \gamma \, \begin{bmatrix}
+      \mathcal{P}_{s_1 s_1}^\pi &amp; \mathcal{P}_{s_1 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_1 s_n}^\pi \\
+      \mathcal{P}_{s_2 s_1}^\pi &amp; \mathcal{P}_{s_2 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_2 s_n}^\pi \\
+      \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+      \mathcal{P}_{s_n s_1}^\pi &amp; \mathcal{P}_{s_n s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_n s_n}^\pi \\
+  \end{bmatrix} \times \begin{bmatrix}
+      V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
+  \end{bmatrix}
+</span></p>
+<p>leads to the same equations as:</p>
+<p><span class="math display">
+      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+</span></p>
+<p>for all states <span class="math inline">s</span>.</p>
+<p>The Bellman equations for all states <span class="math inline">s</span> can therefore be written with a matrix-vector notation as:</p>
+<p><span class="math display">
+  \mathbf{V}^\pi = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
+</span></p>
+<p>or:</p>
+<p><span class="math display">
+  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathcal{R}^\pi
+</span></p>
+<p>where <span class="math inline">\mathbb{I}</span> is the identity matrix. If we know <span class="math inline">\mathcal{P}^\pi</span> and <span class="math inline">\mathcal{R}^\pi</span> (dynamics of the MDP for the policy <span class="math inline">\pi</span>), we can simply obtain the state values with a matrix inversion:</p>
+<p><span class="math display">
+  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathcal{R}^\pi
+</span></p>
+<p>Done! <strong>But</strong>, if we have <span class="math inline">n</span> states, the matrix <span class="math inline">\mathcal{P}^\pi</span> has <span class="math inline">n^2</span> elements. Inverting <span class="math inline">\mathbb{I} - \gamma \, \mathcal{P}^\pi</span> requires at least <span class="math inline">\mathcal{O}(n^{2.37})</span> operations. Forget it if you have more than a thousand states (<span class="math inline">1000^{2.37} \approx 13</span> million operations). In dynamic programming, we will therefore use <strong>iterative methods</strong> to estimate <span class="math inline">\mathbf{V}^\pi</span> with (hopefully) less operations.</p>
+</section>
+<section id="iterative-policy-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="iterative-policy-evaluation">Iterative policy evaluation</h3>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/DOGbCQjSIlY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>The idea of <strong>iterative policy evaluation</strong> (IPE) is to consider a sequence of consecutive state-value functions which should converge from initially wrong estimates <span class="math inline">V_0(s)</span> towards the real state-value function <span class="math inline">V^{\pi}(s)</span>.</p>
+<p><span class="math display">
+      V_0 \rightarrow V_1 \rightarrow V_2 \rightarrow \ldots \rightarrow V_k \rightarrow V_{k+1} \rightarrow \ldots \rightarrow V^\pi
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/iterativepolicyevaluation2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Backup diagram of iterative policy evaluation. Credit: David Silver.</figcaption><p></p>
+</figure>
+</div>
+<p>The value function at step <span class="math inline">k+1</span> <span class="math inline">V_{k+1}(s)</span> is computed using the previous estimates <span class="math inline">V_{k}(s)</span> and the Bellman equation transformed into an <strong>update rule</strong>. In vector notation:</p>
+<p><span class="math display">
+  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+</span></p>
+<p>Let’s start with dummy (e.g.&nbsp;random) initial estimates <span class="math inline">V_0(s)</span> for the value of every state <span class="math inline">s</span>. We can obtain new estimates <span class="math inline">V_1(s)</span> which are slightly less wrong by applying once the <strong>Bellman operator</strong>:</p>
+<p><span class="math display">
+     V_{1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_0 (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<p>Based on these estimates <span class="math inline">V_1(s)</span>, we can obtain even better estimates <span class="math inline">V_2(s)</span> by applying again the Bellman operator:</p>
+<p><span class="math display">
+     V_{2} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_1 (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<p>Generally, state-value function estimates are improved iteratively through:</p>
+<p><span class="math display">
+     V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<p><span class="math inline">V_\infty = V^{\pi}</span> is a fixed point of this update rule because of the uniqueness of the solution to the Bellman equation.</p>
+<p>The <strong>Bellman operator</strong> <span class="math inline">\mathcal{T}^\pi</span> is a mapping between two vector spaces:</p>
+<p><span class="math display">
+  \mathcal{T}^\pi (\mathbf{V}) = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
+</span></p>
+<p>If you apply repeatedly the Bellman operator on any initial vector <span class="math inline">\mathbf{V}_0</span>, it converges towards the solution of the Bellman equations <span class="math inline">\mathbf{V}^\pi</span>. Mathematically speaking, <span class="math inline">\mathcal{T}^\pi</span> is a <span class="math inline">\gamma</span>-contraction, i.e.&nbsp;it makes value functions closer by at least <span class="math inline">\gamma</span>:</p>
+<p><span class="math display">
+  || \mathcal{T}^\pi (\mathbf{V}) - \mathcal{T}^\pi (\mathbf{U})||_\infty \leq \gamma \, ||\mathbf{V} - \mathbf{U} ||_\infty
+</span></p>
+<p>The <strong>contraction mapping theorem</strong> ensures that <span class="math inline">\mathcal{T}^\pi</span> converges to an unique fixed point: this proves the existence and uniqueness of the solution of the Bellman equations.</p>
+<p>Iterative Policy Evaluation relies on <strong>full backups</strong>: it backs up the value of ALL possible successive states into the new value of a state.</p>
+<p><span class="math display">
+     V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<p>The backups are <strong>synchronous</strong>: all states are backed up in parallel.</p>
+<p><span class="math display">
+  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+</span></p>
+<p>The termination of iterative policy evaluation has to be controlled by hand, as the convergence of the algorithm is only at the limit. It is good practice to look at the variations on the values of the different states, and stop the iteration when this variation falls below a predefined threshold.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Iterative Policy Evaluation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>For a fixed policy <span class="math inline">\pi</span>, initialize <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><span class="math inline">\delta =0</span></p></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><p><span class="math inline">\delta = \max(\delta, |V(s) - V_\text{target}(s)|)</span></p></li>
+<li><p><span class="math inline">V(s) = V_\text{target}(s)</span></p></li>
+</ul></li>
+<li><p><strong>if</strong> <span class="math inline">\delta &lt; \delta_\text{threshold}</span>:</p>
+<ul>
+<li>converged = True</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="policy-improvement" class="level3">
+<h3 class="anchored" data-anchor-id="policy-improvement">Policy improvement</h3>
+<p>The goal of finding the value function for a given policy <span class="math inline">\pi</span> is to help improving this policy. For each state <span class="math inline">s</span>, we would like to know if we should deterministically choose an action <span class="math inline">a \neq \pi(s)</span> or not in order to improve the policy.</p>
+<p>The value of an action <span class="math inline">a</span> in the state <span class="math inline">s</span> for the policy <span class="math inline">\pi</span> is given by:</p>
+<p><span class="math display">
+     Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]
+</span></p>
+<p>f the Q-value of an action <span class="math inline">a</span> is higher than the one currently selected by the <strong>deterministic</strong> policy:</p>
+<p><span class="math display">Q^{\pi} (s, a) &gt; Q^{\pi} (s, \pi(s)) = V^{\pi}(s)</span></p>
+<p>then it is better to select <span class="math inline">a</span> once in <span class="math inline">s</span> and thereafter follow <span class="math inline">\pi</span>. If there is no better action, we keep the previous policy for this state. This corresponds to a <strong>greedy</strong> action selection over the Q-values, defining a <strong>deterministic</strong> policy <span class="math inline">\pi(s)</span>:</p>
+<p><span class="math display">\pi(s) \leftarrow \text{argmax}_a Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></p>
+<p>After the policy improvement, the Q-value of each deterministic action <span class="math inline">\pi(s)</span> has increased or stayed the same.</p>
+<p><span class="math display">\text{argmax}_a Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ] \geq Q^\pi(s, \pi(s))</span></p>
+<p>This defines an <strong>improved</strong> policy <span class="math inline">\pi'</span>, where all states and actions have a higher value than previously. <strong>Greedy action selection</strong> over the state value function implements policy improvement:</p>
+<p><span class="math display">\pi' \leftarrow \text{Greedy}(V^\pi)</span></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Greedy policy improvement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>:</p>
+<ul>
+<li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="policy-iteration-1" class="level3">
+<h3 class="anchored" data-anchor-id="policy-iteration-1">Policy iteration</h3>
+<p>Once a policy <span class="math inline">\pi</span> has been improved using <span class="math inline">V^{\pi}</span> to yield a better policy <span class="math inline">\pi'</span>, we can then compute <span class="math inline">V^{\pi'}</span> and improve it again to yield an even better policy <span class="math inline">\pi''</span>.</p>
+<p>The algorithm <strong>policy iteration</strong> successively uses <strong>policy evaluation</strong> and <strong>policy improvement</strong> to find the optimal policy.</p>
+<p><span class="math display">
+  \pi_0 \xrightarrow[]{E} V^{\pi_0} \xrightarrow[]{I} \pi_1 \xrightarrow[]{E} V^{\pi^1} \xrightarrow[]{I}  ... \xrightarrow[]{I} \pi^* \xrightarrow[]{E} V^{*}
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/gpi.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+</figure>
+</div>
+<p>The <strong>optimal policy</strong> being deterministic, policy improvement can be greedy over the state values. If the policy does not change after policy improvement, the optimal policy has been found.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Policy iteration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Initialize a deterministic policy <span class="math inline">\pi(s)</span> and set <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
+<li><p><strong>while</strong> <span class="math inline">\pi</span> is not optimal:</p>
+<ul>
+<li><p><strong>while</strong> not converged: # Policy evaluation</p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V(s) = V_\text{target}(s)</span></li>
+</ul></li>
+</ul></li>
+<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>: # Policy improvement</p>
+<ul>
+<li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
+</ul></li>
+<li><p><strong>if</strong> <span class="math inline">\pi</span> has not changed: <strong>break</strong></p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="gridworld-example" class="level3">
+<h3 class="anchored" data-anchor-id="gridworld-example">Gridworld example</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dp-gridworld1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Gridworld example. Credit: David Silver</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Gridworld</strong> is an undiscounted MDP (we can take <span class="math inline">\gamma=1</span>). The states are the position in the grid, the actions are up, down, left, right. Transitions to a wall leave in the same state. The reward is always -1, except after being in the terminal states in gray (<span class="math inline">r=0</span>). The initial policy is random:</p>
+<p><span class="math display">\pi(s, \text{up}) = \pi(s, \text{down})= \pi(s, \text{left}) = \pi(s, \text{right}) = 0.25</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dp-gridworld2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">First iterations. Credit: David Silver</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><span class="math inline">k=0</span>: The initial values <span class="math inline">V_0</span> are set to 0 as the initial policy is random.</li>
+<li><span class="math inline">k=1</span>: The random policy is evaluated: all states get the value of the average immediate reward in that state. -1, except the terminal states (0). The greedy policy is already an improvement over the random policy: adjacent states to the terminal states would decide to go there systematically, as the value is 0 instead of -1.</li>
+<li><span class="math inline">k=2</span>: The previous estimates propagate: states adjacent to the terminal states get a higher value, as there will be less punishments after these states.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dp-gridworld3.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Later iterations. Credit: David Silver</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><span class="math inline">k=3</span>: The values continue to propagate. The greedy policy at that step of policy evaluation is already optimal.</li>
+<li><span class="math inline">k&gt;3</span>: The values continue to converge towards the true values. The greedy policy does not change. In this simple example, it is already the optimal policy.</li>
+</ul>
+<p>Two things to notice:</p>
+<ul>
+<li>There is no actually no need to wait until the end of policy evaluation to improve the policy, as the greedy policy might already be optimal.</li>
+<li>There can be more than one optimal policy: some actions may have the same Q-value: choosing one or other is equally optimal.</li>
+</ul>
+</section>
+</section>
+<section id="value-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="value-iteration">Value iteration</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/lB_ouoRVWiE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p><strong>Policy iteration</strong> can converge in a surprisingly small number of iterations. One drawback of <em>policy iteration</em> is that it uses a full policy evaluation, which can be computationally exhaustive as the convergence of <span class="math inline">V_k</span> is only at the limit and the number of states can be huge.</p>
+<p>The idea of <strong>value iteration</strong> is to interleave policy evaluation and policy improvement, so that the policy is improved after each iteration of policy evaluation, not after complete convergence. As policy improvement returns a deterministic greedy policy, updating of the value of a state is then simpler:</p>
+<p><span class="math display">
+        V_{k+1}(s) = \max_a \sum_{s'} p(s' | s,a) [r(s, a, s') + \gamma \, V_k(s') ]
+</span></p>
+<p>Note that this is equivalent to turning the <strong>Bellman optimality equation</strong> into an update rule. Value iteration converges to <span class="math inline">V^*</span>, faster than policy iteration, and should be stopped when the values do not change much anymore.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Value iteration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Initialize a deterministic policy <span class="math inline">\pi(s)</span> and set <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \max_a \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><span class="math inline">\delta = 0</span></p></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><p><span class="math inline">\delta = \max(\delta, |V(s) - V_\text{target}(s)|)</span></p></li>
+<li><p><span class="math inline">V(s) = V_\text{target}(s)</span></p></li>
+</ul></li>
+<li><p><strong>if</strong> <span class="math inline">\delta &lt; \delta_\text{threshold}</span>:</p>
+<ul>
+<li>converged = True</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="comparison-of-policy--and-value-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-of-policy--and-value-iteration">Comparison of Policy- and Value-iteration</h2>
+<p><strong>Full policy-evaluation backup</strong></p>
+<p><span class="math display">
+    V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ]
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/fullpe.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Backup diagram of policy evaluation.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Full value-iteration backup</strong></p>
+<p><span class="math display">
+    V_{k+1} (s) \leftarrow \max_{a \in \mathcal{A}(s)} \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ]
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/fullvi.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Backup diagram of value evaluation.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="asynchronous-dynamic-programming" class="level2">
+<h2 class="anchored" data-anchor-id="asynchronous-dynamic-programming">Asynchronous dynamic programming</h2>
+<p>Synchronous DP requires exhaustive sweeps of the entire state set (<strong>synchronous backups</strong>).</p>
+<ul>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \max_a \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V(s) = V_\text{target}(s)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Asynchronous DP updates instead each state independently and asynchronously (<strong>in-place</strong>):</p>
+<ul>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p>Pick a state <span class="math inline">s</span> randomly (or following a heuristics).</p></li>
+<li><p>Update the value of this state.</p></li>
+</ul>
+<p><span class="math display">
+    V(s) =  \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]
+  </span></p></li>
+</ul>
+<p>We must still ensure that all states are visited, but their frequency and order is irrelevant. Is it possible to select the states to backup intelligently?</p>
+<p><strong>Prioritized sweeping</strong> selects in priority the states with the largest remaining <strong>Bellman error</strong>:</p>
+<p><span class="math display">\delta = |\max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ] - V(s) |</span></p>
+<p>A large Bellman error means that the current estimate <span class="math inline">V(s)</span> is very different from the <strong>target</strong> <span class="math inline">y</span>:</p>
+<p><span class="math display">y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></p>
+<p>States with a high error should be updated in priority. If the Bellman error is small, this means that the current estimate <span class="math inline">V(s)</span> is already close to what it should be: there is no hurry in evaluating this state. The main advantage is that the DP algorithm can be applied as the agent is actually experiencing its environment (no need for the dynamics of environment to be fully known).</p>
+</section>
+<section id="curse-of-dimensionality" class="level2">
+<h2 class="anchored" data-anchor-id="curse-of-dimensionality">Curse of dimensionality</h2>
+<p>Policy-iteration and value-iteration consist of alternations between policy evaluation and policy improvement, although at different frequencies. This principle is called <strong>Generalized Policy Iteration</strong> (GPI). Finding an optimal policy is polynomial in the number of states and actions: <span class="math inline">\mathcal{O}(n^2 \, m)</span> (<span class="math inline">n</span> is the number of states, <span class="math inline">m</span> the number of actions). However, the number of states is often astronomical, e.g., often growing exponentially with the number of state variables (what Bellman called <strong>“the curse of dimensionality”</strong>) In practice, classical DP can only be applied to problems with a few millions of states.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/cursedimensionality.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Curse of dimensionality. Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption><p></p>
+</figure>
+</div>
+<p>If one variable can be represented by 5 discrete values:</p>
+<ul>
+<li>2 variables necessitate 25 states,</li>
+<li>3 variables need 125 states, and so on…</li>
+</ul>
+<p>The number of states explodes exponentially with the number of dimensions of the problem…</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Sutton1998" class="csl-entry" role="doc-biblioentry">
+Sutton, R. S., and Barto, A. G. (1998). <em>Reinforcement <span>Learning</span>: <span>An</span> introduction</em>. <span>Cambridge, MA</span>: <span>MIT press</span>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/2.2-MDP.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Markov Decision Processes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/2.4-MC.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-title">Monte-Carlo (MC) methods</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

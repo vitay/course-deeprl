@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - References</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./exercises/12-DQN-solution.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">References</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./" class="sidebar-logo-link">
+      <img src="./../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.3-DP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.6-FA.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/2.7-NN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">References</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Agarwal2014" class="csl-entry" role="doc-biblioentry">
+Agarwal, A., Hsu, D., Kale, S., Langford, J., Li, L., and Schapire, R.
+E. (2014). Taming the <span>Monster</span>: <span>A Fast</span> and
+<span>Simple Algorithm</span> for <span>Contextual Bandits</span>. in
+<em>Proceedings of the 31 st <span>International Conference</span> on
+<span>Machine Learning</span></em> (<span>Beijing, China</span>), 9.
+Available at: <a href="https://arxiv.org/abs/1402.0555">https://arxiv.org/abs/1402.0555</a>.
+</div>
+<div id="ref-Andrychowicz2017" class="csl-entry" role="doc-biblioentry">
+Andrychowicz, M., Wolski, F., Ray, A., Schneider, J., Fong, R.,
+Welinder, P., et al. (2017). Hindsight <span>Experience Replay</span>.
+Available at: <a href="http://arxiv.org/abs/1707.01495">http://arxiv.org/abs/1707.01495</a>.
+</div>
+<div id="ref-Arora2019" class="csl-entry" role="doc-biblioentry">
+Arora, S., and Doshi, P. (2019). A <span>Survey</span> of <span>Inverse
+Reinforcement Learning</span>: <span>Challenges</span>,
+<span>Methods</span> and <span>Progress</span>. Available at: <a href="http://arxiv.org/abs/1806.06877">http://arxiv.org/abs/1806.06877</a>
+[Accessed January 31, 2020].
+</div>
+<div id="ref-Barreto2016" class="csl-entry" role="doc-biblioentry">
+Barreto, A., Dabney, W., Munos, R., Hunt, J. J., Schaul, T., van
+Hasselt, H., et al. (2016). Successor <span>Features</span> for
+<span>Transfer</span> in <span>Reinforcement Learning</span>. Available
+at: <a href="http://arxiv.org/abs/1606.05312">http://arxiv.org/abs/1606.05312</a>
+[Accessed March 11, 2019].
+</div>
+<div id="ref-Barth-Maron2018" class="csl-entry" role="doc-biblioentry">
+Barth-Maron, G., Hoffman, M. W., Budden, D., Dabney, W., Horgan, D., TB,
+D., et al. (2018). Distributed <span>Distributional Deterministic Policy
+Gradients</span>. Available at: <a href="http://arxiv.org/abs/1804.08617">http://arxiv.org/abs/1804.08617</a>.
+</div>
+<div id="ref-Barto2013" class="csl-entry" role="doc-biblioentry">
+Barto, A. G. (2013). <span>“Intrinsic <span>Motivation</span> and
+<span>Reinforcement Learning</span>,”</span> in <em>Intrinsically
+<span>Motivated Learning</span> in <span>Natural</span> and
+<span>Artificial Systems</span></em>, eds. G. Baldassarre and M. Mirolli
+(<span>Berlin, Heidelberg</span>: <span>Springer</span>), 17–47. doi:<a href="https://doi.org/10.1007/978-3-642-32375-1_2">10.1007/978-3-642-32375-1_2</a>.
+</div>
+<div id="ref-Belkhale2021" class="csl-entry" role="doc-biblioentry">
+Belkhale, S., Li, R., Kahn, G., McAllister, R., Calandra, R., and
+Levine, S. (2021). Model-<span>Based Meta-Reinforcement Learning</span>
+for <span>Flight</span> with <span>Suspended Payloads</span>. <em>IEEE
+Robot. Autom. Lett.</em>, 1–1. doi:<a href="https://doi.org/10.1109/LRA.2021.3057046">10.1109/LRA.2021.3057046</a>.
+</div>
+<div id="ref-Bellemare2017" class="csl-entry" role="doc-biblioentry">
+Bellemare, M. G., Dabney, W., and Munos, R. (2017). A
+<span>Distributional Perspective</span> on <span>Reinforcement
+Learning</span>. Available at: <a href="http://arxiv.org/abs/1707.06887">http://arxiv.org/abs/1707.06887</a>.
+</div>
+<div id="ref-Burda2018" class="csl-entry" role="doc-biblioentry">
+Burda, Y., Edwards, H., Pathak, D., Storkey, A., Darrell, T., and Efros,
+A. A. (2018). Large-<span>Scale Study</span> of <span>Curiosity-Driven
+Learning</span>. Available at: <a href="http://arxiv.org/abs/1808.04355">http://arxiv.org/abs/1808.04355</a>
+[Accessed February 6, 2021].
+</div>
+<div id="ref-Chou2017" class="csl-entry" role="doc-biblioentry">
+Chou, P.-W., Maturana, D., and Scherer, S. (2017). Improving
+<span>Stochastic Policy Gradients</span> in <span>Continuous
+Control</span> with <span>Deep Reinforcement Learning</span> using the
+<span>Beta Distribution</span>. in <em>International
+<span>Conference</span> on <span>Machine Learning</span></em> Available
+at: <a href="http://proceedings.mlr.press/v70/chou17a/chou17a.pdf">http://proceedings.mlr.press/v70/chou17a/chou17a.pdf</a>.
+</div>
+<div id="ref-Dabney2018" class="csl-entry" role="doc-biblioentry">
+Dabney, W., Ostrovski, G., Silver, D., and Munos, R. (2018). Implicit
+<span>Quantile Networks</span> for <span>Distributional Reinforcement
+Learning</span>. Available at: <a href="http://arxiv.org/abs/1806.06923">http://arxiv.org/abs/1806.06923</a>
+[Accessed November 26, 2019].
+</div>
+<div id="ref-Dabney2017" class="csl-entry" role="doc-biblioentry">
+Dabney, W., Rowland, M., Bellemare, M. G., and Munos, R. (2017).
+Distributional <span>Reinforcement Learning</span> with <span>Quantile
+Regression</span>. Available at: <a href="http://arxiv.org/abs/1710.10044">http://arxiv.org/abs/1710.10044</a>
+[Accessed June 28, 2019].
+</div>
+<div id="ref-Dayan1993" class="csl-entry" role="doc-biblioentry">
+Dayan, P. (1993). Improving <span>Generalization</span> for
+<span>Temporal Difference Learning</span>: <span>The Successor
+Representation</span>. <em>Neural Computation</em> 5, 613–624. doi:<a href="https://doi.org/10.1162/neco.1993.5.4.613">10.1162/neco.1993.5.4.613</a>.
+</div>
+<div id="ref-Dayan2008" class="csl-entry" role="doc-biblioentry">
+Dayan, P., and Niv, Y. (2008). Reinforcement learning: <span>The
+Good</span>, <span>The Bad</span> and <span>The Ugly</span>. <em>Current
+Opinion in Neurobiology</em> 18, 185–196. doi:<a href="https://doi.org/10.1016/j.conb.2008.08.003">10.1016/j.conb.2008.08.003</a>.
+</div>
+<div id="ref-Degris2012" class="csl-entry" role="doc-biblioentry">
+Degris, T., White, M., and Sutton, R. S. (2012). Linear <span>Off-Policy
+Actor-Critic</span>. in <em>Proceedings of the 2012 <span>International
+Conference</span> on <span>Machine Learning</span></em> Available at: <a href="http://arxiv.org/abs/1205.4839">http://arxiv.org/abs/1205.4839</a>.
+</div>
+<div id="ref-Duan2016a" class="csl-entry" role="doc-biblioentry">
+Duan, Y., Schulman, J., Chen, X., Bartlett, P. L., Sutskever, I., and
+Abbeel, P. (2016). <span>RL</span>$2̂$: <span>Fast Reinforcement
+Learning</span> via <span>Slow Reinforcement Learning</span>. Available
+at: <a href="http://arxiv.org/abs/1611.02779">http://arxiv.org/abs/1611.02779</a>
+[Accessed February 5, 2021].
+</div>
+<div id="ref-Feinberg2018" class="csl-entry" role="doc-biblioentry">
+Feinberg, V., Wan, A., Stoica, I., Jordan, M. I., Gonzalez, J. E., and
+Levine, S. (2018). Model-<span>Based Value Estimation</span> for
+<span>Efficient Model-Free Reinforcement Learning</span>. Available at:
+<a href="http://arxiv.org/abs/1803.00101">http://arxiv.org/abs/1803.00101</a>.
+</div>
+<div id="ref-Fortunato2017" class="csl-entry" role="doc-biblioentry">
+Fortunato, M., Azar, M. G., Piot, B., Menick, J., Osband, I., Graves,
+A., et al. (2017). Noisy <span>Networks</span> for
+<span>Exploration</span>. Available at: <a href="http://arxiv.org/abs/1706.10295">http://arxiv.org/abs/1706.10295</a>
+[Accessed March 2, 2020].
+</div>
+<div id="ref-Frans2017" class="csl-entry" role="doc-biblioentry">
+Frans, K., Ho, J., Chen, X., Abbeel, P., and Schulman, J. (2017). Meta
+<span>Learning Shared Hierarchies</span>. Available at: <a href="http://arxiv.org/abs/1710.09767">http://arxiv.org/abs/1710.09767</a>
+[Accessed January 31, 2020].
+</div>
+<div id="ref-Fujimoto2018" class="csl-entry" role="doc-biblioentry">
+Fujimoto, S., van Hoof, H., and Meger, D. (2018). Addressing
+<span>Function Approximation Error</span> in <span>Actor-Critic
+Methods</span>. Available at: <a href="http://arxiv.org/abs/1802.09477">http://arxiv.org/abs/1802.09477</a>
+[Accessed March 1, 2020].
+</div>
+<div id="ref-Gehring2015" class="csl-entry" role="doc-biblioentry">
+Gehring, C. A. (2015). Approximate <span>Linear Successor
+Representation</span>. in, 5. Available at: <a href="http://people.csail.mit.edu/gehring/publications/clement-gehring-rldm-2015.pdf">http://people.csail.mit.edu/gehring/publications/clement-gehring-rldm-2015.pdf</a>.
+</div>
+<div id="ref-Goodfellow2016" class="csl-entry" role="doc-biblioentry">
+Goodfellow, I., Bengio, Y., and Courville, A. (2016). <em>Deep
+<span>Learning</span></em>. <span>MIT Press</span> Available at: <a href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a>.
+</div>
+<div id="ref-Gruslys2017" class="csl-entry" role="doc-biblioentry">
+Gruslys, A., Dabney, W., Azar, M. G., Piot, B., Bellemare, M., and
+Munos, R. (2017). The <span>Reactor</span>: <span>A</span> fast and
+sample-efficient <span>Actor-Critic</span> agent for <span>Reinforcement
+Learning</span>. Available at: <a href="http://arxiv.org/abs/1704.04651">http://arxiv.org/abs/1704.04651</a>.
+</div>
+<div id="ref-Gu2016" class="csl-entry" role="doc-biblioentry">
+Gu, S., Lillicrap, T., Sutskever, I., and Levine, S. (2016). Continuous
+<span>Deep Q-Learning</span> with <span class="nocase">Model-based
+Acceleration</span>. Available at: <a href="http://arxiv.org/abs/1603.00748">http://arxiv.org/abs/1603.00748</a>.
+</div>
+<div id="ref-Ha2017" class="csl-entry" role="doc-biblioentry">
+Ha, D., and Eck, D. (2017). A <span>Neural Representation</span> of
+<span>Sketch Drawings</span>. Available at: <a href="http://arxiv.org/abs/1704.03477">http://arxiv.org/abs/1704.03477</a>
+[Accessed January 17, 2021].
+</div>
+<div id="ref-Ha2018" class="csl-entry" role="doc-biblioentry">
+Ha, D., and Schmidhuber, J. (2018). World <span>Models</span>. doi:<a href="https://doi.org/10.5281/zenodo.1207631">10.5281/zenodo.1207631</a>.
+</div>
+<div id="ref-Haarnoja2017" class="csl-entry" role="doc-biblioentry">
+Haarnoja, T., Tang, H., Abbeel, P., and Levine, S. (2017). Reinforcement
+<span>Learning</span> with <span>Deep Energy-Based Policies</span>.
+Available at: <a href="http://arxiv.org/abs/1702.08165">http://arxiv.org/abs/1702.08165</a>
+[Accessed February 13, 2019].
+</div>
+<div id="ref-Haarnoja2018b" class="csl-entry" role="doc-biblioentry">
+Haarnoja, T., Zhou, A., Abbeel, P., and Levine, S. (2018). Soft
+<span>Actor-Critic</span>: <span>Off-Policy Maximum Entropy Deep
+Reinforcement Learning</span> with a <span>Stochastic Actor</span>.
+Available at: <a href="http://arxiv.org/abs/1801.01290">http://arxiv.org/abs/1801.01290</a>.
+</div>
+<div id="ref-Hafner2020" class="csl-entry" role="doc-biblioentry">
+Hafner, D., Lillicrap, T., Ba, J., and Norouzi, M. (2020). Dream to
+<span>Control</span>: <span>Learning Behaviors</span> by <span>Latent
+Imagination</span>. Available at: <a href="http://arxiv.org/abs/1912.01603">http://arxiv.org/abs/1912.01603</a>
+[Accessed March 24, 2020].
+</div>
+<div id="ref-Hafner2019" class="csl-entry" role="doc-biblioentry">
+Hafner, D., Lillicrap, T., Fischer, I., Villegas, R., Ha, D., Lee, H.,
+et al. (2019). Learning <span>Latent Dynamics</span> for
+<span>Planning</span> from <span>Pixels</span>. Available at: <a href="http://arxiv.org/abs/1811.04551">http://arxiv.org/abs/1811.04551</a>
+[Accessed January 24, 2020].
+</div>
+<div id="ref-Hausknecht2015" class="csl-entry" role="doc-biblioentry">
+Hausknecht, M., and Stone, P. (2015). Deep <span>Recurrent
+Q-Learning</span> for <span>Partially Observable MDPs</span>. Available
+at: <a href="http://arxiv.org/abs/1507.06527">http://arxiv.org/abs/1507.06527</a>.
+</div>
+<div id="ref-Hessel2017" class="csl-entry" role="doc-biblioentry">
+Hessel, M., Modayil, J., van Hasselt, H., Schaul, T., Ostrovski, G.,
+Dabney, W., et al. (2017). Rainbow: <span>Combining Improvements</span>
+in <span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1710.02298">http://arxiv.org/abs/1710.02298</a>.
+</div>
+<div id="ref-Horgan2018" class="csl-entry" role="doc-biblioentry">
+Horgan, D., Quan, J., Budden, D., Barth-Maron, G., Hessel, M., van
+Hasselt, H., et al. (2018). Distributed <span>Prioritized Experience
+Replay</span>. Available at: <a href="http://arxiv.org/abs/1803.00933">http://arxiv.org/abs/1803.00933</a>
+[Accessed December 14, 2019].
+</div>
+<div id="ref-Kakade2002" class="csl-entry" role="doc-biblioentry">
+Kakade, S., and Langford, J. (2002). Approximately <span>Optimal
+Approximate Reinforcement Learning</span>. <em>Proc. 19th International
+Conference on Machine Learning</em>, 267–274. Available at: <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.7.7601">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.7.7601</a>.
+</div>
+<div id="ref-Kapturowski2019" class="csl-entry" role="doc-biblioentry">
+Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W.
+(2019). Recurrent experience replay in distributed reinforcement
+learning. in, 19. Available at: <a href="https://openreview.net/pdf?id=r1lyTjAqYX">https://openreview.net/pdf?id=r1lyTjAqYX</a>.
+</div>
+<div id="ref-Kendall2018" class="csl-entry" role="doc-biblioentry">
+Kendall, A., Hawke, J., Janz, D., Mazur, P., Reda, D., Allen, J.-M., et
+al. (2018). Learning to <span>Drive</span> in a <span>Day</span>.
+Available at: <a href="http://arxiv.org/abs/1807.00412">http://arxiv.org/abs/1807.00412</a>
+[Accessed December 19, 2018].
+</div>
+<div id="ref-Kulkarni2016" class="csl-entry" role="doc-biblioentry">
+Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016).
+Deep <span>Successor Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1606.02396">http://arxiv.org/abs/1606.02396</a>
+[Accessed February 20, 2019].
+</div>
+<div id="ref-Kurutach2018" class="csl-entry" role="doc-biblioentry">
+Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018).
+Model-<span>Ensemble Trust-Region Policy Optimization</span>. Available
+at: <a href="http://arxiv.org/abs/1802.10592">http://arxiv.org/abs/1802.10592</a>
+[Accessed January 26, 2020].
+</div>
+<div id="ref-Lillicrap2015" class="csl-entry" role="doc-biblioentry">
+Lillicrap, T. P., Hunt, J. J., Pritzel, A., Heess, N., Erez, T., Tassa,
+Y., et al. (2015). Continuous control with deep reinforcement learning.
+<em>CoRR</em>. Available at: <a href="http://arxiv.org/abs/1509.02971">http://arxiv.org/abs/1509.02971</a>.
+</div>
+<div id="ref-Mao2016" class="csl-entry" role="doc-biblioentry">
+Mao, H., Alizadeh, M., Menache, I., and Kandula, S. (2016). Resource
+<span>Management</span> with <span>Deep Reinforcement Learning</span>.
+in <em>Proceedings of the 15th <span>ACM Workshop</span> on <span>Hot
+Topics</span> in <span>Networks</span> - <span>HotNets</span> ’16</em>
+(<span>Atlanta, GA, USA</span>: <span>ACM Press</span>), 50–56. doi:<a href="https://doi.org/10.1145/3005745.3005750">10.1145/3005745.3005750</a>.
+</div>
+<div id="ref-Mnih2016" class="csl-entry" role="doc-biblioentry">
+Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley,
+T., et al. (2016). Asynchronous <span>Methods</span> for <span>Deep
+Reinforcement Learning</span>. in <em>Proc. <span>ICML</span></em>
+Available at: <a href="http://arxiv.org/abs/1602.01783">http://arxiv.org/abs/1602.01783</a>.
+</div>
+<div id="ref-Mnih2013" class="csl-entry" role="doc-biblioentry">
+Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I.,
+Wierstra, D., et al. (2013). Playing <span>Atari</span> with <span>Deep
+Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1312.5602">http://arxiv.org/abs/1312.5602</a>.
+</div>
+<div id="ref-Momennejad2017" class="csl-entry" role="doc-biblioentry">
+Momennejad, I., Russek, E. M., Cheong, J. H., Botvinick, M. M., Daw, N.
+D., and Gershman, S. J. (2017). The successor representation in human
+reinforcement learning. <em>Nature Human Behaviour</em> 1, 680–692.
+doi:<a href="https://doi.org/10.1038/s41562-017-0180-8">10.1038/s41562-017-0180-8</a>.
+</div>
+<div id="ref-Moore1993" class="csl-entry" role="doc-biblioentry">
+Moore, A. W., and Atkeson, C. G. (1993). Prioritized sweeping:
+<span>Reinforcement</span> learning with less data and less time.
+<em>Mach Learn</em> 13, 103–130. doi:<a href="https://doi.org/10.1007/BF00993104">10.1007/BF00993104</a>.
+</div>
+<div id="ref-Nagabandi2017" class="csl-entry" role="doc-biblioentry">
+Nagabandi, A., Kahn, G., Fearing, R. S., and Levine, S. (2017). Neural
+<span>Network Dynamics</span> for <span>Model-Based Deep Reinforcement
+Learning</span> with <span>Model-Free Fine-Tuning</span>. Available at:
+<a href="http://arxiv.org/abs/1708.02596">http://arxiv.org/abs/1708.02596</a>
+[Accessed March 3, 2019].
+</div>
+<div id="ref-Nair2015" class="csl-entry" role="doc-biblioentry">
+Nair, A., Srinivasan, P., Blackwell, S., Alcicek, C., Fearon, R., De
+Maria, A., et al. (2015). Massively <span>Parallel Methods</span> for
+<span>Deep Reinforcement Learning</span>. Available at: <a href="https://arxiv.org/pdf/1507.04296.pdf">https://arxiv.org/pdf/1507.04296.pdf</a>.
+</div>
+<div id="ref-Niu2011" class="csl-entry" role="doc-biblioentry">
+Niu, F., Recht, B., Re, C., and Wright, S. J. (2011).
+<span>HOGWILD</span>!: <span>A Lock-Free Approach</span> to
+<span>Parallelizing Stochastic Gradient Descent</span>. in <em>Proc.
+<span>Advances</span> in <span>Neural Information Processing
+Systems</span></em>, 21–21. Available at: <a href="http://arxiv.org/abs/1106.5730">http://arxiv.org/abs/1106.5730</a>.
+</div>
+<div id="ref-Pathak2017" class="csl-entry" role="doc-biblioentry">
+Pathak, D., Agrawal, P., Efros, A. A., and Darrell, T. (2017).
+Curiosity-driven <span>Exploration</span> by <span class="nocase">Self-supervised Prediction</span>. Available at: <a href="http://arxiv.org/abs/1705.05363">http://arxiv.org/abs/1705.05363</a>
+[Accessed February 6, 2021].
+</div>
+<div id="ref-Plappert2018" class="csl-entry" role="doc-biblioentry">
+Plappert, M., Houthooft, R., Dhariwal, P., Sidor, S., Chen, R. Y., Chen,
+X., et al. (2018). Parameter <span>Space Noise</span> for
+<span>Exploration</span>. Available at: <a href="http://arxiv.org/abs/1706.01905">http://arxiv.org/abs/1706.01905</a>
+[Accessed December 18, 2019].
+</div>
+<div id="ref-Pong2018" class="csl-entry" role="doc-biblioentry">
+Pong, V., Gu, S., Dalal, M., and Levine, S. (2018). Temporal
+<span>Difference Models</span>: <span>Model-Free Deep RL</span> for
+<span>Model-Based Control</span>. Available at: <a href="http://arxiv.org/abs/1802.09081">http://arxiv.org/abs/1802.09081</a>.
+</div>
+<div id="ref-Popov2017" class="csl-entry" role="doc-biblioentry">
+Popov, I., Heess, N., Lillicrap, T., Hafner, R., Barth-Maron, G.,
+Vecerik, M., et al. (2017). Data-efficient <span>Deep Reinforcement
+Learning</span> for <span>Dexterous Manipulation</span>. Available at:
+<a href="http://arxiv.org/abs/1704.03073">http://arxiv.org/abs/1704.03073</a>.
+</div>
+<div id="ref-Russek2017" class="csl-entry" role="doc-biblioentry">
+Russek, E. M., Momennejad, I., Botvinick, M. M., Gershman, S. J., and
+Daw, N. D. (2017). Predictive representations can link model-based
+reinforcement learning to model-free mechanisms. <em>PLOS Computational
+Biology</em> 13, e1005768. doi:<a href="https://doi.org/10.1371/journal.pcbi.1005768">10.1371/journal.pcbi.1005768</a>.
+</div>
+<div id="ref-Rusu2016" class="csl-entry" role="doc-biblioentry">
+Rusu, A. A., Colmenarejo, S. G., Gulcehre, C., Desjardins, G.,
+Kirkpatrick, J., Pascanu, R., et al. (2016). Policy
+<span>Distillation</span>. Available at: <a href="http://arxiv.org/abs/1511.06295">http://arxiv.org/abs/1511.06295</a>
+[Accessed January 26, 2020].
+</div>
+<div id="ref-Schaul2015" class="csl-entry" role="doc-biblioentry">
+Schaul, T., Quan, J., Antonoglou, I., and Silver, D. (2015). Prioritized
+<span>Experience Replay</span>. Available at: <a href="http://arxiv.org/abs/1511.05952">http://arxiv.org/abs/1511.05952</a>.
+</div>
+<div id="ref-Schrittwieser2019" class="csl-entry" role="doc-biblioentry">
+Schrittwieser, J., Antonoglou, I., Hubert, T., Simonyan, K., Sifre, L.,
+Schmitt, S., et al. (2019). Mastering <span>Atari</span>,
+<span>Go</span>, <span>Chess</span> and <span>Shogi</span> by
+<span>Planning</span> with a <span>Learned Model</span>. Available at:
+<a href="http://arxiv.org/abs/1911.08265">http://arxiv.org/abs/1911.08265</a>
+[Accessed November 24, 2019].
+</div>
+<div id="ref-Schulman2017" class="csl-entry" role="doc-biblioentry">
+Schulman, J., Chen, X., and Abbeel, P. (2017). Equivalence <span>Between
+Policy Gradients</span> and <span>Soft Q-Learning</span>. Available at:
+<a href="http://arxiv.org/abs/1704.06440">http://arxiv.org/abs/1704.06440</a>
+[Accessed June 12, 2019].
+</div>
+<div id="ref-Schulman2015a" class="csl-entry" role="doc-biblioentry">
+Schulman, J., Levine, S., Abbeel, P., Jordan, M., and Moritz, P.
+(2015a). Trust <span>Region Policy Optimization</span>. in
+<em>Proceedings of the 31 st <span>International Conference</span> on
+<span>Machine Learning</span></em>, 1889–1897. Available at: <a href="http://proceedings.mlr.press/v37/schulman15.html">http://proceedings.mlr.press/v37/schulman15.html</a>.
+</div>
+<div id="ref-Schulman2015" class="csl-entry" role="doc-biblioentry">
+Schulman, J., Moritz, P., Levine, S., Jordan, M., and Abbeel, P.
+(2015b). High-<span>Dimensional Continuous Control Using Generalized
+Advantage Estimation</span>. Available at: <a href="http://arxiv.org/abs/1506.02438">http://arxiv.org/abs/1506.02438</a>.
+</div>
+<div id="ref-Silver2016" class="csl-entry" role="doc-biblioentry">
+Silver, D., Huang, A., Maddison, C. J., Guez, A., Sifre, L., van den
+Driessche, G., et al. (2016). Mastering the game of <span>Go</span> with
+deep neural networks and tree search. <em>Nature</em> 529, 484–489.
+doi:<a href="https://doi.org/10.1038/nature16961">10.1038/nature16961</a>.
+</div>
+<div id="ref-Silver2018" class="csl-entry" role="doc-biblioentry">
+Silver, D., Hubert, T., Schrittwieser, J., Antonoglou, I., Lai, M.,
+Guez, A., et al. (2018). A general reinforcement learning algorithm that
+masters chess, shogi, and <span>Go</span> through self-play.
+<em>Science</em> 362, 1140–1144. doi:<a href="https://doi.org/10.1126/science.aar6404">10.1126/science.aar6404</a>.
+</div>
+<div id="ref-Silver2014" class="csl-entry" role="doc-biblioentry">
+Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., and
+Riedmiller, M. (2014). Deterministic <span>Policy Gradient
+Algorithms</span>. in <em>Proc. <span>ICML</span></em> Proceedings of
+<span>Machine Learning Research</span>., eds. E. P. Xing and T. Jebara
+(<span>PMLR</span>), 387–395. Available at: <a href="http://proceedings.mlr.press/v32/silver14.html">http://proceedings.mlr.press/v32/silver14.html</a>.
+</div>
+<div id="ref-Sutton1990" class="csl-entry" role="doc-biblioentry">
+Sutton, R. S. (1990). Integrated <span>Architectures</span> for
+<span>Learning</span>, <span>Planning</span>, and <span>Reacting
+Based</span> on <span>Approximating Dynamic Programming</span>.
+<em>Machine Learning Proceedings 1990</em>, 216–224. doi:<a href="https://doi.org/10.1016/B978-1-55860-141-3.50030-4">10.1016/B978-1-55860-141-3.50030-4</a>.
+</div>
+<div id="ref-Sutton1998" class="csl-entry" role="doc-biblioentry">
+Sutton, R. S., and Barto, A. G. (1998). <em>Reinforcement
+<span>Learning</span>: <span>An</span> introduction</em>.
+<span>Cambridge, MA</span>: <span>MIT press</span>.
+</div>
+<div id="ref-Sutton2017" class="csl-entry" role="doc-biblioentry">
+Sutton, R. S., and Barto, A. G. (2017). <em>Reinforcement
+<span>Learning</span>: <span>An Introduction</span></em>. 2nd ed.
+<span>Cambridge, MA</span>: <span>MIT Press</span> Available at: <a href="http://incompleteideas.net/book/the-book-2nd.html">http://incompleteideas.net/book/the-book-2nd.html</a>.
+</div>
+<div id="ref-Sutton1999" class="csl-entry" role="doc-biblioentry">
+Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy
+gradient methods for reinforcement learning with function approximation.
+in <em>Proceedings of the 12th <span>International Conference</span> on
+<span>Neural Information Processing Systems</span></em> (<span>MIT
+Press</span>), 1057–1063. Available at: <a href="https://dl.acm.org/citation.cfm?id=3009806">https://dl.acm.org/citation.cfm?id=3009806</a>.
+</div>
+<div id="ref-Teh2017" class="csl-entry" role="doc-biblioentry">
+Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J.,
+Hadsell, R., et al. (2017). Distral: <span>Robust Multitask
+Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1707.04175">http://arxiv.org/abs/1707.04175</a>
+[Accessed January 26, 2020].
+</div>
+<div id="ref-Tesauro1995" class="csl-entry" role="doc-biblioentry">
+Tesauro, G. (1995). <span>“<span>TD-Gammon</span>: <span>A Self-Teaching
+Backgammon Program</span>,”</span> in <em>Applications of <span>Neural
+Networks</span></em>, ed. A. F. Murray (<span>Boston, MA</span>:
+<span>Springer US</span>), 267–285. doi:<a href="https://doi.org/10.1007/978-1-4757-2379-3_11">10.1007/978-1-4757-2379-3_11</a>.
+</div>
+<div id="ref-Todorov2008" class="csl-entry" role="doc-biblioentry">
+Todorov, E. (2008). General duality between optimal control and
+estimation. in <em>2008 47th <span>IEEE Conference</span> on
+<span>Decision</span> and <span>Control</span></em>, 4286–4292. doi:<a href="https://doi.org/10.1109/CDC.2008.4739438">10.1109/CDC.2008.4739438</a>.
+</div>
+<div id="ref-Toussaint2009" class="csl-entry" role="doc-biblioentry">
+Toussaint, M. (2009). Robot <span>Trajectory Optimization Using
+Approximate Inference</span>. in <em>Proceedings of the 26th
+<span>Annual International Conference</span> on <span>Machine
+Learning</span></em> <span>ICML</span> ’09. (<span>New York, NY,
+USA</span>: <span>ACM</span>), 1049–1056. doi:<a href="https://doi.org/10.1145/1553374.1553508">10.1145/1553374.1553508</a>.
+</div>
+<div id="ref-Uhlenbeck1930" class="csl-entry" role="doc-biblioentry">
+Uhlenbeck, G. E., and Ornstein, L. S. (1930). On the <span>Theory</span>
+of the <span>Brownian Motion</span>. <em>Physical Review</em> 36. doi:<a href="https://doi.org/10.1103/PhysRev.36.823">10.1103/PhysRev.36.823</a>.
+</div>
+<div id="ref-vanHasselt2015" class="csl-entry" role="doc-biblioentry">
+van Hasselt, H., Guez, A., and Silver, D. (2015). Deep
+<span>Reinforcement Learning</span> with <span class="nocase">Double
+Q-learning</span>. Available at: <a href="http://arxiv.org/abs/1509.06461">http://arxiv.org/abs/1509.06461</a>.
+</div>
+<div id="ref-Wang2017" class="csl-entry" role="doc-biblioentry">
+Wang, J. X., Kurth-Nelson, Z., Tirumala, D., Soyer, H., Leibo, J. Z.,
+Munos, R., et al. (2017a). Learning to reinforcement learn. Available
+at: <a href="http://arxiv.org/abs/1611.05763">http://arxiv.org/abs/1611.05763</a>
+[Accessed February 5, 2021].
+</div>
+<div id="ref-Wang2017a" class="csl-entry" role="doc-biblioentry">
+Wang, Z., Bapst, V., Heess, N., Mnih, V., Munos, R., Kavukcuoglu, K., et
+al. (2017b). Sample <span>Efficient Actor-Critic</span> with
+<span>Experience Replay</span>. Available at: <a href="http://arxiv.org/abs/1611.01224">http://arxiv.org/abs/1611.01224</a>.
+</div>
+<div id="ref-Wang2016" class="csl-entry" role="doc-biblioentry">
+Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de
+Freitas, N. (2016). Dueling <span>Network Architectures</span> for
+<span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1511.06581">http://arxiv.org/abs/1511.06581</a>
+[Accessed November 21, 2019].
+</div>
+<div id="ref-Weber2017" class="csl-entry" role="doc-biblioentry">
+Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A.,
+Rezende, D. J., et al. (2017). Imagination-<span>Augmented Agents</span>
+for <span>Deep Reinforcement Learning</span>. Available at: <a href="http://arxiv.org/abs/1707.06203">http://arxiv.org/abs/1707.06203</a>.
+</div>
+<div id="ref-Williams1992" class="csl-entry" role="doc-biblioentry">
+Williams, R. J. (1992). Simple statistical gradient-following algorithms
+for connectionist reinforcement learning. <em>Machine Learning</em> 8,
+229–256.
+</div>
+<div id="ref-Williams1991" class="csl-entry" role="doc-biblioentry">
+Williams, R. J., and Peng, J. (1991). Function optimization using
+connectionist reinforcement learning algorithms. <em>Connection
+Science</em> 3, 241–268.
+</div>
+<div id="ref-Zhang2016" class="csl-entry" role="doc-biblioentry">
+Zhang, J., Springenberg, J. T., Boedecker, J., and Burgard, W. (2016).
+Deep <span>Reinforcement Learning</span> with <span>Successor
+Features</span> for <span>Navigation</span> across <span>Similar
+Environments</span>. Available at: <a href="http://arxiv.org/abs/1612.05533">http://arxiv.org/abs/1612.05533</a>
+[Accessed March 11, 2019].
+</div>
+<div id="ref-Zhu2017" class="csl-entry" role="doc-biblioentry">
+Zhu, Y., Gordon, D., Kolve, E., Fox, D., Fei-Fei, L., Gupta, A., et al.
+(2017). Visual <span>Semantic Planning</span> using <span>Deep Successor
+Representations</span>. Available at: <a href="http://arxiv.org/abs/1705.08080">http://arxiv.org/abs/1705.08080</a>
+[Accessed February 23, 2019].
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-page-right">
+  <div class="nav-page nav-page-previous">
+      <a href="./exercises/12-DQN-solution.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">DQN</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - 34&nbsp; DQN</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../exercises/11-Keras-solution.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">DQN</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.3-DP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.6-FA.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.7-NN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#cartpole-balancing-task" id="toc-cartpole-balancing-task" class="nav-link active" data-scroll-target="#cartpole-balancing-task">Cartpole balancing task</a></li>
+  <li><a href="#creating-the-model" id="toc-creating-the-model" class="nav-link" data-scroll-target="#creating-the-model">Creating the model</a></li>
+  <li><a href="#experience-replay-memory" id="toc-experience-replay-memory" class="nav-link" data-scroll-target="#experience-replay-memory">Experience replay memory</a></li>
+  <li><a href="#dqn-agent" id="toc-dqn-agent" class="nav-link" data-scroll-target="#dqn-agent">DQN agent</a>
+  <ul class="collapse">
+  <li><a href="#init__-initializing-the-agent" id="toc-init__-initializing-the-agent" class="nav-link" data-scroll-target="#init__-initializing-the-agent">1 - <code>__init__()</code>: Initializing the agent</a></li>
+  <li><a href="#act-action-selection" id="toc-act-action-selection" class="nav-link" data-scroll-target="#act-action-selection">2 - <code>act()</code>: action selection</a></li>
+  <li><a href="#train-training-loop" id="toc-train-training-loop" class="nav-link" data-scroll-target="#train-training-loop">3 - <code>train()</code>: training loop</a></li>
+  <li><a href="#update-training-the-value-network" id="toc-update-training-the-value-network" class="nav-link" data-scroll-target="#update-training-the-value-network">4 - <code>update()</code>: training the value network</a></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test">5 - <code>test()</code></a></li>
+  </ul></li>
+  <li><a href="#reward-scaling" id="toc-reward-scaling" class="nav-link" data-scroll-target="#reward-scaling">Reward scaling</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">DQN</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>The goal of this exercise is to implement DQN and to apply it to the cartpole balancing problem.</p>
+<p>Let’s import eveything we need to run gym on Colab:</p>
+<div class="cell" data-outputid="948030f3-cdfb-43a1-882a-6140df11639b" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> deque</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> running_mean(x, N):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    cumsum <span class="op">=</span> np.cumsum(np.insert(np.array(x), <span class="dv">0</span>, <span class="dv">0</span>)) </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (cumsum[N:] <span class="op">-</span> cumsum[:<span class="op">-</span>N]) <span class="op">/</span> N</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> google.colab</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> IN_COLAB:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> gym</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> show_video():</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrap_env(env):</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> env</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Installing Debian and pip packages. It can take a while.</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># remove " &gt; /dev/null 2&gt;&amp;1" to see what is going on under the hood</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install gym pyvirtualdisplay <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>apt<span class="op">-</span>get install <span class="op">-</span>y xvfb python<span class="op">-</span>opengl ffmpeg <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>apt<span class="op">-</span>get update <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>apt<span class="op">-</span>get install cmake <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install box2d <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install gym[box2d] <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install gym[atari]</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> gym</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> gym.wrappers <span class="im">import</span> Monitor</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> random, math, glob, io, base64</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> IPython <span class="im">import</span> display <span class="im">as</span> ipythondisplay</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> pyvirtualdisplay <span class="im">import</span> Display</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    display <span class="op">=</span> Display(visible<span class="op">=</span><span class="dv">0</span>, size<span class="op">=</span>(<span class="dv">1400</span>, <span class="dv">900</span>))</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    display.start()</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> show_video():</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        mp4list <span class="op">=</span> glob.glob(<span class="st">'video/*.mp4'</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(mp4list) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>            mp4 <span class="op">=</span> mp4list[<span class="dv">0</span>]</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>            video <span class="op">=</span> io.<span class="bu">open</span>(mp4, <span class="st">'r+b'</span>).read()</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            encoded <span class="op">=</span> base64.b64encode(video)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            ipythondisplay.display(HTML(data<span class="op">=</span><span class="st">'''&lt;video alt="test" autoplay loop controls style="height: 400px;"&gt;</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="st">                    &lt;source src="data:video/mp4;base64,</span><span class="sc">{0}</span><span class="st">" type="video/mp4" /&gt;&lt;/video&gt;'''</span>.<span class="bu">format</span>(encoded.decode(<span class="st">'ascii'</span>))))</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Could not find video"</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrap_env(env):</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        env <span class="op">=</span> Monitor(env, <span class="st">'./video'</span>, force<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: gym[atari] in /usr/local/lib/python3.6/dist-packages (0.17.3)
+Requirement already satisfied: scipy in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.4.1)
+Requirement already satisfied: pyglet&lt;=1.5.0,&gt;=1.4.0 in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.5.0)
+Requirement already satisfied: cloudpickle&lt;1.7.0,&gt;=1.2.0 in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.3.0)
+Requirement already satisfied: numpy&gt;=1.10.4 in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.19.5)
+Requirement already satisfied: atari-py~=0.2.0; extra == "atari" in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (0.2.6)
+Requirement already satisfied: opencv-python; extra == "atari" in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (4.1.2.30)
+Requirement already satisfied: Pillow; extra == "atari" in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (7.0.0)
+Requirement already satisfied: future in /usr/local/lib/python3.6/dist-packages (from pyglet&lt;=1.5.0,&gt;=1.4.0-&gt;gym[atari]) (0.16.0)
+Requirement already satisfied: six in /usr/local/lib/python3.6/dist-packages (from atari-py~=0.2.0; extra == "atari"-&gt;gym[atari]) (1.15.0)</code></pre>
+</div>
+</div>
+<section id="cartpole-balancing-task" class="level2">
+<h2 class="anchored" data-anchor-id="cartpole-balancing-task">Cartpole balancing task</h2>
+<p>We are going to use the Cartpole balancing problem, which can be loaded with:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> wrap_env(gym.make(<span class="st">'CartPole-v0'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>States have 4 continuous values (position and speed of the cart, angle and speed of the pole) and 2 discrete outputs (going left or right). The reward is +1 for each transition where the pole is still standing (angle of less than 30° with the vertical). The episode ends when the pole fails or after 200 steps. The maximal (undiscounted) return is therefore 200. Can DQN learn this?</p>
+<div class="cell" data-outputid="58411c0e-4248-4e15-9f5e-b284aeea321e" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> wrap_env(gym.make(<span class="st">'CartPole-v0'</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample the initial state</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> env.reset()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># One episode:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>return_episode <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Render the current state</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    env.render()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select an action randomly</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> env.action_space.sample()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a single transition</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    next_state, reward, done, info <span class="op">=</span> env.step(action)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update undiscounted return</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    return_episode <span class="op">+=</span> reward</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Go in the next state</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> next_state</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Return:"</span>, return_episode)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Exit cleanly</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>env.close()</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>show_video()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Return: 12.0</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<video alt="test" autoplay="" loop="" controls="" style="height: 400px;">
+                    <source src="data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAACbRtZGF0AAACrgYF//+q3EXpvebZSLeWLNgg2SPu73gyNjQgLSBjb3JlIDE1MiByMjg1NCBlOWE1OTAzIC0gSC4yNjQvTVBFRy00IEFWQyBjb2RlYyAtIENvcHlsZWZ0IDIwMDMtMjAxNyAtIGh0dHA6Ly93d3cudmlkZW9sYW4ub3JnL3gyNjQuaHRtbCAtIG9wdGlvbnM6IGNhYmFjPTEgcmVmPTMgZGVibG9jaz0xOjA6MCBhbmFseXNlPTB4MzoweDExMyBtZT1oZXggc3VibWU9NyBwc3k9MSBwc3lfcmQ9MS4wMDowLjAwIG1peGVkX3JlZj0xIG1lX3JhbmdlPTE2IGNocm9tYV9tZT0xIHRyZWxsaXM9MSA4eDhkY3Q9MSBjcW09MCBkZWFkem9uZT0yMSwxMSBmYXN0X3Bza2lwPTEgY2hyb21hX3FwX29mZnNldD0tMiB0aHJlYWRzPTMgbG9va2FoZWFkX3RocmVhZHM9MSBzbGljZWRfdGhyZWFkcz0wIG5yPTAgZGVjaW1hdGU9MSBpbnRlcmxhY2VkPTAgYmx1cmF5X2NvbXBhdD0wIGNvbnN0cmFpbmVkX2ludHJhPTAgYmZyYW1lcz0zIGJfcHlyYW1pZD0yIGJfYWRhcHQ9MSBiX2JpYXM9MCBkaXJlY3Q9MSB3ZWlnaHRiPTEgb3Blbl9nb3A9MCB3ZWlnaHRwPTIga2V5aW50PTI1MCBrZXlpbnRfbWluPTI1IHNjZW5lY3V0PTQwIGludHJhX3JlZnJlc2g9MCByY19sb29rYWhlYWQ9NDAgcmM9Y3JmIG1idHJlZT0xIGNyZj0yMy4wIHFjb21wPTAuNjAgcXBtaW49MCBxcG1heD02OSBxcHN0ZXA9NCBpcF9yYXRpbz0xLjQwIGFxPTE6MS4wMACAAAABwGWIhAAv//72rvzLK0cLlS4dWXuzUfLoSXL9iDB9aAAAAwAAAwAAJuKiZ0WFMeJsgAAALmAIWElDyDzETFWKgSvGXwOeIADohtxzcX0Dw1iEniO1NFWVvv7JMVRBhv3ZATL7G2T/WCoKyrp5Z3irxwI6CT9cfrg0qgCOSEDkrUx/+OpwOUjAgB7AYtbY64EMLu2hn3acctakYKGGHSg+jLwAE2jMDKN95WWrKWEzk51BSvLq3k8RydMKClszMAPVQAANZx1rzqTzGmpKVvebJLyUQbGKDBLzojieBFaxJ7RAAK7KWd719qLZg5du8rj4Yrk7G2+Msp79+Pl2ijRsi1ADkjRNDIsJdJt2h+GLUv+825UK4wIs0MEellEJqgHoAoaP2ONX6hY52Sko7snWRGyHW/pjy/t6g3+4ZP1GrjrN9ZSQjnaFKdur2H1Vm1nFgm3A9spMxc53U0YigX3VeDh3U+FKsTgty5Ix3dzcGpjwem8nyRCgNSDCY5DIYPzfZMAACF5PaAlx1UIw/qkeqqNnAj8ErWVT8DFM+/8sm58T8B7U8UA06B/AAnN2GN9LQJYJfMdUOsAAAAMAAAMAD6kAAACrQZokbEL//oywAABGCqFG7gCt9WoMIRTEGamBlkSKsyb4KZMb1uLTNhit/ZnVnUiM3Ev2H2CYwUOKxPz4Lcq42taYqZRZ+V8la3vPqzC+gAkX+bOdV2jaeDVK3BM5l+MKvfyatr72Xjp0YxJBrYB0yz4s9oM8ngGo5mZREr56jnZ4BiO7JFKWdx+Z2c77cSI5F8iVPfxUpzWyclsPRyMAz9Ycp4y5zk5mBsmAAAAAP0GeQniEfwAAFr5MoiABYIPaqdnhZmRWtUIK98/X93CeeNQN7KMdCLBbRX51L9FTS5M/977pJ14foYQlnvHBYQAAACsBnmF0R/8AACKsPSLMc3NKgALRnvY34FVVHEu2Umqv0YxLM8EPXCdIkVM+AAAAMwGeY2pH/wAAI7HXl4aKABaiYJj7kh1bLq+VtKurLgRYXEsS21UoQO7oVnd/PVyNt+lhNwAAAJRBmmZJqEFomUwU8L/+jLAAAEYCz5vMgPQAJXBgcIYNUPxZZvfAVgWcvMXEYYINeMQbIgPS5bHBdCKQAXUgfH9zQQQY4tCChYcWfN8iI57gsWu4crz9yf13y9U1k1bI/XXxHyrIQj7L/p4/jYeNGHTYIkho3ULSZ/d9t92IcqAsJzFolHw9Er91QuqjSuzHAj7l+faJAAAAPAGehWpH/wAAI78EJxLLj4E948jpgNJ146VkQAHAeTsqX/fmtdAA2GDvG/VFBekwkzB37lZ6gcPXv4RwWQAAAN5BmopJ4QpSZTAhP/3xAAADAp+2ydT4AEZHJkicYTqxz2CPB/gfUR8OzSgnAOUAqpGnZR6odwF5QI64fs8Em3SgiislBQClX+HGN99sVbx0nsqvuERANSBRKQzdwElgelyR3qdCxyM0ewXzTtIz3CukoDVPV8uKtxvZ1R/3Y++3JdrgRUG7zZjzD8C35fK76m3+Gjupklw6wv7d77vhIq1iwHVNMGCfDxr38Bpg3Tas+UNclTn8iP8UR9V/gHeBZ2TjpB+AwZ2GwC/xKxVi6Lu/bGgmnskrGDITjIRYmrEAAABvQZ6oRTRMI/8AABak8e4/JL8v8zmIXCbR2vi5B/4/OEmUdf4wT8M3NXTyeBAq5aL7qtiWLFGckcmrWpWQGEyGD+YVRvGn3hNJwAE6/gkkCSBg3PWr5B832R+ZD7ZbwUg3BQBL/J3YJysb43F2b8z4AAAAWgGex3RH/wAAI8CZH85/64vPtFMRegl6i1GPjv48Y1DTwAcFm3ss3AmD7CV1KGYawKI3cPKCbnyLm753NUdWFEO2hkR5LPy9oaB90QRe9O5He8mCv9ialtfmLAAAAF8BnslqR/8AACPG20W1IARjx+3cwIWjGj8LQuzA7GDAlGK676P4sSP0xQDHz+cRBtBb1sA7O58GArNZunw+oyyNhMvZ+DFNRRBwSxPv0ycPKFoyjHIklTMcn1wia7pCwQAAAIVBmsxJqEFomUwU8f/8hAAAD+LuZ7tSAFemTEHK4cLj2fuoGmV83MRzgBe7MMOTnAl5j0EC/HoS7JePvjD+xHRPpqlj5O2DFzC+cnP63YMCZgpdgwdS9uyCsFyx+OCXwQZCDYypHFJehz8f6D0WZqJLH+5ALlLi1NZ66dNRSpbP1af/9fHgAAAAYwGe62pH/wAAI5Kifq1FJLnKD93oSj3bMJF7/fLoA9SmdJHKs53lKbBFgTpajC1avCW1iomtdMQIAWBzUBE4Vv+tTxetHOT6JM72XO73/6yOIlCjnSmbC49fqz0rLdEjqZcScAAAA69tb292AAAAbG12aGQAAAAAAAAAAAAAAAAAAAPoAAABBAABAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAC2XRyYWsAAABcdGtoZAAAAAMAAAAAAAAAAAAAAAEAAAAAAAABBAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAACWAAAAZAAAAAAACRlZHRzAAAAHGVsc3QAAAAAAAAAAQAAAQQAAAIAAAEAAAAAAlFtZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAADIAAAANAFXEAAAAAAAtaGRscgAAAAAAAAAAdmlkZQAAAAAAAAAAAAAAAFZpZGVvSGFuZGxlcgAAAAH8bWluZgAAABR2bWhkAAAAAQAAAAAAAAAAAAAAJGRpbmYAAAAcZHJlZgAAAAAAAAABAAAADHVybCAAAAABAAABvHN0YmwAAACYc3RzZAAAAAAAAAABAAAAiGF2YzEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAACWAGQAEgAAABIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY//8AAAAyYXZjQwFkAB//4QAZZ2QAH6zZQJgz5eEAAAMAAQAAAwBkDxgxlgEABmjr48siwAAAABhzdHRzAAAAAAAAAAEAAAANAAABAAAAABRzdHNzAAAAAAAAAAEAAAABAAAAeGN0dHMAAAAAAAAADQAAAAEAAAIAAAAAAQAABQAAAAABAAACAAAAAAEAAAAAAAAAAQAAAQAAAAABAAADAAAAAAEAAAEAAAAAAQAABQAAAAABAAACAAAAAAEAAAAAAAAAAQAAAQAAAAABAAADAAAAAAEAAAEAAAAAHHN0c2MAAAAAAAAAAQAAAAEAAAANAAAAAQAAAEhzdHN6AAAAAAAAAAAAAAANAAAEdgAAAK8AAABDAAAALwAAADcAAACYAAAAQAAAAOIAAABzAAAAXgAAAGMAAACJAAAAZwAAABRzdGNvAAAAAAAAAAEAAAAwAAAAYnVkdGEAAABabWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAbWRpcmFwcGwAAAAAAAAAAAAAAAAtaWxzdAAAACWpdG9vAAAAHWRhdGEAAAABAAAAAExhdmY1Ny44My4xMDA=" type="video/mp4"></video>
+</div>
+</div>
+<p>As the problem is quite simple (4 state variables, 2 actions), DQN can run on a single CPU. However, we advise that you run the notebook on a GPU in Colab to avoid emptying the battery of your laptop too fast or making it too warm as training takes quite a long time.</p>
+<p>We will forget from now on to display the cartpole on colab, it does not work well.</p>
+</section>
+<section id="creating-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-model">Creating the model</h2>
+<p>The first step is to create the value network using <code>keras</code>. We will not need anything fancy: a simple fully connected network with 4 input neurons, two hidden layers of 64 neurons each and 2 output neurons will do the trick. ReLU activation functions all along and the Adam optimizer.</p>
+<p><strong>Q:</strong> Which loss function should we use? Think about which arguments have to passed to <code>model.compile()</code> and what activation function is required in the output layer.</p>
+<p>We will need to create two identical networks: the trained network and the target network. You should therefore create a method that returns a compiled model, so it can be called two times. You should pass it the environment (so the network can know how many input and output neurons it needs) and the learning rate for the Adam optimizer.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_model(env, lr):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> Sequential()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Q:</strong> Implement the method accordingly.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_model(env, lr):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> tf.keras.models.Sequential()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Input(env.observation_space.shape))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(env.action_space.n, activation<span class="op">=</span><span class="st">'linear'</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">compile</span>(loss<span class="op">=</span><span class="st">'mse'</span>, optimizer<span class="op">=</span>tf.keras.optimizers.Adam(lr<span class="op">=</span>lr))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.summary())</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s test this method by creating the trained and target networks.</p>
+<p><strong>Important:</strong> every time you call <code>create_model</code>, a new neural network will be instantiated but the previous ones will not be deleted. During this exercise, you may have to create hundreds of networks because of the incremental implementation of DQN: all networks will stay instantiated in the RAM, and your computer/colab tab will freeze after a while. Before creating new networks, delete all existing ones with:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tf.keras.backend.clear_session()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Q:</strong> Create the trained and target networks. The learning rate does not matter for now. Instantiate the Cartpole environment and print the output of both networks for the initial state (<code>state = env.reset()</code>). Are they the same?</p>
+<p><em>Hint:</em> <code>model.predict()</code> expects an array of shape (N, 4), with N the number of examples. Here, we have only one example, so make sure to reshape <code>state</code> so it has the shape (1, 4) (otherwise tf will complain).</p>
+<div class="cell" data-outputid="5298b903-b14b-4136-d8db-16c74b321199" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'CartPole-v0'</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> env.reset()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"State:"</span>, state)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>tf.keras.backend.clear_session()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>trained_model <span class="op">=</span> create_model(env, <span class="fl">0.001</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>target_model <span class="op">=</span> create_model(env, <span class="fl">0.001</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>trained_prediction <span class="op">=</span> trained_model.predict(state.reshape((<span class="dv">1</span>, env.observation_space.shape[<span class="dv">0</span>])))[<span class="dv">0</span>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>target_prediction <span class="op">=</span> target_model.predict(state.reshape((<span class="dv">1</span>, env.observation_space.shape[<span class="dv">0</span>])))[<span class="dv">0</span>]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Predictions:"</span>, trained_prediction, target_prediction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>State: [-0.01228574  0.00488752  0.02812964 -0.00934043]
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense (Dense)                (None, 64)                320       
+_________________________________________________________________
+dense_1 (Dense)              (None, 64)                4160      
+_________________________________________________________________
+dense_2 (Dense)              (None, 2)                 130       
+=================================================================
+Total params: 4,610
+Trainable params: 4,610
+Non-trainable params: 0
+_________________________________________________________________
+None
+Model: "sequential_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_3 (Dense)              (None, 64)                320       
+_________________________________________________________________
+dense_4 (Dense)              (None, 64)                4160      
+_________________________________________________________________
+dense_5 (Dense)              (None, 2)                 130       
+=================================================================
+Total params: 4,610
+Trainable params: 4,610
+Non-trainable params: 0
+_________________________________________________________________
+None
+Predictions: [-0.0029409   0.00551502] [0.00421481 0.0009347 ]</code></pre>
+</div>
+</div>
+<p>The target network has the same structure as the trained network, but not the same weights, as they are randomly initialized. We want the target network <span class="math inline">\theta'</span> to have exactly the same weights as the trained weights <span class="math inline">\theta</span>. You can obtain the weights of a network with:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> model.get_weights()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and set weights using:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model.set_weights(w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Q:</strong> Transfer the weights of the trained model to the target model. Compare their predictions for the current state.</p>
+<div class="cell" data-outputid="48ea740d-9abd-4d88-942c-f895c27baa25" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>target_model.set_weights(trained_model.get_weights())</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>trained_prediction <span class="op">=</span> trained_model.predict(state.reshape((<span class="dv">1</span>, env.observation_space.shape[<span class="dv">0</span>])))[<span class="dv">0</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>target_prediction <span class="op">=</span> target_model.predict(state.reshape((<span class="dv">1</span>, env.observation_space.shape[<span class="dv">0</span>])))[<span class="dv">0</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Predictions:"</span>, trained_prediction, target_prediction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Predictions: [-0.0029409   0.00551502] [-0.0029409   0.00551502]</code></pre>
+</div>
+</div>
+</section>
+<section id="experience-replay-memory" class="level2">
+<h2 class="anchored" data-anchor-id="experience-replay-memory">Experience replay memory</h2>
+<p>The second thing that we need is the experience replay memory (or replay buffer). We need a container like a python list where we append (s, a, r, s’, done) transitions (as in Q-learning), but with a maximal capacity: when there are already <span class="math inline">C</span> transitions in the list, one should stop appending to the list, but rather start writing at the beginning of the list.</p>
+<p>This would not be very hard to write, but it would take a lot of time and the risk is high to have hard-to-notice bugs.</p>
+<p>Here is a basic implementation of the replay buffer using <strong>double-ended queues</strong> (deque). A deque is list with a maximum capacity. If the deque is full, it starts writing again at the beginnning. Exactly what we need. This implementation uses one deque per element in (s, a, r, s’, done), but one could also append the whole transition to a single deque.</p>
+<p><strong>Q:</strong> Read the code of the ReplayBuffer and understand what it does.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ReplayBuffer:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Basic implementation of the experience replay memory using separated deques."</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, max_capacity):</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.max_capacity <span class="op">=</span> max_capacity</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># deques for each element</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.states <span class="op">=</span> deque(maxlen<span class="op">=</span>max_capacity)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.actions <span class="op">=</span> deque(maxlen<span class="op">=</span>max_capacity)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rewards <span class="op">=</span> deque(maxlen<span class="op">=</span>max_capacity)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.next_states <span class="op">=</span> deque(maxlen<span class="op">=</span>max_capacity)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dones <span class="op">=</span> deque(maxlen<span class="op">=</span>max_capacity)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> append(<span class="va">self</span>, state, action, reward, next_state, done):</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store data</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.states.append(state)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.actions.append(action)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rewards.append(reward)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.next_states.append(next_state)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dones.append(done)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> sample(<span class="va">self</span>, batch_size):</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Do not return samples if we do not have at least 2*batch_size transitions</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(<span class="va">self</span>.states) <span class="op">&lt;</span> <span class="dv">2</span><span class="op">*</span>batch_size: </span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> []</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Randomly choose the indices of the samples.</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        indices <span class="op">=</span> <span class="bu">sorted</span>(np.random.choice(np.arange(<span class="bu">len</span>(<span class="va">self</span>.states)), batch_size, replace<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Return the corresponding</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [np.array([<span class="va">self</span>.states[i] <span class="cf">for</span> i <span class="kw">in</span> indices]), </span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>                np.array([<span class="va">self</span>.actions[i] <span class="cf">for</span> i <span class="kw">in</span> indices]), </span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>                np.array([<span class="va">self</span>.rewards[i] <span class="cf">for</span> i <span class="kw">in</span> indices]), </span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>                np.array([<span class="va">self</span>.next_states[i] <span class="cf">for</span> i <span class="kw">in</span> indices]), </span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>                np.array([<span class="va">self</span>.dones[i] <span class="cf">for</span> i <span class="kw">in</span> indices])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Q:</strong> Run a random agent on Cartpole for a few episodes and append each transition to a replay buffer with small capacity (e.g.&nbsp;100) and sample batches from time to time. Check that everything makes sense.</p>
+<div class="cell" data-outputid="d95112be-68f0-4681-e354-72625f656b75" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'CartPole-v0'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">buffer</span> <span class="op">=</span> ReplayBuffer(<span class="dv">100</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> episode <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reset</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> env.reset()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample the episode</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Select an action randomly</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> env.action_space.sample()</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Perform the action</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        next_state, reward, done, info <span class="op">=</span> env.step(action)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the transition</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        <span class="bu">buffer</span>.append(state, action, reward, next_state, done)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Go in the next state</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        state <span class="op">=</span> next_state</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a minibatch</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    batch <span class="op">=</span> <span class="bu">buffer</span>.sample(<span class="dv">10</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(batch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[]
+[array([[-0.04588702,  0.17571342, -0.04359217, -0.26982999],
+       [-0.03494416,  0.56720267, -0.06050751, -0.88364164],
+       [-0.02360011,  0.37295228, -0.07818034, -0.61057763],
+       [-0.01614106,  0.56907494, -0.0903919 , -0.92682465],
+       [ 0.01054631,  0.96163079, -0.13385819, -1.57121202],
+       [ 0.04514565,  0.57564238, -0.19174444, -1.08637116],
+       [-0.07998055, -0.42091214,  0.07157347,  0.65326576],
+       [-0.0883988 , -0.226856  ,  0.08463878,  0.38395145],
+       [-0.13009838, -1.01217643,  0.15373449,  1.67594304],
+       [-0.15034191, -1.20871176,  0.18725335,  2.01228927]]), array([1, 0, 1, 1, 0, 1, 1, 0, 0, 1]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-0.04237275,  0.37142947, -0.04898877, -0.5759372 ],
+       [-0.02360011,  0.37295228, -0.07818034, -0.61057763],
+       [-0.01614106,  0.56907494, -0.0903919 , -0.92682465],
+       [-0.00475956,  0.76529356, -0.10892839, -1.24649   ],
+       [ 0.02977892,  0.76833619, -0.16528243, -1.32310072],
+       [ 0.0566585 ,  0.77270422, -0.21347187, -1.43257474],
+       [-0.0883988 , -0.226856  ,  0.08463878,  0.38395145],
+       [-0.09293592, -0.42307124,  0.09231781,  0.70207482],
+       [-0.15034191, -1.20871176,  0.18725335,  2.01228927],
+       [-0.17451615, -1.01596628,  0.22749914,  1.78295639]]), array([False, False, False, False, False,  True, False, False, False,
+        True])]
+[array([[-0.03494416,  0.56720267, -0.06050751, -0.88364164],
+       [-0.01614106,  0.56907494, -0.0903919 , -0.92682465],
+       [ 0.01054631,  0.96163079, -0.13385819, -1.57121202],
+       [-0.03861068, -0.41916791,  0.01007019,  0.61341107],
+       [-0.06767495, -0.61528014,  0.05299678,  0.92883467],
+       [-0.11378421, -0.81570892,  0.12680595,  1.34642685],
+       [ 0.02946412,  0.00944244, -0.02332485, -0.04617419],
+       [ 0.03375079,  0.40034929, -0.03117082, -0.64635371],
+       [ 0.04175778,  0.59589138, -0.04409789, -0.94868711],
+       [ 0.0536756 ,  0.79157841, -0.06307163, -1.25489287]]), array([0, 1, 0, 0, 1, 0, 1, 1, 1, 1]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-0.02360011,  0.37295228, -0.07818034, -0.61057763],
+       [-0.00475956,  0.76529356, -0.10892839, -1.24649   ],
+       [ 0.02977892,  0.76833619, -0.16528243, -1.32310072],
+       [-0.04699404, -0.61442913,  0.02233841,  0.90924863],
+       [-0.07998055, -0.42091214,  0.07157347,  0.65326576],
+       [-0.13009838, -1.01217643,  0.15373449,  1.67594304],
+       [ 0.02965297,  0.20489096, -0.02424833, -0.3461241 ],
+       [ 0.04175778,  0.59589138, -0.04409789, -0.94868711],
+       [ 0.0536756 ,  0.79157841, -0.06307163, -1.25489287],
+       [ 0.06950717,  0.98744873, -0.08816949, -1.56664493]]), array([False, False, False, False, False, False, False, False, False,
+       False])]
+[array([[-0.07998055, -0.42091214,  0.07157347,  0.65326576],
+       [-0.09293592, -0.42307124,  0.09231781,  0.70207482],
+       [-0.13009838, -1.01217643,  0.15373449,  1.67594304],
+       [ 0.04456579, -0.18728104, -0.04528   ,  0.28217656],
+       [ 0.0331856 , -0.18607367, -0.02843163,  0.25533923],
+       [ 0.10512582,  0.98990177, -0.14555671, -1.6302918 ],
+       [-0.02366513,  0.22517243, -0.04587956, -0.30802066],
+       [-0.01916168,  0.03073322, -0.05203997, -0.03015261],
+       [-0.07011939, -0.54787848,  0.01115384,  0.69896567],
+       [-0.1743693 , -0.74925887,  0.15544077,  1.14156613]]), array([1, 0, 0, 0, 1, 0, 0, 1, 0, 1]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-0.0883988 , -0.226856  ,  0.08463878,  0.38395145],
+       [-0.10139734, -0.61934327,  0.10635931,  1.0223321 ],
+       [-0.15034191, -1.20871176,  0.18725335,  2.01228927],
+       [ 0.04082017, -0.38172886, -0.03963647,  0.56024157],
+       [ 0.02946412,  0.00944244, -0.02332485, -0.04617419],
+       [ 0.12492386,  0.79675917, -0.17816255, -1.38628425],
+       [-0.01916168,  0.03073322, -0.05203997, -0.03015261],
+       [-0.01854701,  0.22656133, -0.05264303, -0.33878997],
+       [-0.08107695, -0.74315328,  0.02513316,  0.99513882],
+       [-0.18935448, -0.5564717 ,  0.17827209,  0.9013877 ]]), array([False, False, False, False, False, False, False, False, False,
+       False])]
+[array([[ 0.08925615,  0.79348391, -0.11950239, -1.30271612],
+       [-0.01337126, -0.16199547, -0.06068205,  0.21019852],
+       [-0.01661117, -0.35619964, -0.05647808,  0.48313902],
+       [-0.03721756, -0.35365612, -0.0314414 ,  0.42638794],
+       [-0.07011939, -0.54787848,  0.01115384,  0.69896567],
+       [-0.12959367, -0.54997232,  0.09129524,  0.74776884],
+       [-0.15551766, -0.94258199,  0.12760519,  1.39177889],
+       [ 0.02423362,  0.35477442, -0.02756646, -0.56215783],
+       [ 0.05267667, -0.03268853, -0.07391405, -0.03808703],
+       [ 0.03940372, -0.01677189, -0.13481805, -0.39240767]]), array([1, 0, 1, 0, 0, 0, 1, 1, 0, 1]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[ 0.10512582,  0.98990177, -0.14555671, -1.6302918 ],
+       [-0.01661117, -0.35619964, -0.05647808,  0.48313902],
+       [-0.02373516, -0.16032796, -0.0468153 ,  0.17320423],
+       [-0.04429068, -0.54831896, -0.02291364,  0.70899563],
+       [-0.08107695, -0.74315328,  0.02513316,  0.99513882],
+       [-0.14059312, -0.74622723,  0.10625061,  1.06772877],
+       [-0.1743693 , -0.74925887,  0.15544077,  1.14156613],
+       [ 0.03132911,  0.55027215, -0.03880962, -0.86339652],
+       [ 0.0520229 , -0.226677  , -0.07467579,  0.23039023],
+       [ 0.03906829,  0.17997992, -0.1426662 , -0.72437389]]), array([False, False, False, False, False, False, False, False, False,
+       False])]
+[array([[-0.11378421, -0.81570892,  0.12680595,  1.34642685],
+       [ 0.02946412,  0.00944244, -0.02332485, -0.04617419],
+       [ 0.06950717,  0.98744873, -0.08816949, -1.56664493],
+       [-0.07011939, -0.54787848,  0.01115384,  0.69896567],
+       [ 0.03411469, -0.00360845, -0.19010635, -0.69103416],
+       [-0.01561388,  0.24260873, -0.01121911, -0.27438396],
+       [-0.0107617 ,  0.43788894, -0.01670679, -0.5705842 ],
+       [ 0.03019177,  0.83091222, -0.07015847, -1.21931716],
+       [ 0.06840585,  0.24965211, -0.12729061, -0.43298024],
+       [ 0.08232539,  0.25331111, -0.15120872, -0.51592219]]), array([0, 1, 0, 0, 1, 1, 0, 0, 1, 0]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-0.13009838, -1.01217643,  0.15373449,  1.67594304],
+       [ 0.02965297,  0.20489096, -0.02424833, -0.3461241 ],
+       [ 0.08925615,  0.79348391, -0.11950239, -1.30271612],
+       [-0.08107695, -0.74315328,  0.02513316,  0.99513882],
+       [ 0.03404252,  0.19357148, -0.20392703, -1.03703072],
+       [-0.0107617 ,  0.43788894, -0.01670679, -0.5705842 ],
+       [-0.00200392,  0.24300522, -0.02811847, -0.28321098],
+       [ 0.04681002,  0.63676127, -0.09454481, -0.94941686],
+       [ 0.07339889,  0.44632481, -0.13595022, -0.76292497],
+       [ 0.08739161,  0.06060563, -0.16152716, -0.27444836]]), array([False, False, False, False, False, False, False, False, False,
+       False])]
+[array([[-0.02373516, -0.16032796, -0.0468153 ,  0.17320423],
+       [-0.09594002, -0.93860222,  0.04503593,  1.295608  ],
+       [-0.01656031,  0.04732154, -0.0116582 ,  0.02195434],
+       [-0.01561388,  0.24260873, -0.01121911, -0.27438396],
+       [ 0.00869979,  0.43947173, -0.03982674, -0.6058149 ],
+       [ 0.03019177,  0.83091222, -0.07015847, -1.21931716],
+       [ 0.08739161,  0.06060563, -0.16152716, -0.27444836],
+       [ 0.02318629, -0.16544129,  0.06638922,  0.36720994],
+       [ 0.02252386,  0.21795011,  0.0882486 , -0.06800942],
+       [ 0.01640814, -0.17726995,  0.12111231,  0.6315977 ]]), array([0, 1, 1, 1, 1, 0, 1, 1, 0, 0]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-0.02694172, -0.3547497 , -0.04335122,  0.45075865],
+       [-0.11471206, -0.74408039,  0.07094809,  1.01735721],
+       [-0.01561388,  0.24260873, -0.01121911, -0.27438396],
+       [-0.0107617 ,  0.43788894, -0.01670679, -0.5705842 ],
+       [ 0.01748923,  0.6351273 , -0.05194304, -0.91077149],
+       [ 0.04681002,  0.63676127, -0.09454481, -0.94941686],
+       [ 0.08860372,  0.25761936, -0.16701613, -0.61340485],
+       [ 0.01987746,  0.02867756,  0.07373342,  0.09617723],
+       [ 0.02688286,  0.02168106,  0.08688841,  0.25115996],
+       [ 0.01286274, -0.37385492,  0.13374427,  0.95983516]]), array([False, False, False, False, False, False, False, False, False,
+       False])]
+[array([[ 0.0520229 , -0.226677  , -0.07467579,  0.23039023],
+       [ 0.02847391,  0.37003179, -0.10387816, -0.90265178],
+       [ 0.03813067, -0.20079893, -0.18317346, -0.3466444 ],
+       [-0.02140737,  0.24235326, -0.00628339, -0.26874016],
+       [ 0.01748923,  0.6351273 , -0.05194304, -0.91077149],
+       [ 0.08860372,  0.25761936, -0.16701613, -0.61340485],
+       [ 0.10284877,  0.65165459, -0.19835798, -1.2969111 ],
+       [-0.01357656, -0.18525485,  0.1997725 ,  0.81854805],
+       [-0.01315511,  0.14671572, -0.03682447, -0.31321735],
+       [ 0.00486409,  0.74280442, -0.11908856, -1.4356092 ]]), array([0, 0, 1, 0, 1, 1, 0, 1, 0, 1]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[ 0.04748936, -0.42065683, -0.07006798,  0.49861478],
+       [ 0.03587455,  0.17645877, -0.1219312 , -0.64434272],
+       [ 0.03411469, -0.00360845, -0.19010635, -0.69103416],
+       [-0.01656031,  0.04732154, -0.0116582 ,  0.02195434],
+       [ 0.03019177,  0.83091222, -0.07015847, -1.21931716],
+       [ 0.09375611,  0.45463285, -0.17928422, -0.95368777],
+       [ 0.11588186,  0.4595259 , -0.2242962 , -1.07230467],
+       [-0.01728166,  0.00665442,  0.21614346,  0.59475248],
+       [-0.01022079, -0.04786282, -0.04308882, -0.03237137],
+       [ 0.01972017,  0.93917647, -0.14780074, -1.76301036]]), array([False, False, False, False, False, False,  True,  True, False,
+       False])]
+[array([[-0.01561388,  0.24260873, -0.01121911, -0.27438396],
+       [-0.0107617 ,  0.43788894, -0.01670679, -0.5705842 ],
+       [ 0.01987746,  0.02867756,  0.07373342,  0.09617723],
+       [ 0.02045101, -0.16741948,  0.07565696,  0.41118155],
+       [ 0.01763368,  0.2203797 ,  0.08674614, -0.12180875],
+       [ 0.02731648, -0.17456726,  0.09191161,  0.569935  ],
+       [-0.01307542,  0.35042117, -0.08086043, -0.79721063],
+       [ 0.04680089, -0.16049118, -0.03509216,  0.27523426],
+       [-0.02027473,  0.22240778,  0.07877649, -0.14882592],
+       [ 0.0113827 , -0.37571906,  0.1455837 ,  1.02055041]]), array([1, 0, 0, 1, 0, 0, 1, 1, 1, 0]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-0.0107617 ,  0.43788894, -0.01670679, -0.5705842 ],
+       [-0.00200392,  0.24300522, -0.02811847, -0.28321098],
+       [ 0.02045101, -0.16741948,  0.07565696,  0.41118155],
+       [ 0.01710263,  0.02655296,  0.08388059,  0.14327715],
+       [ 0.02204128,  0.02412895,  0.08430996,  0.19693188],
+       [ 0.02382514, -0.37084988,  0.10331031,  0.89010017],
+       [-0.00606699,  0.54655402, -0.09680465, -1.1141957 ],
+       [ 0.04359106,  0.03511342, -0.02958747, -0.02830697],
+       [-0.01582658,  0.41631846,  0.07579997, -0.41565355],
+       [ 0.00386832, -0.57244916,  0.16599471,  1.35517444]]), array([False, False, False, False, False, False, False, False, False,
+       False])]
+[array([[-6.02428909e-03, -3.77613571e-01,  1.78768312e-01,
+         1.05020945e+00],
+       [-1.40961151e-02, -4.97950406e-02, -3.10058632e-02,
+         1.02872809e-02],
+       [-1.60248718e-02, -4.66227879e-02, -3.88080202e-02,
+        -5.97399823e-02],
+       [ 4.42933311e-02, -1.59572005e-01, -3.01536094e-02,
+         2.54895909e-01],
+       [ 4.89776485e-02, -3.70983886e-01,  5.85792870e-02,
+         9.07854348e-01],
+       [ 1.13826996e-02, -3.75719058e-01,  1.45583701e-01,
+         1.02055041e+00],
+       [-4.59710778e-03,  2.41846810e-01, -6.59756969e-02,
+        -3.76268034e-01],
+       [ 2.39828428e-04,  4.37840767e-01, -7.35010576e-02,
+        -6.89002147e-01],
+       [ 1.20013721e-02, -3.37180309e-01, -9.67229348e-02,
+         3.64580237e-01],
+       [ 5.25776591e-03, -5.30804141e-01, -8.94313301e-02,
+         6.25266258e-01]]), array([1, 1, 1, 0, 0, 0, 1, 0, 0, 0]), array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]), array([[-1.35765605e-02, -1.85254846e-01,  1.99772501e-01,
+         8.18548046e-01],
+       [-1.50920159e-02,  1.45757540e-01, -3.08001176e-02,
+        -2.92014867e-01],
+       [-1.69573275e-02,  1.49033483e-01, -4.00028198e-02,
+        -3.64410108e-01],
+       [ 4.11018910e-02, -3.54250735e-01, -2.50556912e-02,
+         5.37917438e-01],
+       [ 4.15579708e-02, -5.66847830e-01,  7.67363739e-02,
+         1.21835879e+00],
+       [ 3.86831841e-03, -5.72449163e-01,  1.65994709e-01,
+         1.35517444e+00],
+       [ 2.39828428e-04,  4.37840767e-01, -7.35010576e-02,
+        -6.89002147e-01],
+       [ 8.99664377e-03,  2.43811687e-01, -8.72811005e-02,
+        -4.20334199e-01],
+       [ 5.25776591e-03, -5.30804141e-01, -8.94313301e-02,
+         6.25266258e-01],
+       [-5.35831690e-03, -7.24571315e-01, -7.69260049e-02,
+         8.88497710e-01]]), array([False, False, False, False, False, False, False, False, False,
+       False])]</code></pre>
+</div>
+</div>
+</section>
+<section id="dqn-agent" class="level2">
+<h2 class="anchored" data-anchor-id="dqn-agent">DQN agent</h2>
+<p>Here starts the fun part. There are a lot of things to do here, but you will now whether it works or not only when everything has been (correctly) implemented. So here is a lot of text to read carefully, and then you are on your own.</p>
+<p>Reminder from the lecture:</p>
+<ul>
+<li><p>Initialize value network <span class="math inline">Q_{\theta}</span> and target network <span class="math inline">Q_{\theta'}</span>.</p></li>
+<li><p>Initialize experience replay memory <span class="math inline">\mathcal{D}</span> of maximal size <span class="math inline">N</span>.</p></li>
+<li><p>for <span class="math inline">t \in [0, T_\text{total}]</span>:</p>
+<ul>
+<li><p>Select an action <span class="math inline">a_t</span> based on <span class="math inline">Q_\theta(s_t, a)</span>, observe <span class="math inline">s_{t+1}</span> and <span class="math inline">r_{t+1}</span>.</p></li>
+<li><p>Store <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1})</span> in the experience replay memory.</p></li>
+<li><p>Every <span class="math inline">T_\text{train}</span> steps:</p>
+<ul>
+<li><p>Sample a minibatch <span class="math inline">\mathcal{D}_s</span> randomly from <span class="math inline">\mathcal{D}</span>.</p></li>
+<li><p>For each transition <span class="math inline">(s_k, a_k, r_k, s'_k)</span> in the minibatch:</p>
+<ul>
+<li>Compute the target value <span class="math inline">t_k = r_k + \gamma \, \max_{a'} Q_{\theta'}(s'_k, a')</span> using the target network.</li>
+</ul></li>
+<li><p>Update the value network <span class="math inline">Q_{\theta}</span> on <span class="math inline">\mathcal{D}_s</span> to minimize:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[(t_k - Q_\theta(s_k, a_k))^2]</span></p></li>
+<li><p>Every <span class="math inline">T_\text{target}</span> steps:</p>
+<ul>
+<li>Update target network: <span class="math inline">\theta' \leftarrow \theta</span>.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Here is the skeleton of the <code>DQNAgent</code> class that you have to write:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DQNAgent:</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, env, create_model, some_parameters):</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.env <span class="op">=</span> env</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: copy the parameters</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: Create the trained and target networks, copy the weights.</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: Create an instance of the replay memory</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> act(<span class="va">self</span>, state):</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: Select an action using epsilon-greedy on the output of the trained model</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> action</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, batch):</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: train the model using the batch of transitions</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> loss <span class="co"># mse on the batch</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> train(<span class="va">self</span>, nb_episodes):</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>        returns <span class="op">=</span> []</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>        losses <span class="op">=</span> []</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: Train the network for the given number of episodes</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns, losses</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> test(<span class="va">self</span>):</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">TODO</span><span class="co">: one episode with epsilon temporarily set to 0</span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> nb_steps <span class="co"># Should be 200 after learning</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this structure, it will be very simple to actually train the DQN on Cartpole:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'CartPole-v0'</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> DQNAgent(env, create_model, other_parameters)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the agent</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>returns, losses <span class="op">=</span> agent.train(nb_episodes)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the returns</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>plt.plot(returns)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plt.plot(running_mean(returns, <span class="dv">10</span>))</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Episodes"</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Returns"</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the losses</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.plot(losses)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Episodes"</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Training loss"</span>)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the network</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>nb_steps <span class="op">=</span> agent.test()</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of steps:"</span>, nb_steps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So you “just” have to fill the holes.</p>
+<section id="init__-initializing-the-agent" class="level3">
+<h3 class="anchored" data-anchor-id="init__-initializing-the-agent">1 - <code>__init__()</code>: Initializing the agent</h3>
+<p>In this method, you should first copy the value of the parameters as attributes: learning rate, epsilon, gamma and so on.</p>
+<p>Suggested values: gamma = 0.99, learning_rate = 0.001</p>
+<p>The second thing to do is to create the trained and target networks (with the same weights) and save them as attributes (the other methods will use them). Do not forget to clear the keras session first, otherwise the RAM will be quickly filled.</p>
+<p>The third thing is to create an instance of the ERM. Use a buffer limit of 5000 transitions (should be passed as a parameter).</p>
+<p>Do not hesitate to add other stuff as you implementing the other methods (e.g.&nbsp;counters).</p>
+</section>
+<section id="act-action-selection" class="level3">
+<h3 class="anchored" data-anchor-id="act-action-selection">2 - <code>act()</code>: action selection</h3>
+<p>We will use a simple <span class="math inline">\epsilon</span>-greedy method for the action selection, as in the previous exercises.</p>
+<p>The only difference is that we have to use the trained model to get the greedy action, using <code>trained_model.predict()</code>. This will return the Q-value of the two actions left and right. Use <code>argmax()</code> to return the greedy action (with probability 1 - <span class="math inline">\epsilon</span>). <code>env.action_space.sample()</code> should be used for the exploration (do not use the Q-network in that case, it is slow!).</p>
+<p><span class="math inline">\epsilon</span> will be scheduled with an initial value of 1.0 and an exponential decay rate of 0.0005 after each action. It is always better to keep a little exploration, even if <span class="math inline">\epsilon</span> has decayed to 0. Keep a minimal value of 0.05 for epsilon.</p>
+<p><strong>Q:</strong> Once this has been implemented, run your very slow random agent for 100 episodes to check everything works correctly.</p>
+</section>
+<section id="train-training-loop" class="level3">
+<h3 class="anchored" data-anchor-id="train-training-loop">3 - <code>train()</code>: training loop</h3>
+<p>This method will be very similar to the Q-learning agent that you implemented previously. Do not hesitate to copy and paste.</p>
+<p>Here is the parts of the DQN algorithm that should be implemented:</p>
+<ul>
+<li><p>for <span class="math inline">t \in [0, T_\text{total}]</span>:</p>
+<ul>
+<li><p>Select an action <span class="math inline">a_t</span> based on <span class="math inline">Q_\theta(s_t, a)</span>, observe <span class="math inline">s_{t+1}</span> and <span class="math inline">r_{t+1}</span>.</p></li>
+<li><p>Store <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1})</span> in the experience replay memory.</p></li>
+<li><p>Every <span class="math inline">T_\text{train}</span> steps:</p>
+<ul>
+<li><p>Sample a minibatch <span class="math inline">\mathcal{D}_s</span> randomly from <span class="math inline">\mathcal{D}</span>.</p></li>
+<li><p>Update the trained network using <span class="math inline">\mathcal{D}_s</span>.</p></li>
+</ul></li>
+<li><p>Every <span class="math inline">T_\text{target}</span> steps:</p>
+<ul>
+<li>Update target network: <span class="math inline">\theta' \leftarrow \theta</span>.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>The main difference with Q-learning is that <code>update()</code> will be called only every <code>T_train = 4</code> steps: the number of updates to the trained network will be 4 times smaller that the number of steps made in the environment. Beware that if the ERM does not have enough transitions yet (less than the batch size), you should not call <code>update()</code>.</p>
+<p>Updating the target network (copying the weights of the trained network) should happen every 100 steps. Pass these parameters to the constructor of the agent.</p>
+<p>The batch size can be set to 32.</p>
+</section>
+<section id="update-training-the-value-network" class="level3">
+<h3 class="anchored" data-anchor-id="update-training-the-value-network">4 - <code>update()</code>: training the value network</h3>
+<p>Using the provided minibatch, one should implement the following part of the DQN algorithm:</p>
+<ul>
+<li><p>For each transition <span class="math inline">(s_k, a_k, r_k, s'_k)</span> in the minibatch:</p>
+<ul>
+<li>Compute the target value <span class="math inline">t_k = r_k + \gamma \, \max_{a'} Q_{\theta'}(s'_k, a')</span> using the target network.</li>
+</ul></li>
+<li><p>Update the value network <span class="math inline">Q_{\theta}</span> on <span class="math inline">\mathcal{D}_s</span> to minimize:</p>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[(t_k - Q_\theta(s_k, a_k))^2]</span></p></li>
+</ul>
+<p>So we just need to define the targets for each transition in the minibatch, and call <code>model.fit()</code> on the trained network to minimize the mse between the current predictions <span class="math inline">Q_\theta(s_k, a_k)</span> and the target.</p>
+<p>But we have a problem: the network has two outputs for the actions left and right, but we have only one target for the action that was executed. We cannot compute the mse between a vector with 2 elements and a single value… They must have the same size.</p>
+<p>As we want only the train the output neuron corresponding to the action <span class="math inline">a_k</span>, we are going to:</p>
+<ol type="1">
+<li>Use the trained network to predict the Q-value of both actions <span class="math inline">[Q_\theta(s_k, 0), Q_\theta(s_k, 1)]</span>.</li>
+<li>Replace one of the values with the target, for example <span class="math inline">[Q_\theta(s_k, 0), t_k]</span> if the second action was chosen.</li>
+<li>Minimize the mse between <span class="math inline">[Q_\theta(s_k, 0), Q_\theta(s_k, 1)]</span> and <span class="math inline">[Q_\theta(s_k, 0), t_k]</span>.</li>
+</ol>
+<p>That way, the first output neuron has a squared error of 0, so it won’t learn anything. Only the second output neuron will have a non-zero mse and learn.</p>
+<p>There are more efficient ways to do this (using masks), but this will do the trick, the drawback being that we have to make a forward pass on the minibatch before calling <code>fit()</code>.</p>
+<p>The rest is pretty much the same as for your Q-learning agent. Do not forget that actions leading to a terminal state should only use the reward as a target, not the complete Bellman target <span class="math inline">r + \gamma \max Q</span>.</p>
+<p><em>Hint:</em> as we sample a minibatch of 32 transitions, it is faster to call:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Q_values <span class="op">=</span> np.array(training_model.predict_on_batch(states))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>than:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Q_values <span class="op">=</span> training_model.predict(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>for reasons internal to tensorflow. Note that with tf2, you need to cast the result to numpy arrays as eager mode is now the default.</p>
+<p>The method should return the training loss, which is contained in the <code>History</code> object returned by <code>model.fit()</code>. <code>model.fit()</code> should be called for one epoch only, a batch size of 32, and <code>verbose</code> set to 0.</p>
+</section>
+<section id="test" class="level3">
+<h3 class="anchored" data-anchor-id="test">5 - <code>test()</code></h3>
+<p>This method should run one episode with epsilon set to 0, without learning. The number of steps should be returned (do not bother discounting with gamma, the goal is to be up for 200 steps).</p>
+<p><strong>Q:</strong> Let’s go! Run the agent for 100 episodes and observe how fast it manages to keep the pole up for 200 steps.</p>
+<p>Beware that running the same network twice can lead to very different results. In particular, policy collapse (the network was almost perfect, but suddenly crashes and becomes random) can happen. Just be patient.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DQNAgent:</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, env, create_model, learning_rate, epsilon, epsilon_decay, gamma, batch_size, target_update_period, training_update_period, buffer_limit):</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.env <span class="op">=</span> env</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.learning_rate <span class="op">=</span> learning_rate</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> epsilon</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon_decay <span class="op">=</span> epsilon_decay</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.gamma <span class="op">=</span> gamma</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.batch_size <span class="op">=</span> batch_size</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.target_update_period <span class="op">=</span> target_update_period</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.training_update_period <span class="op">=</span> training_update_period</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the Q-network and the target network</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        tf.keras.backend.clear_session() <span class="co"># start by deleting all existing models to be gentle on the RAM</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> create_model(<span class="va">self</span>.env, <span class="va">self</span>.learning_rate)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.target_model <span class="op">=</span> create_model(<span class="va">self</span>.env, <span class="va">self</span>.learning_rate)</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.target_model.set_weights(<span class="va">self</span>.model.get_weights())</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the replay memory</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">buffer</span> <span class="op">=</span> ReplayBuffer(buffer_limit)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> act(<span class="va">self</span>, state):</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># epsilon-greedy</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.random.rand() <span class="op">&lt;</span> <span class="va">self</span>.epsilon: <span class="co"># Random selection</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>            action <span class="op">=</span> <span class="va">self</span>.env.action_space.sample()</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>: <span class="co"># Use the Q-network to get the greedy action</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>            action <span class="op">=</span> <span class="va">self</span>.model.predict(state.reshape((<span class="dv">1</span>, env.observation_space.shape[<span class="dv">0</span>])))[<span class="dv">0</span>].argmax()</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Decay epsilon</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">*=</span> <span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.epsilon_decay</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> <span class="bu">max</span>(<span class="fl">0.05</span>, <span class="va">self</span>.epsilon)</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> action</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, batch):</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the minibatch</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>        states, actions, rewards, next_states, dones <span class="op">=</span> batch </span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values in the current state</span></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>        targets <span class="op">=</span> np.array(<span class="va">self</span>.model.predict_on_batch(states))</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values in the next state using the target model</span></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>        next_Q_value <span class="op">=</span> np.array(<span class="va">self</span>.target_model.predict_on_batch(next_states)).<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Terminal states have a value of 0</span></span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>        next_Q_value[dones] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute the target</span></span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.batch_size):</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>            targets[i, actions[i]] <span class="op">=</span> rewards[i] <span class="op">+</span> <span class="va">self</span>.gamma <span class="op">*</span> next_Q_value[i]</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Train the model on the minibatch</span></span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>        history <span class="op">=</span> <span class="va">self</span>.model.fit(states, targets, epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span><span class="va">self</span>.batch_size, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> history.history[<span class="st">'loss'</span>][<span class="dv">0</span>]</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> train(<span class="va">self</span>, nb_episodes):</span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>        steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>        returns <span class="op">=</span> []</span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a>        losses <span class="op">=</span> []</span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> episode <span class="kw">in</span> <span class="bu">range</span>(nb_episodes):</span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Reset</span></span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a>            done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a>            steps_episode <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>            loss_episode <span class="op">=</span> []</span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>                next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the transition</span></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.<span class="bu">buffer</span>.append(state, action, reward, next_state, done)</span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Sample a minibatch</span></span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a>                batch <span class="op">=</span> <span class="va">self</span>.<span class="bu">buffer</span>.sample(batch_size)</span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Train the NN on the minibatch</span></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">len</span>(batch) <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> steps <span class="op">%</span> <span class="va">self</span>.training_update_period <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>                    loss <span class="op">=</span> <span class="va">self</span>.update(batch)</span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a>                    loss_episode.append(loss)</span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Update the target model</span></span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> steps <span class="op">&gt;</span> <span class="va">self</span>.target_update_period <span class="kw">and</span> steps <span class="op">%</span> <span class="va">self</span>.target_update_period <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.target_model.set_weights(<span class="va">self</span>.model.get_weights())</span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a>                steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a>                steps_episode <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>                return_episode <span class="op">+=</span> reward</span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> done:</span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>            losses.append(np.mean(loss_episode))</span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Print info</span></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a>            clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'Episode'</span>, episode<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">' total steps:'</span>, steps)</span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">' length of the episode:'</span>, steps_episode)</span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">' return of the episode:'</span>, return_episode)</span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">' current loss:'</span>, np.mean(loss_episode))</span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">' epsilon:'</span>, <span class="va">self</span>.epsilon)</span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns, losses</span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> test(<span class="va">self</span>, render<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>        old_epsilon <span class="op">=</span> <span class="va">self</span>.epsilon</span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a>        state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a>        nb_steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a>        done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a>            action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>            next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> next_state</span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> old_epsilon</span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> nb_steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>epsilon_decay <span class="op">=</span> <span class="fl">0.0005</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.99</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.005</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>buffer_limit <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>target_update_period <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>training_update_period <span class="op">=</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="d920d07f-198c-4591-d6c3-2945fea5c287" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'CartPole-v0'</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> DQNAgent(env, create_model, learning_rate, epsilon, epsilon_decay, gamma, batch_size, target_update_period, training_update_period, buffer_limit)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the agent</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>returns, losses <span class="op">=</span> agent.train(nb_episodes)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the returns</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>plt.plot(returns)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>plt.plot(running_mean(returns, <span class="dv">10</span>))</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Episodes"</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Returns"</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the losses</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>plt.plot(losses)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Episodes"</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Training loss"</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Episode 100
+ total steps: 8599
+ length of the episode: 174
+ return of the episode: 174.0
+ current loss: 5.679146097149959
+ epsilon: 0.05</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="12-DQN-solution_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="12-DQN-solution_files/figure-html/cell-11-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-outputid="4fbd292b-0f83-4d33-fa86-b103d035f095" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the network</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>nb_steps <span class="op">=</span> agent.test()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of steps:"</span>, nb_steps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of steps: 131</code></pre>
+</div>
+</div>
+<p><strong>Q:</strong> How does the loss evolve? Does it make sense?</p>
+<p><strong>A:</strong> The Q-values are non-stationary: the initial Q-values are very small (the agent fails almost immediately), while they are around 40 after training (200 steps, but discounted with gamma). The mse increases with the magnitude of the Q-values, so the loss is a poor indicator of the convergence of the network.</p>
+</section>
+</section>
+<section id="reward-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="reward-scaling">Reward scaling</h2>
+<p><strong>Q:</strong> Do a custom test trial after training (i.e.&nbsp;do not call test(), but copy and adapt its code) and plot the Q-value of the selected action at each time step. Do you think it is a good output for the network? Could it explain why learning is so slow?</p>
+<div class="cell" data-outputid="5c417c70-e4d7-4516-b8b7-227cb09c6a46" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>agent.epsilon <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> agent.env.reset()</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>Q_values <span class="op">=</span> []</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> agent.act(state)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    Q_values.append(agent.model.predict(state.reshape((<span class="dv">1</span>, <span class="dv">4</span>)))[<span class="dv">0</span>][action])</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    next_state, reward, done, info <span class="op">=</span> agent.env.step(action)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> next_state</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>plt.plot(Q_values)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Steps"</span>)</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Q-value"</span>)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="12-DQN-solution_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>A:</strong> The predicted Q-values at the beginning of learning are close to 0, as the weights are randomly initialized. They must grow to around 40, which takes a lot of time. If the target Q-values were around 1, learning might be much faster.</p>
+<p><strong>Q:</strong> Implement <strong>reward scaling</strong> by dividing the received rewards by a fixed factor of 100 when computing the Bellman targets. That way, the final Q-values will be around 1, what may be much easier to learned.</p>
+<p><em>Tip:</em> in order to avoid a huge copy and paste, you can inherit from your DQNAgent and ony reimplement the desired function:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ScaledDQNAgent (DQNAgent):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, batch):</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Change the content of this function only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should reduce a bit the learning rate (e.g.&nbsp;0.001) as the magnitude of the targets has changed.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ScaledDQNAgent(DQNAgent):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, batch):</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the minibatch</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        states, actions, rewards, next_states, dones <span class="op">=</span> batch </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values in the current state</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        targets <span class="op">=</span> np.array(<span class="va">self</span>.model.predict_on_batch(states))</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values in the next state using the target model</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>        next_Q_value <span class="op">=</span> np.array(<span class="va">self</span>.target_model.predict_on_batch(next_states)).<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Terminal states have a value of 0</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>        next_Q_value[dones] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute the target</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.batch_size):</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>            targets[i, actions[i]] <span class="op">=</span> rewards[i]<span class="op">/</span><span class="fl">100.</span> <span class="op">+</span> <span class="va">self</span>.gamma <span class="op">*</span> next_Q_value[i]</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Train the model on the minibatch</span></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>        history <span class="op">=</span> <span class="va">self</span>.model.fit(states, targets, epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span><span class="va">self</span>.batch_size, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> history.history[<span class="st">'loss'</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="2c4d228a-f36a-4f13-9ba6-c971ced0925b" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'CartPole-v0'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.001</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> ScaledDQNAgent(env, create_model, learning_rate, epsilon, epsilon_decay, gamma, batch_size, target_update_period, training_update_period, buffer_limit)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the agent</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>returns, losses <span class="op">=</span> agent.train(nb_episodes)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the network</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>agent.epsilon <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-values     </span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> agent.env.reset()</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>Q_values <span class="op">=</span> []</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> agent.act(state)</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    Q_values.append(agent.model.predict(state.reshape((<span class="dv">1</span>, <span class="dv">4</span>)))[<span class="dv">0</span>][action])</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    next_state, reward, done, info <span class="op">=</span> agent.env.step(action)</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> next_state</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the returns</span></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>plt.plot(returns)</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>plt.plot(running_mean(returns, <span class="dv">10</span>))</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Episodes"</span>)</span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Returns"</span>)</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the losses</span></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>plt.plot(losses)</span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Episodes"</span>)</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Training loss"</span>)</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the Q-values</span></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>plt.plot(Q_values)</span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Steps"</span>)</span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Q-value"</span>)</span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Episode 100
+ total steps: 9986
+ length of the episode: 200
+ return of the episode: 200.0
+ current loss: 0.0003223761088884203
+ epsilon: 0.05</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="12-DQN-solution_files/figure-html/cell-15-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="12-DQN-solution_files/figure-html/cell-15-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="12-DQN-solution_files/figure-html/cell-15-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-outputid="6a77b08d-7d46-47dd-9ff6-8dca35625747" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the network</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>nb_steps <span class="op">=</span> agent.test()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of steps:"</span>, nb_steps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of steps: 200</code></pre>
+</div>
+</div>
+<p><strong>Q:</strong> Depending on the time left and your motivation, vary the different parameters to understand their influence: learning rate, target update frequency, training update frequency, epsilon decay, gamma, etc. Change the size of the network. If you find better hyperparameters than what is proposed, please report them for next year!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../exercises/11-Keras-solution.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Keras tutorial</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

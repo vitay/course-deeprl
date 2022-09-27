@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deep Reinforcement Learning - 9&nbsp; Deep learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../notes/3.1-DQN.html" rel="next">
+<link href="../notes/2.6-FA.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Deep learning</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../../slides/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Deep Reinforcement Learning</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Introduction</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.1-Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/1.2-Math.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Math basics (optional)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tabular RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.1-Bandits.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.2-MDP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Markov Decision Processes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.3-DP.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic Programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.4-MC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo (MC) methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.5-TD.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Temporal Difference learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.6-FA.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Function approximation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/2.7-NN.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Model-free RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.1-DQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Q-Learning (DQN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.2-BeyondDQN.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Beyond DQN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.3-PG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Policy gradient (PG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.4-A3C.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Advantage actor-critic (A2C, A3C)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.5-DDPG.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Deep Deterministic Policy Gradient (DDPG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.6-PPO.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Natural gradients (TRPO, PPO)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/3.7-SAC.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Maximum Entropy RL (SAC)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Model-based RL</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.1-MB.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Model-based RL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.2-LearnedModels.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Learned world models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.3-AlphaGo.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AlphaGo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/4.4-SR.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Successor representations</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Outlook</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/5.1-Outlook.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Outlook</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Exercises</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/Content.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/2-Numpy-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Numpy and Matplotlib</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/3-Sampling-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sampling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/4-Bandits-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/5-Bandits2-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Bandits - part 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/6-DP-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/7-Gym-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Gym environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/8-MonteCarlo-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Monte-Carlo control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/9-TD-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Q-learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/10-Eligibilitytraces-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Eligibility traces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/11-Keras-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Keras tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/12-DQN-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DQN</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#feedforward-neural-networks" id="toc-feedforward-neural-networks" class="nav-link active" data-scroll-target="#feedforward-neural-networks">Feedforward neural networks</a></li>
+  <li><a href="#convolutional-neural-networks" id="toc-convolutional-neural-networks" class="nav-link" data-scroll-target="#convolutional-neural-networks">Convolutional neural networks</a></li>
+  <li><a href="#autoencoders" id="toc-autoencoders" class="nav-link" data-scroll-target="#autoencoders">Autoencoders</a></li>
+  <li><a href="#recurrent-neural-networks" id="toc-recurrent-neural-networks" class="nav-link" data-scroll-target="#recurrent-neural-networks">Recurrent neural networks</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-title">Deep learning</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Slides: <a href="../slides/2.7-DeepNetworks.html" target="_blank">html</a> <a href="../slides/pdf/2.7-DeepNetworks.pdf" target="_blank">pdf</a></p>
+<section id="feedforward-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="feedforward-neural-networks">Feedforward neural networks</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/pVneu-1EYdI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>An <strong>artificial neural network</strong> (ANN) is a cascade of <strong>fully-connected</strong> (FC) layers of artificial neurons.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/shallowdeep.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Shallow vs.&nbsp;deep neural networks.</figcaption><p></p>
+</figure>
+</div>
+<p>Each layer <span class="math inline">k</span> transforms an input vector <span class="math inline">\mathbf{h}_{k-1}</span> into an output vector <span class="math inline">\mathbf{h}_{k}</span> using a weight matrix <span class="math inline">W_k</span>, a bias vector <span class="math inline">\mathbf{b}_k</span> and an activation function <span class="math inline">f()</span>.</p>
+<p><span class="math display">\mathbf{h}_{k} = f(W_k \times \mathbf{h}_{k-1} + \mathbf{b}_k)</span></p>
+<p>Overall, ANNs are <strong>non-linear parameterized function estimators</strong> from the inputs <span class="math inline">\mathbf{x}</span> to the outputs <span class="math inline">\mathbf{y}</span> with parameters <span class="math inline">\theta</span> (all weight matrices and biases).</p>
+<p><span class="math display">\mathbf{y} = F_\theta (\mathbf{x})</span></p>
+<p>ANNs can be used for both <strong>regression</strong> (continuous outputs) and <strong>classification</strong> (discrete outputs) tasks. In supervised learning, we have a fixed <strong>training set</strong> <span class="math inline">\mathcal{D}</span> of <span class="math inline">N</span> samples <span class="math inline">(\mathbf{x}_t, \mathbf{t}_i)</span>, where <span class="math inline">t_i</span> is the <strong>desired output</strong> or <strong>target</strong>.</p>
+<ul>
+<li><p><strong>Regression:</strong></p>
+<ul>
+<li><p>The output layer uses a <strong>linear</strong> activation function: <span class="math inline">f(x) = x</span></p></li>
+<li><p>The network minimizes the <strong>mean square error</strong> (mse) of the model on the training set:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ ||\mathbf{t} - \mathbf{y}||^2 ]</span></p></li>
+<li><p><strong>Classification:</strong></p>
+<ul>
+<li><p>The output layer uses the <strong>softmax</strong> operator to produce a probabilty distribution: <span class="math inline">y_j = \frac{e^{z_j}}{\sum_k e^{z_k}}</span></p></li>
+<li><p>The network minimizes the <strong>cross-entropy</strong> or <strong>negative log-likelihood</strong> of the model on the training set:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \mathbf{t} \, \log \mathbf{y} ]</span></p></li>
+</ul>
+<p>The cross-entropy between two probability distributions <span class="math inline">X</span> and <span class="math inline">Y</span> measures their similarity:</p>
+<p><span class="math display">
+    H(X, Y) = \mathbb{E}_{x \sim X}[- \log P(Y=x)]
+</span></p>
+<p>It measures whether samples from <span class="math inline">X</span> are likely under <span class="math inline">Y</span>? Minimizing the cross-entropy makes the two distributions equal almost anywhere.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/crossentropy.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The cross-entropy measures the similarity of the two probability distributions.</figcaption><p></p>
+</figure>
+</div>
+<p>In supervised learning, the targets <span class="math inline">\mathbf{t}</span> are fixed <strong>one-hot encoded vectors</strong>.</p>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \sum_j t_j \, \log y_{j} ]</span></p>
+<p>But it could be any target distribution.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/crossentropy-animation.gif" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Cross-entropy between multinomial distributions.</figcaption><p></p>
+</figure>
+</div>
+<p>In both cases, we want to minimize the loss variant by applying <strong>Stochastic Gradient Descent</strong> (SGD) or a variant (Adam, RMSprop).</p>
+<p><span class="math display">
+    \Delta \theta = - \eta \, \nabla_\theta \mathcal{L}(\theta)
+</span></p>
+<p>The question is how to compute the <strong>gradient of the loss function</strong> w.r.t the parameters <span class="math inline">\theta</span>. For both the mse and cross-entropy loss functions, we have:</p>
+<p><span class="math display">\nabla_\theta \mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [- (\mathbf{t} - \mathbf{y}) \, \nabla_\theta \, \mathbf{y}]</span></p>
+<p>There is an algorithm to compute efficiently the gradient of the output w.r.t the parameters: <strong>backpropagation</strong> (see Neurocomputing). In deep RL, we do not care about backprop: tensorflow or pytorch do it for us.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/deeprl.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Principle of deep reinforcement learning.</figcaption><p></p>
+</figure>
+</div>
+<p>There are three aspects to consider when building a neural network:</p>
+<ol type="1">
+<li><p><strong>Architecture:</strong> how many layers, what type of layers, how many neurons, etc.</p>
+<ul>
+<li>Task-dependent: each RL task will require a different architecture. Not our focus.</li>
+</ul></li>
+<li><p><strong>Loss function:</strong> what should the network do?</p>
+<ul>
+<li>Central to deep RL!</li>
+</ul></li>
+<li><p><strong>Update rule</strong> how should we update the parameters <span class="math inline">\theta</span> to minimize the loss function? SGD, backprop.</p>
+<ul>
+<li>Not really our problem, but see <em>natural gradients</em> later.</li>
+</ul></li>
+</ol>
+</section>
+<section id="convolutional-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="convolutional-neural-networks">Convolutional neural networks</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/t244PS_tZtY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>When using images as inputs, <strong>fully-connected networks</strong> (FCN) would have too many weights: slow learning and overfitting.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/fullyconnected.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Fully-connected layers necessitate too many parameters on images.</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Convolutional layers</strong> reduce the number of weights by <strong>reusing</strong> weights at different locations. This the principle of a convolution, which leads to fast and efficient learning.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/convolutional.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Convolutional layers share weights on the image.</figcaption><p></p>
+</figure>
+</div>
+<p>A <strong>convolutional layer</strong> extracts <strong>features</strong> of its inputs. <span class="math inline">d</span> filters are defined with very small sizes (3x3, 5x5…). Each filter is convoluted over the input image (or the previous layer) to create a <strong>feature map</strong>. The set of <span class="math inline">d</span> feature maps becomes a new 3D structure: a <strong>tensor</strong>. If the input image is 32x32x3, the resulting tensor will be 32x32xd. The convolutional layer has only very few parameters: each feature map has 3x3 values in the filter and a bias, i.e.&nbsp;10 parameters. The convolution operation is <strong>differentiable</strong>: backprop will work.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/depthcol.jpeg" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Convolutional layer. Source: <a href="http://cs231n.github.io/convolutional-networks/" class="uri">http://cs231n.github.io/convolutional-networks/</a></figcaption><p></p>
+</figure>
+</div>
+<p>The number of elements in a convolutional layer is still too high. We need to reduce the spatial dimension of a convolutional layer by <strong>downsampling</strong> it. For each feature, a <strong>max-pooling</strong> layer takes the maximum value of a feature for each subregion of the image (mostly 2x2). Pooling allows translation invariance: the same input pattern will be detected whatever its position in the input image. Max-pooling is also differentiable.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/maxpooling.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Convolutional layer. Source: <a href="http://cs231n.github.io/convolutional-networks/" class="uri">http://cs231n.github.io/convolutional-networks/</a></figcaption><p></p>
+</figure>
+</div>
+<p>A <strong>convolutional neural network</strong> (CNN) is a cascade of convolution and pooling operations, extracting layer by layer increasingly complex features. The spatial dimensions decrease after each pooling operation, but the number of extracted features increases after each convolution. One usually stops when the spatial dimensions are around 7x7. The last layers are fully connected. Can be used for regression and classification depending on the output layer and the loss function. Training a CNN uses backpropagation all along: the convolution and pooling operations are differentiable.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/lenet.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Convolutional neural network.</figcaption><p></p>
+</figure>
+</div>
+<p>The only thing we need to know is that CNNs are non-linear function approximators that work well with images.</p>
+<p><span class="math display">\mathbf{y} = F_\theta (\mathbf{x})</span></p>
+<p>The convolutional layers <strong>extract complex features</strong> from the images through learning. The last FC layers allow to approximate values (regression) or probability distributions (classification).</p>
+</section>
+<section id="autoencoders" class="level2">
+<h2 class="anchored" data-anchor-id="autoencoders">Autoencoders</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/IqrEdV9ejO8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>The problem with FCN and CNN is that they <strong>extract features</strong> in supervised learning tasks: Need for a lot of annotated data (image, label). <strong>Autoencoders</strong> allows <strong>unsupervised learning</strong>, as they only need inputs (images). Their task is to <strong>reconstruct</strong> the input:</p>
+<p><span class="math display">\mathbf{y} = \mathbf{\tilde{x}} \approx \mathbf{x}</span></p>
+<p>The <strong>reconstruction loss</strong> is simply the <strong>mse</strong> between the input and its reconstruction.</p>
+<p><span class="math display">
+    \mathcal{L}_\text{autoencoder}(\theta) = \mathbb{E}_{\mathbf{x} \in \mathcal{D}} [ ||\mathbf{\tilde{x}} - \mathbf{x}||^2 ]
+</span></p>
+<p>Apart from the loss function, they are trained as regular NNs. Autoencoders consists of:</p>
+<ul>
+<li><p>the <strong>encoder</strong>: from the input <span class="math inline">\mathbf{x}</span> to the <strong>latent space</strong> <span class="math inline">\mathbf{z}</span>.</p></li>
+<li><p>the <strong>decoder</strong>: from the latent space <span class="math inline">\mathbf{z}</span> to the reconstructed input <span class="math inline">\mathbf{\tilde{x}}</span>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/autoencoder-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Autoencoder. Source: <a href="https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html" class="uri">https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html</a></figcaption><p></p>
+</figure>
+</div>
+<p>The <strong>latent space</strong> <span class="math inline">\mathbf{z}</span> is a <strong>compressed representation</strong> (bottleneck) of the inputs <span class="math inline">\mathbf{x}</span>. It has to learn to compress efficiently the inputs without losing too much information, in order to reconstruct the inputs: Dimensionality reduction, unsupervised feature extraction.</p>
+<p>In deep RL, we can construct the feature vector with an autoencoder. The autoencoder can be trained offline with a random agent or online with the current policy (auxiliary loss).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/autoencoder-RL.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Autoencoders can be used in RL to find a feature space where linear FA can apply easily.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="recurrent-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="recurrent-neural-networks">Recurrent neural networks</h2>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/dkxIqBjldtY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>FCN, CNN and AE are <strong>feedforward neural networks</strong>: they transform an input <span class="math inline">\mathbf{x}</span> into an output <span class="math inline">\mathbf{y}</span>:</p>
+<p><span class="math display">\mathbf{y} = F_\theta(\mathbf{x})</span></p>
+<p>If you present a sequence of inputs <span class="math inline">\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t</span> to a feedforward network, the outputs will be independent from each other:</p>
+<p><span class="math display">\mathbf{y}_0 = F_\theta(\mathbf{x}_0)</span> <span class="math display">\mathbf{y}_1 = F_\theta(\mathbf{x}_1)</span> <span class="math display">\dots</span> <span class="math display">\mathbf{y}_t = F_\theta(\mathbf{x}_t)</span></p>
+<p>The output <span class="math inline">\mathbf{y}_t</span> does <strong>not</strong> depend on the history of inputs <span class="math inline">\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_{t-1}</span>. This not always what you want. If your inputs are frames of a video, the correct response at time <span class="math inline">t</span> might also depend on previous frames. The task of the NN could be to explain what happens at each frame. As we saw, a single frame is often not enough to predict the future (<strong>Markov property</strong>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/RNN-rolled.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption">Recurrent neural network. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
+</figure>
+</div>
+<p>A <strong>recurrent neural network</strong> (RNN) uses it previous output as an additional input (<em>context</em>). All vectors have a time index <span class="math inline">t</span> denoting the time at which this vector was computed. The input vector at time <span class="math inline">t</span> is <span class="math inline">\mathbf{x}_t</span>, the output vector is <span class="math inline">\mathbf{h}_t</span>:</p>
+<p><span class="math display">
+    \mathbf{h}_t = f(W_x \times \mathbf{x}_t + W_h \times \mathbf{h}_{t-1} + \mathbf{b})
+</span></p>
+<p>The input <span class="math inline">\mathbf{x}_t</span> and previous output <span class="math inline">\mathbf{h}_{t-1}</span> are multiplied by <strong>learnable weights</strong>:</p>
+<ul>
+<li><span class="math inline">W_x</span> is the input weight matrix.</li>
+<li><span class="math inline">W_h</span> is the recurrent weight matrix.</li>
+</ul>
+<p>This is equivalent to a deep neural network taking the whole history <span class="math inline">\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t</span> as inputs, but reusing weights between two time steps. The weights are trainable using <strong>backpropagation through time</strong> (BPTT). A RNN can learn the <strong>temporal dependencies</strong> between inputs.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/RNN-unrolled.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Recurrent neural network, unrolled. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
+</figure>
+</div>
+<p>A popular variant of RNN is <strong>LSTM</strong> (long short-term memory). In addition to the input <span class="math inline">\mathbf{x}_t</span> and output <span class="math inline">\mathbf{h}_t</span>, it also has a <strong>state</strong> (or <strong>memory</strong> or <strong>context</strong>) <span class="math inline">\mathbf{C}_t</span> which is maintained over time. It also contains three multiplicative <strong>gates</strong>:</p>
+<ul>
+<li>The <strong>input gate</strong> controls which inputs should enter the memory.</li>
+<li>The <strong>forget gate</strong> controls which memory should be forgotten.</li>
+<li>The <strong>output gate</strong> controls which part of the memory should be used to produce the output.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/LSTM-cell2.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">LSTM cell. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
+</figure>
+</div>
+<p>An obvious use case of RNNs in deep RL is for POMDP (partially observable MDP). If the individual states <span class="math inline">s_t</span> do not have the Markov property, the output of a LSTM does: The output of the RNN is a representation of the complete history <span class="math inline">s_0, s_1, \ldots, s_t</span>. We can apply RL on the output of a RNN and solve POMDPs for free!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/capture-flag2.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">LSTM layers help solving POMDP by concatenating and compressing the history. Source: <a href="https://deepmind.com/blog/article/capture-the-flag-science" class="uri">https://deepmind.com/blog/article/capture-the-flag-science</a></figcaption><p></p>
+</figure>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/2.6-FA.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Function approximation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../notes/3.1-DQN.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-title">Deep Q-Learning (DQN)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+  </div>
+</footer>
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
