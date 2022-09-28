@@ -64,11 +64,13 @@ The rollout policy and the value network are used to guide stochastic tree explo
 Supervised learning is used for bootstrapping the policy network.
 
 A **policy network** $\rho_\sigma$ is trained to predict human expert moves:
+
 * 30M expert games have been gathered: input is board configuration, output is the move played by the expert.
 * The CNN has 13 convolutional layers (5x5) and no max-pooling.
 * The accuracy at the end of learning is 57% (not bad, but not sufficient to beat experts).
 
 A faster **rollout policy network** $\rho_\pi$ is also trained:
+
 * Only one layer, views only part of the state (around the last opponent's move).
 * Prediction accuracy of 24%.
 * Inference time is only 2 $\mu$s,  instead of 3 ms for the policy network $\rho_\sigma$.
@@ -127,7 +129,8 @@ The tree therefore grows every time a **Monte-Carlo sampling** ("episode") is do
 
 #### Evaluaiton phase
 
-In the **evaluation phase**, the leaf $s_L$ is evaluated both by
+In the **evaluation phase**, the leaf $s_L$ is evaluated both by:
+
 * the RL value network $\nu_\theta$ (how likely can we win from that state),
 * a random rollout until the end of the game using the fast rollout policy $\rho_\pi$.
 

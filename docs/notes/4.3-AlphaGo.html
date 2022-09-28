@@ -490,8 +490,18 @@ Play Go in Chemnitz:
 </figure>
 </div>
 <p>Supervised learning is used for bootstrapping the policy network.</p>
-<p>A <strong>policy network</strong> <span class="math inline">\rho_\sigma</span> is trained to predict human expert moves: * 30M expert games have been gathered: input is board configuration, output is the move played by the expert. * The CNN has 13 convolutional layers (5x5) and no max-pooling. * The accuracy at the end of learning is 57% (not bad, but not sufficient to beat experts).</p>
-<p>A faster <strong>rollout policy network</strong> <span class="math inline">\rho_\pi</span> is also trained: * Only one layer, views only part of the state (around the last opponent’s move). * Prediction accuracy of 24%. * Inference time is only 2 <span class="math inline">\mu</span>s, instead of 3 ms for the policy network <span class="math inline">\rho_\sigma</span>.</p>
+<p>A <strong>policy network</strong> <span class="math inline">\rho_\sigma</span> is trained to predict human expert moves:</p>
+<ul>
+<li>30M expert games have been gathered: input is board configuration, output is the move played by the expert.</li>
+<li>The CNN has 13 convolutional layers (5x5) and no max-pooling.</li>
+<li>The accuracy at the end of learning is 57% (not bad, but not sufficient to beat experts).</li>
+</ul>
+<p>A faster <strong>rollout policy network</strong> <span class="math inline">\rho_\pi</span> is also trained:</p>
+<ul>
+<li>Only one layer, views only part of the state (around the last opponent’s move).</li>
+<li>Prediction accuracy of 24%.</li>
+<li>Inference time is only 2 <span class="math inline">\mu</span>s, instead of 3 ms for the policy network <span class="math inline">\rho_\sigma</span>.</li>
+</ul>
 <p>The SL policy network <span class="math inline">\rho_\sigma</span> is used to initialize the weights of the <strong>RL policy network</strong> <span class="math inline">\rho_\rho</span>, so it can start exploring from a decent policy.</p>
 <p>The RL policy network then plays against an <strong>older</strong> version of itself (<span class="math inline">\approx</span> target network) to improve its policy, updating the weights using <strong>Policy Gradient</strong> (REINFORCE):</p>
 <p><span class="math display">
@@ -539,7 +549,11 @@ Play Go in Chemnitz:
 </section>
 <section id="evaluaiton-phase" class="level4">
 <h4 class="anchored" data-anchor-id="evaluaiton-phase">Evaluaiton phase</h4>
-<p>In the <strong>evaluation phase</strong>, the leaf <span class="math inline">s_L</span> is evaluated both by * the RL value network <span class="math inline">\nu_\theta</span> (how likely can we win from that state), * a random rollout until the end of the game using the fast rollout policy <span class="math inline">\rho_\pi</span>.</p>
+<p>In the <strong>evaluation phase</strong>, the leaf <span class="math inline">s_L</span> is evaluated both by:</p>
+<ul>
+<li>the RL value network <span class="math inline">\nu_\theta</span> (how likely can we win from that state),</li>
+<li>a random rollout until the end of the game using the fast rollout policy <span class="math inline">\rho_\pi</span>.</li>
+</ul>
 <p>The random rollout consists in “emulating” the end of the game using the fast rollout policy network. The rollout is of course imperfect, but complements the value network: they are more accurate together than alone!</p>
 <p><span class="math display">V(s_L) = (1 - \lambda)  \, \nu_\theta(s_L) + \lambda \, R_\text{rollout} </span></p>
 <p>This solves the bias/variance trade-off.</p>
