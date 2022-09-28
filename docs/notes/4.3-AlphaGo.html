@@ -493,9 +493,7 @@ Play Go in Chemnitz:
 <p>A <strong>policy network</strong> <span class="math inline">\rho_\sigma</span> is trained to predict human expert moves: * 30M expert games have been gathered: input is board configuration, output is the move played by the expert. * The CNN has 13 convolutional layers (5x5) and no max-pooling. * The accuracy at the end of learning is 57% (not bad, but not sufficient to beat experts).</p>
 <p>A faster <strong>rollout policy network</strong> <span class="math inline">\rho_\pi</span> is also trained: * Only one layer, views only part of the state (around the last opponent’s move). * Prediction accuracy of 24%. * Inference time is only 2 <span class="math inline">\mu</span>s, instead of 3 ms for the policy network <span class="math inline">\rho_\sigma</span>.</p>
 <p>The SL policy network <span class="math inline">\rho_\sigma</span> is used to initialize the weights of the <strong>RL policy network</strong> <span class="math inline">\rho_\rho</span>, so it can start exploring from a decent policy.</p>
-<ul>
-<li>The RL policy network then plays against an <strong>older</strong> version of itself (<span class="math inline">\approx</span> target network) to improve its policy, updating the weights using <strong>Policy Gradient</strong> (REINFORCE):</li>
-</ul>
+<p>The RL policy network then plays against an <strong>older</strong> version of itself (<span class="math inline">\approx</span> target network) to improve its policy, updating the weights using <strong>Policy Gradient</strong> (REINFORCE):</p>
 <p><span class="math display">
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, R ]
 </span></p>
@@ -525,7 +523,12 @@ Play Go in Chemnitz:
 <p>The final AlphaGo player uses <strong>Monte-Carlo Tree Search</strong> (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions. The game tree is traversed depth-first from the current state, but the order of the visits depends on the value of the transition. MCTS was previously the standard approach for Go AIs, but based on expert moves only, not deep networks. One step of MCTS consists of four phases:</p>
 <section id="selection-phase" class="level4">
 <h4 class="anchored" data-anchor-id="selection-phase">Selection phase</h4>
-<p>In the <strong>selection phase</strong>, a path is found in the tree of possible actions using <strong>Upper Confidence Bound</strong> (UCB). The probability of selecting an action when sampling the tree depends on: * Its Q-value <span class="math inline">Q(s, a)</span> (as learned by MCTS): how likely this action leads to winning. * Its prior probability: how often human players would play it, given by the SL policy network <span class="math inline">\rho_\sigma</span>. * Its number of visits <span class="math inline">N(s, a)</span>: this ensures exploration during the sampling.</p>
+<p>In the <strong>selection phase</strong>, a path is found in the tree of possible actions using <strong>Upper Confidence Bound</strong> (UCB). The probability of selecting an action when sampling the tree depends on:</p>
+<ul>
+<li>Its Q-value <span class="math inline">Q(s, a)</span> (as learned by MCTS): how likely this action leads to winning.</li>
+<li>Its prior probability: how often human players would play it, given by the SL policy network <span class="math inline">\rho_\sigma</span>.</li>
+<li>Its number of visits <span class="math inline">N(s, a)</span>: this ensures exploration during the sampling.</li>
+</ul>
 <p><span class="math display">a_t = \text{argmax}_a \, Q(s, a) + K \cdot \frac{P(s, a)}{1 + N(s, a)}</span></p>
 </section>
 <section id="expansion-phase" class="level4">
@@ -536,7 +539,7 @@ Play Go in Chemnitz:
 </section>
 <section id="evaluaiton-phase" class="level4">
 <h4 class="anchored" data-anchor-id="evaluaiton-phase">Evaluaiton phase</h4>
-<p>In the <strong>evaluation phase</strong>, the leaf <span class="math inline">s_L</span> is evaluated both by * the RL value network <span class="math inline">\nu_\theta</span> (how likely can we win from that state) * a random rollout until the end of the game using the fast rollout policy <span class="math inline">\rho_\pi</span>.</p>
+<p>In the <strong>evaluation phase</strong>, the leaf <span class="math inline">s_L</span> is evaluated both by * the RL value network <span class="math inline">\nu_\theta</span> (how likely can we win from that state), * a random rollout until the end of the game using the fast rollout policy <span class="math inline">\rho_\pi</span>.</p>
 <p>The random rollout consists in “emulating” the end of the game using the fast rollout policy network. The rollout is of course imperfect, but complements the value network: they are more accurate together than alone!</p>
 <p><span class="math display">V(s_L) = (1 - \lambda)  \, \nu_\theta(s_L) + \lambda \, R_\text{rollout} </span></p>
 <p>This solves the bias/variance trade-off.</p>
@@ -590,7 +593,10 @@ But is Go that hard compared to robotics?
 <p></p><figcaption class="figure-caption">Architecture of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<p>The RL policy network uses MCTS to select moves, not a softmax-like selection as in AlphaGo. The policy and value networks are merged into a <strong>two-headed monster</strong>: the convolutional residual layers are shared to predict both: * The policy <span class="math inline">\pi_\theta(s)</span>, which is only used to guide MCTS (prior of UCB).</p>
+<p>The RL policy network uses MCTS to select moves, not a softmax-like selection as in AlphaGo. The policy and value networks are merged into a <strong>two-headed monster</strong>: the convolutional residual layers are shared to predict both:</p>
+<ul>
+<li>The policy <span class="math inline">\pi_\theta(s)</span>, which is only used to guide MCTS (prior of UCB).</li>
+</ul>
 <p><span class="math display">a_t = \text{argmax}_a \, Q(s, a) + K \cdot \frac{\pi_\theta(s, a)}{1 + N(s, a)}</span></p>
 <ul>
 <li>The state value <span class="math inline">V_\varphi(s)</span> for the value of the leaves (no fast rollout).</li>
