@@ -127,7 +127,7 @@ $$s_{t+1} = f(s_t, a_t)$$
 The tree therefore grows every time a **Monte-Carlo sampling** ("episode") is done.
 
 
-#### Evaluaiton phase
+#### Evaluation phase
 
 In the **evaluation phase**, the leaf $s_L$ is evaluated both by:
 
