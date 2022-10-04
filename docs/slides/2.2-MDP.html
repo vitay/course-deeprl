@@ -812,8 +812,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 
 <section id="why-the-reward-on-the-long-term" class="title-slide slide level1 center">
 <h1>Why the reward on the long term?</h1>
-
-<img data-src="img/return-example.svg" style="width:80.0%" class="r-stretch quarto-figure-center"><ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/return-example.svg" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
 <li><p>Selecting the action <span class="math inline">a_1</span> in <span class="math inline">s_1</span> does not bring reward immediately (<span class="math inline">r_1 = 0</span>) but allows to reach <span class="math inline">s_5</span> in the future and get a reward of 10.</p></li>
 <li><p>Selecting <span class="math inline">a_2</span> in <span class="math inline">s_1</span> brings immediately a reward of 1, but that will be all.</p></li>
 <li><p><span class="math inline">a_1</span> is <strong>better</strong> than <span class="math inline">a_2</span>, because it will bring more reward <strong>on the long term</strong>.</p></li>
@@ -822,8 +828,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 
 <section id="why-the-reward-on-the-long-term-1" class="title-slide slide level1 center">
 <h1>Why the reward on the long term?</h1>
-
-<img data-src="img/return-example.svg" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/return-example.svg" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
 <li>When selecting <span class="math inline">a_1</span> in <span class="math inline">s_1</span>, the discounted return is:</li>
 </ul>
 <p><span class="math display">
@@ -919,8 +931,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </ul>
 </div>
 </div>
-
-<img data-src="img/recyclingrobot.png" style="width:70.0%" class="r-stretch quarto-figure-center"></section>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/recyclingrobot.png" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</section>
 
 <section id="example-the-recycling-robot-mdp-2" class="title-slide slide level1 center">
 <h1>Example: the recycling robot MDP</h1>
@@ -1188,11 +1206,11 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li>We can note that the return at time <span class="math inline">t</span> depends on the <strong>immediate reward</strong> <span class="math inline">r_{t+1}</span> and the return at the next time step <span class="math inline">t+1</span>:</li>
 </ul>
 <p><span class="math display">
-\begin{eqnarray*}
-    R_t &amp;=&amp; r_{t+1} + \gamma \, r_{t+2} +  \gamma^2  \, r_{t+3} + \dots + \gamma^k \, r_{t+k+1} + \dots \\
-        &amp;=&amp; r_{t+1} + \gamma \, ( r_{t+2} +  \gamma \, r_{t+3} + \dots + \gamma^{k-1} \, r_{t+k+1} + \dots) \\
-        &amp;=&amp; r_{t+1} + \gamma \,  R_{t+1} \\
-\end{eqnarray*}
+\begin{aligned}
+    R_t &amp;= r_{t+1} + \gamma \, r_{t+2} +  \gamma^2  \, r_{t+3} + \dots + \gamma^k \, r_{t+k+1} + \dots \\
+        &amp;= r_{t+1} + \gamma \, ( r_{t+2} +  \gamma \, r_{t+3} + \dots + \gamma^{k-1} \, r_{t+k+1} + \dots) \\
+        &amp;= r_{t+1} + \gamma \,  R_{t+1} \\
+\end{aligned}
 </span></p>
 <ul>
 <li>When taking the mathematical expectation of that identity, we obtain:</li>
@@ -1255,10 +1273,10 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li>The same recursive relationship stands for <span class="math inline">Q^{\pi}(s, a)</span>:</li>
 </ul>
 <p><span class="math display">
-\begin{eqnarray*}
-        Q^{\pi}(s, a)  &amp;=&amp; \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ] \\
-                    &amp;=&amp;  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, \sum_{a' \in \mathcal{A}(s')} \pi(s', a') \, Q^{\pi} (s', a')]
-\end{eqnarray*}
+\begin{aligned}
+        Q^{\pi}(s, a)  &amp;= \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ] \\
+                    &amp;=  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, \sum_{a' \in \mathcal{A}(s')} \pi(s', a') \, Q^{\pi} (s', a')]
+\end{aligned}
 </span></p>
 <p>which is called the <strong>Bellman equation</strong> for <span class="math inline">Q^{\pi}</span>.</p>
 <ul>

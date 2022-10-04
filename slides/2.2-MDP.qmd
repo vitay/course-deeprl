@@ -481,7 +481,9 @@ $$ R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} $$
 
 # Why the reward on the long term?
 
-![](img/return-example.svg){width=80%}
+::: {}
+![](img/return-example.svg){width=60%}
+:::
 
 * Selecting the action $a_1$ in $s_1$ does not bring reward immediately ($r_1 = 0$) but allows to reach $s_5$ in the future and get a reward of 10.
 
@@ -492,7 +494,9 @@ $$ R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} $$
 
 # Why the reward on the long term?
 
+::: {}
 ![](img/return-example.svg){width=60%}
+:::
 
 * When selecting $a_1$ in $s_1$, the discounted return is:
 
@@ -609,8 +613,9 @@ while it is $R= 1$ for the action $a_2$.
 :::
 :::
 
-
+::: {}
 ![](img/recyclingrobot.png){width=70%}
+:::
 
 
 # Example: the recycling robot MDP
@@ -820,11 +825,11 @@ $$
 * We can note that the return at time $t$ depends on the **immediate reward** $r_{t+1}$ and the return at the next time step $t+1$:
 
 $$
-\begin{eqnarray*}
-    R_t &=& r_{t+1} + \gamma \, r_{t+2} +  \gamma^2  \, r_{t+3} + \dots + \gamma^k \, r_{t+k+1} + \dots \\
-        &=& r_{t+1} + \gamma \, ( r_{t+2} +  \gamma \, r_{t+3} + \dots + \gamma^{k-1} \, r_{t+k+1} + \dots) \\
-        &=& r_{t+1} + \gamma \,  R_{t+1} \\
-\end{eqnarray*}
+\begin{aligned}
+    R_t &= r_{t+1} + \gamma \, r_{t+2} +  \gamma^2  \, r_{t+3} + \dots + \gamma^k \, r_{t+k+1} + \dots \\
+        &= r_{t+1} + \gamma \, ( r_{t+2} +  \gamma \, r_{t+3} + \dots + \gamma^{k-1} \, r_{t+k+1} + \dots) \\
+        &= r_{t+1} + \gamma \,  R_{t+1} \\
+\end{aligned}
 $$
 
 * When taking the mathematical expectation of that identity, we obtain:
@@ -884,10 +889,10 @@ $$
 * The same recursive relationship stands for $Q^{\pi}(s, a)$:
 
 $$
-\begin{eqnarray*}
-        Q^{\pi}(s, a)  &=& \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ] \\
-                    &=&  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, \sum_{a' \in \mathcal{A}(s')} \pi(s', a') \, Q^{\pi} (s', a')]
-\end{eqnarray*}
+\begin{aligned}
+        Q^{\pi}(s, a)  &= \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ] \\
+                    &=  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, \sum_{a' \in \mathcal{A}(s')} \pi(s', a') \, Q^{\pi} (s', a')]
+\end{aligned}
 $$
 
 which is called the **Bellman equation** for $Q^{\pi}$.
