@@ -620,6 +620,12 @@ Note
 \end{aligned}
 </span></p>
 <p>This means that the current state representation <span class="math inline">s</span> contains enough information to predict the probability of arriving in the next state <span class="math inline">s'</span> given the chosen action <span class="math inline">a</span>. When the Markovian property is not met, we have a <strong>Partially-Observable Markov Decision Process</strong> (POMDP).</p>
+<p>In a POMDP, the agent does not have access to the true state <span class="math inline">s_t</span> of the environment, but only <strong>observations</strong> <span class="math inline">o_t</span>. Observations are partial views of the state, without the Markov property. The dynamics of the environment (transition probabilities, reward expectations) only depend on the state, not the observations. The agent can only make decisions (actions) based on the sequence of observations, as it does not have access to the state directly (Plato’s cavern).</p>
+<p>In a POMDP, the state <span class="math inline">s_t</span> of the agent is implicitly the concatenation of the past observations and actions:</p>
+<p><span class="math display">
+s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
+</span></p>
+<p>Under conditions, this inferred state can have the Markov property and the POMDP is solvable.</p>
 </section>
 <section id="returns" class="level4">
 <h4 class="anchored" data-anchor-id="returns">Returns</h4>
