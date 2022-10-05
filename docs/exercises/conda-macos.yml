@@ -1,0 +1,16 @@
+name: deeprl
+channels:
+  - apple
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - numpy 
+  - matplotlib
+  - jupyter
+  - tensorflow-deps # macos only
+  - pip:
+    - tensorflow-macos # macos only
+    - tensorflow-metal # macos only
+    - gym[all]

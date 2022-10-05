@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 28&nbsp; Dynamic programming</title>
+<title>Deep Reinforcement Learning - 29&nbsp; Dynamic programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -351,6 +351,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../exercises/Installation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Python installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../exercises/1-Python-solution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Introduction To Python</span></a>
   </div>
 </li>
@@ -621,8 +626,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You can then access the individual values with <code>V[s['high']]</code> or <code>Q[s['low'], a['wait']]</code>.</p>
 <p>We can now evaluate a policy <span class="math inline">\pi</span>. In dynamic programming, the policies are deterministic, as we want to estimate the optimal policy.</p>
 <p>To implement the policy, we just need to assign the index of an action to each state, i.e.&nbsp;<span class="math inline">\pi(s)</span>. The following cell creates an initial policy <span class="math inline">\pi</span> where the agent <strong>searches</strong> in both states high and low. We here make sure that the array contains integers (0, 1 or 2), but that is not even necessary.</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Q:</strong> Evaluate this policy using iterative policy evaluation.</p>
 <p>We would normally only need to update the V-value of the two states using:</p>
@@ -639,7 +644,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </span></p>
 <p>These updates should normally be applied until the V-values converge. For simplicity, we could decide to simply apply 50 updates or so, and hope that it is enough.</p>
 <p>Record the V-value of the two states after each update and plot them.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -713,11 +718,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pi_old <span class="op">=</span> pi</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pi[s[<span class="st">'high'</span>]] <span class="op">=</span> a[<span class="st">'search'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>pi_old</code> will also change! You need to <code>.copy()</code> the policy.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>V_high_history <span class="op">=</span> []</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>V_low_history <span class="op">=</span> []</span>
@@ -801,11 +806,11 @@ pi(low)= 2
 </ul></li>
 </ul>
 <p><strong>Q:</strong> Modify your previous code to implement value iteration. Use a fixed number of iterations (e.g.&nbsp;50) as in policy evaluation. Visualize the evolution of the V-values and print the greedy policy after each iteration. Conclude.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>V_high_history <span class="op">=</span> []</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>V_low_history <span class="op">=</span> []</span>
@@ -859,7 +864,7 @@ Q= [[13.4228186  11.39597296  0.        ]
 </div>
 </div>
 <p><strong>Q:</strong> Change the value of the discount factor <span class="math inline">\gamma =0.3</span> so that the agent becomes short-sighted: it only takes into account the immediate rewards, but forgets about the long-term. Does it change the strategy? Explain why.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transition probabilities</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.3</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.2</span></span>
@@ -874,7 +879,7 @@ Q= [[13.4228186  11.39597296  0.        ]
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>V_high_history <span class="op">=</span> []</span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>V_low_history <span class="op">=</span> []</span>
@@ -929,7 +934,7 @@ Q= [[7.25274725 4.17582418 0.        ]
 </div>
 <p><strong>A:</strong> the agent now decides to wait in the low state (r=2) instead of recharging (r=0) and then be in the high state (r=6). The agent is so greedy that it cannot stand not getting reward for one step, although he will collect much more reard later.</p>
 <p><strong>Q:</strong> Change <span class="math inline">\gamma</span> to 0.99 (far-sighted agent). What does it change and why?</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transition probabilities</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.3</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.2</span></span>
@@ -944,7 +949,7 @@ Q= [[7.25274725 4.17582418 0.        ]
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>V_high_history <span class="op">=</span> []</span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>V_low_history <span class="op">=</span> []</span>
@@ -1001,7 +1006,7 @@ Q= [[141.37219244 139.82818773   0.        ]
 <p><strong>Q:</strong> Change the parameters to:</p>
 <p><span class="math display">\alpha = 0.01 \quad \beta = 0.2 \quad \gamma = 0.7 \quad \mathcal{R}^{\text{search}} = 6 \quad  \mathcal{R}^{\text{wait}} = 5</span></p>
 <p>Find the optimal policy. What is the optimal action to be taken in the state <em>high</em>, although the probability to stay in this state is very small? Why?</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transition probabilities</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.2</span></span>
@@ -1016,7 +1021,7 @@ Q= [[141.37219244 139.82818773   0.        ]
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>V_high_history <span class="op">=</span> []</span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>V_low_history <span class="op">=</span> []</span>
@@ -1071,7 +1076,7 @@ Q= [[17.67371571 17.37160091  0.        ]
 </div>
 <p><strong>A:</strong> the agent now decides to wait in the low state and accumulate quite a lot of rewards (r=5, compared to 6 while searching). But it is still worth searching in the high state: even if we transition immediately into low with 99% probability, one still gets 6 instead of 5, so the return is higher than when waiting in high.</p>
 <p><strong>Q:</strong> Find a set of parameters where it would be optimal to search while in the <em>low</em> state.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transition probabilities</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.8</span></span>
@@ -1086,7 +1091,7 @@ Q= [[17.67371571 17.37160091  0.        ]
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> np.zeros(nb_states)</span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> np.zeros((nb_states, nb_actions))</span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span>np.<span class="bu">int</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.array([a[<span class="st">'search'</span>], a[<span class="st">'search'</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
 <span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>V_high_history <span class="op">=</span> []</span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>V_low_history <span class="op">=</span> []</span>

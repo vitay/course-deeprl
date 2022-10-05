@@ -1,0 +1,13 @@
+name: deeprl
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - matplotlib
+  - jupyter
+  - pip:
+    - tensorflow
+    - gym[all]
