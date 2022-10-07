@@ -11,6 +11,8 @@ Here are the main Python dependencies necessary for the exercises:
 
 If you are using Linux, you can probably install all the dependencies (except gym) from your package manager. For the others, use either Anaconda or Colab.
 
+{{< youtube j-fKyQFHJ88 >}}
+
 ## Anaconda
 
 ### Installing Anaconda
@@ -156,7 +158,15 @@ If you have a CUDA-capable NVIDIA graphical card, follow these instructions to i
 <https://www.tensorflow.org/install/pip>
 :::
 
+### Using notebooks
 
+When the installation is complete, you just need to download the Jupyter notebooks (.ipynb) on [this page](Content.qmd), activate your environment, and type:
+
+```bash
+jupyter lab name_of_the_notebook.ipynb
+```
+
+to open a browser tab with the notebook.
 
 ## Colab
 

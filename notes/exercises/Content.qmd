@@ -1,5 +1,7 @@
 # List of exercises
 
+{{< youtube dzdXpUCo0nw >}}
+
 You will find below links to download the notebooks for the exercises (which you have to fill) and their solution (which you can look at after you finished the exercise). It is recommended not to look at the solution while doing the exercise unless you are lost. 
 
 Alternatively, you can run the notebooks directly on Colab (<https://colab.research.google.com/>) if you have a Google account. 
@@ -21,7 +23,7 @@ This exercise is an introduction to Python for absolute beginners. If you alread
 
 **Presentation**
 
-{{< youtube lqJ-2Wrc5SI >}}
+{{< youtube _zKKnbxDOjA >}}
 
 **Commented solution**
 

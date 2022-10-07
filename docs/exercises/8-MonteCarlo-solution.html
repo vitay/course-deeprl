@@ -474,14 +474,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> google.colab</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> IN_COLAB:</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install gym <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> IN_COLAB:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install gym <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="the-taxi-environment" class="level2">
 <h2 class="anchored" data-anchor-id="the-taxi-environment">The taxi environment</h2>
@@ -497,19 +498,60 @@ NAME
     gym.envs.toy_text.taxi
 
 CLASSES
-    gym.envs.toy_text.discrete.DiscreteEnv(gym.core.Env)
+    gym.core.Env(typing.Generic)
         TaxiEnv
     
-    class TaxiEnv(gym.envs.toy_text.discrete.DiscreteEnv)
+    class TaxiEnv(gym.core.Env)
+     |  TaxiEnv(render_mode: Optional[str] = None)
+     |  
      |  The Taxi Problem
      |  from "Hierarchical Reinforcement Learning with the MAXQ Value Function Decomposition"
      |  by Tom Dietterich
      |  
-     |  Description:
-     |  There are four designated locations in the grid world indicated by R(ed), G(reen), Y(ellow), and B(lue). When the episode starts, the taxi starts off at a random square and the passenger is at a random location. The taxi drives to the passenger's location, picks up the passenger, drives to the passenger's destination (another one of the four specified locations), and then drops off the passenger. Once the passenger is dropped off, the episode ends.
+     |  ### Description
+     |  There are four designated locations in the grid world indicated by R(ed),
+     |  G(reen), Y(ellow), and B(lue). When the episode starts, the taxi starts off
+     |  at a random square and the passenger is at a random location. The taxi
+     |  drives to the passenger's location, picks up the passenger, drives to the
+     |  passenger's destination (another one of the four specified locations), and
+     |  then drops off the passenger. Once the passenger is dropped off, the episode ends.
      |  
-     |  Observations: 
-     |  There are 500 discrete states since there are 25 taxi positions, 5 possible locations of the passenger (including the case when the passenger is in the taxi), and 4 destination locations. 
+     |  Map:
+     |  
+     |      +---------+
+     |      |R: | : :G|
+     |      | : | : : |
+     |      | : : : : |
+     |      | | : | : |
+     |      |Y| : |B: |
+     |      +---------+
+     |  
+     |  ### Actions
+     |  There are 6 discrete deterministic actions:
+     |  - 0: move south
+     |  - 1: move north
+     |  - 2: move east
+     |  - 3: move west
+     |  - 4: pickup passenger
+     |  - 5: drop off passenger
+     |  
+     |  ### Observations
+     |  There are 500 discrete states since there are 25 taxi positions, 5 possible
+     |  locations of the passenger (including the case when the passenger is in the
+     |  taxi), and 4 destination locations.
+     |  
+     |  Note that there are 400 states that can actually be reached during an
+     |  episode. The missing states correspond to situations in which the passenger
+     |  is at the same location as their destination, as this typically signals the
+     |  end of an episode. Four additional states can be observed right after a
+     |  successful episodes, when both the passenger and the taxi are at the destination.
+     |  This gives a total of 404 reachable discrete states.
+     |  
+     |  Each state space is represented by the tuple:
+     |  (taxi_row, taxi_col, passenger_location, destination)
+     |  
+     |  An observation is an integer that encodes the corresponding state.
+     |  The state tuple can then be decoded with the "decode" method.
      |  
      |  Passenger locations:
      |  - 0: R(ed)
@@ -523,136 +565,151 @@ CLASSES
      |  - 1: G(reen)
      |  - 2: Y(ellow)
      |  - 3: B(lue)
-     |      
-     |  Actions:
-     |  There are 6 discrete deterministic actions:
-     |  - 0: move south
-     |  - 1: move north
-     |  - 2: move east 
-     |  - 3: move west 
-     |  - 4: pickup passenger
-     |  - 5: dropoff passenger
      |  
-     |  Rewards: 
-     |  There is a default per-step reward of -1,
-     |  except for delivering the passenger, which is +20,
-     |  or executing "pickup" and "drop-off" actions illegally, which is -10.
+     |  ### Info
      |  
+     |  ``step`` and ``reset()`` will return an info dictionary that contains "p" and "action_mask" containing
+     |      the probability that the state is taken and a mask of what actions will result in a change of state to speed up training.
      |  
-     |  Rendering:
-     |  - blue: passenger
-     |  - magenta: destination
-     |  - yellow: empty taxi
-     |  - green: full taxi
-     |  - other letters (R, G, Y and B): locations for passengers and destinations
+     |  As Taxi's initial state is a stochastic, the "p" key represents the probability of the
+     |  transition however this value is currently bugged being 1.0, this will be fixed soon.
+     |  As the steps are deterministic, "p" represents the probability of the transition which is always 1.0
      |  
+     |  For some cases, taking an action will have no effect on the state of the agent.
+     |  In v0.25.0, ``info["action_mask"]`` contains a np.ndarray for each of the action specifying
+     |  if the action will change the state.
      |  
-     |  state space is represented by:
-     |      (taxi_row, taxi_col, passenger_location, destination)
+     |  To sample a modifying action, use ``action = env.action_space.sample(info["action_mask"])``
+     |  Or with a Q-value based algorithm ``action = np.argmax(q_values[obs, np.where(info["action_mask"] == 1)[0]])``.
+     |  
+     |  ### Rewards
+     |  - -1 per step unless other reward is triggered.
+     |  - +20 delivering passenger.
+     |  - -10  executing "pickup" and "drop-off" actions illegally.
+     |  
+     |  ### Arguments
+     |  
+     |  ```
+     |  gym.make('Taxi-v3')
+     |  ```
+     |  
+     |  ### Version History
+     |  * v3: Map Correction + Cleaner Domain Description, v0.25.0 action masking added to the reset and step information
+     |  * v2: Disallow Taxi start location = goal location, Update Taxi observations in the rollout, Update Taxi reward threshold.
+     |  * v1: Remove (3,2) from locs, add passidx&lt;4 check
+     |  * v0: Initial versions release
      |  
      |  Method resolution order:
      |      TaxiEnv
-     |      gym.envs.toy_text.discrete.DiscreteEnv
      |      gym.core.Env
+     |      typing.Generic
      |      builtins.object
      |  
      |  Methods defined here:
      |  
-     |  __init__(self)
+     |  __init__(self, render_mode: Optional[str] = None)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  action_mask(self, state: int)
+     |      Computes an action mask for the action space using the state information.
+     |  
+     |  close(self)
+     |      Override close in your subclass to perform any necessary cleanup.
+     |      
+     |      Environments will automatically :meth:`close()` themselves when
+     |      garbage collected or when the program exits.
      |  
      |  decode(self, i)
      |  
      |  encode(self, taxi_row, taxi_col, pass_loc, dest_idx)
      |  
-     |  render(self, mode='human')
-     |      Renders the environment.
+     |  get_surf_loc(self, map_loc)
+     |  
+     |  render(self)
+     |      Compute the render frames as specified by render_mode attribute during initialization of the environment.
      |      
      |      The set of supported modes varies per environment. (And some
-     |      environments do not support rendering at all.) By convention,
-     |      if mode is:
+     |      third-party environments may not support rendering at all.)
+     |      By convention, if render_mode is:
      |      
-     |      - human: render to the current display or terminal and
-     |        return nothing. Usually for human consumption.
-     |      - rgb_array: Return an numpy.ndarray with shape (x, y, 3),
-     |        representing RGB values for an x-by-y pixel image, suitable
-     |        for turning into a video.
-     |      - ansi: Return a string (str) or StringIO.StringIO containing a
-     |        terminal-style text representation. The text can include newlines
-     |        and ANSI escape sequences (e.g. for colors).
+     |      - None (default): no render is computed.
+     |      - human: render return None.
+     |        The environment is continuously rendered in the current display or terminal. Usually for human consumption.
+     |      - rgb_array: return a single frame representing the current state of the environment.
+     |        A frame is a numpy.ndarray with shape (x, y, 3) representing RGB values for an x-by-y pixel image.
+     |      - rgb_array_list: return a list of frames representing the states of the environment since the last reset.
+     |        Each frame is a numpy.ndarray with shape (x, y, 3), as with `rgb_array`.
+     |      - ansi: Return a strings (str) or StringIO.StringIO containing a
+     |        terminal-style text representation for each time step.
+     |        The text can include newlines and ANSI escape sequences (e.g. for colors).
      |      
      |      Note:
-     |          Make sure that your class's metadata 'render.modes' key includes
-     |            the list of supported modes. It's recommended to call super()
-     |            in implementations to use the functionality of this method.
+     |          Make sure that your class's metadata 'render_modes' key includes
+     |          the list of supported modes. It's recommended to call super()
+     |          in implementations to use the functionality of this method.
+     |  
+     |  reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None)
+     |      Resets the environment to an initial state and returns the initial observation.
+     |      
+     |      This method can reset the environment's random number generator(s) if ``seed`` is an integer or
+     |      if the environment has not yet initialized a random number generator.
+     |      If the environment already has a random number generator and :meth:`reset` is called with ``seed=None``,
+     |      the RNG should not be reset. Moreover, :meth:`reset` should (in the typical use case) be called with an
+     |      integer seed right after initialization and then never again.
      |      
      |      Args:
-     |          mode (str): the mode to render with
+     |          seed (optional int): The seed that is used to initialize the environment's PRNG.
+     |              If the environment does not already have a PRNG and ``seed=None`` (the default option) is passed,
+     |              a seed will be chosen from some source of entropy (e.g. timestamp or /dev/urandom).
+     |              However, if the environment already has a PRNG and ``seed=None`` is passed, the PRNG will *not* be reset.
+     |              If you pass an integer, the PRNG will be reset even if it already exists.
+     |              Usually, you want to pass an integer *right after the environment has been initialized and then never again*.
+     |              Please refer to the minimal example above to see this paradigm in action.
+     |          options (optional dict): Additional information to specify how the environment is reset (optional,
+     |              depending on the specific environment)
      |      
-     |      Example:
      |      
-     |      class MyEnv(Env):
-     |          metadata = {'render.modes': ['human', 'rgb_array']}
+     |      Returns:
+     |          observation (object): Observation of the initial state. This will be an element of :attr:`observation_space`
+     |              (typically a numpy array) and is analogous to the observation returned by :meth:`step`.
+     |          info (dictionary):  This dictionary contains auxiliary information complementing ``observation``. It should be analogous to
+     |              the ``info`` returned by :meth:`step`.
+     |  
+     |  step(self, a)
+     |      Run one timestep of the environment's dynamics.
      |      
-     |          def render(self, mode='human'):
-     |              if mode == 'rgb_array':
-     |                  return np.array(...) # return RGB frame suitable for video
-     |              elif mode == 'human':
-     |                  ... # pop up a window and render
-     |              else:
-     |                  super(MyEnv, self).render(mode=mode) # just raise an exception
+     |      When end of episode is reached, you are responsible for calling :meth:`reset` to reset this environment's state.
+     |      Accepts an action and returns either a tuple `(observation, reward, terminated, truncated, info)`.
+     |      
+     |      Args:
+     |          action (ActType): an action provided by the agent
+     |      
+     |      Returns:
+     |          observation (object): this will be an element of the environment's :attr:`observation_space`.
+     |              This may, for instance, be a numpy array containing the positions and velocities of certain objects.
+     |          reward (float): The amount of reward returned as a result of taking the action.
+     |          terminated (bool): whether a `terminal state` (as defined under the MDP of the task) is reached.
+     |              In this case further step() calls could return undefined results.
+     |          truncated (bool): whether a truncation condition outside the scope of the MDP is satisfied.
+     |              Typically a timelimit, but could also be used to indicate agent physically going out of bounds.
+     |              Can be used to end the episode prematurely before a `terminal state` is reached.
+     |          info (dictionary): `info` contains auxiliary diagnostic information (helpful for debugging, learning, and logging).
+     |              This might, for instance, contain: metrics that describe the agent's performance state, variables that are
+     |              hidden from observations, or individual reward terms that are combined to produce the total reward.
+     |              It also can contain information that distinguishes truncation and termination, however this is deprecated in favour
+     |              of returning two booleans, and will be removed in a future version.
+     |      
+     |          (deprecated)
+     |          done (bool): A boolean value for if the episode has ended, in which case further :meth:`step` calls will return undefined results.
+     |              A done signal may be emitted for different reasons: Maybe the task underlying the environment was solved successfully,
+     |              a certain timelimit was exceeded, or the physics simulation has entered an invalid state.
      |  
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
      |  
-     |  metadata = {'render.modes': ['human', 'ansi']}
+     |  __parameters__ = ()
      |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from gym.envs.toy_text.discrete.DiscreteEnv:
-     |  
-     |  reset(self)
-     |      Resets the environment to an initial state and returns an initial
-     |      observation.
-     |      
-     |      Note that this function should not reset the environment's random
-     |      number generator(s); random variables in the environment's state should
-     |      be sampled independently between multiple calls to `reset()`. In other
-     |      words, each call of `reset()` should yield an environment suitable for
-     |      a new episode, independent of previous episodes.
-     |      
-     |      Returns:
-     |          observation (object): the initial observation.
-     |  
-     |  seed(self, seed=None)
-     |      Sets the seed for this env's random number generator(s).
-     |      
-     |      Note:
-     |          Some environments use multiple pseudorandom number generators.
-     |          We want to capture all such seeds used in order to ensure that
-     |          there aren't accidental correlations between multiple generators.
-     |      
-     |      Returns:
-     |          list&lt;bigint&gt;: Returns the list of seeds used in this env's random
-     |            number generators. The first value in the list should be the
-     |            "main" seed, or the value which a reproducer should pass to
-     |            'seed'. Often, the main seed equals the provided 'seed', but
-     |            this won't be true if seed=None, for example.
-     |  
-     |  step(self, a)
-     |      Run one timestep of the environment's dynamics. When end of
-     |      episode is reached, you are responsible for calling `reset()`
-     |      to reset this environment's state.
-     |      
-     |      Accepts an action and returns a tuple (observation, reward, done, info).
-     |      
-     |      Args:
-     |          action (object): an action provided by the agent
-     |      
-     |      Returns:
-     |          observation (object): agent's observation of the current environment
-     |          reward (float) : amount of reward returned after previous action
-     |          done (bool): whether the episode has ended, in which case further step() calls will return undefined results
-     |          info (dict): contains auxiliary diagnostic information (helpful for debugging, and sometimes learning)
+     |  metadata = {'render_fps': 4, 'render_modes': ['human', 'ansi', 'rgb_ar...
      |  
      |  ----------------------------------------------------------------------
      |  Methods inherited from gym.core.Env:
@@ -664,22 +721,16 @@ CLASSES
      |      Support with-statement for the environment.
      |  
      |  __str__(self)
-     |      Return str(self).
-     |  
-     |  close(self)
-     |      Override close in your subclass to perform any necessary cleanup.
-     |      
-     |      Environments will automatically close() themselves when
-     |      garbage collected or when the program exits.
+     |      Returns a string of the environment with the spec id if specified.
      |  
      |  ----------------------------------------------------------------------
      |  Readonly properties inherited from gym.core.Env:
      |  
      |  unwrapped
-     |      Completely unwrap this env.
+     |      Returns the base non-wrapped environment.
      |      
      |      Returns:
-     |          gym.Env: The base non-wrapped gym.Env instance
+     |          Env: The base non-wrapped gym.Env instance
      |  
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from gym.core.Env:
@@ -690,31 +741,53 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
      |  
+     |  np_random
+     |      Returns the environment's internal :attr:`_np_random` that if not set will initialise with a random seed.
+     |  
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from gym.core.Env:
      |  
-     |  action_space = None
+     |  __annotations__ = {'_np_random': typing.Optional[numpy.random._generat...
      |  
-     |  observation_space = None
+     |  __orig_bases__ = (typing.Generic[~ObsType, ~ActType],)
+     |  
+     |  render_mode = None
      |  
      |  reward_range = (-inf, inf)
      |  
      |  spec = None
+     |  
+     |  ----------------------------------------------------------------------
+     |  Class methods inherited from typing.Generic:
+     |  
+     |  __class_getitem__(params) from builtins.type
+     |  
+     |  __init_subclass__(*args, **kwargs) from builtins.type
+     |      This method is called when a class is subclassed.
+     |      
+     |      The default implementation does nothing. It may be
+     |      overridden to extend subclasses.
 
 DATA
     MAP = ['+---------+', '|R: | : :G|', '| : | : : |', '| : : : : |', '| ...
+    Optional = typing.Optional
+        Optional type.
+        
+        Optional[X] is equivalent to Union[X, None].
+    
+    WINDOW_SIZE = (550, 350)
 
 FILE
-    /usr/lib/python3.8/site-packages/gym/envs/toy_text/taxi.py
+    /Users/vitay/Applications/miniforge3/lib/python3.9/site-packages/gym/envs/toy_text/taxi.py
 
 </code></pre>
 </div>
 </div>
-<p>Let’s create the environment, initialize it and render the first state:</p>
+<p>Let’s create the environment, initialize it and render the first state. Note that in ‘ansi’ mode, you need to print what is returned by <code>render()</code>.</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> env.reset()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>env.render()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>state, info <span class="op">=</span> env.reset()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(env.render())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+
 |R: | : :G|
@@ -723,10 +796,11 @@ FILE
 | | : | : |
 |Y| : |B: |
 +---------+
+
 </code></pre>
 </div>
 </div>
-<p>The agent is the yellow square. It can move up, down, left or right if there is no wall (the pipes and dashes). Its goal is to pick clients at the blue location and drop them off at the pink location. These locations are fixed (R, G, B, Y), but which one is the pick-up location and which one is the drop-off destination changes between each episode.</p>
+<p>The agent is the black square. It can move up, down, left or right if there is no wall (the pipes and dashes). Its goal is to pick clients at the blue location and drop them off at the purple location. These locations are fixed (R, G, B, Y), but which one is the pick-up location and which one is the drop-off destination changes between each episode.</p>
 <p><strong>Q:</strong> Re-run the previous cell multiple times to observe the diversity of initial states.</p>
 <p>The following cell prints the action space of the environment:</p>
 <div class="cell" data-execution_count="4">
@@ -774,26 +848,26 @@ State: [3, 1, 2, 0]</code></pre>
 </ul>
 <p>The actions pickup and dropoff are very dangerous: take them at the wrong time and your return will be very low. The navigation actions are less critical.</p>
 <p>Depending on the initial state, the taxi will need at least 10 steps to deliver the client, so the maximal return you can expect is around 10 (+20 for the success, -1 for all the steps).</p>
-<p>The task is episodic: if you have not delivered the client within 200 steps, the episode stops (no particular reward).</p>
+<p>The task is episodic: if you have not delivered the client within 200 steps, the episode stops (no particular reward) by setting <code>truncated</code> to <code>True</code>.</p>
 </section>
 <section id="random-agent" class="level2">
 <h2 class="anchored" data-anchor-id="random-agent">Random agent</h2>
 <p>Let’s now define a random agent that just samples the action space.</p>
-<p><strong>Q:</strong> Modify the random agent of last time, so that the agent performs a fixed number of <strong>episodes</strong>, not steps. Make sure to use the <code>done</code> flag to break the for loop and start in a new state. Optionally render the state of the agent at every step. At the end of each episode, compute its return using <span class="math inline">\gamma = 1.0</span> (i.e.&nbsp;simply sum the obtained rewards) and print the list in the end.</p>
+<p><strong>Q:</strong> Modify the random agent of last time, so that the agent performs a fixed number of <strong>episodes</strong>, not steps. Make sure to use both the <code>terminal</code> and <code>truncated</code> flags to break the <code>for</code> loop and start in a new state by calling <code>env.reset</code>. Optionally render the state of the agent at every step. At the end of each episode, compute its return using <span class="math inline">\gamma = 1.0</span> (i.e.&nbsp;simply sum the obtained rewards) and print the list in the end.</p>
 <p><em>Tip:</em> If you render the state at every step, they will be printed one after the other. To have an animation, you can clear the output of the cell using:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output <span class="co"># already imported</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> episode: </span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    env.render()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(env.render(), flush<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>Tip:</em> The animation may be too fast to visualize anything. To force the framerate to be low enough, you can make Python “sleep” (do nothing) for a few milliseconds after each rendering:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time <span class="co"># already imported</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> episode: </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    env.render()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(env.render(), flush<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.1</span>) <span class="co"># sleep for 100 milliseconds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RandomAgent:</span>
@@ -825,40 +899,45 @@ State: [3, 1, 2, 0]</code></pre>
 <span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> episode <span class="kw">in</span> <span class="bu">range</span>(nb_episodes):</span>
 <span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Reset</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>            done <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>            rewards <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="kw">not</span> done:</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>                    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.env.render()</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>                    time.sleep(<span class="fl">0.1</span>)</span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> agent.act(state)</span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>                next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the reward</span></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>                rewards <span class="op">+=</span> reward</span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store the return of the episode</span></span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>            returns.append(rewards)</span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>            state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>            rewards <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>                next_state, reward, terminal, truncated, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the reward</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>                rewards <span class="op">+=</span> reward</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>                    clear_output(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="va">self</span>.env.render(), flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>                    time.sleep(<span class="fl">0.1</span>)</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Terminate the episode when terminal or truncated are returned.</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> terminal <span class="kw">or</span> truncated:</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>                    state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store the return of the episode</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>            returns.append(rewards)</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> RandomAgent(env)</span>
@@ -879,17 +958,18 @@ State: [3, 1, 2, 0]</code></pre>
 | | : | : |
 |Y| : |B: |
 +---------+
-  (North)
-Episode 1 : return -704.0
-Episode 2 : return -583.0
-Episode 3 : return -956.0
-Episode 4 : return -767.0
-Episode 5 : return -776.0
-Episode 6 : return -866.0
-Episode 7 : return -785.0
-Episode 8 : return -767.0
-Episode 9 : return -812.0
-Episode 10 : return -839.0</code></pre>
+  (South)
+
+Episode 1 : return -677.0
+Episode 2 : return -812.0
+Episode 3 : return -758.0
+Episode 4 : return -686.0
+Episode 5 : return -884.0
+Episode 6 : return -722.0
+Episode 7 : return -758.0
+Episode 8 : return -884.0
+Episode 9 : return -848.0
+Episode 10 : return -821.0</code></pre>
 </div>
 </div>
 <p><strong>Q:</strong> What do you think of the returns obtained by the random agent? Conclude on the difficulty of the task.</p>
@@ -926,20 +1006,24 @@ Episode 10 : return -839.0</code></pre>
 <p><strong>Q:</strong> Create a <code>MonteCarloAgent</code> agent implementing on-policy MC for the Taxi environment. Use <span class="math inline">\gamma = 0.9</span>, <span class="math inline">\epsilon = 0.1</span> and <span class="math inline">\alpha=0.01</span> (pass these parameters to the constructor of the agent and store them). Train the agent for 20000 episodes (yes, 20000… Start with one episode to debug everything and then launch the simulation. It should take around one minute). Save the return of each episode in a list and plot them in the end.</p>
 <p>Implementing the action selection should not be a problem, it is the same as for bandits. Little trick (not obligatory): you can implement <span class="math inline">\epsilon</span>-greedy as:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>action <span class="op">=</span> <span class="va">self</span>.Q[state, :].argmax()</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> rng.random() <span class="op">&lt;</span> epsilon:</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> <span class="va">self</span>.env.action_space.sample()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> rng.random() <span class="op">&lt;</span> epsilon:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> <span class="va">self</span>.env.action_space.sample()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is not exactly <span class="math inline">\epsilon</span>-greedy, as <code>env.action_space.sample()</code> may select the greedy action again. In practice it does not matter, it only changes the meaning of <span class="math inline">\epsilon</span>, but the action selection stays similar. It is better to rely on <code>env.action_space.sample()</code> for the exploration, as some Gym problem work better with a normal distribution for the exploration than with uniform (e.g.&nbsp;continuous problems).</p>
 <p>Do not select the greedy action with <code>self.Q[state, :].argmax()</code> but <code>rng.random.choice(np.where(self.Q[state, :] == self.Q[state, :].max())[0])</code>: at the beginning of learning, where the Q-values are all 0, you would otherwise always take the first action (south).</p>
 <p>The <code>update()</code> method should take a complete episode as argument, using a list of (state, action, reward) transitions. It should be called at the end of an episode only, not after every step.</p>
 <p>A bit tricky is the calculation of the returns for each visited state. The naive approach would look like:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="bu">len</span>(episode)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(T):</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    state, action, reward <span class="op">=</span> episode[t]</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    return_state <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(t, T): <span class="co"># rewards coming after t</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        next_state, next_action, next_reward <span class="op">=</span> episode[k]</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        return_state <span class="op">+=</span> gamma<span class="op">**</span>k <span class="op">*</span> reward</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.Q[state, action] <span class="op">+=</span> alpha <span class="op">*</span> (return_state <span class="op">-</span> <span class="va">self</span>.Q[state, action])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    state, action, reward <span class="op">=</span> episode[t]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    return_state <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(t, T): <span class="co"># rewards coming after t</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        next_state, next_action, next_reward <span class="op">=</span> episode[k]</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        return_state <span class="op">+=</span> gamma<span class="op">**</span>k <span class="op">*</span> reward</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.Q[state, action] <span class="op">+=</span> alpha <span class="op">*</span> (return_state <span class="op">-</span> <span class="va">self</span>.Q[state, action])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The double for loop can be computationally expensive for long episodes (complexity T log T). It is much more efficient to iterate <strong>backwards</strong> on the episode, starting from the last transition and iterating until the first one, and using the fact that:</p>
 <p><span class="math display">R_{t} = r_{t+1} + \gamma \, R_{t+1}</span></p>
 <p>The terminal state <span class="math inline">s_T</span> has a return of 0 by definition. The last transition <span class="math inline">s_{T-1} \rightarrow s_{T}</span> has therefore a return of <span class="math inline">R_{T-1} = r_T</span>. The transition before that has a return of <span class="math inline">R_{T-2} = r_{T-1} + \gamma \, R_{T-1}</span>, and so on. You can then compute the returns of each action taken in the episode (and update its Q-value) in <strong>linear time</strong>.</p>
@@ -948,7 +1032,7 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> <span class="bu">reversed</span>(l):</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MonteCarloAgent:</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Online Monte-Carlo agent.</span></span>
@@ -1005,54 +1089,58 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> episode <span class="kw">in</span> <span class="bu">range</span>(nb_episodes):</span>
 <span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Reset</span></span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>            done <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store transitions</span></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>            transitions <span class="op">=</span> []</span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="kw">not</span> done:</span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>                    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.env.render()</span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>                    time.sleep(<span class="fl">0.1</span>)</span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a>                next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
-<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the transition</span></span>
-<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>                transitions.append([state, action, reward])</span>
-<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
-<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
-<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
-<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a>                nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the Monte Carlo agent after the episode is completed</span></span>
-<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> <span class="va">self</span>.update(transitions)    </span>
-<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
-<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Print info</span></span>
-<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> episode <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Episode'</span>, episode, <span class="st">':'</span>)</span>
-<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' return:'</span>, return_episode)</span>
-<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' steps:'</span>, nb_steps)</span>
-<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>            state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store transitions</span></span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>            transitions <span class="op">=</span> []</span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>                next_state, reward, terminal, truncated, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the transition</span></span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>                transitions.append([state, action, reward])</span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
+<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
+<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a>                nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
+<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>                    clear_output(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="va">self</span>.env.render(), flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>                    time.sleep(<span class="fl">0.1</span>)</span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Terminate the episode when terminal or truncated are returned.</span></span>
+<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> terminal <span class="kw">or</span> truncated:</span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a>                    state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the Monte Carlo agent after the episode is completed</span></span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> <span class="va">self</span>.update(transitions)    </span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
+<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Print info</span></span>
+<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> episode <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Episode'</span>, episode, <span class="st">':'</span>)</span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' return:'</span>, return_episode)</span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' steps:'</span>, nb_steps)</span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.1</span></span>
@@ -1060,7 +1148,7 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">20000</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> MonteCarloAgent(env, gamma, epsilon, alpha)</span>
@@ -1077,8 +1165,8 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: -10.071396867876462
- steps: 22</code></pre>
+ return: 5.9432300000000025
+ steps: 7</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1089,13 +1177,13 @@ Episode 10 : return -839.0</code></pre>
 </div>
 </div>
 <p>As you may observe, the returns have a huge variance due to the exploration, what makes the plot quite ugly and unreadable. The following function allows to smooth the returns using a sliding average over the last <span class="math inline">N</span> epochs:</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> running_average(x, N):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    cumsum <span class="op">=</span> np.cumsum(np.insert(np.array(x), <span class="dv">0</span>, <span class="dv">0</span>)) </span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (cumsum[N:] <span class="op">-</span> cumsum[:<span class="op">-</span>N]) <span class="op">/</span> N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Q:</strong> Plot the returns as well as their sliding average. Comment on the influence of exploration.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the returns</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.plot(returns)</span>
@@ -1114,7 +1202,7 @@ Episode 10 : return -839.0</code></pre>
 <p><strong>Q:</strong> Extend the agent with a <code>test(self, render)</code> method that performs a single episode on the environment without exploration, optionally renders each state but does <strong>not</strong> learn. You will have to re-train the agent, because the definition of its class has changed. Backup the previous value of <code>epsilon</code> in a temporary variable and reset it at the end of the episode. Have the method return the <strong>undiscounted</strong> sum of rewards in the episode, as well as the number of steps until termination.</p>
 <p>After training (you can reduce the number of episodes), first observe a couple of test episodes with rendering on. Is the policy any good?</p>
 <p>Perform 1000 test episodes without rendering and report the mean return over these 1000 episodes as the final performance of your agent.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MonteCarloAgentTest (MonteCarloAgent):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Online Monte-Carlo agent with a test method.</span></span>
@@ -1126,28 +1214,32 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Reset</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        done <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        nb_steps <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        rewards<span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sample the episode</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="kw">not</span> done:</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> render:</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.env.render()</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>                time.sleep(<span class="fl">0.1</span>)</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>            action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            rewards <span class="op">+=</span> reward</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> next_state</span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> previous_epsilon</span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rewards, nb_steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        nb_steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        rewards<span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sample the episode</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>            action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>            next_state, reward, terminal, truncated, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>            rewards <span class="op">+=</span> reward</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> next_state</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> render:</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="va">self</span>.env.render(), flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>                time.sleep(<span class="fl">0.1</span>)</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> terminal <span class="kw">or</span> truncated:</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>                state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.epsilon <span class="op">=</span> previous_epsilon</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rewards, nb_steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.1</span></span>
@@ -1155,7 +1247,7 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">20000</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> MonteCarloAgentTest(env, gamma, epsilon, alpha)</span>
@@ -1190,8 +1282,8 @@ Episode 10 : return -839.0</code></pre>
 <span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: -5.88217735810702
- steps: 16</code></pre>
+ return: -6.2750682244117
+ steps: 15</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1201,7 +1293,7 @@ Episode 10 : return -839.0</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance 6.325</code></pre>
+<pre><code>Test performance 5.249</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1211,7 +1303,7 @@ Episode 10 : return -839.0</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize some episodes</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> []</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>length_episode <span class="op">=</span> []</span>
@@ -1236,9 +1328,10 @@ Episode 10 : return -839.0</code></pre>
 | | : | : |
 |Y| : |B: |
 +---------+
-  (West)
-Returns: [1, 7, 3, 12, 3]
-Number of steps [20, 14, 18, 9, 18]</code></pre>
+  (Dropoff)
+
+Returns: [9, 2, 10, 2, 11]
+Number of steps [12, 19, 11, 19, 10]</code></pre>
 </div>
 </div>
 <p><strong>A:</strong> the agent successfully delivers the client at the correct location. The path is not always the shortest one (especially in the vast area before G), but that is fine.</p>
@@ -1248,7 +1341,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <section id="early-stopping" class="level3">
 <h3 class="anchored" data-anchor-id="early-stopping">Early stopping</h3>
 <p><strong>Q:</strong> Train the agent for the smallest number of episodes where the returns seem to have stabilized (e.g.&nbsp;2000 episodes). Test the agent. Does it work? Why?</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.1</span></span>
@@ -1256,7 +1349,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">2000</span></span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> MonteCarloAgentTest(env, gamma, epsilon, alpha)</span>
@@ -1291,7 +1384,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 1900 :
- return: -11.052893778075973
+ return: -10.523462115055622
  steps: 200</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1302,7 +1395,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance -147.357</code></pre>
+<pre><code>Test performance -133.944</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1317,7 +1410,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <section id="discount-rate" class="level3">
 <h3 class="anchored" data-anchor-id="discount-rate">Discount rate</h3>
 <p><strong>Q:</strong> Change the value of the discount factor <span class="math inline">\gamma</span>. As the task is episodic (maximum 200 steps), try a discount rate of 1. What happens? Conclude.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.1</span></span>
@@ -1325,7 +1418,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">20000</span></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> MonteCarloAgentTest(env, gamma, epsilon, alpha)</span>
@@ -1360,8 +1453,8 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: -13.0
- steps: 25</code></pre>
+ return: 5.0
+ steps: 16</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1371,7 +1464,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance -64.025</code></pre>
+<pre><code>Test performance -97.569</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1387,7 +1480,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <section id="learning-rate" class="level3">
 <h3 class="anchored" data-anchor-id="learning-rate">Learning rate</h3>
 <p><strong>Q:</strong> Vary the learning rate <code>alpha</code>. What happens?</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.1</span></span>
@@ -1395,7 +1488,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">20000</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> MonteCarloAgentTest(env, gamma, epsilon, alpha)</span>
@@ -1430,8 +1523,8 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: -3.8232660371605287
- steps: 16</code></pre>
+ return: -19.54706026467099
+ steps: 200</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1441,7 +1534,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance -148.272</code></pre>
+<pre><code>Test performance -142.915</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1456,7 +1549,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <section id="exploration-parameter" class="level3">
 <h3 class="anchored" data-anchor-id="exploration-parameter">Exploration parameter</h3>
 <p><strong>Q:</strong> Vary the exploration parameter <code>epsilon</code> and observe its impact on learning.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.01</span> <span class="co"># or 0.3, etc.</span></span>
@@ -1464,7 +1557,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">20000</span></span>
 <span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> MonteCarloAgentTest(env, gamma, epsilon, alpha)</span>
@@ -1499,8 +1592,8 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: -0.5856821172999982
- steps: 12</code></pre>
+ return: -10.000008201255028
+ steps: 200</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1510,7 +1603,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance -107.576</code></pre>
+<pre><code>Test performance -148.725</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1530,7 +1623,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <p>at the end of each episode, with <span class="math inline">\epsilon_\text{decay}</span> being a small decay parameter (<code>1e-5</code> or so).</p>
 <p>Find a correct value for <span class="math inline">\epsilon_\text{decay}</span>. Do not hesitate to fine-tune alpha at the same time.</p>
 <p><em>Tip:</em> Prepare and visualize the scheduling in a different cell, and use the initial value of <span class="math inline">\epsilon</span> and <span class="math inline">\epsilon_\text{decay}</span> that seem to make sense.</p>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DecayMonteCarloAgent (MonteCarloAgentTest):</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Monte-Carlo agent with decay of the exploration parameter.</span></span>
@@ -1559,58 +1652,62 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> episode <span class="kw">in</span> <span class="bu">range</span>(nb_episodes):</span>
 <span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Reset</span></span>
-<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
-<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>            done <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store transitions</span></span>
-<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a>            transitions <span class="op">=</span> []</span>
-<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
-<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="kw">not</span> done:</span>
-<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
-<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
-<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>                    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.env.render()</span>
-<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a>                    time.sleep(<span class="fl">0.1</span>)</span>
-<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
-<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
-<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
-<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a>                next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
-<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the transition</span></span>
-<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a>                transitions.append([state, action, reward])</span>
-<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
-<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
-<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
-<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a>                nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the Monte Carlo agent after the episode is completed</span></span>
-<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> <span class="va">self</span>.update(transitions)   </span>
-<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Decay epsilon</span></span>
-<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.epsilon <span class="op">=</span> <span class="va">self</span>.epsilon <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.decay_epsilon)</span>
-<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
-<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
-<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Print info</span></span>
-<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> episode <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Episode'</span>, episode, <span class="st">':'</span>)</span>
-<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' return:'</span>, return_episode)</span>
-<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' steps:'</span>, nb_steps)</span>
-<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' epsilon:'</span>, <span class="va">self</span>.epsilon)</span>
-<span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>            state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store transitions</span></span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>            transitions <span class="op">=</span> []</span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a>                next_state, reward, terminal, truncated, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Store the transition</span></span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a>                transitions.append([state, action, reward])</span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
+<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
+<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a>                nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render</span></span>
+<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
+<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a>                    clear_output(wait<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="va">self</span>.env.render(), flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a>                    time.sleep(<span class="fl">0.1</span>)</span>
+<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Terminate</span></span>
+<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> terminal <span class="kw">or</span> truncated:</span>
+<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a>                    state, info <span class="op">=</span> env.reset()</span>
+<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
+<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update the Monte Carlo agent after the episode is completed</span></span>
+<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> <span class="va">self</span>.update(transitions)   </span>
+<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Decay epsilon</span></span>
+<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.epsilon <span class="op">=</span> <span class="va">self</span>.epsilon <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.decay_epsilon)</span>
+<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
+<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
+<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Print info</span></span>
+<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> episode <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">'Episode'</span>, episode, <span class="st">':'</span>)</span>
+<span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' return:'</span>, return_episode)</span>
+<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' steps:'</span>, nb_steps)</span>
+<span id="cb43-79"><a href="#cb43-79" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">' epsilon:'</span>, <span class="va">self</span>.epsilon)</span>
+<span id="cb43-80"><a href="#cb43-80" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb43-81"><a href="#cb43-81" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="33">
+<div class="cell" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">0.4</span></span>
@@ -1619,7 +1716,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>nb_episodes <span class="op">=</span> <span class="dv">20000</span></span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">"Taxi-v3"</span>, render_mode<span class="op">=</span><span class="st">'ansi'</span>)</span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the agent</span></span>
 <span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>agent <span class="op">=</span> DecayMonteCarloAgent(env, gamma, epsilon, decay_epsilon, alpha)</span>
@@ -1654,8 +1751,8 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 <span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: -10.148872536022827
- steps: 25
+ return: -0.5856821172999982
+ steps: 12
  epsilon: 0.054667262335293364</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1666,7 +1763,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance 6.8</code></pre>
+<pre><code>Test performance 7.289</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1676,7 +1773,7 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
+<div class="cell" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize some episodes</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> []</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>length_episode <span class="op">=</span> []</span>
@@ -1701,9 +1798,10 @@ Number of steps [20, 14, 18, 9, 18]</code></pre>
 | | : | : |
 |Y| : |B: |
 +---------+
-  (East)
-Returns: [5, 4, 6, 1, 2]
-Number of steps [16, 17, 15, 20, 19]</code></pre>
+  (Dropoff)
+
+Returns: [5, 7, 12, 6, 7]
+Number of steps [16, 14, 9, 15, 14]</code></pre>
 </div>
 </div>
 <p><strong>A:</strong> As seen with bandits, decaying the exploration parameter with the right schedule improves very significantly the speed of learning and the optimality.</p>
