@@ -82,7 +82,7 @@ The loss function is estimated by **sampling** a minibatch of $K$ **i.i.d** samp
 
 Unfortunately, this does not work either. The last $K$ transitions $(s, a, r, s')$ are not **i.i.d** (independent and identically distributed). The transition $(s_{t+1}, a_{t+1}, r_{t+2}, s_{t+2})$ **depends** on $(s_{t}, a_{t}, r_{t+1}, s_{t+1})$ by definition, i.e. the transitions are **correlated**. Even worse, when playing video games, successive frames will be very similar or even identical.
 
-![Successive video frames are extremely correlated.](../slides/img/breakout.png){width=80%}
+![Successive video frames are extremely correlated.](../slides/img/breakout.png)
 
 The actions are also correlated: you move the paddle to the left for several successive steps.
 
@@ -110,7 +110,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{s, a \sim \pi_\theta} [(r + \gamma \, \max_{
 
 Neural networks do not like this at all. After a while, they give up and settle on a **suboptimal** policy.
 
-![Supervised learning has stationary targets, not RL. Learning is much less efficient and optimal in RL.](../slides/img/nonstationarity.svg){width=70%}
+![Supervised learning has stationary targets, not RL. Learning is much less efficient and optimal in RL.](../slides/img/nonstationarity.svg)
 
 ## Deep Q-network (DQN)
 
@@ -132,7 +132,7 @@ These two problems are very bad for deep networks, which end up overfitting the 
 
 To avoid correlation between samples, (Mnih et al. 2015) proposed to store the $(s, a, r, s')$ transitions in a huge **experience replay memory** or **replay buffer**  $\mathcal{D}$ (e.g. 1 million transitions).
 
-![Experience replay memory / replay buffer.](../slides/img/ERM.svg){width=60%}
+![Experience replay memory / replay buffer.](../slides/img/ERM.svg){width=80%}
 
 When the buffer is full, we simply overwrite old transitions. The Q-learning update is only applied on a **random minibatch** of those past experiences, not the last transitions. This ensure the independence of the samples (non-correlated samples).
 
@@ -209,7 +209,7 @@ $$
 
 $\theta'$ is simply a copy of $\theta$ from the past.
 
-![Target network.](../slides/img/targetnetwork.png){width=60%}
+![Target network.](../slides/img/targetnetwork.png){width=80%}
 
 The DQN loss function becomes:
 
@@ -219,7 +219,7 @@ $$
 
 This allows the target $r + \gamma \, \max_{a'} Q_{\theta'}(s', a')$ to be **stationary** between two updates. It leaves time for the trained network to catch up with the targets.
 
-![The target network keeps the target constant long enough for the DNN to catch up.](../slides/img/nonstationarity2.svg){width=80%}
+![The target network keeps the target constant long enough for the DNN to catch up.](../slides/img/nonstationarity2.svg){width=100%}
 
 The target network is updated by simply replacing the parameters $\theta'$ with the current trained parameters $\theta$:
 
@@ -352,7 +352,9 @@ The DQN network was trained to solve 49 different Atari 2600 games **with the sa
 ![Training curves of DQN [@Mnih2013].](../slides/img/dqn-results.png){width=100%}
 
 
-![Performance of DQN on Atari games [@Mnih2013].](../slides/img/atari-results.png){width=70%}
+![Performance of DQN on Atari games [@Mnih2013].](../slides/img/atari-results.png){width=100%}
+
+
 ## DQN variants
 
 {{< youtube  VM28-5YyLJk >}}
@@ -413,7 +415,7 @@ The main drawback is that inserting and sampling can be computationally expensiv
 * Insertion: $\mathcal{O}(N \, \log N)$.
 * Sampling: $\mathcal{O}(N)$.
 
-![Sorting transitions w.r.t their advantage is expensive. Source: <https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/>](../slides/img/per_bar_1.png){width=90%}
+![Sorting transitions w.r.t their advantage is expensive. Source: <https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/>](../slides/img/per_bar_1.png){width=100%}
 
 Using binary **sumtrees** instead of a linear queue, prioritized experience replay can be made efficient in both insertion ($\mathcal{O}(\log N)$) and sampling ($\mathcal{O}(1)$).
 
@@ -427,7 +429,7 @@ Using binary **sumtrees** instead of a linear queue, prioritized experience repl
 
 DQN and its variants learn to predict directly the Q-value of each available action.
 
-![DQN predicts directly the Q-values. Source: [@Wang2016].](../slides/img/duelling1.png){width=60%}
+![DQN predicts directly the Q-values. Source: [@Wang2016].](../slides/img/duelling1.png){width=80%}
 
 There are several problems with predicting Q-values with a DNN:
 
@@ -436,7 +438,7 @@ There are several problems with predicting Q-values with a DNN:
 * For a transition $(s_t, a_t, s_{t+1})$, a single Q-value is updated, not all actions in $s_t$.
 
 
-![The variance of the Q-values between good and bad states is high.](../slides/img/dueling-principle.svg){width=60%}
+![The variance of the Q-values between good and bad states is high.](../slides/img/dueling-principle.svg){width=80%}
 
 The exact Q-values of all actions are not equally important.
 
@@ -462,7 +464,7 @@ $$
 
 This is particularly true for the optimal policy. But if we have separate estimates $V_\varphi(s)$ and $Q_\theta(s, a)$, some actions may have a positive advantage. Advantages have **less variance** than Q-values.
 
-![The variance of the advantages is much lower.](../slides/img/dueling-principle2.svg){width=60%}
+![The variance of the advantages is much lower.](../slides/img/dueling-principle2.svg){width=80%}
 
 In **dueling networks** [@Wang2016], the network is forced to decompose the estimated Q-value $Q_\theta(s, a)$ into a state value $V_\alpha(s)$ and an advantage function $A_\beta(s, a)$:
 
@@ -470,7 +472,7 @@ $$
     Q_\theta(s, a) = V_\alpha(s) + A_\beta(s, a)
 $$
 
-![Dueling DQN decomposes the Q-values as the sum of the V-value and the advantage of the action. Source: [@Wang2016].](../slides/img/duelling2.png){width=60%}
+![Dueling DQN decomposes the Q-values as the sum of the V-value and the advantage of the action. Source: [@Wang2016].](../slides/img/duelling2.png){width=80%}
 
 The parameters $\alpha$ and $\beta$ are just two shared subparts of the NN $\theta$. The loss function 
 
@@ -507,13 +509,13 @@ $$
 $$
 
 
-![Dueling DQN network improves over double DQN with PER on most Atari games. Source: [@Wang2016].](../slides/img/dueling-result.png){width=80%}
+![Dueling DQN network improves over double DQN with PER on most Atari games. Source: [@Wang2016].](../slides/img/dueling-result.png){width=100%}
 
 
 ::: {.callout-note}
 ## Summary of DQN algorithms
 
-![Architecture of DQN [@Mnih2013].](../slides/img/DeepQNetwork.jpg){width=60%}
+![Architecture of DQN [@Mnih2013].](../slides/img/DeepQNetwork.jpg){width=80%}
 
 DQN and its early variants (double duelling DQN with PER) are an example of **value-based deep RL**. The value $Q_\theta(s, a)$ of each possible action in a given state is approximated by a convolutional neural network. The NN has to minimize the mse between the predicted Q-values and the target value corresponding to the Bellman equation:
 

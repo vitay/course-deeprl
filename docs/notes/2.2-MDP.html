@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -408,7 +408,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -427,14 +427,14 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/2.2-MDP.html" target="_blank">html</a> <a href="../slides/pdf/2.2-MDP.pdf" target="_blank">pdf</a></p>
-<section id="from-finite-state-machines-to-markov-decision-process" class="level2">
+<section id="from-finite-state-machines-to-markov-decision-process" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="from-finite-state-machines-to-markov-decision-process">From Finite State Machines to Markov Decision Process</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/u8_DgEuqo3g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>The kind of task that can be solved by RL is called a <strong>Markov Decision Process</strong> (MDP). For a MDP, the environment is <strong>fully observable</strong>, i.e.&nbsp;the current state <span class="math inline">s_t</span> completely characterizes the process at time <span class="math inline">t</span>. <strong>Actions</strong> <span class="math inline">a_t</span> provoke transitions between two states <span class="math inline">s_t</span> and <span class="math inline">s_{t+1}</span>, according to <strong>transition probabilities</strong>. A <strong>reward</strong> <span class="math inline">r_{t+1}</span> is (probabilistically) associated to each transition.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/rl-loop.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Agent-environment interface for video games. Source: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Agent-environment interface for video games. Source: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
 </figure>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -450,13 +450,13 @@ Note
 <p>n-armed bandits are MDPs with only one state.</p>
 </div>
 </div>
-<section id="finite-state-machine-fsm" class="level3">
+<section id="finite-state-machine-fsm" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="finite-state-machine-fsm">Finite State Machine (FSM)</h3>
 <p>A <strong>finite state machine</strong> (or finite state automaton) is a mathematical model of computation. A FSM can only be in a single <strong>state</strong> <span class="math inline">s</span> at any given time. <strong>Transitions</strong> between states are governed by external inputs, when some condition is met.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/fsm.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Finite state machine. Source: <a href="https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/" class="uri">https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/</a></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/fsm.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption margin-caption">Finite state machine. Source: <a href="https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/" class="uri">https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A FSM is fully defined by:</p>
@@ -474,12 +474,12 @@ Note
 <li>elif …</li>
 </ul>
 </section>
-<section id="markov-chain-mc" class="level3">
+<section id="markov-chain-mc" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="markov-chain-mc">Markov Chain (MC)</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/student-markovchain.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Markov chain. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/student-markovchain.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Markov chain. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A first-order <strong>Markov Chain</strong> (or Markov process) is a stochastic process generated by a FSM, where transitions between states are governed by <strong>state transition probabilities</strong>.</p>
@@ -525,13 +525,13 @@ Note
 </ul>
 <p>Single <strong>video frames</strong> are not Markov states: you cannot generally predict what will happen based on a single image. A simple solution is to <strong>stack</strong> or <strong>concatenate</strong> multiple frames: By measuring the displacement of the ball between two consecutive frames, we can predict where it is going. One can also <strong>learn</strong> state representations containing the history using recurrent neural networks (see later).</p>
 </section>
-<section id="state-transition-matrix" class="level4">
+<section id="state-transition-matrix" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="state-transition-matrix">State transition matrix</h4>
 <p>Supposing that the states have the Markov property, the transitions in the system can be summarized by the <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}</span>:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/student-transitionmatrix.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">State transition matrix. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/student-transitionmatrix.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">State transition matrix. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
 </figure>
 </div>
 <p>Each element of the state transition matrix corresponds to <span class="math inline">p(s' | s)</span>. Each row of the state transition matrix sums to 1:</p>
@@ -539,13 +539,13 @@ Note
 <p>The tuple <span class="math inline">&lt;\mathcal{S}, \mathcal{P}&gt;</span> fully describes the Markov chain.</p>
 </section>
 </section>
-<section id="markov-reward-process-mrp" class="level3">
+<section id="markov-reward-process-mrp" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="markov-reward-process-mrp">Markov Reward Process (MRP)</h3>
 <p>A <strong>Markov Reward Process</strong> is a Markov Chain where each transition is associated with a scalar <strong>reward</strong> <span class="math inline">r</span>, coming from some probability distribution.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/student-mrp.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Markov Reward Process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/student-mrp.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Markov Reward Process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A Markov Reward Process is defined by the tuple <span class="math inline">&lt;\mathcal{S}, \mathcal{P}, \mathcal{R}, \gamma&gt;</span>.</p>
@@ -579,13 +579,13 @@ Note
 <p>The <strong>discount factor</strong> (or discount rate, or discount) <span class="math inline">\gamma \in [0, 1]</span> is a very important parameter in RL: It defines the <strong>present value of future rewards</strong>. Receiving 10 euros now has a higher <strong>value</strong> than receiving 10 euros in ten years, although the reward is the same: you do not have to wait.</p>
 <p>The value of receiving a reward <span class="math inline">r</span> after <span class="math inline">k+1</span> time steps is <span class="math inline">\gamma^k \, r</span>. <strong>Immediate rewards</strong> are better than <strong>delayed rewards</strong>. When <span class="math inline">\gamma &lt; 1</span>, <span class="math inline">\gamma^k</span> tends to 0 when <span class="math inline">k</span> goes to infinity: this makes sure that the return is always <strong>finite</strong>. This is particularly important when the MRP is cyclic / periodic. If all sequences terminate at some time step <span class="math inline">T</span>, we can set <span class="math inline">\gamma= 1</span>.</p>
 </section>
-<section id="markov-decision-process-mdp" class="level3">
+<section id="markov-decision-process-mdp" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="markov-decision-process-mdp">Markov Decision Process (MDP)</h3>
 <p>A <strong>Markov Decision Process</strong> is a MRP where transitions are influenced by <strong>actions</strong> <span class="math inline">a \in \mathcal{A}</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/student-mdp.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Markov decision process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/student-mdp.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Markov decision process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A finite MDP is defined by the tuple <span class="math inline">&lt;\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma&gt;</span>:</p>
@@ -680,12 +680,12 @@ Why the reward on the long term?
 </div>
 </div>
 </section>
-<section id="example-the-cartpole-balancing-task" class="level4">
+<section id="example-the-cartpole-balancing-task" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="example-the-cartpole-balancing-task">Example: the cartpole balancing task</h4>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/cartpole-after.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Cartpole balancing task</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Cartpole balancing task</figcaption><p></p>
 </figure>
 </div>
 <ul>
@@ -708,12 +708,12 @@ Why the reward on the long term?
 </ul>
 <p>In both cases, the goal is to maximize the return by maintaining the pole vertical as long as possible.</p>
 </section>
-<section id="example-the-recycling-robot" class="level4">
+<section id="example-the-recycling-robot" class="level4 page-columns page-full">
 <h4 class="anchored" data-anchor-id="example-the-recycling-robot">Example: the recycling robot</h4>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/recyclingrobot.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Recycling robot. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/recyclingrobot.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Recycling robot. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>At each step, the recycling robot has to decide whether it should:</p>
@@ -852,7 +852,7 @@ Why the reward on the long term?
 </section>
 </section>
 </section>
-<section id="bellman-equations" class="level2">
+<section id="bellman-equations" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="bellman-equations">Bellman equations</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/1Z5sMSCEMRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="value-functions" class="level3">
@@ -908,7 +908,7 @@ Why the reward on the long term?
 <li>the reward received immediately after taking that action <span class="math inline">r(s, a, s')</span> (as it is not included in the value of <span class="math inline">s'</span>).</li>
 </ul>
 </section>
-<section id="bellman-equations-1" class="level3">
+<section id="bellman-equations-1" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="bellman-equations-1">Bellman equations</h3>
 <p>A fundamental property of value functions used throughout reinforcement learning is that they satisfy a particular recursive relationship:</p>
 <p><span class="math display">
@@ -927,18 +927,18 @@ Why the reward on the long term?
 </span></p>
 <p>which is called the <strong>Bellman equation</strong> for <span class="math inline">Q^{\pi}</span>.</p>
 <p>The following <strong>backup diagrams</strong> denote these recursive relationships.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/backup-V.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagrams of the Bellman equations. Left: the value of a state <span class="math inline">s</span> depends on the policy <span class="math inline">\pi</span> and the value of the succeeding states <span class="math inline">s'</span>. Right: the value of an action depends on the value of the action that can be taken in the next states. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/backup-V.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Backup diagrams of the Bellman equations. Left: the value of a state <span class="math inline">s</span> depends on the policy <span class="math inline">\pi</span> and the value of the succeeding states <span class="math inline">s'</span>. Right: the value of an action depends on the value of the action that can be taken in the next states. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="bellman-optimality-equations" class="level2">
+<section id="bellman-optimality-equations" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="bellman-optimality-equations">Bellman optimality equations</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/mFucN5K351A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="optimal-policy" class="level3">
+<section id="optimal-policy" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="optimal-policy">Optimal policy</h3>
 <p>The optimal policy is the policy that gathers the maximum of reward on the long term. Value functions define a partial ordering over policies:</p>
 <ul>
@@ -955,10 +955,10 @@ Why the reward on the long term?
     Q^* (s, a) = \max_{\pi} Q^{\pi}(s, a) \quad \forall s \in \mathcal{S}, \quad \forall a \in \mathcal{A}
 </span></p>
 <p>When the policy is optimal <span class="math inline">\pi^*</span>, the link between the V and Q values is even easier. The V and Q values are maximal for the optimal policy: there is no better alternative.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/fullvi.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagrams of the Bellman optimality equations. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/fullvi.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Backup diagrams of the Bellman optimality equations. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p><strong>The optimal action <span class="math inline">a^*</span> to perform in the state <span class="math inline">s</span> is the one with the highest optimal Q-value <span class="math inline">Q^*(s, a)</span></strong>.</p>
@@ -1034,12 +1034,12 @@ Why the reward on the long term?
 <p>How much space and time do we need? A solution requires an exhaustive search, looking ahead at all possibilities, computing their probabilities of occurrence and their desirability in terms of expected rewards. The number of states is often huge or astronomical (e.g., Go has about <span class="math inline">10^{170}</span> states). <strong>Dynamic programming</strong> solves exactly the Bellman equations; <strong>Monte-Carlo</strong> and <strong>temporal-difference</strong> methods approximate them.</p>
 </section>
 </section>
-<section id="generalized-policy-iteration" class="level2">
+<section id="generalized-policy-iteration" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="generalized-policy-iteration">Generalized Policy Iteration</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/gpi-scheme.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Generalized Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Generalized Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>RL algorithms iterate over two steps:</p>

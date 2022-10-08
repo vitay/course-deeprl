@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -407,7 +407,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -426,34 +426,34 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/2.6-FunctionApproximation.html" target="_blank">html</a> <a href="../slides/pdf/2.6-FunctionApproximation.pdf" target="_blank">pdf</a></p>
-<section id="limits-of-tabular-rl" class="level2">
+<section id="limits-of-tabular-rl" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="limits-of-tabular-rl">Limits of tabular RL</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/el6F6Drem88" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>All the methods seen so far belong to <strong>tabular RL</strong>. Q-learning necessitates to store in a <strong>Q-table</strong> one Q-value per state-action pair <span class="math inline">(s, a)</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/qtable.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Tabular Q-learning. Source: <a href="https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677" class="uri">https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Tabular Q-learning. Source: <a href="https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677" class="uri">https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677</a></figcaption><p></p>
 </figure>
 </div>
 <p>If a state has never been visited during learning, the Q-values will still be at their initial value (0.0), no policy can be derived.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/tabular-generalization.svg" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">In high-dimensional state spaces (e.g.&nbsp;images), tabular RL cannot generalize between close states.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">In high-dimensional state spaces (e.g.&nbsp;images), tabular RL cannot generalize between close states.</figcaption><p></p>
 </figure>
 </div>
 <p>Similar states likely have the same optimal action: we want to be able to <strong>generalize</strong> the policy between states. For most realistic problems, the size of the Q-table becomes quickly untractable. If you use black-and-white 256x256 images as inputs, you have <span class="math inline">2^{256 * 256} = 10^{19728}</span> possible states! <strong>Tabular RL</strong> is therefore limited to toy problems.</p>
 <p>Tabular RL also only works for small <strong>discrete action spaces</strong>. Robots have <strong>continuous action spaces</strong>, where the actions are changes in <strong>joint angles</strong> or <strong>torques</strong>. A joint angle could for example take any value in <span class="math inline">[0, \pi]</span>. A solution would be to <strong>discretize</strong> the action space (one action per degree), but we would fall into the <strong>curse of dimensionality</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/cursedimensionality.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">Curse of dimensionality. Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Curse of dimensionality. Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption><p></p>
 </figure>
 </div>
 <p>The more degrees of freedom, the more discrete actions, the more entries in the Q-table… Tabular RL cannot deal with continuous action spaces, unless we approximate the policy with an <strong>actor-critic</strong> architecture.</p>
 </section>
-<section id="function-approximation" class="level2">
+<section id="function-approximation" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="function-approximation">Function approximation</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/cATgUO0QBes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="feature-vectors" class="level3">
@@ -485,22 +485,22 @@ div.csl-indent {
 <p><span class="math display">d \ll |\mathcal{S}|</span></p>
 <p>We can also represent <strong>continuous state spaces</strong> with feature vectors, as in cartpole.</p>
 </section>
-<section id="state-value-approximation" class="level3">
+<section id="state-value-approximation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="state-value-approximation">State value approximation</h3>
 <p>In <strong>state value approximation</strong>, we want to approximate the state value function <span class="math inline">V^\pi(s)</span> with a <strong>parameterized function</strong> <span class="math inline">V_\varphi(s)</span>:</p>
 <p><span class="math display">V_\varphi(s) \approx V^\pi(s)</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/functionapproximation-state.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">State value approximation.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">State value approximation.</figcaption><p></p>
 </figure>
 </div>
 <p>The parameterized function can have any form. Its has a set of parameters <span class="math inline">\varphi</span> used to transform the feature vector <span class="math inline">\phi(s)</span> into an approximated value <span class="math inline">V_\varphi(s)</span>.</p>
 <p>The simplest function approximator (FA) is the <strong>linear approximator</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/functionapproximation-state-linear.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Linear state value approximation.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Linear state value approximation.</figcaption><p></p>
 </figure>
 </div>
 <p>The approximated value is a linear combination of the features:</p>
@@ -639,25 +639,25 @@ Semi-gradient Temporal Difference Algorithm for value estimation
 <p>Note that for Temporal Difference, we actually want to minimize the TD reward-prediction error for all states, i.e.&nbsp;the surprise:</p>
 <p><span class="math display">\mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (r_{t+1} + \gamma \, V_\varphi(s') - V_\varphi(s))^2]= \mathbb{E}_{s \in \mathcal{S}} [ \delta_t^2]</span></p>
 </section>
-<section id="action-value-approximation" class="level3">
+<section id="action-value-approximation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="action-value-approximation">Action value approximation</h3>
 <p>Q-values can be approximated by a parameterized function <span class="math inline">Q_\theta(s, a)</span> in the same manner. There are basically two options for the structure of the function approximator:</p>
 <ul>
 <li>The FA takes a feature vector for both the state <span class="math inline">s</span> and the action <span class="math inline">a</span> (which can be continuous) as inputs, and outputs a single Q-value <span class="math inline">Q_\theta(s ,a)</span>.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/functionapproximation-action1.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Action value approximation for a single action.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Action value approximation for a single action.</figcaption><p></p>
 </figure>
 </div>
 <ul>
 <li>The FA takes a feature vector for the state <span class="math inline">s</span> as input, and outputs one Q-value <span class="math inline">Q_\theta(s ,a)</span> per possible action (the action space must be discrete).</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/functionapproximation-action2.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Action value approximation for all actions.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Action value approximation for all actions.</figcaption><p></p>
 </figure>
 </div>
 <p>In both cases, we minimize the mse between the true value <span class="math inline">Q^\pi(s, a)</span> and the approximated value <span class="math inline">Q_\theta(s, a)</span>.</p>
@@ -696,10 +696,10 @@ Q-learning with function approximation
 </div>
 </section>
 </section>
-<section id="feature-construction" class="level2">
+<section id="feature-construction" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="feature-construction">Feature construction</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/t39QwC_5vXI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="linear-features" class="level3">
+<section id="linear-features" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="linear-features">Linear features</h3>
 <p>Before we dive into deep RL (i.e.&nbsp;RL with non-linear FA), let’s see how we can design good <strong>feature vectors</strong> for linear function approximation. The problem with deep NN is that they need a lot of samples to converge, what worsens the fundamental problem of RL: <strong>sample efficiency</strong>. By engineering the right features, we could use linear approximators, which converge much faster. The convergence of linear FA is <strong>guaranteed</strong>, not (always) non-linear ones.</p>
 <p>Why do we need to choose features? For the cartpole, the feature vector <span class="math inline">\phi(s)</span> could be:</p>
@@ -708,21 +708,21 @@ Q-learning with function approximation
 <p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
 <p>This answer is no, as a high angular velocity <span class="math inline">\dot{\theta}</span> is good when the pole is horizontal (going up) but bad if the pole is vertical (will not stop). The value would depends linearly on something like <span class="math inline">\dot{\theta} \, \sin \theta</span>, which is a non-linear combination of features.</p>
 <p>Let’s suppose we have a simple problem where the state <span class="math inline">s</span> is represented by two continuous variables <span class="math inline">x</span> and <span class="math inline">y</span>. The true value function <span class="math inline">V^\pi(s)</span> is a non-linear function of <span class="math inline">x</span> and <span class="math inline">y</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-data.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">State values <span class="math inline">V^\pi(s)</span> for a two-dimensional state space.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">State values <span class="math inline">V^\pi(s)</span> for a two-dimensional state space.</figcaption><p></p>
 </figure>
 </div>
 <p>If we apply linear FA directly on the feature vector <span class="math inline">[x, y]</span>, we catch the tendency of <span class="math inline">V^\pi(s)</span> but we make a lot of bad predictions: <strong>high bias</strong> (underfitting).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-linear.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Linear approximation of the state value function.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Linear approximation of the state value function.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="polynomial-features" class="level3">
+<section id="polynomial-features" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="polynomial-features">Polynomial features</h3>
 <p>To introduce non-linear relationships between continuous variables, a simple method is to construct the feature with <strong>polynomials</strong> of the variables.</p>
 <p>Example with polynomials of order 2:</p>
@@ -738,21 +738,21 @@ Q-learning with function approximation
 <p><span class="math display">
     V_\varphi(s) = w_0 + w_1 \, x + w_2 \, y + w_3 \, x \, y + w_4 \, x^2 + w_5 \, y^2 + \ldots
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-polynomial2.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Polynomial approximation of the state value function with order 2.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Polynomial approximation of the state value function with order 2.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-polynomial6.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Polynomial approximation of the state value function with order 6.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Polynomial approximation of the state value function with order 6.</figcaption><p></p>
 </figure>
 </div>
 <p>The higher the degree of the polynomial, the better the fit, but the number of features grows exponentially. This adds to the computational complexity and leads to <strong>overfitting</strong>: if we only sample some states, high-order polynomials will not interpolate correctly.</p>
 </section>
-<section id="fourier-transforms" class="level3">
+<section id="fourier-transforms" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="fourier-transforms">Fourier transforms</h3>
 <p>Instead of approximating a state variable <span class="math inline">x</span> by a polynomial:</p>
 <p><span class="math display">
@@ -763,78 +763,78 @@ Q-learning with function approximation
     V_\varphi(s) = w_0 + w_1 \, \cos(\pi \, x) + w_2 \, \cos( 2 \, \pi \, x) + w_3 \, \cos(3 \, \pi \, x) + \ldots
 </span></p>
 <p>The Fourier theorem tells us that, if we take enough frequencies, we can reconstruct the signal <span class="math inline">V_\varphi(s)</span> perfectly.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-fourier1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Fourier transform in 1D. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Fourier transform in 1D. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>It is just a change of basis, the problem stays a linear regression to find <span class="math inline">w_0, w_1, w_2</span>, etc.</p>
 <p>Fourier transforms can be applied on multivariate functions as well.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-fourier2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Fourier transform in 2D. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Fourier transform in 2D. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-fourier3.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Comparison of polynomial and Fourier features. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Comparison of polynomial and Fourier features. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>A Fourier basis tends to work better than a polynomial basis. The main problem is that the number of features increases very fast with the number of input dimensions and the desired precision (higher-order polynomials, more frequencies).</p>
 </section>
-<section id="discrete-coding" class="level3">
+<section id="discrete-coding" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="discrete-coding">Discrete coding</h3>
 <p>An obvious solution for continuous state variables is to <strong>discretize</strong> the input space. The input space is divided into a grid of non-overlapping <strong>tiles</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-tile1.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Linear approximation of the state value function using discrete coding.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Linear approximation of the state value function using discrete coding.</figcaption><p></p>
 </figure>
 </div>
 <p>The feature vector is a <strong>binary</strong> vector with a 1 when the input is inside a tile, 0 otherwise.</p>
 <p><span class="math display">\phi(s) = \begin{bmatrix}0 &amp; 0 &amp; \ldots &amp; 0 &amp; 1 &amp; 0 &amp; \ldots &amp; 0 \\ \end{bmatrix}^T</span></p>
 <p>This ensures <strong>generalization</strong> inside a tile: you only need a couple of samples inside a tile to know the mean value of all the states. Drawbacks: the value function is step-like (discontinuous), the correct size of a tile is not known, we fall into the <strong>curse of dimensionality</strong>.</p>
 </section>
-<section id="coarse-coding" class="level3">
+<section id="coarse-coding" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="coarse-coding">Coarse coding</h3>
 <p>A more efficient solution is <strong>coarse coding</strong>. The tiles (rectangles, circles, or what you need) need to <strong>overlap</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-tile2.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Coarse coding uses overlapping tiles. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Coarse coding uses overlapping tiles. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>A state <span class="math inline">s</span> is encoded by a <strong>binary vector</strong>, but with several 1, for each tile it belongs.</p>
 <p><span class="math display">\phi(s) = \begin{bmatrix}0 &amp; 1 &amp; 0 &amp; \ldots &amp; 1 &amp; 1 &amp; 0 &amp; \ldots &amp; 0 \\ \end{bmatrix}^T</span></p>
 <p>This allows generalization inside a tile, but also <strong>across tiles</strong>. The size and shape of the <strong>“receptive field”</strong> influences the generalization properties.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-tile4.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">The overlap between tiles defines the generalization. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">The overlap between tiles defines the generalization. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="tile-coding" class="level3">
+<section id="tile-coding" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="tile-coding">Tile coding</h3>
 <p>A simple way to ensure that tiles overlap is to use several regular grids with an <strong>offset</strong>. Each tiling will be <strong>coarse</strong>, but the location of a state will be quite precise as it may belong to many tiles.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-tile3.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Tile coding. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Tile coding. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>This helps against the curse of dimensionality: high precision, but the number of tiles does not grow exponentially.</p>
 </section>
-<section id="radial-basis-functions-rbf" class="level3">
+<section id="radial-basis-functions-rbf" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="radial-basis-functions-rbf">Radial-basis functions (RBF)</h3>
 <p>The feature vector in tile coding is a binary vector: there will be <strong>discontinuous jumps</strong> in the approximated value function when moving between tiles. We can use <strong>radial-basis functions</strong> (RBF) such as Gaussians to map the state space.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/featurecoding-rbf.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Radial-basis functions.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Radial-basis functions.</figcaption><p></p>
 </figure>
 </div>
 <p>We set a set of centers <span class="math inline">\{c_i\}_{i=1}^K</span> in the input space on a regular grid (or randomly). Each element of the feature vector will be a Gaussian function of the distance between the state <span class="math inline">s</span> and one center:</p>

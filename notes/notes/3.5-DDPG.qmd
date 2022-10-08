@@ -103,7 +103,7 @@ We can now use the chain rule to decompose the gradient of $Q^{\mu_\theta}(s, \m
 
 $$\nabla_\theta \, Q^{\mu_\theta}(s, \mu_\theta(s)) = \nabla_a \, Q^{\mu_\theta}(s, a)|_{a = \mu_\theta(s)} \times \nabla_\theta \mu_\theta(s)$$
 
-![Chain rule applied to the deterministic policy gradient. ](../slides/img/dpg-chainrule.svg){width=80%}
+![Chain rule applied to the deterministic policy gradient. ](../slides/img/dpg-chainrule.svg){width=100%}
 
 
 $\nabla_a \, Q^{\mu_\theta}(s, a)|_{a = \mu_\theta(s)}$ means that we differentiate $Q^{\mu_\theta}$ w.r.t. $a$, and evaluate it in $\mu_\theta(s)$. $a$ is a variable, but $\mu_\theta(s)$ is a deterministic value (constant).
@@ -131,7 +131,7 @@ We come back to an actor-critic architecture:
 * The **deterministic actor** $\mu_\theta(s)$ selects a single action in state $s$.
 * The **critic** $Q_\varphi(s, a)$ estimates the value of that action. 
 
-![Actor-critic architecture of the deterministic policy gradient with function approximation. ](../slides/img/dpg.svg){width=80%}
+![Actor-critic architecture of the deterministic policy gradient with function approximation. ](../slides/img/dpg.svg){width=100%}
 
 **Training the actor:**
 
@@ -255,7 +255,7 @@ DDPG suffers from several problems:
 
 Policy collapse happens when the bias of the critic is too high for the actor. Example with A2C:
 
-![Policy collapse happens regularly without  warning: the performance is back to random. Source: Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.](../slides/img/policy-collapse.png){width=70%}
+![Policy collapse happens regularly without  warning: the performance is back to random. Source: Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.](../slides/img/policy-collapse.png){width=100%}
 
 TD3 [@Fujimoto2018] has been introduced to fix the problems of DDPG.
 
@@ -263,7 +263,7 @@ TD3 [@Fujimoto2018] has been introduced to fix the problems of DDPG.
 
 As any Q-learning-based method, DDPG **overestimates** Q-values. The Bellman target $t = r + \gamma \, \max_{a'} Q(s', a')$ uses a maximum over other values, so it is increasingly overestimated during learning. After a while, the overestimated Q-values disrupt training in the actor.
 
-![Overestimation of Q-values by DDPG and TD3 (labelled CDQ here - clipped double Q-learning). Source: [@Fujimoto2018]](../slides/img/td3-overestimation.png){width=70%}
+![Overestimation of Q-values by DDPG and TD3 (labelled CDQ here - clipped double Q-learning). Source: [@Fujimoto2018]](../slides/img/td3-overestimation.png){width=100%}
 
 Double Q-learning solves the problem by using the target network $\theta'$ to estimate Q-values, but the value network $\theta$ to select the greedy action in the next state:
 

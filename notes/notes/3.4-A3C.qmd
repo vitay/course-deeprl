@@ -11,7 +11,7 @@ Let's consider an **n-step advantage actor-critic** architecture where the Q-val
 
 $$Q^{\pi_\theta}(s_t, a_t) \approx R_t^n =  \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n})$$
 
-![n-step returns. Source: [@Sutton1998]. ](../slides/img/nstep.png){width=70%}
+![n-step returns. Source: [@Sutton1998]. ](../slides/img/nstep.png){width=100%}
 
 The **actor** $\pi_\theta(s, a)$ uses PG with baseline to learn the policy:
 
@@ -27,7 +27,7 @@ $$
 $$
 
 
-![Advantage actor-critic. ](../slides/img/a2c.svg){width=70%}
+![Advantage actor-critic. ](../slides/img/a2c.svg){width=100%}
 
 The advantage actor-critic is strictly **on-policy**:
 
@@ -38,7 +38,8 @@ $$\begin{cases}
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R^n_t - V_\varphi(s_t)) ] \\
     \\
     \mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[(R^n_t - V_\varphi(s_t))^2] \\
-\end{cases}$$
+\end{cases}
+$$
 
 We cannot use an **experience replay memory** to deal with the correlated inputs, as it is only for off-policy methods. We cannot either get an uncorrelated batch of transitions by acting **sequentially** with a single agent.
 
@@ -200,7 +201,7 @@ A3C still needs target networks to ensure stability. It works best on shared-mem
 A3C set a new record for Atari games in 2016. The main advantage is that the workers gather experience in parallel: training is much faster than with DQN. LSTMs can be used to improve the performance.
 
 ![A3C results [@Mnih2016].](../slides/img/a3c-comparison.png){width=100%}
-![A3C results [@Mnih2016].](../slides/img/a3c-time.png){width=70%}
+![A3C results [@Mnih2016].](../slides/img/a3c-time.png){width=100%}
 
 Learning is only marginally better with more threads:
 
@@ -219,4 +220,4 @@ but much faster!
 
 A3C came up in 2016. A lot of things happened since then...
 
-![The Rainbow network combines all DQN improvements and outperforms each of them. Source: [@Hessel2017].](../slides/img/rainbow-results1.png){width=80%}
+![The Rainbow network combines all DQN improvements and outperforms each of them. Source: [@Hessel2017].](../slides/img/rainbow-results1.png){width=100%}

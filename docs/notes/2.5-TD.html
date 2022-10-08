@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -402,7 +402,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -421,7 +421,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/2.5-TD.html" target="_blank">html</a> <a href="../slides/pdf/2.5-TD.pdf" target="_blank">pdf</a></p>
-<section id="temporal-difference-algorithms" class="level2">
+<section id="temporal-difference-algorithms" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="temporal-difference-algorithms">Temporal Difference algorithms</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/XLB98ZFsy8w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>MC methods wait until the end of the episode to compute the obtained return, and update the estimates of all encountered states:</p>
@@ -439,10 +439,10 @@ div.csl-indent {
     V(s_t) = V(s_t) + \alpha \, (r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t))
 </span></p>
 <p>where <span class="math inline">r_{t+1} + \gamma\, V(s_{t+1})</span> is a sampled estimate of the return.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/MCTD.svg" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">TD replaces <span class="math inline">R_{t+1}</span> with an estimate <span class="math inline">V(s_{t+1})</span>. Adapted from <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">TD replaces <span class="math inline">R_{t+1}</span> with an estimate <span class="math inline">V(s_{t+1})</span>. Adapted from <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The quantity</p>
@@ -497,13 +497,13 @@ TD(0) policy evaluation
     Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))
 </span></p>
 <p>Like for MC, the exploration/exploitation trade-off has to be managed: what is the next action <span class="math inline">a_{t+1}</span>? There are therefore two classes of TD control algorithms: <strong>on-policy</strong> (SARSA) and <strong>off-policy</strong> (Q-learning).</p>
-<section id="sarsa-on-policy-td-control" class="level3">
+<section id="sarsa-on-policy-td-control" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="sarsa-on-policy-td-control">SARSA: On-policy TD control</h3>
 <p><strong>SARSA</strong> (state-action-reward-state-action) updates the value of a state-action pair by using the predicted value of the next state-action pair according to the current policy.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/sarsa-sequence.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">State-action-reward-state-action transitions. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">State-action-reward-state-action transitions. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>When arriving in <span class="math inline">s_{t+1}</span> from <span class="math inline">(s_t, a_t)</span>, we already sample the next action:</p>
@@ -630,14 +630,14 @@ Temporal Difference learning
 </div>
 </section>
 </section>
-<section id="actor-critic-methods" class="level2">
+<section id="actor-critic-methods" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="actor-critic-methods">Actor-critic methods</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/6IyZ3BGmuSI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>Actor-critic methods are TD methods that have a separate memory structure to explicitly represent the policy independent of the value function. The policy <span class="math inline">\pi</span> is implemented by the <strong>actor</strong>, because it is used to select actions. The estimated values <span class="math inline">V(s)</span> are implemented by the <strong>critic</strong>, because it criticizes the actions made by the actor. Learning is always <strong>on-policy</strong>: the critic must learn about and critique whatever policy is currently being followed by the actor.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/actorcritic.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Actor-critic architecture. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Actor-critic architecture. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The critic computes the <strong>TD error</strong> or <strong>1-step advantage</strong> after each transition <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1})</span>:</p>
@@ -753,15 +753,15 @@ Value-based vs.&nbsp;policy-based algorithms
 </div>
 </div>
 </section>
-<section id="eligibility-traces-and-advantage-estimation" class="level2">
+<section id="eligibility-traces-and-advantage-estimation" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="eligibility-traces-and-advantage-estimation">Eligibility traces and advantage estimation</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/Coe9U4bv-nI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>MC has <strong>high variance, zero bias</strong>: it has good convergence properties and we are more likely to find the optimal policy. It is not very sensitive to initial estimates, and very simple to understand and use.</p>
 <p>TD has <strong>low variance, some bias</strong>, so it is usually more <strong>sample efficient</strong> than MC. TD(0) converges to <span class="math inline">V^\pi(s)</span> (but not always with function approximation). The policy might be suboptimal. It is more sensitive to initial values (bootstrapping).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/gridworld-lambda.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Gridworld environment. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/gridworld-lambda.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Gridworld environment. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>When the reward function is sparse (e.g.&nbsp;only at the end of a game), only the last action, leading to that reward, will be updated the first time in TD.</p>
@@ -769,12 +769,12 @@ Value-based vs.&nbsp;policy-based algorithms
     Q(s, a) = Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, \max_a Q(s', a) - Q(s, a))
 </span></p>
 <p>The previous actions, which were equally important in obtaining the reward, will only be updated the next time they are visited. This makes learning very slow: if the path to the reward has <span class="math inline">n</span> steps, you will need to repeat the same episode at least <span class="math inline">n</span> times to learn the Q-value of the first action.</p>
-<section id="n-step-returns" class="level3">
+<section id="n-step-returns" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="n-step-returns">n-step returns</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/nstep.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">n-step returns. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/nstep.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">n-step returns. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Optimally, we would like a trade-off between:</p>
@@ -800,23 +800,23 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 </span></p>
 <p>As you use more “real” rewards, you <strong>reduce the bias</strong> of Q-learning. As you use estimates for the rest of the episode, you <strong>reduce the variance</strong> of MC methods. But how to choose <span class="math inline">n</span>?</p>
 </section>
-<section id="eligibility-traces" class="level3">
+<section id="eligibility-traces" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="eligibility-traces">Eligibility traces</h3>
 <p>One solution is to <strong>average</strong> the n-step returns, using a discount factor <span class="math inline">\lambda</span> :</p>
 <p><span class="math display">R^\lambda_t = (1  - \lambda) \, \sum_{n=1}^\infty \lambda^{n-1} \, R^n_t</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/eligibility-forward.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption"><span class="math inline">\lambda</span>-returns are averages of all n-step returns. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/eligibility-forward.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption"><span class="math inline">\lambda</span>-returns are averages of all n-step returns. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The term <span class="math inline">1- \lambda</span> is there to ensure that the coefficients <span class="math inline">\lambda^{n-1}</span> sum to one.</p>
 <p><span class="math display">\sum_{n=1}^\infty \lambda^{n-1} = \dfrac{1}{1 - \lambda}</span></p>
 <p>Each reward <span class="math inline">r_{t+k+1}</span> will count multiple times in the <span class="math inline">\lambda</span>-return. Distant rewards are discounted by <span class="math inline">\lambda^k</span> in addition to <span class="math inline">\gamma^k</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/eligibility-forward-decay.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption"><span class="math inline">\lambda</span> controls the importance of large n-step returns. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/eligibility-forward-decay.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption"><span class="math inline">\lambda</span> controls the importance of large n-step returns. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Large n-step returns (MC) should not have as much importance as small ones (TD), as they have a high variance.</p>
@@ -828,20 +828,20 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <li>If <span class="math inline">\lambda=1</span>, the <span class="math inline">\lambda</span>-return is equal to <span class="math inline">R_t = \sum_{k=0}^{\infty} \gamma^{k} \, r_{t+k+1}</span>, i.e.&nbsp;MC: low bias, high variance.</li>
 </ul>
 <p>This <strong>forward view</strong> of eligibility traces implies to look at all future rewards until the end of the episode to perform a value update. This prevents online learning using single transitions.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/eligibility-forward-view.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Forward view of eligibility traces. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Forward view of eligibility traces. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Another view on eligibility traces is that the <strong>TD reward prediction error</strong> at time <span class="math inline">t</span> is sent backwards in time:</p>
 <p><span class="math display">
 \delta_t = r_{t+1} + \gamma V(s_{t+1}) - V(s_t)
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/eligibility-backwards.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Backward view of eligibility traces. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Backward view of eligibility traces. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Every state <span class="math inline">s</span> previously visited during the episode will be updated proportionally to the current TD error and an <strong>eligibility trace</strong> <span class="math inline">e_t(s)</span>:</p>
@@ -855,10 +855,10 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
                 e_{t-1}(s) + 1 \qquad \text{if} \quad s = s_t \\
             \end{cases}
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/traces.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Updating of eligibility traces. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Updating of eligibility traces. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p><span class="math inline">\lambda</span> defines how important is a future TD error for the current state.</p>

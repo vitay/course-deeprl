@@ -129,7 +129,7 @@ $$
 $$
 
 
-![Backup diagram of iterative policy evaluation. Credit: David Silver.](../slides/img/iterativepolicyevaluation2.png){width=80%}
+![Backup diagram of iterative policy evaluation. Credit: David Silver.](../slides/img/iterativepolicyevaluation2.png){width=100%}
 
 
 The value function at step $k+1$ $V_{k+1}(s)$ is computed using the previous estimates $V_{k}(s)$ and the Bellman equation transformed into an **update rule**. In vector notation:
@@ -289,20 +289,20 @@ The **optimal policy** being deterministic, policy improvement can be greedy ove
 
 ### Gridworld example
 
-![Gridworld example. Credit: David Silver](../slides/img/dp-gridworld1.png){width=80%}
+![Gridworld example. Credit: David Silver](../slides/img/dp-gridworld1.png){width=100%}
 
 **Gridworld** is an undiscounted MDP (we can take $\gamma=1$). The states are the position in the grid, the actions are up, down, left, right. Transitions to a wall leave in the same state. The reward is always -1, except after being in the terminal states in gray ($r=0$). The initial policy is random:
 
 $$\pi(s, \text{up}) = \pi(s, \text{down})= \pi(s, \text{left}) = \pi(s, \text{right}) = 0.25$$
 
-![First iterations. Credit: David Silver](../slides/img/dp-gridworld2.png){width=80%}
+![First iterations. Credit: David Silver](../slides/img/dp-gridworld2.png){width=100%}
 
 * $k=0$: The initial values $V_0$ are set to 0 as the initial policy is random. 
 * $k=1$:  The random policy is evaluated: all states get the value of the average immediate reward in that state. -1, except the terminal states (0).  The greedy policy is already an improvement over the random policy: adjacent states to the terminal states would decide to go there systematically, as the value is 0 instead of -1. 
 * $k=2$: The previous estimates propagate: states adjacent to the terminal states get a higher value, as there will be less punishments after these states. 
 
 
-![Later iterations. Credit: David Silver](../slides/img/dp-gridworld3.png){width=80%}
+![Later iterations. Credit: David Silver](../slides/img/dp-gridworld3.png){width=100%}
 
 * $k=3$:  The values continue to propagate.  The greedy policy at that step of policy evaluation is already optimal.
 * $k>3$: The values continue to converge towards the true values. The greedy policy does not change. In this simple example, it is already the optimal policy.

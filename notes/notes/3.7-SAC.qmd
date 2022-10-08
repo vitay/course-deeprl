@@ -36,9 +36,9 @@ $$
 
 In continuous action spaces, we would have to integrate over the whole action space, what is not tractable. Exploratory noise as in DDPG only leads to **unimodal** policies: greedy action plus some noise.
 
-![Unimodal policies explore around the greedy action. Source: <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/>](../slides/img/sac-unimodal.png){width=70%}
+![Unimodal policies explore around the greedy action. Source: <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/>](../slides/img/sac-unimodal.png){width=100%}
 
-![Multimodal policies explore in the whole action space. Source: <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/>](../slides/img/sac-multimodal.png){width=70%}
+![Multimodal policies explore in the whole action space. Source: <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/>](../slides/img/sac-multimodal.png){width=100%}
 
 ## Continuous stochastic policies
 

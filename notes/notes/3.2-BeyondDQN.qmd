@@ -331,15 +331,15 @@ The final performance is not incredibly better than single-GPU DQN, but obtained
 
 With more experience, Deepmind realized that a single learner is better. Distributed SGD (computing gradients with different learners) is not very efficient. What matters is collecting transitions very quickly (multiple workers) but using **prioritized experience replay** to learn from the most interesting ones.
 
-![](../img/apex.png)
+![](../slides/img/apex.png)
 
 Using 360 workers (1 per CPU core), Ape-X [@Horgan2018] reaches super-human performance for a fraction of the wall-clock training time.
 
-![](../img/apex-results.png)
+![](../slides/img/apex-results.png)
 
 The multiple parallel workers can collect much more frames, leading to the better performance. The learner uses n-step returns and the double dueling DQN network architecture, so it is not much different from Rainbow DQN internally.
 
-![](../img/apex-results2.png)
+![](../slides/img/apex-results2.png)
 
 ## Recurrent DQN
 

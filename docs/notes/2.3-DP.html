@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -402,7 +402,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -421,7 +421,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/2.3-DP.html" target="_blank">html</a> <a href="../slides/pdf/2.3-DP.pdf" target="_blank">pdf</a></p>
-<section id="policy-iteration" class="level2">
+<section id="policy-iteration" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="policy-iteration">Policy iteration</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/9LS_pD728yo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="policy-evaluation" class="level3">
@@ -503,17 +503,17 @@ div.csl-indent {
 </span></p>
 <p>Done! <strong>But</strong>, if we have <span class="math inline">n</span> states, the matrix <span class="math inline">\mathcal{P}^\pi</span> has <span class="math inline">n^2</span> elements. Inverting <span class="math inline">\mathbb{I} - \gamma \, \mathcal{P}^\pi</span> requires at least <span class="math inline">\mathcal{O}(n^{2.37})</span> operations. Forget it if you have more than a thousand states (<span class="math inline">1000^{2.37} \approx 13</span> million operations). In dynamic programming, we will therefore use <strong>iterative methods</strong> to estimate <span class="math inline">\mathbf{V}^\pi</span> with (hopefully) less operations.</p>
 </section>
-<section id="iterative-policy-evaluation" class="level3">
+<section id="iterative-policy-evaluation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="iterative-policy-evaluation">Iterative policy evaluation</h3>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/DOGbCQjSIlY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>The idea of <strong>iterative policy evaluation</strong> (IPE) is to consider a sequence of consecutive state-value functions which should converge from initially wrong estimates <span class="math inline">V_0(s)</span> towards the real state-value function <span class="math inline">V^{\pi}(s)</span>.</p>
 <p><span class="math display">
       V_0 \rightarrow V_1 \rightarrow V_2 \rightarrow \ldots \rightarrow V_k \rightarrow V_{k+1} \rightarrow \ldots \rightarrow V^\pi
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/iterativepolicyevaluation2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagram of iterative policy evaluation. Credit: David Silver.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/iterativepolicyevaluation2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Backup diagram of iterative policy evaluation. Credit: David Silver.</figcaption><p></p>
 </figure>
 </div>
 <p>The value function at step <span class="math inline">k+1</span> <span class="math inline">V_{k+1}(s)</span> is computed using the previous estimates <span class="math inline">V_{k}(s)</span> and the Bellman equation transformed into an <strong>update rule</strong>. In vector notation:</p>
@@ -618,17 +618,17 @@ Greedy policy improvement
 </div>
 </div>
 </section>
-<section id="policy-iteration-1" class="level3">
+<section id="policy-iteration-1" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="policy-iteration-1">Policy iteration</h3>
 <p>Once a policy <span class="math inline">\pi</span> has been improved using <span class="math inline">V^{\pi}</span> to yield a better policy <span class="math inline">\pi'</span>, we can then compute <span class="math inline">V^{\pi'}</span> and improve it again to yield an even better policy <span class="math inline">\pi''</span>.</p>
 <p>The algorithm <strong>policy iteration</strong> successively uses <strong>policy evaluation</strong> and <strong>policy improvement</strong> to find the optimal policy.</p>
 <p><span class="math display">
   \pi_0 \xrightarrow[]{E} V^{\pi_0} \xrightarrow[]{I} \pi_1 \xrightarrow[]{E} V^{\pi^1} \xrightarrow[]{I}  ... \xrightarrow[]{I} \pi^* \xrightarrow[]{E} V^{*}
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/gpi.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>The <strong>optimal policy</strong> being deterministic, policy improvement can be greedy over the state values. If the policy does not change after policy improvement, the optimal policy has been found.</p>
@@ -667,20 +667,20 @@ Policy iteration
 </div>
 </div>
 </section>
-<section id="gridworld-example" class="level3">
+<section id="gridworld-example" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="gridworld-example">Gridworld example</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/dp-gridworld1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Gridworld example. Credit: David Silver</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/dp-gridworld1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Gridworld example. Credit: David Silver</figcaption><p></p>
 </figure>
 </div>
 <p><strong>Gridworld</strong> is an undiscounted MDP (we can take <span class="math inline">\gamma=1</span>). The states are the position in the grid, the actions are up, down, left, right. Transitions to a wall leave in the same state. The reward is always -1, except after being in the terminal states in gray (<span class="math inline">r=0</span>). The initial policy is random:</p>
 <p><span class="math display">\pi(s, \text{up}) = \pi(s, \text{down})= \pi(s, \text{left}) = \pi(s, \text{right}) = 0.25</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/dp-gridworld2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">First iterations. Credit: David Silver</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/dp-gridworld2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">First iterations. Credit: David Silver</figcaption><p></p>
 </figure>
 </div>
 <ul>
@@ -688,10 +688,10 @@ Policy iteration
 <li><span class="math inline">k=1</span>: The random policy is evaluated: all states get the value of the average immediate reward in that state. -1, except the terminal states (0). The greedy policy is already an improvement over the random policy: adjacent states to the terminal states would decide to go there systematically, as the value is 0 instead of -1.</li>
 <li><span class="math inline">k=2</span>: The previous estimates propagate: states adjacent to the terminal states get a higher value, as there will be less punishments after these states.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/dp-gridworld3.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Later iterations. Credit: David Silver</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/dp-gridworld3.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Later iterations. Credit: David Silver</figcaption><p></p>
 </figure>
 </div>
 <ul>
@@ -747,26 +747,26 @@ Value iteration
 </div>
 </div>
 </section>
-<section id="comparison-of-policy--and-value-iteration" class="level2">
+<section id="comparison-of-policy--and-value-iteration" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="comparison-of-policy--and-value-iteration">Comparison of Policy- and Value-iteration</h2>
 <p><strong>Full policy-evaluation backup</strong></p>
 <p><span class="math display">
     V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ]
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/fullpe.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagram of policy evaluation.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Backup diagram of policy evaluation.</figcaption><p></p>
 </figure>
 </div>
 <p><strong>Full value-iteration backup</strong></p>
 <p><span class="math display">
     V_{k+1} (s) \leftarrow \max_{a \in \mathcal{A}(s)} \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ]
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/fullvi.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagram of value evaluation.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Backup diagram of value evaluation.</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -804,13 +804,13 @@ Value iteration
 <p><span class="math display">y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></p>
 <p>States with a high error should be updated in priority. If the Bellman error is small, this means that the current estimate <span class="math inline">V(s)</span> is already close to what it should be: there is no hurry in evaluating this state. The main advantage is that the DP algorithm can be applied as the agent is actually experiencing its environment (no need for the dynamics of environment to be fully known).</p>
 </section>
-<section id="curse-of-dimensionality" class="level2">
+<section id="curse-of-dimensionality" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="curse-of-dimensionality">Curse of dimensionality</h2>
 <p>Policy-iteration and value-iteration consist of alternations between policy evaluation and policy improvement, although at different frequencies. This principle is called <strong>Generalized Policy Iteration</strong> (GPI). Finding an optimal policy is polynomial in the number of states and actions: <span class="math inline">\mathcal{O}(n^2 \, m)</span> (<span class="math inline">n</span> is the number of states, <span class="math inline">m</span> the number of actions). However, the number of states is often astronomical, e.g., often growing exponentially with the number of state variables (what Bellman called <strong>“the curse of dimensionality”</strong>) In practice, classical DP can only be applied to problems with a few millions of states.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/cursedimensionality.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Curse of dimensionality. Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Curse of dimensionality. Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption><p></p>
 </figure>
 </div>
 <p>If one variable can be represented by 5 discrete values:</p>

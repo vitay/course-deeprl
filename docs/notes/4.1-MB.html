@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -393,7 +393,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -412,28 +412,28 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/4.1-ModelBased.html" target="_blank">html</a> <a href="../slides/pdf/4.1-ModelBased.pdf" target="_blank">pdf</a></p>
-<section id="model-free-vs.-model-based-rl" class="level2">
+<section id="model-free-vs.-model-based-rl" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="model-free-vs.-model-based-rl">Model-free vs.&nbsp;model-based RL</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/p3k05RxrTVE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>In <strong>model-free RL</strong> (MF) methods, we do not need to know anything about the dynamics of the environment to start learning a policy:</p>
 <p><span class="math display">p(s_{t+1} | s_t, a_t) \; \; r(s_t, a_t, s_{t+1})</span></p>
 <p>We just sample transitions <span class="math inline">(s, a, r, s')</span> and update Q-values or a policy network. The main advantage is that the agent does not need to “think” when acting: just select the action with highest Q-value (<strong>reflexive behavior</strong>). The other advantage is that you can use MF methods on <strong>any</strong> MDP: you do not need to know anything about them. But MF methods are very slow (sample complexity): as they make no assumption, they have to learn everything by trial-and-error from scratch.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/modelbased2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Model-free vs.&nbsp;model-based RL. Source: <span class="citation" data-cites="Dayan2008">(<a href="../references.html#ref-Dayan2008" role="doc-biblioref">Dayan and Niv, 2008</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Model-free vs.&nbsp;model-based RL. Source: <span class="citation" data-cites="Dayan2008">(<a href="../references.html#ref-Dayan2008" role="doc-biblioref">Dayan and Niv, 2008</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>If you had a <strong>model</strong> of the environment, you could plan ahead (what would happen if I did that?) and speed up learning (do not explore stupid ideas): <strong>model-based RL</strong> (MB). In chess, players <strong>plan</strong> ahead the possible moves up to a certain horizon and evaluate moves based on their emulated consequences. In real-time strategy games, learning the environment (<strong>world model</strong>) is part of the strategy: you do not attack right away.</p>
 </section>
-<section id="model-predictive-control-mpc" class="level2">
+<section id="model-predictive-control-mpc" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="model-predictive-control-mpc">Model Predictive Control (MPC)</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/WGGqJ-vOoqE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>Learning the world model is not complicated in theory. We just need to collect <em>enough</em> transitions <span class="math inline">s_t, a_t, s_{t+1}, r_{t+1}</span> using a random agent (or during learning) and train a model to predict the next state and reward.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/learningdynamics.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Learning the world model.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Learning the world model.</figcaption><p></p>
 </figure>
 </div>
 <p>Such a model is called the <strong>dynamics model</strong>, the <strong>transition model</strong> or the <strong>forward model</strong>: <strong>What happens if I do that?</strong> The model can be deterministic (use neural networks) or stochastic (use Gaussian Processes). Given an initial state <span class="math inline">s_0</span> and a policy <span class="math inline">\pi</span>, you can unroll the future using the local model.</p>
@@ -441,29 +441,29 @@ div.csl-indent {
 <p><span class="math display">\tau = (s_o, a_o, r_ 1, s_1, a_1, \ldots, s_T)</span></p>
 <p>You can then feed these trajectories to any model-free algorithm (value-based, policy-gradient) that will learn to maximize the returns.</p>
 <p><span class="math display">\mathcal{J}(\theta) = \mathbb{E}_{\tau}[R(\tau)]</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-rollout.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Imaginary rollouts can be used to improve the policy. Source: <span class="citation" data-cites="Kurutach2018">(<a href="../references.html#ref-Kurutach2018" role="doc-biblioref">Kurutach et al., 2018</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Imaginary rollouts can be used to improve the policy. Source: <span class="citation" data-cites="Kurutach2018">(<a href="../references.html#ref-Kurutach2018" role="doc-biblioref">Kurutach et al., 2018</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The only sample complexity is the one needed to train the model: the rest is <strong>emulated</strong>. Drawback: This can only work when the model is close to perfect, especially for long trajectories or probabilistic MDPs.</p>
 <p>For long horizons, the slightest imperfection in the model can accumulate (<strong>drift</strong>) and lead to completely wrong trajectories. The emulated trajectory cannot be generated by the current policy <span class="math inline">\pi_\theta</span>, the policy gradient is biased (especially if you are on-policy), the algorithm does not converge. If you have a perfect model, you should not be using RL anyway as classical control methods would be much faster (but see AlphaGo).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-drift1.jpeg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Imaginary rollouts generated by an imperfect model can drigt for long horizons. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Imaginary rollouts generated by an imperfect model can drigt for long horizons. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption><p></p>
 </figure>
 </div>
 <p>The solution is to <strong>replan</strong> at each time step and execute the first planned action <strong>in the real environment</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-drift2.jpeg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Constantly replanning allows to correct the trajectories. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Constantly replanning allows to correct the trajectories. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption><p></p>
 </figure>
 </div>
 <p><strong>Model Predictive Control</strong> iteratively plans complete trajectories, but only selects the first action.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-tip callout callout-style-default callout-captioned page-columns page-full">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -472,19 +472,19 @@ div.csl-indent {
 Model Predictive Control
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="callout-body-container callout-body page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-algo.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: <a href="http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf" class="uri">http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Source: <a href="http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf" class="uri">http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf</a></figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">A neural network can be used to learn the model in an MPC architecture. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">A neural network can be used to learn the model in an MPC architecture. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The planner can actually be anything, it does not have to be a RL algorithm. For example, it can be iLQR (Iterative Linear Quadratic Regulator), a non-linear optimization method (see <a href="https://jonathan-hui.medium.com/rl-lqr-ilqr-linear-quadratic-regulator-a5de5104c750" class="uri">https://jonathan-hui.medium.com/rl-lqr-ilqr-linear-quadratic-regulator-a5de5104c750</a>).</p>
@@ -494,27 +494,27 @@ Model Predictive Control
 <li>generate rollouts with these action and compute their returns using the model.</li>
 <li>select the action whose rollout has the highest return.</li>
 </ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-example.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Random-sampling shooting. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Random-sampling shooting. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
 </figure>
 </div>
 <p>The main advantage of MPC is that you can change the reward function (the <strong>goal</strong>) on the fly: what you learn is the model, but planning is just an optimization procedure. You can set intermediary goals to the agent very flexibly: no need for a well-defined reward function. Model imperfection is not a problem as you replan all the time. The model can adapt to changes in the environment (slippery terrain, simulation to real-world).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-application1.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/mpc-application2.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="dyna-q" class="level2">
+<section id="dyna-q" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="dyna-q">Dyna-Q</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/0MVpljc2KJc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>Another approach to MB RL is to <strong>augment</strong> MF methods with MB rollouts. The MF algorithm (e.g.&nbsp;Q-learning) learns from transitions <span class="math inline">(s, a, r, s')</span> sampled either with:</p>
@@ -522,10 +522,10 @@ Model Predictive Control
 <li><strong>real experience</strong>: interaction with the environment.</li>
 <li><strong>simulated experience</strong>: simulation by the model.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/dynaq.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Dyna-Q: RL with planning. Source: <a href="https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8" class="uri">https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Dyna-Q: RL with planning. Source: <a href="https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8" class="uri">https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8</a></figcaption><p></p>
 </figure>
 </div>
 <p>If the simulated transitions are good enough, the MF algorithm can converge using much less <strong>real transitions</strong>, thereby reducing its <strong>sample complexity</strong>. The <strong>Dyna-Q</strong> algorithm <span class="citation" data-cites="Sutton1990">(<a href="../references.html#ref-Sutton1990" role="doc-biblioref">Sutton, 1990</a>)</span> is an extension of Q-learning to integrate a model <span class="math inline">M(s, a) = (s', r')</span>. The model can be tabular or approximated with a NN.</p>
@@ -563,10 +563,10 @@ Dyna-Q
 </ul>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/dynaq2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Dyna-Q: RL with planning. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Dyna-Q: RL with planning. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>It is interesting to notice that Dyna-Q is very similar to DQN and its <strong>experience replay memory</strong>. In DQN, the ERM stores <strong>real transitions</strong> generated in the past. In Dyna-Q, the model generates <strong>imagined transitions</strong> based on past real transitions.</p>

@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -375,7 +375,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -394,14 +394,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>Slides: <a href="../slides/2.7-DeepNetworks.html" target="_blank">html</a> <a href="../slides/pdf/2.7-DeepNetworks.pdf" target="_blank">pdf</a></p>
-<section id="feedforward-neural-networks" class="level2">
+<section id="feedforward-neural-networks" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="feedforward-neural-networks">Feedforward neural networks</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/pVneu-1EYdI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>An <strong>artificial neural network</strong> (ANN) is a cascade of <strong>fully-connected</strong> (FC) layers of artificial neurons.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/shallowdeep.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Shallow vs.&nbsp;deep neural networks.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Shallow vs.&nbsp;deep neural networks.</figcaption><p></p>
 </figure>
 </div>
 <p>Each layer <span class="math inline">k</span> transforms an input vector <span class="math inline">\mathbf{h}_{k-1}</span> into an output vector <span class="math inline">\mathbf{h}_{k}</span> using a weight matrix <span class="math inline">W_k</span>, a bias vector <span class="math inline">\mathbf{b}_k</span> and an activation function <span class="math inline">f()</span>.</p>
@@ -428,19 +428,19 @@ ul.task-list li input[type="checkbox"] {
     H(X, Y) = \mathbb{E}_{x \sim X}[- \log P(Y=x)]
 </span></p>
 <p>It measures whether samples from <span class="math inline">X</span> are likely under <span class="math inline">Y</span>? Minimizing the cross-entropy makes the two distributions equal almost anywhere.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/crossentropy.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">The cross-entropy measures the similarity of the two probability distributions.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">The cross-entropy measures the similarity of the two probability distributions.</figcaption><p></p>
 </figure>
 </div>
 <p>In supervised learning, the targets <span class="math inline">\mathbf{t}</span> are fixed <strong>one-hot encoded vectors</strong>.</p>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \sum_j t_j \, \log y_{j} ]</span></p>
 <p>But it could be any target distribution.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/crossentropy-animation.gif" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Cross-entropy between multinomial distributions.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Cross-entropy between multinomial distributions.</figcaption><p></p>
 </figure>
 </div>
 <p>In both cases, we want to minimize the loss variant by applying <strong>Stochastic Gradient Descent</strong> (SGD) or a variant (Adam, RMSprop).</p>
@@ -450,10 +450,10 @@ ul.task-list li input[type="checkbox"] {
 <p>The question is how to compute the <strong>gradient of the loss function</strong> w.r.t the parameters <span class="math inline">\theta</span>. For both the mse and cross-entropy loss functions, we have:</p>
 <p><span class="math display">\nabla_\theta \mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [- (\mathbf{t} - \mathbf{y}) \, \nabla_\theta \, \mathbf{y}]</span></p>
 <p>There is an algorithm to compute efficiently the gradient of the output w.r.t the parameters: <strong>backpropagation</strong> (see Neurocomputing). In deep RL, we do not care about backprop: tensorflow or pytorch do it for us.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/deeprl.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Principle of deep reinforcement learning.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Principle of deep reinforcement learning.</figcaption><p></p>
 </figure>
 </div>
 <p>There are three aspects to consider when building a neural network:</p>
@@ -472,49 +472,49 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ol>
 </section>
-<section id="convolutional-neural-networks" class="level2">
+<section id="convolutional-neural-networks" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="convolutional-neural-networks">Convolutional neural networks</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/t244PS_tZtY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>When using images as inputs, <strong>fully-connected networks</strong> (FCN) would have too many weights: slow learning and overfitting.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/fullyconnected.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Fully-connected layers necessitate too many parameters on images.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Fully-connected layers necessitate too many parameters on images.</figcaption><p></p>
 </figure>
 </div>
 <p><strong>Convolutional layers</strong> reduce the number of weights by <strong>reusing</strong> weights at different locations. This the principle of a convolution, which leads to fast and efficient learning.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/convolutional.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Convolutional layers share weights on the image.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Convolutional layers share weights on the image.</figcaption><p></p>
 </figure>
 </div>
 <p>A <strong>convolutional layer</strong> extracts <strong>features</strong> of its inputs. <span class="math inline">d</span> filters are defined with very small sizes (3x3, 5x5…). Each filter is convoluted over the input image (or the previous layer) to create a <strong>feature map</strong>. The set of <span class="math inline">d</span> feature maps becomes a new 3D structure: a <strong>tensor</strong>. If the input image is 32x32x3, the resulting tensor will be 32x32xd. The convolutional layer has only very few parameters: each feature map has 3x3 values in the filter and a bias, i.e.&nbsp;10 parameters. The convolution operation is <strong>differentiable</strong>: backprop will work.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/depthcol.jpeg" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Convolutional layer. Source: <a href="http://cs231n.github.io/convolutional-networks/" class="uri">http://cs231n.github.io/convolutional-networks/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Convolutional layer. Source: <a href="http://cs231n.github.io/convolutional-networks/" class="uri">http://cs231n.github.io/convolutional-networks/</a></figcaption><p></p>
 </figure>
 </div>
 <p>The number of elements in a convolutional layer is still too high. We need to reduce the spatial dimension of a convolutional layer by <strong>downsampling</strong> it. For each feature, a <strong>max-pooling</strong> layer takes the maximum value of a feature for each subregion of the image (mostly 2x2). Pooling allows translation invariance: the same input pattern will be detected whatever its position in the input image. Max-pooling is also differentiable.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/maxpooling.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Convolutional layer. Source: <a href="http://cs231n.github.io/convolutional-networks/" class="uri">http://cs231n.github.io/convolutional-networks/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Convolutional layer. Source: <a href="http://cs231n.github.io/convolutional-networks/" class="uri">http://cs231n.github.io/convolutional-networks/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A <strong>convolutional neural network</strong> (CNN) is a cascade of convolution and pooling operations, extracting layer by layer increasingly complex features. The spatial dimensions decrease after each pooling operation, but the number of extracted features increases after each convolution. One usually stops when the spatial dimensions are around 7x7. The last layers are fully connected. Can be used for regression and classification depending on the output layer and the loss function. Training a CNN uses backpropagation all along: the convolution and pooling operations are differentiable.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/lenet.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Convolutional neural network.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Convolutional neural network.</figcaption><p></p>
 </figure>
 </div>
 <p>The only thing we need to know is that CNNs are non-linear function approximators that work well with images.</p>
 <p><span class="math display">\mathbf{y} = F_\theta (\mathbf{x})</span></p>
 <p>The convolutional layers <strong>extract complex features</strong> from the images through learning. The last FC layers allow to approximate values (regression) or probability distributions (classification).</p>
 </section>
-<section id="autoencoders" class="level2">
+<section id="autoencoders" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="autoencoders">Autoencoders</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/IqrEdV9ejO8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>The problem with FCN and CNN is that they <strong>extract features</strong> in supervised learning tasks: Need for a lot of annotated data (image, label). <strong>Autoencoders</strong> allows <strong>unsupervised learning</strong>, as they only need inputs (images). Their task is to <strong>reconstruct</strong> the input:</p>
@@ -528,22 +528,22 @@ ul.task-list li input[type="checkbox"] {
 <li><p>the <strong>encoder</strong>: from the input <span class="math inline">\mathbf{x}</span> to the <strong>latent space</strong> <span class="math inline">\mathbf{z}</span>.</p></li>
 <li><p>the <strong>decoder</strong>: from the latent space <span class="math inline">\mathbf{z}</span> to the reconstructed input <span class="math inline">\mathbf{\tilde{x}}</span>.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/autoencoder-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Autoencoder. Source: <a href="https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html" class="uri">https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Autoencoder. Source: <a href="https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html" class="uri">https://lilianweng.github.io/lil-log/2018/08/12/from-autoencoder-to-beta-vae.html</a></figcaption><p></p>
 </figure>
 </div>
 <p>The <strong>latent space</strong> <span class="math inline">\mathbf{z}</span> is a <strong>compressed representation</strong> (bottleneck) of the inputs <span class="math inline">\mathbf{x}</span>. It has to learn to compress efficiently the inputs without losing too much information, in order to reconstruct the inputs: Dimensionality reduction, unsupervised feature extraction.</p>
 <p>In deep RL, we can construct the feature vector with an autoencoder. The autoencoder can be trained offline with a random agent or online with the current policy (auxiliary loss).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/autoencoder-RL.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Autoencoders can be used in RL to find a feature space where linear FA can apply easily.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Autoencoders can be used in RL to find a feature space where linear FA can apply easily.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="recurrent-neural-networks" class="level2">
+<section id="recurrent-neural-networks" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="recurrent-neural-networks">Recurrent neural networks</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/dkxIqBjldtY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>FCN, CNN and AE are <strong>feedforward neural networks</strong>: they transform an input <span class="math inline">\mathbf{x}</span> into an output <span class="math inline">\mathbf{y}</span>:</p>
@@ -551,10 +551,10 @@ ul.task-list li input[type="checkbox"] {
 <p>If you present a sequence of inputs <span class="math inline">\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t</span> to a feedforward network, the outputs will be independent from each other:</p>
 <p><span class="math display">\mathbf{y}_0 = F_\theta(\mathbf{x}_0)</span> <span class="math display">\mathbf{y}_1 = F_\theta(\mathbf{x}_1)</span> <span class="math display">\dots</span> <span class="math display">\mathbf{y}_t = F_\theta(\mathbf{x}_t)</span></p>
 <p>The output <span class="math inline">\mathbf{y}_t</span> does <strong>not</strong> depend on the history of inputs <span class="math inline">\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_{t-1}</span>. This not always what you want. If your inputs are frames of a video, the correct response at time <span class="math inline">t</span> might also depend on previous frames. The task of the NN could be to explain what happens at each frame. As we saw, a single frame is often not enough to predict the future (<strong>Markov property</strong>).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/RNN-rolled.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Recurrent neural network. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Recurrent neural network. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A <strong>recurrent neural network</strong> (RNN) uses it previous output as an additional input (<em>context</em>). All vectors have a time index <span class="math inline">t</span> denoting the time at which this vector was computed. The input vector at time <span class="math inline">t</span> is <span class="math inline">\mathbf{x}_t</span>, the output vector is <span class="math inline">\mathbf{h}_t</span>:</p>
@@ -567,10 +567,10 @@ ul.task-list li input[type="checkbox"] {
 <li><span class="math inline">W_h</span> is the recurrent weight matrix.</li>
 </ul>
 <p>This is equivalent to a deep neural network taking the whole history <span class="math inline">\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t</span> as inputs, but reusing weights between two time steps. The weights are trainable using <strong>backpropagation through time</strong> (BPTT). A RNN can learn the <strong>temporal dependencies</strong> between inputs.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/RNN-unrolled.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Recurrent neural network, unrolled. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Recurrent neural network, unrolled. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
 </figure>
 </div>
 <p>A popular variant of RNN is <strong>LSTM</strong> (long short-term memory). In addition to the input <span class="math inline">\mathbf{x}_t</span> and output <span class="math inline">\mathbf{h}_t</span>, it also has a <strong>state</strong> (or <strong>memory</strong> or <strong>context</strong>) <span class="math inline">\mathbf{C}_t</span> which is maintained over time. It also contains three multiplicative <strong>gates</strong>:</p>
@@ -579,17 +579,17 @@ ul.task-list li input[type="checkbox"] {
 <li>The <strong>forget gate</strong> controls which memory should be forgotten.</li>
 <li>The <strong>output gate</strong> controls which part of the memory should be used to produce the output.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/LSTM-cell2.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">LSTM cell. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">LSTM cell. Source: <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" class="uri">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></figcaption><p></p>
 </figure>
 </div>
 <p>An obvious use case of RNNs in deep RL is for POMDP (partially observable MDP). If the individual states <span class="math inline">s_t</span> do not have the Markov property, the output of a LSTM does: The output of the RNN is a representation of the complete history <span class="math inline">s_0, s_1, \ldots, s_t</span>. We can apply RL on the output of a RNN and solve POMDPs for free!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/capture-flag2.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">LSTM layers help solving POMDP by concatenating and compressing the history. Source: <a href="https://deepmind.com/blog/article/capture-the-flag-science" class="uri">https://deepmind.com/blog/article/capture-the-flag-science</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">LSTM layers help solving POMDP by concatenating and compressing the history. Source: <a href="https://deepmind.com/blog/article/capture-the-flag-science" class="uri">https://deepmind.com/blog/article/capture-the-flag-science</a></figcaption><p></p>
 </figure>
 </div>
 

@@ -14,7 +14,7 @@ Learning directly the Q-values in value-based methods (DQN) suffers from many pr
 
 Instead of learning the Q-values, one could approximate directly the policy $\pi_\theta(s, a)$ with a neural network. $\pi_\theta(s, a)$ is called a **parameterized policy**: it depends directly on the parameters $\theta$ of the NN. For discrete action spaces, the output of the NN can be a **softmax** layer, directly giving the probability of selecting an action. For continuous action spaces, the output layer can directly control the effector (joint angles). Parameterized policies can represent continuous policies and avoid the curse of dimensionality.
 
-![Policy search methods learn directly the policy.](../slides/img/conv_agent.png){width=70%}
+![Policy search methods learn directly the policy.](../slides/img/conv_agent.png){width=100%}
 
 **Policy search** methods aim at maximizing directly the expected return over all possible trajectories (episodes) $\tau = (s_0, a_0, \dots, s_T, a_T)$
 

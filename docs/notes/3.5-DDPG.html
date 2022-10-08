@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -405,7 +405,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content page-columns page-full column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -424,7 +424,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/3.5-DDPG.html" target="_blank">html</a> <a href="../slides/pdf/3.5-DDPG.pdf" target="_blank">pdf</a></p>
-<section id="deterministic-policy-gradient-theorem" class="level2">
+<section id="deterministic-policy-gradient-theorem" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="deterministic-policy-gradient-theorem">Deterministic policy gradient theorem</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/knqtWwp8qoM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="problem-with-stochastic-policies" class="level3">
@@ -468,7 +468,7 @@ div.csl-indent {
    g = \nabla_\theta \, \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[\nabla_\theta \, V^{\pi_\theta}(s)]
 </span></p>
 </section>
-<section id="deterministic-policy-gradient" class="level3">
+<section id="deterministic-policy-gradient" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="deterministic-policy-gradient">Deterministic policy gradient</h3>
 <p>When introducing Q-values, we obtain the following policy gradient:</p>
 <p><span class="math display">
@@ -492,10 +492,10 @@ div.csl-indent {
 </span></p>
 <p>We can now use the chain rule to decompose the gradient of <span class="math inline">Q^{\mu_\theta}(s, \mu_\theta(s))</span>:</p>
 <p><span class="math display">\nabla_\theta \, Q^{\mu_\theta}(s, \mu_\theta(s)) = \nabla_a \, Q^{\mu_\theta}(s, a)|_{a = \mu_\theta(s)} \times \nabla_\theta \mu_\theta(s)</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/dpg-chainrule.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Chain rule applied to the deterministic policy gradient.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/dpg-chainrule.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Chain rule applied to the deterministic policy gradient.</figcaption><p></p>
 </figure>
 </div>
 <p><span class="math inline">\nabla_a \, Q^{\mu_\theta}(s, a)|_{a = \mu_\theta(s)}</span> means that we differentiate <span class="math inline">Q^{\mu_\theta}</span> w.r.t. <span class="math inline">a</span>, and evaluate it in <span class="math inline">\mu_\theta(s)</span>. <span class="math inline">a</span> is a variable, but <span class="math inline">\mu_\theta(s)</span> is a deterministic value (constant).</p>
@@ -515,7 +515,7 @@ Deterministic policy gradient theorem <span class="citation" data-cites="Silver2
 </div>
 </div>
 </section>
-<section id="off-policy-actor-critic" class="level3">
+<section id="off-policy-actor-critic" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="off-policy-actor-critic">Off-policy actor-critic</h3>
 <p>As always, you do not know the true Q-value <span class="math inline">Q^{\mu_\theta}(s, a)</span>, because you search for the policy <span class="math inline">\mu_\theta</span>. <span class="citation" data-cites="Silver2014">(<a href="../references.html#ref-Silver2014" role="doc-biblioref">Silver et al., 2014</a>)</span> showed that you can safely (without introducing any bias) replace the true Q-value with an estimate <span class="math inline">Q_\varphi(s, a)</span>, as long as the estimate minimizes the mse with the TD target:</p>
 <p><span class="math display">Q_\varphi(s, a) \approx Q^{\mu_\theta}(s, a)</span></p>
@@ -525,10 +525,10 @@ Deterministic policy gradient theorem <span class="citation" data-cites="Silver2
 <li>The <strong>deterministic actor</strong> <span class="math inline">\mu_\theta(s)</span> selects a single action in state <span class="math inline">s</span>.</li>
 <li>The <strong>critic</strong> <span class="math inline">Q_\varphi(s, a)</span> estimates the value of that action.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/dpg.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Actor-critic architecture of the deterministic policy gradient with function approximation.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/dpg.svg" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Actor-critic architecture of the deterministic policy gradient with function approximation.</figcaption><p></p>
 </figure>
 </div>
 <p><strong>Training the actor:</strong></p>
@@ -550,7 +550,7 @@ Deterministic policy gradient theorem <span class="citation" data-cites="Silver2
 <p>The critic uses Q-learning, so it is also off-policy. <strong>DPG is an off-policy actor-critic architecture!</strong></p>
 </section>
 </section>
-<section id="ddpg-deep-deterministic-policy-gradient" class="level2">
+<section id="ddpg-deep-deterministic-policy-gradient" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="ddpg-deep-deterministic-policy-gradient">DDPG: Deep Deterministic Policy Gradient</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/9vdo91DE1ZY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>As the name indicates, DDPG <span class="citation" data-cites="Lillicrap2015">(<a href="../references.html#ref-Lillicrap2015" role="doc-biblioref">Lillicrap et al., 2015</a>)</span> is the deep variant of DPG for <strong>continuous control</strong>. It uses the DQN tricks to stabilize learning with deep networks:</p>
@@ -565,19 +565,19 @@ Deterministic policy gradient theorem <span class="citation" data-cites="Silver2
 <p>A deterministic actor is good for learning (less variance), but not for exploring. We cannot use <span class="math inline">\epsilon</span>-greedy or softmax, as the actor outputs directly the policy, not Q-values. For continuous actions, an <strong>exploratory noise</strong> can be added to the deterministic action:</p>
 <p><span class="math display">a_t = \mu_\theta(s_t) + \xi_t</span></p>
 <p>Ex: if the actor wants to move the joint of a robot by <span class="math inline">2^o</span>, it will actually be moved from <span class="math inline">2.1^o</span> or <span class="math inline">1.9^o</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/ddpg.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Deep deterministic policy gradient architecture with exploratory noise.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Deep deterministic policy gradient architecture with exploratory noise.</figcaption><p></p>
 </figure>
 </div>
 <p>In DDPG, an <strong>Ornstein-Uhlenbeck</strong> stochastic process <span class="citation" data-cites="Uhlenbeck1930">(<a href="../references.html#ref-Uhlenbeck1930" role="doc-biblioref">Uhlenbeck and Ornstein, 1930</a>)</span> is used to add noise to the continuous actions. It is defined by a <strong>stochastic differential equation</strong>, classically used to describe Brownian motion:</p>
 <p><span class="math display"> dx_t = \theta (\mu - x_t) dt + \sigma dW_t \qquad \text{with} \qquad dW_t = \mathcal{N}(0, dt)</span></p>
 <p>The temporal mean of <span class="math inline">x_t</span> is <span class="math inline">\mu= 0</span>, its amplitude is <span class="math inline">\theta</span> (exploration level), its speed is <span class="math inline">\sigma</span>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/OU.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Ornstein-Uhlenbeck stochastic process.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Ornstein-Uhlenbeck stochastic process.</figcaption><p></p>
 </figure>
 </div>
 <p>Another approach to ensure exploration is to add noise to the <strong>parameters</strong> <span class="math inline">\theta</span> of the actor at inference time. For the same input <span class="math inline">s_t</span>, the output <span class="math inline">\mu_\theta(s_t)</span> will be different every time. The <strong>NoisyNet</strong> <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span> approach can be applied to any deep RL algorithm to enable a smart state-dependent exploration (e.g.&nbsp;Noisy DQN).</p>
@@ -638,7 +638,7 @@ Example: learning to drive in a day
 </div>
 </div>
 </section>
-<section id="td3---twin-delayed-deep-deterministic-policy-gradient" class="level2">
+<section id="td3---twin-delayed-deep-deterministic-policy-gradient" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="td3---twin-delayed-deep-deterministic-policy-gradient">TD3 - Twin Delayed Deep Deterministic policy gradient</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/dJ-nPMcZZxo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>DDPG suffers from several problems:</p>
@@ -648,20 +648,20 @@ Example: learning to drive in a day
 <li>Overestimation of Q-values.</li>
 </ul>
 <p>Policy collapse happens when the bias of the critic is too high for the actor. Example with A2C:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/policy-collapse.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Policy collapse happens regularly without warning: the performance is back to random. Source: Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.</figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/policy-collapse.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Policy collapse happens regularly without warning: the performance is back to random. Source: Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.</figcaption><p></p>
 </figure>
 </div>
 <p>TD3 <span class="citation" data-cites="Fujimoto2018">(<a href="../references.html#ref-Fujimoto2018" role="doc-biblioref">Fujimoto et al., 2018</a>)</span> has been introduced to fix the problems of DDPG.</p>
-<section id="twin-critics-against-overestimation" class="level3">
+<section id="twin-critics-against-overestimation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="twin-critics-against-overestimation">Twin critics against overestimation</h3>
 <p>As any Q-learning-based method, DDPG <strong>overestimates</strong> Q-values. The Bellman target <span class="math inline">t = r + \gamma \, \max_{a'} Q(s', a')</span> uses a maximum over other values, so it is increasingly overestimated during learning. After a while, the overestimated Q-values disrupt training in the actor.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../slides/img/td3-overestimation.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Overestimation of Q-values by DDPG and TD3 (labelled CDQ here - clipped double Q-learning). Source: <span class="citation" data-cites="Fujimoto2018">(<a href="../references.html#ref-Fujimoto2018" role="doc-biblioref">Fujimoto et al., 2018</a>)</span></figcaption><p></p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="../slides/img/td3-overestimation.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Overestimation of Q-values by DDPG and TD3 (labelled CDQ here - clipped double Q-learning). Source: <span class="citation" data-cites="Fujimoto2018">(<a href="../references.html#ref-Fujimoto2018" role="doc-biblioref">Fujimoto et al., 2018</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>Double Q-learning solves the problem by using the target network <span class="math inline">\theta'</span> to estimate Q-values, but the value network <span class="math inline">\theta</span> to select the greedy action in the next state:</p>
@@ -703,7 +703,7 @@ Example: learning to drive in a day
 <p>If the additive noise is zero on average, the Bellman targets will be correct on average (unbiased) but will prevent overfitting of particular actions. The additive noise does not have to be an <strong>Ornstein-Uhlenbeck</strong> stochastic process, but could simply be a random variable:</p>
 <p><span class="math display">\xi \sim \mathcal{N}(0, 1)</span></p>
 </section>
-<section id="algorithm" class="level3">
+<section id="algorithm" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="algorithm">Algorithm</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -749,15 +749,15 @@ TD3 - Twin Delayed Deep Deterministic policy gradient
 <li>noisy Bellman targets.</li>
 </ul>
 <p>TD3 outperforms DDPG (but also PPO and SAC) on continuous control tasks.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/td3-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Performance of TD3 on continuous control tasks compared to the state-of-the-art. Source: <span class="citation" data-cites="Fujimoto2018">(<a href="../references.html#ref-Fujimoto2018" role="doc-biblioref">Fujimoto et al., 2018</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Performance of TD3 on continuous control tasks compared to the state-of-the-art. Source: <span class="citation" data-cites="Fujimoto2018">(<a href="../references.html#ref-Fujimoto2018" role="doc-biblioref">Fujimoto et al., 2018</a>)</span></figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="d4pg-distributed-distributional-ddpg" class="level2">
+<section id="d4pg-distributed-distributional-ddpg" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="d4pg-distributed-distributional-ddpg">D4PG: Distributed Distributional DDPG</h2>
 <p>D4PG (Distributed Distributional DDPG, <span class="citation" data-cites="Barth-Maron2018">(<a href="../references.html#ref-Barth-Maron2018" role="doc-biblioref">Barth-Maron et al., 2018</a>)</span>) combines:</p>
 <ul>
@@ -778,14 +778,14 @@ TD3 - Twin Delayed Deep Deterministic policy gradient
 </ul>
 <p><span class="math display">P(k) = \frac{(|\delta_k| + \epsilon)^\alpha}{\sum_k (|\delta_k| + \epsilon)^\alpha}</span></p>
 <p>It could be called the Rainbow DDPG.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/d4pg-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">All components of D4PG are necessary to beat DDPG. Source: <span class="citation" data-cites="Barth-Maron2018">(<a href="../references.html#ref-Barth-Maron2018" role="doc-biblioref">Barth-Maron et al., 2018</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">All components of D4PG are necessary to beat DDPG. Source: <span class="citation" data-cites="Barth-Maron2018">(<a href="../references.html#ref-Barth-Maron2018" role="doc-biblioref">Barth-Maron et al., 2018</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/9kGdCjJtNls" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -794,12 +794,12 @@ TD3 - Twin Delayed Deep Deterministic policy gradient
 Parkour networks
 </div>
 </div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container callout-body page-columns page-full">
 <p>For Parkour tasks, the states cover two different informations: the <strong>terrain</strong> (distance to obstacles, etc.) and the <strong>proprioception</strong> (joint positions of the agent). They enter the actor and critic networks at different locations.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="../slides/img/parkour-network.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Barth-Maron2018">(<a href="../references.html#ref-Barth-Maron2018" role="doc-biblioref">Barth-Maron et al., 2018</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Source: <span class="citation" data-cites="Barth-Maron2018">(<a href="../references.html#ref-Barth-Maron2018" role="doc-biblioref">Barth-Maron et al., 2018</a>)</span></figcaption><p></p>
 </figure>
 </div>
 </div>

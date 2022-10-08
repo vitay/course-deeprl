@@ -141,7 +141,8 @@ $$\mathcal{P}^\pi = \begin{bmatrix}
 0 & 0 & 1 & 0 \\
 0 & 0 & 0 & 1 \\
 0 & 0 & 0 & 1 \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 The SR matrix $M$ also represents the future transitions discounted by $\gamma$:
 
@@ -150,13 +151,15 @@ $$M = \begin{bmatrix}
 0 & 1 & \gamma & \gamma^2 \\
 0 & 0 & 1  & \gamma\\
 0 & 0 & 0 & 1 \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 
 ::: {.callout-note}
 ## SR matrix in a Tolman's maze
 
-![Source: [@Russek2017]](../slides/img/sr-tolman.png)
+![](../slides/img/sr-tolman.png)
+Source: [@Russek2017]
 
 The SR represents whether a state can be reached soon from the current state (b) using the current policy.
 The SR depends on the policy:
@@ -170,6 +173,7 @@ The exact dynamics are lost compared to MB: it only represents whether a state i
 The SR matrix reflects the proximity between states depending on the transitions and the policy. it does not have to be a spatial relationship.
 
 ![](../slides/img/schapiro1.png){width=60%}
+
 ![Probabilistic MDP and the corresponding SR matrix. Source: [@Stachenfeld2017].](../slides/img/schapiro2.png){width=60%}
 
 

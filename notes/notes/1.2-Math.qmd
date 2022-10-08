@@ -111,7 +111,8 @@ a_{11} & a_{12} & a_{13} \\
 a_{21} & a_{22} & a_{23} \\
 a_{31} & a_{32} & a_{33} \\
 a_{41} & a_{42} & a_{43} \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 Each column of the matrix is a vector with 4 elements:
 
@@ -139,7 +140,8 @@ A $m \times n$ matrix is therefore a collection of $n$ vectors of size $m$ put s
 
 $$A = \begin{bmatrix}
 \mathbf{a}_1 & \mathbf{a}_2 & \mathbf{a}_3\\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 So all properties of the vector spaces (associativity, commutativity, distributivity) also apply to matrices, as additions and multiplications with a scalar are defined.
 
@@ -148,7 +150,8 @@ $$\alpha \, A + \beta \, B = \begin{bmatrix}
 \alpha\, a_{21} + \beta \, b_{21} & \alpha\, a_{22} + \beta \, b_{22} & \alpha\, a_{23} + \beta \, b_{23} \\
 \alpha\, a_{31} + \beta \, b_{31} & \alpha\, a_{32} + \beta \, b_{32} & \alpha\, a_{33} + \beta \, b_{33} \\
 \alpha\, a_{41} + \beta \, b_{41} & \alpha\, a_{42} + \beta \, b_{42} & \alpha\, a_{43} + \beta \, b_{43} \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 :::{.callout-note}
 Beware, you can only add matrices of the same dimensions $m\times n$. You cannot add a $2\times 3$ matrix to a $5 \times 4$ one.
@@ -208,14 +211,15 @@ $$
 
 where each element $c_{ij}$ is the dot product of the $i$th row of $A$ and $j$th column of $B$:
 
-$$c_{ij} = \langle A_{i, :} \cdot B_{:, j} \rangle = a_{i1}b_{1j} + a_{i2}b_{2j} +\cdots + a_{in}b_{nj}= \sum_{k=1}^n a_{ik}b_{kj}$$
+$$c_{ij} = \langle A_{i, :} \cdot B_{:, j} \rangle = a_{i1}b_{1j} + a_{i2}b_{2j} +\cdots + a_{in}b_{nj}= \sum_{k=1}^n a_{ik}b_{kj}
+$$
 
 
 :::{.callout-note}
 $n$, the number of columns of $A$ and rows of $B$, must be the same!
 :::
 
-![The element $c_{ij}$ of $C = A \times B$ is the dot product between the $i$th row of $A$ and the $j$th column of $B$. Source: [CC BY-NC-SA; Marcia Levitus](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Book%3A_Mathematical_Methods_in_Chemistry_(Levitus)/15%3A_Matrices/15.03%3A_Matrix_Multiplication)](../slides/img/matrixmultiplication.jpg){width=60%}
+![The element $c_{ij}$ of $C = A \times B$ is the dot product between the $i$th row of $A$ and the $j$th column of $B$. Source: [CC BY-NC-SA; Marcia Levitus](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Book%3A_Mathematical_Methods_in_Chemistry_(Levitus)/15%3A_Matrices/15.03%3A_Matrix_Multiplication)](../slides/img/matrixmultiplication.jpg)
 
 Thinking of vectors as $n \times 1$ matrices, we can multiply a matrix $m \times n$ with a vector:
 
@@ -230,7 +234,7 @@ $$
 
 The result $\mathbf{y}$ is a vector of size $m$. In that sense, a matrix $A$ can transform a vector of size $n$ into a vector of size $m$: $A$ represents a **projection** from $\Re^n$ to $\Re^m$.
 
-![A $2 \times 3$ projection matrix allows to project any 3D vector onto a 2D plane. This is for example what happens inside a camera. Source: <https://en.wikipedia.org/wiki/Homogeneous_coordinate>](../slides/img/projection.png){width=60%}
+![A $2 \times 3$ projection matrix allows to project any 3D vector onto a 2D plane. This is for example what happens inside a camera. Source: <https://en.wikipedia.org/wiki/Homogeneous_coordinate>](../slides/img/projection.png)
 
 Note that the **dot product** between two vectors of size $n$ is the matrix multiplication between the transpose of the first vector and the second one:
 
@@ -277,7 +281,7 @@ x &\mapsto f(x)
 $$
 
 
-![Example of univariate function, here the quadratic function $f(x) = x^2 - 2 \, x + 1$.](../slides/img/function.png){width=60%}
+![Example of univariate function, here the quadratic function $f(x) = x^2 - 2 \, x + 1$.](../slides/img/function.png)
 
 
 A **multivariate function** $f$ associates to any vector $\mathbf{x} \in \Re^n$ (or a subset) a real number $f(\mathbf{x})$:
@@ -297,7 +301,7 @@ f\colon \quad\Re^3 &\to \Re\\
 x, y, z &\mapsto f(x, y, z),\end{align}
 $$
 
-![Example of a multivariate function $f(x_1, x_2)$ mapping $\Re^2$ to $\Re$. Source: <https://en.wikipedia.org/wiki/Function_of_several_real_variables>](../slides/img/multivariatefunction.png){width=50%}
+![Example of a multivariate function $f(x_1, x_2)$ mapping $\Re^2$ to $\Re$. Source: <https://en.wikipedia.org/wiki/Function_of_several_real_variables>](../slides/img/multivariatefunction.png)
 
 
 **Vector fields** associate to any vector $\mathbf{x} \in \Re^n$ (or a subset) another vector (possibly of different size):
@@ -308,7 +312,7 @@ $$
 \mathbf{x} &\mapsto \overrightarrow{f}(\mathbf{x}),\end{align}
 $$
 
-![Vector field associating to each point of $\Re^2$ another vector. Source: <https://en.wikipedia.org/wiki/Vector_field>](../slides/img/vectorfield.png){width=40%}
+![Vector field associating to each point of $\Re^2$ another vector. Source: <https://en.wikipedia.org/wiki/Vector_field>](../slides/img/vectorfield.png)
 
 :::{.callout-note}
 The matrix-vector multiplication $\mathbf{y} = A \times \mathbf{x}$ is a linear vector field, mapping any vector $\mathbf{x}$ into another vector $\mathbf{y}$.
@@ -328,7 +332,7 @@ $$f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$$
 
 The line passing through the points $(x, f(x))$ and $(x + h, f(x + h))$ becomes tangent to the function when $h$ becomes very small:
 
-![The derivative of the function $f(x)$ can be approximated by the slope of the line passing through $(x, f(x))$ and $(x + h, f(x + h))$ when $h$ becomes very small.](../slides/img/derivative-approx.png){width=60%}
+![The derivative of the function $f(x)$ can be approximated by the slope of the line passing through $(x, f(x))$ and $(x + h, f(x + h))$ when $h$ becomes very small.](../slides/img/derivative-approx.png)
 
 The sign of the derivative tells you how the function behaves locally:
 
@@ -351,7 +355,7 @@ You can tell whether an extremum is a maximum or a minimum by looking at its sec
 * If $f''(x) < 0$, the extremum is a **maximum**.
 * If $f''(x) = 0$, the extremum is a **saddle point**.
 
-![Quadratic functions have only one extremum (here a minimum in -1), as their derivative is linear and is equal to zero for only one value.](../slides/img/optimization-example.png){width=80%}
+![Quadratic functions have only one extremum (here a minimum in -1), as their derivative is linear and is equal to zero for only one value.](../slides/img/optimization-example.png)
 
 The derivative of a **multivariate function** $f(\mathbf{x})$ is a vector of partial derivatives called the **gradient of the function** $\nabla_\mathbf{x} \, f(\mathbf{x})$:
 
@@ -488,11 +492,11 @@ The most important to understand for now is maybe that the integral of a functio
 
 $$\mathcal{S} = \int_a^b f(x) \, dx$$
 
-![The integral of $f$ on $[a, b]$ is the area of the surface between the function and the x-axis. Note that it can become negative when the function is mostly negative on $[a, b]$. Source: <https://www.math24.net/riemann-sums-definite-integral/>](../slides/img/riemann-sum1.svg){width=60%}
+![The integral of $f$ on $[a, b]$ is the area of the surface between the function and the x-axis. Note that it can become negative when the function is mostly negative on $[a, b]$. Source: <https://www.math24.net/riemann-sums-definite-integral/>](../slides/img/riemann-sum1.svg)
 
 One way to approximate this surface is to split the interval $[a, b]$ into $n$ intervals of width $dx$ with the points $x_1, x_2, \ldots, x_n$. This defines $n$ rectangles of width $dx$ and height $f(x_i)$, so their surface is $f(x_i) \, dx$. The area under the curve can then be approximated by the sum of the surfaces of all these rectangles.
 
-![The interval$[a, b]$ can be split in $n$ small intervals of width $dx$, defining $n$ rectangles whose sum is close to the area under the curve. Source: <https://www.math24.net/riemann-sums-definite-integral/>](../slides/img/riemann-sum.svg){width=60%}
+![The interval$[a, b]$ can be split in $n$ small intervals of width $dx$, defining $n$ rectangles whose sum is close to the area under the curve. Source: <https://www.math24.net/riemann-sums-definite-integral/>](../slides/img/riemann-sum.svg)
 
 When $n \to \infty$, or equivalently $dx \to 0$, the sum of these rectangular areas (called the Riemann sum) becomes exactly the area under the curve. This is the definition of the definite integral:
 
@@ -568,7 +572,7 @@ $$
 
 **Continuous random variables** can take infinitely many values in a continuous interval, e.g. $\Re$ or some subset. The closed set of values they can take is called the **support** $\mathcal{D}_X$ of the probability distribution. The probability distribution is described by a **probability density function** (pdf) $f(x)$.
 
-![Normal distributions are continuous distributions. The area under the curve is always 1.](../slides/img/normaldistribution.png){width=60%}
+![Normal distributions are continuous distributions. The area under the curve is always 1.](../slides/img/normaldistribution.png)
 
 The pdf of a distribution must be positive ($f(x) \geq 0 \, \forall x \in \mathcal{D}_X$) and its integral (area under the curve) must be equal to 1:
 
@@ -695,7 +699,7 @@ $$
 **Example**
 
 
-![Source: <https://www.elevise.co.uk/g-e-m-h-5-u.html>.](../slides/img/conditionalprobability.png){width=60%}
+![Source: <https://www.elevise.co.uk/g-e-m-h-5-u.html>.](../slides/img/conditionalprobability.png)
 
 You ask 50 people whether they like cats or dogs:
 
@@ -789,7 +793,7 @@ $$
     \mathbb{E}[X] = \mathbb{E}_{x \sim X} [x] \approx \frac{1}{N} \, \sum_{i=1}^N x_i
 $$
 
-![Samples taken from a normal distribution will mostly be around the mean.](../slides/img/normaldistribution.svg){width=60%}
+![Samples taken from a normal distribution will mostly be around the mean.](../slides/img/normaldistribution.svg)
 
 More samples will be obtained where $f(x)$ is high ($x$ is probable), so the average of the sampled data will be close to the expected value of the distribution.
 
@@ -855,7 +859,7 @@ The thermometer is not perfect, but do random measurements allow us to estimate 
 
 We could repeatedly take 100 random samples of the thermometer and see how the distribution of sample averages look like:
 
-![Sampled measurements.](../slides/img/estimators-temperature2.png){width=60%}
+![](../slides/img/estimators-temperature2.png)
 
 But, as the expectation is linear, we actually have:
 
@@ -886,7 +890,7 @@ Ideally, we would like estimators with:
 * **low variance**: we do not need many estimates to get a correct estimate (CLT: $\frac{\sigma}{\sqrt{N}}$)
 
 
-![Bias-variance trade-off.](../slides/img/biasvariance3.png){width=60%}
+![](../slides/img/biasvariance3.png)
 
 Unfortunately, the perfect estimator does not exist in practice.  One usually talks of a **bias/variance** trade-off: if you have a small bias, you will have a high variance, or vice versa. In machine learning, bias corresponds to underfitting, variance to overfitting.
 
@@ -905,7 +909,7 @@ Unfortunately, the perfect estimator does not exist in practice.  One usually ta
 
 * Almost impossible outcomes ($P \sim 0$) are very surprising because they are very rare.
 
-![Self-information.](../slides/img/selfinformation.png){width=80%}
+![Self-information.](../slides/img/selfinformation.png)
 
 A useful measurement of how surprising is an outcome $x$ is the **self-information**:
 
@@ -942,7 +946,7 @@ $$
 The entropy of a Bernouilli variable is maximal when both outcomes are **equiprobable**. If a variable is **deterministic**, its entropy is minimal and equal to zero.
 
 
-![The entropy of a Bernouilli distribution is maximal when the two outcomes are equiprobable.](../slides/img/entropy-binomial.png){width=80%}
+![The entropy of a Bernouilli distribution is maximal when the two outcomes are equiprobable.](../slides/img/entropy-binomial.png)
 
 The **joint entropy** of two random variables $X$ and $Y$ is defined by:
 

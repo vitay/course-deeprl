@@ -136,7 +136,7 @@ $$\nabla_\theta \mathcal{J}_{\theta_\text{old}}(\theta)|_{\theta = \theta_\text{
 
 At least locally, maximizing $\mathcal{J}_{\theta_\text{old}}(\theta)$ is exactly the same as maximizing $\mathcal{J}(\theta)$. $\mathcal{J}_{\theta_\text{old}}(\theta)$ is called a **surrogate objective function**: it is not what we want to maximize, but it leads to the same result locally.
 
-![The surrogate objective is locally the same as the true objective, so we can follow its gradient.](../slides/img/trustregion1.svg){width=80%}
+![The surrogate objective is locally the same as the true objective, so we can follow its gradient.](../slides/img/trustregion1.svg){width=100%}
 
 How big a step can we take when maximizing $\mathcal{J}_{\theta_\text{old}}(\theta)$? $\pi_\theta$ and $\pi_{\theta_\text{old}}$ must be close from each other for the approximation to stand.
 
@@ -172,7 +172,7 @@ $$\nabla_\theta \mathcal{L}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\thet
 
 $$\mathcal{J}(\theta) \geq \mathcal{J}_{\theta_\text{old}}(\theta) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_\theta)$$
 
-![The surrogate objective adds the constraint that the update should stay in the trust region.](../slides/img/trustregion2.svg){width=80%}
+![The surrogate objective adds the constraint that the update should stay in the trust region.](../slides/img/trustregion2.svg){width=100%}
 
 The policy $\pi_\theta$ maximizing the surrogate objective $\mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)$ has a higher expected return than $\pi_{\theta_\text{old}}$:
 
@@ -214,7 +214,7 @@ For each sampled action $(s, a)$, we use the minimum between:
 * the TRPO unconstrained objective with IS $\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)$.
 * the same, but with the IS weight clipped between $1-\epsilon$ and $1+\epsilon$.
 
-![Clipped importance sampling weight.](../slides/img/ppo-clippingfunction.svg){width=80%}
+![Clipped importance sampling weight.](../slides/img/ppo-clippingfunction.svg){width=70%}
 
 If the advantage $A^{\pi_{\theta_\text{old}}}(s, a)$ is positive (better action than usual) and:
 
