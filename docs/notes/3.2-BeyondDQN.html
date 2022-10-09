@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -409,7 +409,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full column-body" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -428,7 +428,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/3.2-BeyondDQN.html" target="_blank">html</a> <a href="../slides/pdf/3.2-BeyondDQN.pdf" target="_blank">pdf</a></p>
-<section id="distributional-learning-categorical-dqn" class="level2 page-columns page-full">
+<section id="distributional-learning-categorical-dqn" class="level2">
 <h2 class="anchored" data-anchor-id="distributional-learning-categorical-dqn">Distributional learning : Categorical DQN</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/PrpYGb8p4tI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="why-learning-distributions-of-returns" class="level3">
@@ -462,14 +462,14 @@ Example
 </div>
 </div>
 </section>
-<section id="categorical-learning" class="level3 page-columns page-full">
+<section id="categorical-learning" class="level3">
 <h3 class="anchored" data-anchor-id="categorical-learning">Categorical learning</h3>
 <p>The idea of <strong>distributional RL</strong> is to learn the <strong>distribution of returns</strong> <span class="math inline">\mathcal{Z}^\pi</span> directly instead of its expectation:</p>
 <p><span class="math display">R_t \sim \mathcal{Z}^\pi(s_t, a_t)</span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/distributionallearning.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Distribution of returns for a given state.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Distribution of returns for a given state.</figcaption><p></p>
 </figure>
 </div>
 <p>Note that we can always obtain the Q-values back:</p>
@@ -485,10 +485,10 @@ Example
 <p><span class="math display">
     Q_\theta(s, a) = \mathbb{E} [\mathcal{Z}_\theta(s, a)] = \sum_{i=1}^{n} p_i(s, a; \theta) \, z_i
 </span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/categorical-dqn.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Categorical DQN outputs the distribution of returns for each action using a softmax output layer. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Categorical DQN outputs the distribution of returns for each action using a softmax output layer. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
 </figure>
 </div>
 <p>The only thing we need is a neural network <span class="math inline">\theta</span> returning for each action <span class="math inline">a</span> in the state <span class="math inline">s</span> a discrete probability distribution <span class="math inline">\mathcal{Z}_\theta(s, a)</span> instead of a single Q-value <span class="math inline">Q_\theta(s, a)</span>. The NN uses a <strong>softmax activation function</strong> for each action. Action selection is similar to DQN: we first compute the <span class="math inline">Q_\theta(s, a)</span> and apply greedy / <span class="math inline">\epsilon</span>-greedy / softmax over the actions.</p>
@@ -497,7 +497,7 @@ Example
 </span></p>
 <p>The number <span class="math inline">n</span> of atoms for each action should be big enough to represent the range of returns. A number that works well with Atari games is <span class="math inline">n=51</span>: Categorical DQN is often noted <strong>C51</strong>.</p>
 </section>
-<section id="distributional-bellman-target" class="level3 page-columns page-full">
+<section id="distributional-bellman-target" class="level3">
 <h3 class="anchored" data-anchor-id="distributional-bellman-target">Distributional Bellman target</h3>
 <p>How do we learn the distribution of returns <span class="math inline">\mathcal{Z}_\theta(s, a)</span> of parameters <span class="math inline">\{p_i(s, a; \theta)\}_{i=1}^N</span>? In Q-learning, we minimize the mse between the prediction <span class="math inline">Q_\theta(s, a)</span> and the <strong>target</strong>:</p>
 <p><span class="math display">\mathcal{T} \, Q_\theta(s, a) = r + \gamma \, Q_\theta(s', a')</span></p>
@@ -509,18 +509,18 @@ Example
 <p><span class="math display">\min_\theta \text{KL}(\mathcal{T} \, \mathcal{Z}_\theta(s, a) || \mathcal{Z}_\theta(s, a))</span></p>
 <p>Let’s note <span class="math inline">P^\pi \, \mathcal{Z}</span> the return distribution of the greedy action in the next state <span class="math inline">\mathcal{Z}_\theta(s', a')</span>.</p>
 <p>Multiplying the returns by the discount factor <span class="math inline">\gamma &lt; 1</span> <strong>shrinks</strong> the return distribution (its support gets smaller). The <strong>atoms</strong> <span class="math inline">z_i</span> of <span class="math inline">\mathcal{Z}_\theta(s', a')</span> now have the position <span class="math inline">\gamma \, z_i</span>, but the probabilities stay the same.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/distributional_bellman1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Multiplying the returns by <span class="math inline">\gamma &lt; 1</span> shrinks the supports of the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Multiplying the returns by <span class="math inline">\gamma &lt; 1</span> shrinks the supports of the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
 </figure>
 </div>
 <p>Adding a reward <span class="math inline">r</span> <strong>translates</strong> the distribution. The probabilities do not change, but the new position of the atoms is:</p>
 <p><span class="math display">z'_i = r + \gamma \, z_i</span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/distributional_bellman2.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Adding the reward translates the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Adding the reward translates the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
 </figure>
 </div>
 <p>But now we have a problem: the atoms <span class="math inline">z'_i</span> of <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> do not match with the atoms <span class="math inline">z_i</span> of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. We need to <strong>interpolate</strong> the target distribution to compare it with the predicted distribution.</p>
@@ -528,10 +528,10 @@ Example
 <p><span class="math display">
     (\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a))_i = \sum_{j=1}^n \big [1 - \frac{| [\mathcal{T}\, z_j]_{R_\text{min}}^{R_\text{max}} - z_i|}{\Delta z} \big ]_0^1 \, p_j (s', a'; \theta)
 </span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/distributional_bellman3.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The Bellman target distribution <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> must be projected to match the support of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">The Bellman target distribution <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> must be projected to match the support of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
 </figure>
 </div>
 <p>We now have two distributions <span class="math inline">\mathcal{Z}_\theta(s, a)</span> and <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> sharing the same support. We now want to have the prediction <span class="math inline">\mathcal{Z}_\theta(s, a)</span> close from the target <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span>. These are probability distributions, not numbers, so we cannot use the mse. We instead minimize the <strong>Kullback-Leibler (KL) divergence</strong> between the two distributions.</p>
@@ -555,7 +555,7 @@ Kullback-Leibler (KL) divergence
 </div>
 </div>
 </section>
-<section id="categorical-dqn" class="level3 page-columns page-full">
+<section id="categorical-dqn" class="level3">
 <h3 class="anchored" data-anchor-id="categorical-dqn">Categorical DQN</h3>
 <p>The categorical DQN algorithm follows the main lines of DQN, with the additional step of prohecting the distributions:</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -599,29 +599,29 @@ Categorical DQN
 </div>
 </div>
 <p>In practice, the computation of the cross-entropy loss is described in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>:</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/categorical-dqn-algo.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Computation of the cross-entropy loss in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Computation of the cross-entropy loss in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Having the full distribution of returns allow to deal with <strong>uncertainty</strong>. For certain actions in critical states, one could get a high return (killing an enemy) or no return (death). The distribution reflects that the agent is not certain of the goodness of the action. Expectations would not provide this information.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/categorical_dqn_animation.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The distribution of returns for each action allows to estimate the uncertainty. Source: <a href="https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning" class="uri">https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">The distribution of returns for each action allows to estimate the uncertainty. Source: <a href="https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning" class="uri">https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning</a></figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/categorical-dqn-results1.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">C51 outperforms both DQN and humans on Atari games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">C51 outperforms both DQN and humans on Atari games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/categorical-dqn-results2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">C51 outperforms double DQN on most games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">C51 outperforms double DQN on most games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/yFBwyPuO2Vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
@@ -634,21 +634,21 @@ Categorical DQN
 </ul>
 </section>
 </section>
-<section id="noisy-dqn" class="level2 page-columns page-full">
+<section id="noisy-dqn" class="level2">
 <h2 class="anchored" data-anchor-id="noisy-dqn">Noisy DQN</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/2u8eSXkW5mg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>DQN and its variants rely on <span class="math inline">\epsilon</span>-greedy action selection over the Q-values to <strong>explore</strong>. The exploration parameter <span class="math inline">\epsilon</span> is <strong>annealed</strong> during training to reach a final minimal value. It is preferred to <strong>softmax</strong> action selection, where <span class="math inline">\tau</span> scales with the unknown Q-values. The problem is that it is a global exploration mechanism: well-learned states do not need as much exploration as poorly explored ones.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/epsilonschedule.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The exploration parameter <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span> is <strong>annealed</strong> during learning to solve the exploration/exploitation trade-off. Source: <a href="https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg" class="uri">https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">The exploration parameter <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span> is <strong>annealed</strong> during learning to solve the exploration/exploitation trade-off. Source: <a href="https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg" class="uri">https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg</a></figcaption><p></p>
 </figure>
 </div>
 <p><span class="math inline">\epsilon</span>-greedy and softmax add <strong>exploratory noise</strong> to the output of DQN: The Q-values predict a greedy action, but another action is taken. What about adding noise to the <strong>parameters</strong> (weights and biases) of the DQN, what would change the greedy action everytime? Controlling the level of noise inside the neural network indirectly controls the exploration level.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/ddpg-parameternoise.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Instead of adding noise to the output (greedy action), we could add noise to the parameters of the neural network. Source: <a href="https://openai.com/blog/better-exploration-with-parameter-noise/" class="uri">https://openai.com/blog/better-exploration-with-parameter-noise/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Instead of adding noise to the output (greedy action), we could add noise to the parameters of the neural network. Source: <a href="https://openai.com/blog/better-exploration-with-parameter-noise/" class="uri">https://openai.com/blog/better-exploration-with-parameter-noise/</a></figcaption><p></p>
 </figure>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -673,23 +673,23 @@ Note
 <p>with <span class="math inline">\epsilon \sim \mathcal{N}(0, 1)</span> a random variable. The prediction <span class="math inline">y</span> will vary for the same input depending on the variances:</p>
 <p><span class="math display">y = (\mu_{\theta_1} + \sigma_{\theta_1} \, \epsilon_1) \, x + \mu_{\theta_0} + \sigma_{\theta_0} \, \epsilon_0</span></p>
 <p>The mean and variance of each parameter can be learned through backpropagation!</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/noisydqn.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Bayesian deep learning learns a distribution of weights. Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Bayesian deep learning learns a distribution of weights. Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption><p></p>
 </figure>
 </div>
 <p>As the random variables <span class="math inline">\epsilon_i \sim \mathcal{N}(0, 1)</span> are not correlated with anything, the variances <span class="math inline">\sigma_\theta^2</span> should decay to 0. The variances <span class="math inline">\sigma_\theta^2</span> represent the <strong>uncertainty</strong> about the prediction <span class="math inline">y</span>.</p>
 <p>Applied to DQN, this means that a state which has not been visited very often will have a high uncertainty: The predicted Q-values will change a lot between two evaluations, so the greedy action might change: <strong>exploration</strong>. Conversely, a well-explored state will have a low uncertainty: The greedy action stays the same: <strong>exploitation</strong>.</p>
 <p>Noisy DQN <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span> uses <strong>greedy action selection</strong> over noisy Q-values. The level of exploration is <strong>learned</strong> by the network on a per-state basis. No need for scheduling! <strong>Parameter noise</strong> improves the performance of <span class="math inline">\epsilon</span>-greedy-based methods, including DQN, dueling DQN, A3C, DDPG (see later), etc.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/noisydqn2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Noisy networks outperform their <span class="math inline">\epsilon</span>-soft variants. Source: <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Noisy networks outperform their <span class="math inline">\epsilon</span>-soft variants. Source: <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="rainbow-network" class="level2 page-columns page-full">
+<section id="rainbow-network" class="level2">
 <h2 class="anchored" data-anchor-id="rainbow-network">Rainbow network</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/Buesu_jGg8Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>We have seen various improvements over a few years (2013-2017):</p>
@@ -718,10 +718,10 @@ Note
 </ul>
 <p><span class="math display">\theta = \mu_\theta + \sigma_\theta \, \epsilon</span></p>
 <p>Which of these improvements should we use?</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rainbow-results1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The Rainbow network combines all DQN improvements and outperforms each of them. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The Rainbow network combines all DQN improvements and outperforms each of them. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Answer: all of them. The <strong>rainbow network</strong> <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span> combines :</p>
@@ -733,52 +733,52 @@ Note
 </ul>
 <p><span class="math display">R_t = \sum_{k=0}^{n-1} \gamma^k \, r_{t+k+1} + \gamma^n \max_a Q(s_{t+n}, a)</span></p>
 <p>and outperforms any of the single improvements.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rainbow-results2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Ablation studies on the Rainbow network. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Ablation studies on the Rainbow network. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Most of these mechanisms are necessary to achieve optimal performance (<strong>ablation studies</strong>). n-step returns, PER and distributional learning are the most critical. Interestingly, double Q-learning does not have a huge effect on the Rainbow network: The other mechanisms (especially distributional learning) already ensure that Q-values are not over-estimated.</p>
 <p>You can find good implementations of Rainbow DQN on all major frameworks, for example on <code>rllib</code>:</p>
 <p><a href="https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn" class="uri">https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn</a></p>
 </section>
-<section id="distributed-learning" class="level2 page-columns page-full">
+<section id="distributed-learning" class="level2">
 <h2 class="anchored" data-anchor-id="distributed-learning">Distributed learning</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/W468iYOpCsE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="gorila---general-reinforcement-learning-architecture" class="level3 page-columns page-full">
+<section id="gorila---general-reinforcement-learning-architecture" class="level3">
 <h3 class="anchored" data-anchor-id="gorila---general-reinforcement-learning-architecture">Gorila - General Reinforcement Learning Architecture</h3>
 <p>The DQN value network <span class="math inline">Q_\theta(s, a)</span> has two jobs:</p>
 <ul>
 <li><strong>actor:</strong> it interacts with the environment to sample <span class="math inline">(s, a, r, s')</span> transitions.</li>
 <li><strong>learner:</strong> it learns from minibatches out of the replay memory.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/gorila1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The DQN value network is both an actor and a learner, as it needs to sequentially select actions and learn from the replay memory. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The DQN value network is both an actor and a learner, as it needs to sequentially select actions and learn from the replay memory. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: <strong>computational bottleneck</strong>. DQN cannot benefit from <strong>parallel computing</strong>: multi-core CPU, clusters of CPU/GPU, etc.</p>
 <p>The Gorila framework <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span> splits DQN into <strong>multiple actors</strong> and <strong>multiple learners</strong>. Each actor (or worker) <strong>interacts</strong> with its copy of the environment and stores transitions in a distributed replay buffer. Each learner samples minibatches from the replay buffer and computes <strong>gradients</strong> w.r.t the DQN loss. The parameter server (<strong>master network</strong>) applies the gradients on the parameters and frequently <strong>synchronizes</strong> the actors and learners.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/gorila2.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The Gorila framework uses multiple actors to collect transitions and store them in the ERM. The learners sample the ERM and compute the gradients of the DQN loss function. The parameter servers collect the gradients and synchronize the parameters of the actors and learners. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The Gorila framework uses multiple actors to collect transitions and store them in the ERM. The learners sample the ERM and compute the gradients of the DQN loss function. The parameter servers collect the gradients and synchronize the parameters of the actors and learners. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Gorila allows to train DQN on parallel hardware (e.g.&nbsp;clusters of GPU) as long as the environment can be copied (simulation).</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/gorila-results1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The Gorila framework allows to slightly improve the performance of DQN on Atari games… Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The Gorila framework allows to slightly improve the performance of DQN on Atari games… Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/gorila-results2.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">… but that performance is achieved in a much smaller wall-clock time. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">… but that performance is achieved in a much smaller wall-clock time. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -804,16 +804,16 @@ Note
 </div>
 </section>
 </section>
-<section id="recurrent-dqn" class="level2 page-columns page-full">
+<section id="recurrent-dqn" class="level2">
 <h2 class="anchored" data-anchor-id="recurrent-dqn">Recurrent DQN</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/DOltPe7XGMA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="drqn-deep-recurrent-q-network" class="level3 page-columns page-full">
+<section id="drqn-deep-recurrent-q-network" class="level3">
 <h3 class="anchored" data-anchor-id="drqn-deep-recurrent-q-network">DRQN: Deep Recurrent Q-network</h3>
 <p>Atari games are POMDP: each frame is a <strong>partial observation</strong>, not a Markov state. One cannot infer the velocity of the ball from a single frame.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/drqn3.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Most Atari games have frames which do not respect the Markov property. Source: <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Most Atari games have frames which do not respect the Markov property. Source: <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The trick used by DQN and its variants is to <strong>stack</strong> the last four frames and provide them as inputs to the CNN. The last 4 frames have (almost) the Markov property.</p>
@@ -826,18 +826,18 @@ Note
 <p><span class="math display">
     P(\mathbf{h}_{t+1} | \mathbf{h}_t) = P(\mathbf{h}_{t+1} | \mathbf{h}_t, \mathbf{h}_{t-1}, \ldots, \mathbf{h}_0)
 </span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/drqn-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Value-based network with a LSTM layer before the Q-value output layer. Source: <a href="https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/" class="uri">https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Value-based network with a LSTM layer before the Q-value output layer. Source: <a href="https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/" class="uri">https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/</a></figcaption><p></p>
 </figure>
 </div>
 <p>For the neural network, it is just a matter of adding a LSTM layer before the output layer. The convolutional layers are <strong>feature extractors</strong> for the LSTM layer. The loss function does not change: backpropagation (through time) all along.</p>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]</span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/drqn-architecture2.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">DRQN architecture <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">DRQN architecture <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The only problem is that RNNs are trained using truncated <strong>backpropagation through time</strong> (BPTT). One needs to provide a partial history of <span class="math inline">T = 10</span> inputs to the network in order to learn one output:</p>
@@ -845,17 +845,17 @@ Note
 <p>The <strong>experience replay memory</strong> should therefore not contain single transitions <span class="math inline">(s_t, a_t, r_{t+1}, s_{t+1})</span>, but a partial history of transitions.</p>
 <p><span class="math display">(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})</span></p>
 <p>Using a LSTM layer helps on certain games, where temporal dependencies are longer that 4 frames, but impairs on others.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/drqn4.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">DRQN performance compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">DRQN performance compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Beware: LSTMs are extremely slow to train (but not to use). Stacking frames is still a reasonable option in many cases.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/drqn5.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Training and inference times of DRQN compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Training and inference times of DRQN compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>

@@ -163,7 +163,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -179,7 +179,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -471,7 +471,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full column-body" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -490,7 +490,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/3.1-DQN.html" target="_blank">html</a> <a href="../slides/pdf/3.1-DQN.pdf" target="_blank">pdf</a></p>
-<section id="value-based-deep-rl" class="level2 page-columns page-full">
+<section id="value-based-deep-rl" class="level2">
 <h2 class="anchored" data-anchor-id="value-based-deep-rl">Value-based deep RL</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/_luuEjWJU20" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>The basic idea in <strong>value-based deep RL</strong> is to approximate the Q-values in each possible state, using a <strong>deep neural network</strong> with free parameters <span class="math inline">\theta</span>:</p>
@@ -503,19 +503,19 @@ div.csl-indent {
 <ul>
 <li>The DNN approximates the Q-value of a single <span class="math inline">(s, a)</span> pair. The action space can be continuous.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/functionapproximation-action1.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Action value approximation for a single action.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Action value approximation for a single action.</figcaption><p></p>
 </figure>
 </div>
 <ul>
 <li>The DNN approximates the Q-value of all actions <span class="math inline">a</span> in a state <span class="math inline">s</span>. The action space must be discrete (one output neuron per action).</li>
 </ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/functionapproximation-action2.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Action value approximation for all actions.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Action value approximation for all actions.</figcaption><p></p>
 </figure>
 </div>
 <p>We could simply adapt Q-learning with FA to the DNN:</p>
@@ -577,26 +577,26 @@ Naive deep Q-learning with a transition buffer
 </ul>
 </div>
 </div>
-<section id="correlated-inputs" class="level3 page-columns page-full">
+<section id="correlated-inputs" class="level3">
 <h3 class="anchored" data-anchor-id="correlated-inputs">Correlated inputs</h3>
 <p>Unfortunately, this does not work either. The last <span class="math inline">K</span> transitions <span class="math inline">(s, a, r, s')</span> are not <strong>i.i.d</strong> (independent and identically distributed). The transition <span class="math inline">(s_{t+1}, a_{t+1}, r_{t+2}, s_{t+2})</span> <strong>depends</strong> on <span class="math inline">(s_{t}, a_{t}, r_{t+1}, s_{t+1})</span> by definition, i.e.&nbsp;the transitions are <strong>correlated</strong>. Even worse, when playing video games, successive frames will be very similar or even identical.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/breakout.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Successive video frames are extremely correlated.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Successive video frames are extremely correlated.</figcaption><p></p>
 </figure>
 </div>
 <p>The actions are also correlated: you move the paddle to the left for several successive steps.</p>
 <p>Feeding transitions sequentially to a DNN is the same as giving all MNIST 0’s to a DNN, then all 1’s, etc… It does not work.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/erm-sequential.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Correlated vs.&nbsp;uniformaly sampled MNIST digits.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Correlated vs.&nbsp;uniformaly sampled MNIST digits.</figcaption><p></p>
 </figure>
 </div>
 <p>In SL, we have all the training data <strong>before</strong> training: it is possible to get i.i.d samples by shuffling the training set between two epochs. In RL, we create the “training set” (transitions) <strong>during</strong> training: the samples are not i.i.d as we act sequentially over time.</p>
 </section>
-<section id="non-stationary-targets" class="level3 page-columns page-full">
+<section id="non-stationary-targets" class="level3">
 <h3 class="anchored" data-anchor-id="non-stationary-targets">Non-stationary targets</h3>
 <p>In SL, the <strong>targets</strong> <span class="math inline">\mathbf{t}</span> do not change over time: an image of a cat stays an image of a cat throughout learning.</p>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \sim \mathcal{D}} [||\mathbf{t} - F_\theta(\mathbf{x})||^2]</span></p>
@@ -608,15 +608,15 @@ Naive deep Q-learning with a transition buffer
 </ul>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s, a \sim \pi_\theta} [(r + \gamma \, \max_{a'} Q_\theta(s', a') - Q_\theta(s, a))^2]</span></p>
 <p>Neural networks do not like this at all. After a while, they give up and settle on a <strong>suboptimal</strong> policy.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/nonstationarity.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Supervised learning has stationary targets, not RL. Learning is much less efficient and optimal in RL.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Supervised learning has stationary targets, not RL. Learning is much less efficient and optimal in RL.</figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="deep-q-network-dqn" class="level2 page-columns page-full">
+<section id="deep-q-network-dqn" class="level2">
 <h2 class="anchored" data-anchor-id="deep-q-network-dqn">Deep Q-network (DQN)</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/r17pjvvj3Qc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>Non-linear approximators never really worked with RL before 2013 because of:</p>
@@ -629,13 +629,13 @@ Naive deep Q-learning with a transition buffer
 <li>experience replay memory.</li>
 <li>target networks.</li>
 </ol>
-<section id="experience-replay-memory" class="level3 page-columns page-full">
+<section id="experience-replay-memory" class="level3">
 <h3 class="anchored" data-anchor-id="experience-replay-memory">Experience replay memory</h3>
 <p>To avoid correlation between samples, (Mnih et al.&nbsp;2015) proposed to store the <span class="math inline">(s, a, r, s')</span> transitions in a huge <strong>experience replay memory</strong> or <strong>replay buffer</strong> <span class="math inline">\mathcal{D}</span> (e.g.&nbsp;1 million transitions).</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/ERM.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Experience replay memory / replay buffer.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Experience replay memory / replay buffer.</figcaption><p></p>
 </figure>
 </div>
 <p>When the buffer is full, we simply overwrite old transitions. The Q-learning update is only applied on a <strong>random minibatch</strong> of those past experiences, not the last transitions. This ensure the independence of the samples (non-correlated samples).</p>
@@ -698,7 +698,7 @@ Note
 </div>
 </div>
 </section>
-<section id="target-network" class="level3 page-columns page-full">
+<section id="target-network" class="level3">
 <h3 class="anchored" data-anchor-id="target-network">Target network</h3>
 <p>The second problem when using DNN for RL is that the target is <strong>non-stationary</strong>, i.e.&nbsp;it changes over time: as the network becomes better, the Q-values have to increase.</p>
 <p>In DQN, the target for the update is not computed from the current deep network <span class="math inline">\theta</span>:</p>
@@ -710,10 +710,10 @@ Note
     r + \gamma \, \max_{a'} Q_{\theta'}(s', a')
 </span></p>
 <p><span class="math inline">\theta'</span> is simply a copy of <span class="math inline">\theta</span> from the past.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/targetnetwork.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Target network.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Target network.</figcaption><p></p>
 </figure>
 </div>
 <p>The DQN loss function becomes:</p>
@@ -721,17 +721,17 @@ Note
     \mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, \max_{a'} Q_{\theta'}(s', a')) - Q_\theta(s, a))^2]
 </span></p>
 <p>This allows the target <span class="math inline">r + \gamma \, \max_{a'} Q_{\theta'}(s', a')</span> to be <strong>stationary</strong> between two updates. It leaves time for the trained network to catch up with the targets.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/nonstationarity2.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The target network keeps the target constant long enough for the DNN to catch up.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The target network keeps the target constant long enough for the DNN to catch up.</figcaption><p></p>
 </figure>
 </div>
 <p>The target network is updated by simply replacing the parameters <span class="math inline">\theta'</span> with the current trained parameters <span class="math inline">\theta</span>:</p>
 <p><span class="math display">\theta' \leftarrow \theta</span></p>
 <p>The value network <span class="math inline">\theta</span> basically learns using an older version of itself…</p>
 </section>
-<section id="dqn-algorithm" class="level3 page-columns page-full">
+<section id="dqn-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="dqn-algorithm">DQN algorithm</h3>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -769,10 +769,10 @@ DQN: Deep Q-network algorithm
 </div>
 </div>
 <p>The deep network can be anything. Deep RL is only about defining the loss function adequately. For pixel-based problems (e.g.&nbsp;video games), convolutional neural networks (without max-pooling) are the weapon of choice.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/DeepQNetwork.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Why no max-pooling? The goal of max-pooling is to get rid of the spatial information in the image. For object recognition, you do not care whether the object is in the center or on the side of the image. Max-pooling brings <strong>spatial invariance</strong>. In video games, you <strong>want</strong> to keep the spatial information: the optimal action depends on where the ball is relative to the paddle.</p>
@@ -853,36 +853,36 @@ DQN code in Keras
 </div>
 </div>
 </section>
-<section id="dqn-results" class="level3 page-columns page-full">
+<section id="dqn-results" class="level3">
 <h3 class="anchored" data-anchor-id="dqn-results">DQN results</h3>
 <p>DQN was trained using 50M frames (38 days of game experience) per game. Replay buffer of 1M frames. Action selection: <span class="math inline">\epsilon</span>-greedy with <span class="math inline">\epsilon = 0.1</span> and annealing. Optimizer: RMSprop with a batch size of 32.</p>
 <p>The DQN network was trained to solve 49 different Atari 2600 games <strong>with the same architecture and hyperparameters</strong>. In most of the games, the network reaches <strong>super-human</strong> performance. Some games are still badly performed (e.g.&nbsp;Montezuma’s revenge), as they require long-term planning. It was the first RL algorithm able to learn different tasks (no free lunch theorem). The 2015 paper in Nature started the hype for deep RL.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/dqn-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Training curves of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Training curves of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/atari-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Performance of DQN on Atari games <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Performance of DQN on Atari games <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="dqn-variants" class="level2 page-columns page-full">
+<section id="dqn-variants" class="level2">
 <h2 class="anchored" data-anchor-id="dqn-variants">DQN variants</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/VM28-5YyLJk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="double-dqn" class="level3 page-columns page-full">
+<section id="double-dqn" class="level3">
 <h3 class="anchored" data-anchor-id="double-dqn">Double DQN</h3>
 <p>Q-learning methods, including DQN, tend to <strong>overestimate</strong> Q-values, especially for the non-greedy actions:</p>
 <p><span class="math display">Q_\theta(s, a) &gt; Q^\pi(s, a)</span></p>
 <p>This does not matter much in action selection, as we apply <span class="math inline">\epsilon</span>-greedy or softmax on the Q-values anyway, but it may make learning slower (sample complexity) and less optimal.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/ddqn-results1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Q-learning methods overstimate Q-values <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Q-learning methods overstimate Q-values <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>To avoid optimistic estimations, the target is computed by both the value network <span class="math inline">\theta</span> and the target network <span class="math inline">\theta'</span>:</p>
@@ -898,14 +898,14 @@ DQN code in Keras
 <p><span class="math display">
     \mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]
 </span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/ddqn-results1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Estimated Q-values by Double DQN compared to DQN and the ground truth <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Estimated Q-values by Double DQN compared to DQN and the ground truth <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="prioritized-experience-replay" class="level3 page-columns page-full">
+<section id="prioritized-experience-replay" class="level3">
 <h3 class="anchored" data-anchor-id="prioritized-experience-replay">Prioritized Experience Replay</h3>
 <p>The <strong>experience replay memory</strong> or <strong>replay buffer</strong> is used to store the last 1M or so transitions <span class="math inline">(s, a, r, s')</span>. The learning algorithm <strong>uniformly samples</strong> a minibatch of size <span class="math inline">K</span> to update its parameters.</p>
 <p>Not all transitions are interesting:</p>
@@ -925,39 +925,39 @@ DQN code in Keras
 <li>Insertion: <span class="math inline">\mathcal{O}(N \, \log N)</span>.</li>
 <li>Sampling: <span class="math inline">\mathcal{O}(N)</span>.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/per_bar_1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Sorting transitions w.r.t their advantage is expensive. Source: <a href="https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/" class="uri">https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Sorting transitions w.r.t their advantage is expensive. Source: <a href="https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/" class="uri">https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/</a></figcaption><p></p>
 </figure>
 </div>
 <p>Using binary <strong>sumtrees</strong> instead of a linear queue, prioritized experience replay can be made efficient in both insertion (<span class="math inline">\mathcal{O}(\log N)</span>) and sampling (<span class="math inline">\mathcal{O}(1)</span>).</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/per_tree.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Sumtrees allow efficient insertion and sampling of the PER. Source: <a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Sumtrees allow efficient insertion and sampling of the PER. Source: <a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682</a></figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/per_results1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/per_results2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="dueling-networks" class="level3 page-columns page-full">
+<section id="dueling-networks" class="level3">
 <h3 class="anchored" data-anchor-id="dueling-networks">Dueling networks</h3>
 <p>DQN and its variants learn to predict directly the Q-value of each available action.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/duelling1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">DQN predicts directly the Q-values. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">DQN predicts directly the Q-values. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>There are several problems with predicting Q-values with a DNN:</p>
@@ -966,10 +966,10 @@ DQN code in Keras
 <li>The Q-values have a high variance, between the minimum and maximum returns obtained during training.</li>
 <li>For a transition <span class="math inline">(s_t, a_t, s_{t+1})</span>, a single Q-value is updated, not all actions in <span class="math inline">s_t</span>.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/dueling-principle.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The variance of the Q-values between good and bad states is high.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The variance of the Q-values between good and bad states is high.</figcaption><p></p>
 </figure>
 </div>
 <p>The exact Q-values of all actions are not equally important.</p>
@@ -989,20 +989,20 @@ DQN code in Keras
     A^\pi(s, a \neq a^*) &lt; 0
 </span></p>
 <p>This is particularly true for the optimal policy. But if we have separate estimates <span class="math inline">V_\varphi(s)</span> and <span class="math inline">Q_\theta(s, a)</span>, some actions may have a positive advantage. Advantages have <strong>less variance</strong> than Q-values.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/dueling-principle2.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">The variance of the advantages is much lower.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">The variance of the advantages is much lower.</figcaption><p></p>
 </figure>
 </div>
 <p>In <strong>dueling networks</strong> <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>, the network is forced to decompose the estimated Q-value <span class="math inline">Q_\theta(s, a)</span> into a state value <span class="math inline">V_\alpha(s)</span> and an advantage function <span class="math inline">A_\beta(s, a)</span>:</p>
 <p><span class="math display">
     Q_\theta(s, a) = V_\alpha(s) + A_\beta(s, a)
 </span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/duelling2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Dueling DQN decomposes the Q-values as the sum of the V-value and the advantage of the action. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Dueling DQN decomposes the Q-values as the sum of the V-value and the advantage of the action. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The parameters <span class="math inline">\alpha</span> and <span class="math inline">\beta</span> are just two shared subparts of the NN <span class="math inline">\theta</span>. The loss function</p>
@@ -1028,13 +1028,13 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <p><span class="math display">
     Q_\theta(s, a) = V_\alpha(s) + (A_\beta(s, a) - \frac{1}{|\mathcal{A}|} \, \sum_{a'} A_\beta(s, a'))
 </span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/dueling-result.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Dueling DQN network improves over double DQN with PER on most Atari games. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Dueling DQN network improves over double DQN with PER on most Atari games. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1043,11 +1043,11 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 Summary of DQN algorithms
 </div>
 </div>
-<div class="callout-body-container callout-body page-columns page-full">
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/DeepQNetwork.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>DQN and its early variants (double duelling DQN with PER) are an example of <strong>value-based deep RL</strong>. The value <span class="math inline">Q_\theta(s, a)</span> of each possible action in a given state is approximated by a convolutional neural network. The NN has to minimize the mse between the predicted Q-values and the target value corresponding to the Bellman equation:</p>

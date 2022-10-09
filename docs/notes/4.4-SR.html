@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -402,7 +402,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full column-body" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -421,7 +421,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/4.4-SR.html" target="_blank">html</a> <a href="../slides/pdf/4.4-SR.pdf" target="_blank">pdf</a></p>
-<section id="model-based-vs.-model-free" class="level2 page-columns page-full">
+<section id="model-based-vs.-model-free" class="level2">
 <h2 class="anchored" data-anchor-id="model-based-vs.-model-free">Model-based vs.&nbsp;Model-free</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/jt9YvApme3Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="comparison" class="level3">
@@ -479,7 +479,7 @@ div.csl-indent {
 </table>
 <p>A trade-off would be nice… Most MB models in the deep RL literature are hybrid MB/MF models anyway.</p>
 </section>
-<section id="goal-directed-learning-vs.-habit-formation" class="level3 page-columns page-full">
+<section id="goal-directed-learning-vs.-habit-formation" class="level3">
 <h3 class="anchored" data-anchor-id="goal-directed-learning-vs.-habit-formation">Goal-directed learning vs.&nbsp;habit formation</h3>
 <p>Two forms of behavior are observed in the animal psychology literature:</p>
 <ol type="1">
@@ -487,19 +487,19 @@ div.csl-indent {
 <li><strong>Habits</strong> are developed by overtraining Stimulus <span class="math inline">\rightarrow</span> Response associations.</li>
 </ol>
 <p>The main difference is that habits are not influenced by <strong>outcome devaluation</strong>, i.e.&nbsp;when reard slose their value.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rewarddevaluation.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Outcome devaluation. Credit: Bernard W. Balleine</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Outcome devaluation. Credit: Bernard W. Balleine</figcaption><p></p>
 </figure>
 </div>
 <p>The classical theory assigns MF to habits and MB to goal-directed, mostly because their sensitivity to outcome devaluation. The open question is the arbitration mechanism between these two segregated process: who takes control? Recent work suggests both systems are largely overlapping.</p>
 </section>
 </section>
-<section id="successor-representations" class="level2 page-columns page-full">
+<section id="successor-representations" class="level2">
 <h2 class="anchored" data-anchor-id="successor-representations">Successor representations</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/Qt2Qtf_WbfM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="principle-of-successor-representations" class="level3 page-columns page-full">
+<section id="principle-of-successor-representations" class="level3">
 <h3 class="anchored" data-anchor-id="principle-of-successor-representations">Principle of successor representations</h3>
 <p>Successor representations (SR, <span class="citation" data-cites="Dayan1993">(<a href="../references.html#ref-Dayan1993" role="doc-biblioref">Dayan, 1993</a>)</span>) have been introduced to combine MF and MB properties. Let’s split the definition of the value of a state:</p>
 <p><span class="math display">
@@ -527,10 +527,10 @@ div.csl-indent {
 \end{align}
 </span></p>
 <p>The underlying assumption is that the world dynamics are independent from the reward function (which does not depend on the policy). This allows to re-use knowledge about world dynamics in other contexts (e.g.&nbsp;a new reward function in the same environment): <strong>transfer learning</strong>.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sr-transferlearning.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Transfer learning in Gridworld. Source: <a href="https://awjuliani.medium.com/the-present-in-terms-of-the-future-successor-representations-in-reinforcement-learning-316b78c5fa3" class="uri">https://awjuliani.medium.com/the-present-in-terms-of-the-future-successor-representations-in-reinforcement-learning-316b78c5fa3</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Transfer learning in Gridworld. Source: <a href="https://awjuliani.medium.com/the-present-in-terms-of-the-future-successor-representations-in-reinforcement-learning-316b78c5fa3" class="uri">https://awjuliani.medium.com/the-present-in-terms-of-the-future-successor-representations-in-reinforcement-learning-316b78c5fa3</a></figcaption><p></p>
 </figure>
 </div>
 <p>What matters is the states that you will visit and how interesting they are, not the order in which you visit them. Knowing that being in the mensa will eventually get you some food is enough to know that being in the mensa is a good state: you do not need to remember which exact sequence of transitions will put food in your mouth.</p>
@@ -594,10 +594,10 @@ SR matrix in a Tolman’s maze
 <p><img src="../slides/img/schapiro1.png" class="img-fluid figure-img" style="width:60.0%"></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/schapiro2.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Probabilistic MDP and the corresponding SR matrix. Source: <span class="citation" data-cites="Stachenfeld2017">(<a href="../references.html#ref-Stachenfeld2017" role="doc-biblioref">Stachenfeld et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Probabilistic MDP and the corresponding SR matrix. Source: <span class="citation" data-cites="Stachenfeld2017">(<a href="../references.html#ref-Stachenfeld2017" role="doc-biblioref">Stachenfeld et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -724,12 +724,12 @@ Summary
 <p><span class="math display">\Delta M^\pi = \delta_t^\text{SFR} \times \phi(s_t)^T</span></p>
 <p>However, this linear approximation scheme only works for <strong>fixed</strong> feature representation <span class="math inline">\phi(s)</span>. We need to go deeper…</p>
 </section>
-<section id="deep-successor-reinforcement-learning" class="level2 page-columns page-full">
+<section id="deep-successor-reinforcement-learning" class="level2">
 <h2 class="anchored" data-anchor-id="deep-successor-reinforcement-learning">Deep Successor Reinforcement Learning</h2>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/DSR.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Deep Successor Reinforcement Learning architecture. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Deep Successor Reinforcement Learning architecture. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Each state <span class="math inline">s_t</span> is represented by a D-dimensional (D=512) vector <span class="math inline">\phi(s_t) = f_\theta(s_t)</span> which is the output of an encoder. A decoder <span class="math inline">g_{\hat{\theta}}</span> is used to provide a reconstruction loss, so <span class="math inline">\phi(s_t)</span> is a latent representation of an autoencoder:</p>
@@ -748,23 +748,23 @@ Summary
 <p><span class="math display">\mathcal{L}^\text{SPE}(\alpha) = \mathbb{E}[\sum_a (\phi(s_t) + \gamma \, \max_{a'} u_{\alpha'}(s_{t+1}, a') - u_\alpha(s_t, a))^2]</span></p>
 <p>The compound loss is used to train the complete network end-to-end <strong>off-policy</strong> using a replay buffer (DQN-like).</p>
 <p><span class="math display">\mathcal{L}(\theta, \hat{\theta}, \mathbf{w}, \alpha) = \mathcal{L}_\text{reconstruction}(\theta, \hat{\theta}) + \mathcal{L}_\text{reward}(\mathbf{w}, \theta) + \mathcal{L}^\text{SPE}(\alpha)</span></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/DSR-algorithm.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Deep Successor Reinforcement Learning algorithm. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Deep Successor Reinforcement Learning algorithm. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/DSR-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Deep Successor Reinforcement Learning results. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Deep Successor Reinforcement Learning results. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The interesting property is that you do not need rewards to learn: * A random agent can be used to learn the encoder and the SR, but <span class="math inline">\mathbf{w}</span> can be left untouched. * When rewards are introduced (or changed), only <span class="math inline">\mathbf{w}</span> has to be adapted, while DQN would have to re-learn all Q-values.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/DSR-results2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Change in the value of distal rewards. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Change in the value of distal rewards. <span class="citation" data-cites="Kulkarni2016">(<a href="../references.html#ref-Kulkarni2016" role="doc-biblioref">Kulkarni et al., 2016</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>This is the principle of <strong>latent learning</strong> in animal psychology: fooling around in an environment without a goal allows to learn the structure of the world, what can speed up learning when a task is introduced. The SR is a <strong>cognitive map</strong> of the environment: learning task-unspecific relationships.</p>

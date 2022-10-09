@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -401,7 +401,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full column-body" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -463,27 +463,27 @@ div.csl-indent {
 <p>After enough interactions, the agent has <strong>learned</strong> which action to perform in a given situation.</p>
 <p>RL is merely a formalization of the trial-and-error learning paradigm. The agent has to <strong>explore</strong> its environment via trial-and-error in order to gain knowledge. The biggest issue with this approach is that exploring large action spaces might necessitate a <strong>lot</strong> of trials (<strong>sample complexity</strong>). The modern techniques we will see in this course try to reduce the sample complexity.</p>
 </section>
-<section id="the-agent-environment-interface" class="level2 page-columns page-full">
+<section id="the-agent-environment-interface" class="level2">
 <h2 class="anchored" data-anchor-id="the-agent-environment-interface">The agent-environment interface</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/QjhKJmFV8T4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rl-agent.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Agent-environment interface. Source: <span class="citation" data-cites="Sutton2017">(<a href="../references.html#ref-Sutton2017" role="doc-biblioref">Sutton and Barto, 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Agent-environment interface. Source: <span class="citation" data-cites="Sutton2017">(<a href="../references.html#ref-Sutton2017" role="doc-biblioref">Sutton and Barto, 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The agent and the environment interact at discrete time steps: <span class="math inline">t</span>=0, 1, … The agent observes its state at time t: <span class="math inline">s_t \in \mathcal{S}</span>, produces an action at time t, depending on the available actions in the current state: <span class="math inline">a_t \in \mathcal{A}(s_t)</span> and receives a reward according to this action at time t+1: <span class="math inline">r_{t+1} \in \Re</span>. It then updates its state: <span class="math inline">s_{t+1} \in \mathcal{S}</span>. The behavior of the agent is therefore is a sequence of <strong>state-action-reward-state</strong> <span class="math inline">(s, a, r, s')</span> transitions.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rl-sequence.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">State-action-reward-state sequences. Source: <span class="citation" data-cites="Sutton2017">(<a href="../references.html#ref-Sutton2017" role="doc-biblioref">Sutton and Barto, 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">State-action-reward-state sequences. Source: <span class="citation" data-cites="Sutton2017">(<a href="../references.html#ref-Sutton2017" role="doc-biblioref">Sutton and Barto, 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>Sequences <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span> are called <strong>episodes</strong>, <strong>trajectories</strong>, <strong>histories</strong> or <strong>rollouts</strong>.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rl-loop.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Agent-environment interface for video games. Source: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Agent-environment interface for video games. Source: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a>.</figcaption><p></p>
 </figure>
 </div>
 <p>The state <span class="math inline">s_t</span> can relate to:</p>
@@ -528,10 +528,10 @@ div.csl-indent {
 </span></p>
 <p>The value of a state defines how good it is to be in that state. If a state has a high value, it means we will be able to collect a lot of rewards <strong>on the long term</strong> and <strong>on average</strong>. Value functions are central to RL: if we know the value of all states, we can infer the policy. The optimal action is the one that leads to the state with the highest value. Most RL methods deal with estimating the value function from experience (trial and error).</p>
 <p><strong>Simple maze</strong></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/maze.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Simple maze. Source: David Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Simple maze. Source: David Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a>.</figcaption><p></p>
 </figure>
 </div>
 <p>The goal is to find a path from start to goal as fast as possible.</p>
@@ -541,17 +541,17 @@ div.csl-indent {
 <li><p><strong>Rewards</strong>: -1 for each step until the exit.</p></li>
 </ul>
 <p>The value of each state indicates how good it is to be in that state. It can be learned by trial-and-error given a policy.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/maze-value.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Value of each state. Source: David Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Value of each state. Source: David Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a>.</figcaption><p></p>
 </figure>
 </div>
 <p>When the value of all states is known, we can infer the optimal policy by choosing actions leading to the states with the highest value.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/maze-policy.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">Optimal policy. Source: David Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Optimal policy. Source: David Silver <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a>.</figcaption><p></p>
 </figure>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -585,59 +585,59 @@ Note
 <li><p><strong>Time</strong> matters: as behavior gets better, the observed data changes.</p></li>
 </ul>
 </section>
-<section id="applications-of-tabular-rl" class="level2 page-columns page-full">
+<section id="applications-of-tabular-rl" class="level2">
 <h2 class="anchored" data-anchor-id="applications-of-tabular-rl">Applications of tabular RL</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/EGI89ypJiv4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <section id="pendulum" class="level3">
 <h3 class="anchored" data-anchor-id="pendulum">Pendulum</h3>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/v6IEpH4vYq0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
-<section id="cartpole" class="level3 page-columns page-full">
+<section id="cartpole" class="level3">
 <h3 class="anchored" data-anchor-id="cartpole">Cartpole</h3>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/cartpole-before.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Cartpole before training. Source: <a href="https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288" class="uri">https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Cartpole before training. Source: <a href="https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288" class="uri">https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288</a>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/cartpole-after.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Cartpole after training. Source: <a href="https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288" class="uri">https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Cartpole after training. Source: <a href="https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288" class="uri">https://towardsdatascience.com/cartpole-introduction-to-reinforcement-learning-ed0eb5b58288</a>.</figcaption><p></p>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/XiigTGKZfks" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
-<section id="backgammon" class="level3 page-columns page-full">
+<section id="backgammon" class="level3">
 <h3 class="anchored" data-anchor-id="backgammon">Backgammon</h3>
 <p>TD-Gammon <span class="citation" data-cites="Tesauro1995">(<a href="../references.html#ref-Tesauro1995" role="doc-biblioref">Tesauro, 1995</a>)</span> was one of the first AI to beat human experts at a complex game, Backgammon.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/tdgammon.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Backgammon. Source: <span class="citation" data-cites="Tesauro1995">(<a href="../references.html#ref-Tesauro1995" role="doc-biblioref">Tesauro, 1995</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Backgammon. Source: <span class="citation" data-cites="Tesauro1995">(<a href="../references.html#ref-Tesauro1995" role="doc-biblioref">Tesauro, 1995</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/tdgammon2.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">TD-Gammon. Source: <span class="citation" data-cites="Tesauro1995">(<a href="../references.html#ref-Tesauro1995" role="doc-biblioref">Tesauro, 1995</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">TD-Gammon. Source: <span class="citation" data-cites="Tesauro1995">(<a href="../references.html#ref-Tesauro1995" role="doc-biblioref">Tesauro, 1995</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="deep-reinforcement-learning-drl" class="level2 page-columns page-full">
+<section id="deep-reinforcement-learning-drl" class="level2">
 <h2 class="anchored" data-anchor-id="deep-reinforcement-learning-drl">Deep Reinforcement Learning (DRL)</h2>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/deeprl.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">In deep RL, the policy is approximated by a deep neural network.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">In deep RL, the policy is approximated by a deep neural network.</figcaption><p></p>
 </figure>
 </div>
 <p>Classical tabular RL was limited to toy problems, with few states and actions. It is only when coupled with <strong>deep neural networks</strong> that interesting applications of RL became possible. Deepmind (now Google) started the deep RL hype in 2013 by learning to solve 50+ Atari games with a CNN, the <strong>deep Q-network</strong> (DQN) <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/discrete.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Architecture of the deep Q-network. Source: <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Architecture of the deep Q-network. Source: <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/rQIShnTz1kU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>

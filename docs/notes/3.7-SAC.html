@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -394,7 +394,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full column-body" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -413,7 +413,7 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/3.7-SAC.html" target="_blank">html</a> <a href="../slides/pdf/3.7-SAC.pdf" target="_blank">pdf</a></p>
-<section id="soft-rl" class="level2 page-columns page-full">
+<section id="soft-rl" class="level2">
 <h2 class="anchored" data-anchor-id="soft-rl">Soft RL</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/b7CnFrgQ0hg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>All methods seen so far search the optimal policy that maximizes the return:</p>
@@ -434,16 +434,16 @@ div.csl-indent {
     \pi(s, a) = \frac{\exp Q(s, a) / \tau}{ \sum_b \exp Q(s, b) / \tau}
 </span></p>
 <p>In continuous action spaces, we would have to integrate over the whole action space, what is not tractable. Exploratory noise as in DDPG only leads to <strong>unimodal</strong> policies: greedy action plus some noise.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac-unimodal.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Unimodal policies explore around the greedy action. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Unimodal policies explore around the greedy action. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac-multimodal.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Multimodal policies explore in the whole action space. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Multimodal policies explore in the whole action space. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -534,7 +534,7 @@ div.csl-indent {
 </span></p>
 <p><span class="citation" data-cites="Haarnoja2017">(<a href="../references.html#ref-Haarnoja2017" role="doc-biblioref">Haarnoja et al., 2017</a>)</span> showed that these soft value functions are the solution of the entropy-regularized objective function. All we need is to be able to estimate them… Soft Q-learning uses complex optimization methods (variational inference) to do it, but SAC is more practical.</p>
 </section>
-<section id="soft-actor-critic-sac" class="level2 page-columns page-full">
+<section id="soft-actor-critic-sac" class="level2">
 <h2 class="anchored" data-anchor-id="soft-actor-critic-sac">Soft Actor-Critic (SAC)</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/4drdHdaANXM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>Putting:</p>
@@ -583,23 +583,23 @@ div.csl-indent {
    \nabla_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s, a} [\alpha \, \nabla_\theta \log \pi_\theta(s, a) - Q_\varphi (s, a)]
 </span></p>
 <p>In practice, SAC uses <strong>clipped double learning</strong> like TD3: it takes the lesser of two evils between two critics <span class="math inline">Q_{\varphi_1}</span> and <span class="math inline">Q_{\varphi_2}</span>. The next action <span class="math inline">a_{t+1}</span> comes from the current policy, no need for target networks. Unlike TD3, the learned policy is <strong>stochastic</strong>: no need for target noise as the targets are already stochastic. See <a href="https://spinningup.openai.com/en/latest/algorithms/sac.html" class="uri">https://spinningup.openai.com/en/latest/algorithms/sac.html</a> for a detailed comparison of SAC and TD3. The initial version of SAV additionally learned a soft V-value critic, but this turns out not to be needed.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac_results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">SAC compared to DDPG, TD3 and PPO. Source <span class="citation" data-cites="Haarnoja2018b">(<a href="../references.html#ref-Haarnoja2018b" role="doc-biblioref">Haarnoja et al., 2018</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">SAC compared to DDPG, TD3 and PPO. Source <span class="citation" data-cites="Haarnoja2018b">(<a href="../references.html#ref-Haarnoja2018b" role="doc-biblioref">Haarnoja et al., 2018</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The enhanced exploration strategy through maximum entropy RL allows to learn robust and varied strategies that can cope with changes in the environment.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac-walker.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">SAC on the Walker environment. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">SAC on the Walker environment. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac_ant.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">SAC on the Ant environment. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">SAC on the Ant environment. Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
 </figure>
 </div>
 <p>The low sample complexity of SAC allows to train a real-world robot in less than 2 hours!</p>
@@ -607,17 +607,17 @@ div.csl-indent {
 <p>Although trained on a flat surface, the rich learned stochastic policy can generalize to complex terrains.</p>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/KOObeIjzXTY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>When trained to stack lego bricks, the robotic arm learns to explore the whole state-action space.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac_lego1.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a>.</figcaption><p></p>
 </figure>
 </div>
 <p>This makes it more robust to external perturbations after training:</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/sac_lego2.gif" class="img-fluid figure-img" style="width:20.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a>.</figcaption><p></p>
 </figure>
 </div>
 

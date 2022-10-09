@@ -100,7 +100,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -399,7 +399,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full column-body" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -418,17 +418,17 @@ div.csl-indent {
 </header>
 
 <p>Slides: <a href="../slides/5.1-Outlook.html" target="_blank">html</a> <a href="../slides/pdf/5.1-Outlook.pdf" target="_blank">pdf</a></p>
-<section id="limits-of-deep-reinforcement-learning" class="level2 page-columns page-full">
+<section id="limits-of-deep-reinforcement-learning" class="level2">
 <h2 class="anchored" data-anchor-id="limits-of-deep-reinforcement-learning">Limits of deep reinforcement learning</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/JDQdcTpHryM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<section id="overview" class="level3 page-columns page-full">
+<section id="overview" class="level3">
 <h3 class="anchored" data-anchor-id="overview">Overview</h3>
 <p><strong>Model-free methods</strong> (DQN, A3C, DDPG, PPO, SAC) are able to find optimal policies in complex MDPs by just <strong>sampling</strong> transitions. They suffer however from a high <strong>sample complexity</strong>, i.e.&nbsp;they need ridiculous amounts of samples to converge.</p>
 <p><strong>Model-based methods</strong> (I2A, Dreamer, MuZero) use <strong>learned dynamics</strong> to predict the future and plan the consequences of an action. The sample complexity is lower, but learning a good model can be challenging. Inference times can be prohibitive.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/drl-overview.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Overview of deep RL methods. Source: <a href="https://github.com/avillemin/RL-Personnal-Notebook" class="uri">https://github.com/avillemin/RL-Personnal-Notebook</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Overview of deep RL methods. Source: <a href="https://github.com/avillemin/RL-Personnal-Notebook" class="uri">https://github.com/avillemin/RL-Personnal-Notebook</a></figcaption><p></p>
 </figure>
 </div>
 <p>Deep RL is still very unstable. Depending on initialization, deep RL networks may or may not converge (30% of runs converge to a worse policy than a random agent). Careful optimization such as TRPO / PPO help, but not completely. You never know if failure is your fault (wrong network, bad hyperparameters, bug), or just bad luck.</p>
@@ -445,7 +445,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <p>You cannot do that with deep RL (yet):</p>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/fRj34o4hN4I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
-<section id="rl-libraries" class="level3 page-columns page-full">
+<section id="rl-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="rl-libraries">RL libraries</h3>
 <ul>
 <li><code>keras-rl</code>: many deep RL algorithms implemented directly in keras: DQN, DDQN, DDPG, Continuous DQN (CDQN or NAF), Cross-Entropy Method (CEM)…</li>
@@ -483,10 +483,10 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><code>Coach</code> from Intel Nervana also provides many state-of-the-art algorithms.</li>
 </ul>
 <p><a href="https://github.com/NervanaSystems/coach" class="uri">https://github.com/NervanaSystems/coach</a></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/coach.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Deep RL algorithms available in Coach. Source: <a href="https://github.com/NervanaSystems/coach" class="uri">https://github.com/NervanaSystems/coach</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Deep RL algorithms available in Coach. Source: <a href="https://github.com/NervanaSystems/coach" class="uri">https://github.com/NervanaSystems/coach</a></figcaption><p></p>
 </figure>
 </div>
 <ul>
@@ -495,15 +495,15 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <p>It has implementations in both tensorflow and Pytorch.</p>
 <p>All major model-free algorithms are implemented (DQN, Rainbow, A3C, DDPG, PPO, SAC), including their distributed variants (Ape-X, IMPALA, TD3) but also model-based algorithms (Dreamer!)</p>
 <p><a href="https://docs.ray.io/en/master/rllib.html" class="uri">https://docs.ray.io/en/master/rllib.html</a></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/rllib.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Architecture of rllib. Source: <a href="https://docs.ray.io/en/master/rllib.html" class="uri">https://docs.ray.io/en/master/rllib.html</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Architecture of rllib. Source: <a href="https://docs.ray.io/en/master/rllib.html" class="uri">https://docs.ray.io/en/master/rllib.html</a></figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="inverse-rl---learning-the-reward-function" class="level2 page-columns page-full">
+<section id="inverse-rl---learning-the-reward-function" class="level2">
 <h2 class="anchored" data-anchor-id="inverse-rl---learning-the-reward-function">Inverse RL - learning the reward function</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/k-nr6Pwb9ds" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>RL is an optimization method: it maximizes the reward function that you provide it. If you do not design the reward function correctly, the agent may not do what you expect. In the Coast runners game, turbos provide small rewards but respawn very fast: it is more optimal to collect them repeatedly than to try to finish the race.</p>
@@ -511,23 +511,23 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <p>Defining the reward function that does what you want becomes an art. RL algorithms work better with dense rewards than sparse ones. It is tempting to introduce intermediary rewards. You end up covering so many special cases that it becomes unusable: Go as fast as you can but not in a curve, except if you are on a closed circuit but not if it rains…</p>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/8QnD8ZM0YCo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>In the OpenAI <strong>Lego stacking</strong> paper <span class="citation" data-cites="Popov2017">(<a href="../references.html#ref-Popov2017" role="doc-biblioref">Popov et al., 2017</a>)</span>, it was perhaps harder to define the reward function than to implement DDPG.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/lego_reward.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Lego stacking handmade reward function <span class="citation" data-cites="Popov2017">(<a href="../references.html#ref-Popov2017" role="doc-biblioref">Popov et al., 2017</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Lego stacking handmade reward function <span class="citation" data-cites="Popov2017">(<a href="../references.html#ref-Popov2017" role="doc-biblioref">Popov et al., 2017</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>The goal of <strong>inverse RL</strong> (see <span class="citation" data-cites="Arora2019">(<a href="../references.html#ref-Arora2019" role="doc-biblioref">Arora and Doshi, 2019</a>)</span> for a review) is to learn from <strong>demonstrations</strong> (e.g.&nbsp;from humans) which reward function is maximized. This is not <strong>imitation learning</strong>, where you try to learn and reproduce actions. The goal if to find a <strong>parametrized representation</strong> of the reward function:</p>
 <p><span class="math display">\hat{r}(s) = \sum_{i=1}^K w_i \, \varphi_i(s)</span></p>
 <p>When the reward function has been learned, you can train a RL algorithm to find the optimal policy.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/inverseRL.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Inverse RL allows to learn from demonstrations. Source: <a href="http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/" class="uri">http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Inverse RL allows to learn from demonstrations. Source: <a href="http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/" class="uri">http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/</a></figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="intrinsic-motivation-and-curiosity" class="level2 page-columns page-full">
+<section id="intrinsic-motivation-and-curiosity" class="level2">
 <h2 class="anchored" data-anchor-id="intrinsic-motivation-and-curiosity">Intrinsic motivation and curiosity</h2>
 <p>One fundamental problem of RL is its dependence on the <strong>reward function</strong>. When rewards are <strong>sparse</strong>, the agent does not learn much (but see successor representations) unless its random exploration policy makes it discover rewards. The reward function is <strong>handmade</strong>, what is difficult in realistic complex problems.</p>
 <p>Human learning does not (only) rely on maximizing rewards or achieving goals. Especially infants discover the world by <strong>playing</strong>, i.e.&nbsp;interacting with the environment out of <strong>curiosity</strong>.</p>
@@ -535,10 +535,10 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <p>What happens if I do that? Oh, that’s fun.</p>
 </blockquote>
 <p>This called <strong>intrinsic motivation</strong>: we are motivated by understanding the world, not only by getting rewards. Rewards are internally generated.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/intrinsicmotivation.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">In intrinsic motivation, rewards are generated internally depending on the achieved states. Source: <span class="citation" data-cites="Barto2013">(<a href="../references.html#ref-Barto2013" role="doc-biblioref">Barto, 2013</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">In intrinsic motivation, rewards are generated internally depending on the achieved states. Source: <span class="citation" data-cites="Barto2013">(<a href="../references.html#ref-Barto2013" role="doc-biblioref">Barto, 2013</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 <p>What is <strong>intrinsically</strong> rewarding / motivating / fun? Mostly what has <strong>unexpected</strong> consequences.</p>
@@ -546,10 +546,10 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li>If you can predict what is going to happen, it becomes boring.</li>
 <li>If you cannot predict, you can become <strong>curious</strong> and try to <strong>explore</strong> that action.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/intrinsicreward.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption><p></p>
 </figure>
 </div>
 <p>The <strong>intrinsic reward</strong> (IR) of an action is defined as the sensory prediction error:</p>
@@ -558,25 +558,25 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 </span></p>
 <p>where <span class="math inline">f(s_t, a_t)</span> is a <strong>forward model</strong> predicting the sensory consequences of an action. An agent maximizing the IR will tend to visit unknown / poorly predicted states (<strong>exploration</strong>).</p>
 <p>Is it a good idea to predict frames directly? Frames are highly dimensional and there will always be a remaining error.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/intrinsicreward-hard.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption><p></p>
 </figure>
 </div>
 <p>Moreover, they can be noisy and unpredictable, without being particularly interesting.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/leaves.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Falling leaves are hard to predict, but hardly interesting. Source: Giphy.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Falling leaves are hard to predict, but hardly interesting. Source: Giphy.</figcaption><p></p>
 </figure>
 </div>
 <p>What can we do? As usual, predict in a latent space!</p>
 <p>The intrinsic curiosity module (ICM, <span class="citation" data-cites="Pathak2017">(<a href="../references.html#ref-Pathak2017" role="doc-biblioref">Pathak et al., 2017</a>)</span>) learns to provide an intrinsic reward for a transition <span class="math inline">(s_t, a_t, s_{t+1})</span> by comparing the predicted latent representation <span class="math inline">\hat{\phi}(s_{t+1})</span> (using a <strong>forward</strong> model) to its “true” latent representation <span class="math inline">\phi(s_{t+1})</span>. The feature representation <span class="math inline">\phi(s_t)</span> is trained using an <strong>inverse model</strong> predicting the action leading from <span class="math inline">s_t</span> to <span class="math inline">s_{t+1}</span>.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/icm.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">intrinsic curiosity module. <span class="citation" data-cites="Pathak2017">(<a href="../references.html#ref-Pathak2017" role="doc-biblioref">Pathak et al., 2017</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption">intrinsic curiosity module. <span class="citation" data-cites="Pathak2017">(<a href="../references.html#ref-Pathak2017" role="doc-biblioref">Pathak et al., 2017</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/J3FHOyhUn3A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
@@ -594,21 +594,21 @@ Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018"
 </div>
 </div>
 </section>
-<section id="hierarchical-rl---learning-different-action-levels" class="level2 page-columns page-full">
+<section id="hierarchical-rl---learning-different-action-levels" class="level2">
 <h2 class="anchored" data-anchor-id="hierarchical-rl---learning-different-action-levels">Hierarchical RL - learning different action levels</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/O7cKkOzWn3s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 <p>In all previous RL methods, the action space is fixed. When you read a recipe, the actions are “Cut carrots”, “Boil water”, etc. But how do you perform these <strong>high-level actions</strong>? Break them into subtasks iteratively until you arrive to muscle activations. But it is not possible to learn to cook a boeuf bourguignon using muscle activations as actions.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/hierarchicalRL.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Hierarchical structure of preparing a boeuf bourguignon. Source: <a href="https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/" class="uri">https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Hierarchical structure of preparing a boeuf bourguignon. Source: <a href="https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/" class="uri">https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/</a></figcaption><p></p>
 </figure>
 </div>
 <p>Sub-policies (<strong>options</strong>) can be trained to solve simple tasks (going left, right, etc). A <strong>meta-learner</strong> or controller then learns to call each sub-policy when needed, at a much lower frequency <span class="citation" data-cites="Frans2017">(<a href="../references.html#ref-Frans2017" role="doc-biblioref">Frans et al., 2017</a>)</span>.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/MLSH.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Meta Learning Shared Hierarchies <span class="citation" data-cites="Frans2017">(<a href="../references.html#ref-Frans2017" role="doc-biblioref">Frans et al., 2017</a>)</span>. Source: <a href="https://openai.com/blog/learning-a-hierarchy/" class="uri">https://openai.com/blog/learning-a-hierarchy/</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Meta Learning Shared Hierarchies <span class="citation" data-cites="Frans2017">(<a href="../references.html#ref-Frans2017" role="doc-biblioref">Frans et al., 2017</a>)</span>. Source: <a href="https://openai.com/blog/learning-a-hierarchy/" class="uri">https://openai.com/blog/learning-a-hierarchy/</a></figcaption><p></p>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/zkJmH4NlzPs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
@@ -622,23 +622,23 @@ Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018"
 <li><strong>Spinal-cortical:</strong> Heess, N., Wayne, G., Tassa, Y., Lillicrap, T., Riedmiller, M., and Silver, D. (2016). Learning and Transfer of Modulated Locomotor Controllers. arXiv:1610.05182.</li>
 </ul>
 </section>
-<section id="meta-reinforcement-learning---rl2" class="level2 page-columns page-full">
+<section id="meta-reinforcement-learning---rl2" class="level2">
 <h2 class="anchored" data-anchor-id="meta-reinforcement-learning---rl2">Meta Reinforcement learning - RL<span class="math inline">^2</span></h2>
 <p><strong>Meta learning</strong> is the ability to reuse skills acquired on a set of tasks to quickly acquire new (similar) ones (generalization).</p>
 <p><img src="../slides/img/metalearning.png" class="img-fluid" style="width:100.0%" data-fig-align="center"> <img src="../slides/img/ml10.gif" class="img-fluid" style="width:100.0%" data-fig-align="center" alt="Meta Reinforcement learning. Source: https://meta-world.github.io/"></p>
 <p>Meta RL is based on the idea of <strong>fast and slow</strong> learning: * Slow learning is the adaptation of weights in the NN. * Fast learning is the adaptation to changes in the environment.</p>
 <p>A simple strategy developed concurrently by <span class="citation" data-cites="Wang2017a">(<a href="../references.html#ref-Wang2017a" role="doc-biblioref">Wang et al., 2017</a>)</span> and <span class="citation" data-cites="Duan2016a">(<a href="../references.html#ref-Duan2016a" role="doc-biblioref">Duan et al., 2016</a>)</span>is to have a model-free algorithm (e.g.&nbsp;A3C) integrate with a LSTM layer not only the current state <span class="math inline">s_t</span>, but also the previous action <span class="math inline">a_{t-1}</span> and reward <span class="math inline">r_t</span>.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/metarl-lstm.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Meta RL uses a LSTM layer to encode past actions and rewards in the state representation. Source: <span class="citation" data-cites="Wang2017a">(<a href="../references.html#ref-Wang2017a" role="doc-biblioref">Wang et al., 2017</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Meta RL uses a LSTM layer to encode past actions and rewards in the state representation. Source: <span class="citation" data-cites="Wang2017a">(<a href="../references.html#ref-Wang2017a" role="doc-biblioref">Wang et al., 2017</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>The policy of the agent becomes <strong>memory-guided</strong>: it selects an action depending on what it did before, not only the state.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/RL_2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Meta RL algorithms are trained on a set of similar MDPs. Source: <span class="citation" data-cites="Duan2016a">(<a href="../references.html#ref-Duan2016a" role="doc-biblioref">Duan et al., 2016</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Meta RL algorithms are trained on a set of similar MDPs. Source: <span class="citation" data-cites="Duan2016a">(<a href="../references.html#ref-Duan2016a" role="doc-biblioref">Duan et al., 2016</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p>The algorithm is trained on a set of similar MDPs:</p>
@@ -649,10 +649,10 @@ Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018"
 <li>Repeat 1, 2 and 3.</li>
 </ol>
 <p>The meta RL can be be trained an a multitude of 2-armed bandits, each giving a reward of 1 with probability <span class="math inline">p</span> and <span class="math inline">1-p</span>. Left is a classical bandit algorithm, right is the meta bandit:</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="../slides/img/metarl-twoarmed.gif" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Classical bandit (left) and meta-bandit (right) learning a new two-armed bandit problem. Source: <a href="https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf" class="uri">https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Classical bandit (left) and meta-bandit (right) learning a new two-armed bandit problem. Source: <a href="https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf" class="uri">https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf</a></figcaption><p></p>
 </figure>
 </div>
 <p>The meta bandit has learned that the best strategy for any 2-armed bandit is to sample both actions randomly at the beginning and then stick to the best one. The meta bandit does not learn to solve each problem, it learns <strong>how</strong> to solve them.</p>
