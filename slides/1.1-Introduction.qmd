@@ -254,6 +254,9 @@ $$
 
 # Policy
 
+* What we search in RL is the optimal **policy**: which action $a$ should the agent perform in a state $s$?
+
+* The policy $\pi$ maps states into actions.
 
 ::: {.columns}
 ::: {.column width=40%}
@@ -265,18 +268,14 @@ $$
 ::: {.column width=60%}
 
 
-* What we search in RL is the optimal **policy**: which action $a$ should the agent perform in a state $s$?
-
-* The policy $\pi$ maps states into actions.
 
 * It is defined as a **probability distribution** over states and actions:
 
 $$
-\begin{align}
+\begin{aligned}
     \pi &: \mathcal{S} \times \mathcal{A} \rightarrow P(\mathcal{S})\\
-    \\
     & (s, a) \rightarrow \pi(s, a)  = P(a_t = a | s_t = s) \\
-\end{align}
+\end{aligned}
 $$
 
 
@@ -568,7 +567,9 @@ TD-Gammon (Tesauro, 1992) was one of the first AI to beat human experts at a com
 
 # Deep Reinforcement Learning (DRL)
 
+::: {}
 ![](img/deeprl.jpg){width=70%}
+:::
 
 * Classical tabular RL was limited to toy problems, with few states and actions.
 
@@ -841,7 +842,7 @@ time before humans take control.
 # Plan of the course
 
 ::: {.columns}
-::: {.column width=50%}
+::: {.column width=33%}
 
 1. **Introduction**
 
@@ -852,25 +853,30 @@ time before humans take control.
 
     1. Bandits
     2. Markov Decision Process
-    3. Bellman equations
-    4. Dynamic programming
-    5. Monte-Carlo control
-    6. Temporal difference, Eligibility traces
-    7. Function approximation, deep learning
+    3. Dynamic programming
+    4. Monte-Carlo control
+    5. Temporal difference, Eligibility traces
+    6. Function approximation
+    7. Deep learning
 
 
 :::
-::: {.column width=50%}
+::: {.column width=30%}
 
 
 3. **Model-free RL**
 
     1. Deep Q-networks
-    1. Policy gradient, REINFORCE
-    2. Advantage Actor-critic (A3C)
-    3. Deterministic policy gradient (DDPG)
-    5. Natural gradients (TRPO, PPO)
-    6. Maximum Entropy RL (SAC)
+    2. Beyond DQN
+    3. Policy gradient, REINFORCE
+    4. Advantage Actor-critic (A3C)
+    5. Deterministic policy gradient (DDPG)
+    6. Natural gradients (TRPO, PPO)
+    7. Maximum Entropy RL (SAC)
+
+:::
+::: {.column width=34%}
+
 
 4. **Model-based RL**
 
@@ -881,7 +887,9 @@ time before humans take control.
 
 5. **Outlook**
 
-    1. Hierarchical RL, Inverse RL, Meta RL
+    1. Hierarchical RL
+    2. Inverse RL
+    3. Meta RL
     
 :::
 :::

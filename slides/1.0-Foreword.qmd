@@ -8,7 +8,11 @@ date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 ---
 
-# Dr. habil. Julien Vitay - <julien.vitay@informatik.tu-chemnitz.de>
+# Dr. habil. Julien Vitay
+
+<https://julien-vitay.net>
+
+<julien.vitay@informatik.tu-chemnitz.de>
 
 ::: {.columns}
 ::: {.column width=50%}
@@ -68,11 +72,11 @@ date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 * **Neurocomputing** (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.
 
-* The content is available for everybody, but the exam is reserved for:
+* The content is available for everybody, but the exam is only for:
 
     * Master Neurorobotik.
 
-    * Master Informatik (Multi-Agent systems)
+    * Master Informatik (Multi-Agent systems).
 
     * Master angewandte Informatik (Themenschwerpunkte Informatik I/II).
 
@@ -82,23 +86,25 @@ date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 # Course description
 
-* One lecture and one exercise.
+* Registration and forum on OPAL: 
+
+<https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457>.
+
+* One lecture (Monday 09:15) and one exercise (Thursday 13:45).
 
 * All materials are at:
 
 <https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/notes>
 
+* The videos might be slightly outdated.
 
-* Written exam, 90 minutes, 5 credit points, but possibility of oral exams.
+* Written exam, 90 minutes, 5 credit points, based on a research paper.
 
-* Registration and forum on OPAL: 
-
-<https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457>.
 
 
 # Exercises
 
-* Exercises : programming in Python the algorithms seen in the course (using tensorflow, keras, scikit-learn).
+* Exercises : programming in Python the algorithms seen in the course (using tensorflow, keras, gym).
 
 * The first exercises are a tutorial on Python and Numpy (common with Neurocomputing and CV).
 
