@@ -11,8 +11,6 @@ Exercises are provided in the form of Jupyter notebooks, allowing to implement i
 
 ### Lectures
 
-::: {.columns}
-::: {.column width=50%}
 
 1. **Introduction**
     1. [Introduction](notes/1.1-Introduction.qmd)
@@ -25,9 +23,6 @@ Exercises are provided in the form of Jupyter notebooks, allowing to implement i
     5. [Temporal Difference](notes/2.5-TD.qmd)
     6. [Function approximation](notes/2.6-FA.qmd)
     7. [Deep learning](notes/2.7-NN.qmd)
-
-:::
-::: {.column width=50%}
 
 3. **Model-free RL**
     1. [Deep Q-network](notes/3.1-DQN.qmd)
@@ -47,8 +42,6 @@ Exercises are provided in the form of Jupyter notebooks, allowing to implement i
 5. **Outlook**
     1. [Outlook](notes/5.1-Outlook.qmd)
 
-:::
-:::
 
 ### Exercises
 

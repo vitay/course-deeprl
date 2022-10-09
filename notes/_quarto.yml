@@ -8,18 +8,18 @@ book:
   search: true
   sidebar:
     style: floating
-    type: dark
+    type: light
     logo: notes/img/tuc-new.png
   page-footer: "Copyright 2022, Julien Vitay - <julien.vitay@informatik.tu-chemnitz.de>" 
   execute: 
     enabled: false
   chapters:
     - index.qmd
-    - part: "Introduction"
+    - part: "**Introduction**"
       chapters:
       - notes/1.1-Introduction.qmd
       - notes/1.2-Math.qmd
-    - part: "Tabular RL"
+    - part: "**Tabular RL**"
       chapters:
       - notes/2.1-Bandits.qmd
       - notes/2.2-MDP.qmd
@@ -28,7 +28,7 @@ book:
       - notes/2.5-TD.qmd
       - notes/2.6-FA.qmd
       - notes/2.7-NN.qmd
-    - part: "Model-free RL"
+    - part: "**Model-free RL**"
       chapters:
       - notes/3.1-DQN.qmd
       - notes/3.2-BeyondDQN.qmd
@@ -37,16 +37,16 @@ book:
       - notes/3.5-DDPG.qmd
       - notes/3.6-PPO.qmd
       - notes/3.7-SAC.qmd
-    - part: "Model-based RL"
+    - part: "**Model-based RL**"
       chapters:
       - notes/4.1-MB.qmd
       - notes/4.2-LearnedModels.qmd
       - notes/4.3-AlphaGo.qmd
       - notes/4.4-SR.qmd
-    - part: "Outlook"
+    - part: "**Outlook**"
       chapters:
       - notes/5.1-Outlook.qmd
-    - part: "Exercises"
+    - part: "**Exercises**"
       chapters:
       - exercises/Content.qmd
       - exercises/Installation.qmd
