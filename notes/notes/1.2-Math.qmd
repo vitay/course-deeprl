@@ -30,7 +30,8 @@ $$A = \begin{bmatrix}
  a_{21} & a_{22} & \cdots & a_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
  a_{m1} & a_{m2} & \cdots & a_{mn} \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 * **Tensors** $\mathcal{A}$ are arrays with more than two dimensions. We will not really do math on these objects, but they are useful internally (hence the name of the `tensorflow` library).
 
@@ -40,11 +41,13 @@ A vector can be thought of as the **coordinates of a point** in an Euclidean spa
 
 * Vectors can be added:
 
-$$\mathbf{x} + \mathbf{y} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} + \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} = \begin{bmatrix} x_1 + y_1 \\ x_2 + y_2 \\ \vdots \\ x_d + y_d \end{bmatrix}$$
+$$\mathbf{x} + \mathbf{y} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} + \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} = \begin{bmatrix} x_1 + y_1 \\ x_2 + y_2 \\ \vdots \\ x_d + y_d \end{bmatrix}
+$$
 
 * Vectors can be multiplied by a scalar:
 
-$$a \, \mathbf{x} = a \, \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} = \begin{bmatrix} a \, x_1 \\ a \, x_2 \\ \vdots \\ a \, x_d \end{bmatrix}$$
+$$a \, \mathbf{x} = a \, \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} = \begin{bmatrix} a \, x_1 \\ a \, x_2 \\ \vdots \\ a \, x_d \end{bmatrix}
+$$
 
 
 ![Vector spaces allow additions of vectors. Source: <https://mathinsight.org/image/vector_2d_add>](../slides/img/vectorspace.png)
@@ -76,7 +79,8 @@ $$||\mathbf{x}||_\infty = \max(|x_1|, |x_2|, \ldots, |x_d|)$$
 
 One important operation for vectors is the **dot product** (also called scalar product or inner product) between two vectors:
 
-$$\langle \mathbf{x} \cdot \mathbf{y} \rangle = \langle \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} \cdot \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} \rangle = x_1 \, y_1 + x_2 \, y_2 + \ldots + x_d \, y_d$$
+$$\langle \mathbf{x} \cdot \mathbf{y} \rangle = \langle \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} \cdot \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} \rangle = x_1 \, y_1 + x_2 \, y_2 + \ldots + x_d \, y_d
+$$
 
 The dot product basically sums one by one the product of the elements of each vector. The angular brackets are sometimes omitted ($\mathbf{x} \cdot \mathbf{y}$) but we will use them in this course for clarity.
 
@@ -301,7 +305,7 @@ f\colon \quad\Re^3 &\to \Re\\
 x, y, z &\mapsto f(x, y, z),\end{align}
 $$
 
-![Example of a multivariate function $f(x_1, x_2)$ mapping $\Re^2$ to $\Re$. Source: <https://en.wikipedia.org/wiki/Function_of_several_real_variables>](../slides/img/multivariatefunction.png)
+![Example of a multivariate function $f(x_1, x_2)$ mapping $\Re^2$ to $\Re$. Source: <https://en.wikipedia.org/wiki/Function_of_several_real_variables>](../slides/img/multivariatefunction.png){width=70%}
 
 
 **Vector fields** associate to any vector $\mathbf{x} \in \Re^n$ (or a subset) another vector (possibly of different size):
@@ -322,8 +326,6 @@ The matrix-vector multiplication $\mathbf{y} = A \times \mathbf{x}$ is a linear 
 
 #### Derivatives
 
-
-
 Differential calculus deals with the **derivative** of a function, a process called differentiation.
 
 The derivative $f'(x)$ or $\displaystyle\frac{d f(x)}{dx}$ of a univariate function $f(x)$ is defined as the local *slope* of the tangent to the function for a given value of $x$:
@@ -332,7 +334,7 @@ $$f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$$
 
 The line passing through the points $(x, f(x))$ and $(x + h, f(x + h))$ becomes tangent to the function when $h$ becomes very small:
 
-![The derivative of the function $f(x)$ can be approximated by the slope of the line passing through $(x, f(x))$ and $(x + h, f(x + h))$ when $h$ becomes very small.](../slides/img/derivative-approx.png)
+![The derivative of the function $f(x)$ can be approximated by the slope of the line passing through $(x, f(x))$ and $(x + h, f(x + h))$ when $h$ becomes very small.](../slides/img/derivative-approx.png){width=70%}
 
 The sign of the derivative tells you how the function behaves locally:
 

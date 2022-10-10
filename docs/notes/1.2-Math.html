@@ -459,7 +459,8 @@ a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
 a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
 a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
-\end{bmatrix}</span></p>
+\end{bmatrix}
+</span></p>
 <ul>
 <li><strong>Tensors</strong> <span class="math inline">\mathcal{A}</span> are arrays with more than two dimensions. We will not really do math on these objects, but they are useful internally (hence the name of the <code>tensorflow</code> library).</li>
 </ul>
@@ -469,11 +470,13 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <ul>
 <li>Vectors can be added:</li>
 </ul>
-<p><span class="math display">\mathbf{x} + \mathbf{y} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} + \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} = \begin{bmatrix} x_1 + y_1 \\ x_2 + y_2 \\ \vdots \\ x_d + y_d \end{bmatrix}</span></p>
+<p><span class="math display">\mathbf{x} + \mathbf{y} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} + \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} = \begin{bmatrix} x_1 + y_1 \\ x_2 + y_2 \\ \vdots \\ x_d + y_d \end{bmatrix}
+</span></p>
 <ul>
 <li>Vectors can be multiplied by a scalar:</li>
 </ul>
-<p><span class="math display">a \, \mathbf{x} = a \, \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} = \begin{bmatrix} a \, x_1 \\ a \, x_2 \\ \vdots \\ a \, x_d \end{bmatrix}</span></p>
+<p><span class="math display">a \, \mathbf{x} = a \, \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} = \begin{bmatrix} a \, x_1 \\ a \, x_2 \\ \vdots \\ a \, x_d \end{bmatrix}
+</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/vectorspace.png" class="img-fluid figure-img"></p>
@@ -497,7 +500,8 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <p>The <strong>infinity norm</strong> (or maximum norm) <span class="math inline">L^\infty</span> returns the maximum element of the vector:</p>
 <p><span class="math display">||\mathbf{x}||_\infty = \max(|x_1|, |x_2|, \ldots, |x_d|)</span></p>
 <p>One important operation for vectors is the <strong>dot product</strong> (also called scalar product or inner product) between two vectors:</p>
-<p><span class="math display">\langle \mathbf{x} \cdot \mathbf{y} \rangle = \langle \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} \cdot \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} \rangle = x_1 \, y_1 + x_2 \, y_2 + \ldots + x_d \, y_d</span></p>
+<p><span class="math display">\langle \mathbf{x} \cdot \mathbf{y} \rangle = \langle \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix} \cdot \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_d \end{bmatrix} \rangle = x_1 \, y_1 + x_2 \, y_2 + \ldots + x_d \, y_d
+</span></p>
 <p>The dot product basically sums one by one the product of the elements of each vector. The angular brackets are sometimes omitted (<span class="math inline">\mathbf{x} \cdot \mathbf{y}</span>) but we will use them in this course for clarity.</p>
 <p>One can notice immediately that the dot product is <strong>symmetric</strong>:</p>
 <p><span class="math display">\langle \mathbf{x} \cdot \mathbf{y} \rangle = \langle \mathbf{y} \cdot \mathbf{x} \rangle</span></p>
@@ -703,7 +707,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 </span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../slides/img/multivariatefunction.png" class="img-fluid figure-img"></p>
+<p><img src="../slides/img/multivariatefunction.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <p></p><figcaption class="figure-caption">Example of a multivariate function <span class="math inline">f(x_1, x_2)</span> mapping <span class="math inline">\Re^2</span> to <span class="math inline">\Re</span>. Source: <a href="https://en.wikipedia.org/wiki/Function_of_several_real_variables" class="uri">https://en.wikipedia.org/wiki/Function_of_several_real_variables</a></figcaption><p></p>
 </figure>
 </div>
@@ -743,7 +747,7 @@ Note
 <p>The line passing through the points <span class="math inline">(x, f(x))</span> and <span class="math inline">(x + h, f(x + h))</span> becomes tangent to the function when <span class="math inline">h</span> becomes very small:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../slides/img/derivative-approx.png" class="img-fluid figure-img"></p>
+<p><img src="../slides/img/derivative-approx.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <p></p><figcaption class="figure-caption">The derivative of the function <span class="math inline">f(x)</span> can be approximated by the slope of the line passing through <span class="math inline">(x, f(x))</span> and <span class="math inline">(x + h, f(x + h))</span> when <span class="math inline">h</span> becomes very small.</figcaption><p></p>
 </figure>
 </div>

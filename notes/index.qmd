@@ -74,3 +74,12 @@ Notebooks and videos are in the [List of Exercises](exercises/Content.qmd). Belo
 
 * [@Sutton2017]  Richard Sutton and Andrew Barto (2017). Reinforcement Learning: An Introduction. MIT press. 
 <http://incompleteideas.net/book/the-book-2nd.html>
+
+
+* CS294 course of Sergey Levine at Berkeley. 
+
+<http://rll.berkeley.edu/deeprlcourse/>
+
+* Reinforcement Learning course by David Silver at UCL.
+
+<http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>

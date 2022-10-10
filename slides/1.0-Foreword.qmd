@@ -70,22 +70,6 @@ date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 # Course description
 
-* **Neurocomputing** (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.
-
-* The content is available for everybody, but the exam is only for:
-
-    * Master Neurorobotik.
-
-    * Master Informatik (Multi-Agent systems).
-
-    * Master angewandte Informatik (Themenschwerpunkte Informatik I/II).
-
-    * Master Data Science.
-
-
-
-# Course description
-
 * Registration and forum on OPAL: 
 
 <https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457>.
@@ -99,6 +83,25 @@ date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 * The videos might be slightly outdated.
 
 * Written exam, 90 minutes, 5 credit points, based on a research paper.
+
+
+# Course description
+
+* **Neurocomputing** (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.
+
+* The content is available for everybody, but the exam is only for:
+
+    * Master Neurorobotik.
+
+    * Master Data Science.
+
+    * Master Informatik ($\rightarrow$ Multi-Agent systems).
+
+    * Master angewandte Informatik ($\rightarrow$ Themenschwerpunkte Informatik I/II).
+
+
+* The course is quite math-heavy: calculus, statistics, information theory.
+
 
 
 

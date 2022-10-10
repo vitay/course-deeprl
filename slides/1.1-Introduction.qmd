@@ -60,9 +60,9 @@ resources: pdf/1.1-Introduction.pdf
 
 * **2013-now**: deep reinforcement learning
 
-    * Deepmind (Mnih, Silver, Graves...)
+    * Deepmind (Mnih, Silver, Graves, Hassabis...)
     * OpenAI (Sutskever, Schulman...)
-    * Sergey Levine (Berkeley)
+    * Berkeley (Sergey Levine)
 
 :::
 :::
@@ -145,9 +145,9 @@ Sutton and Barto (2017). Reinforcement Learning: An Introduction. MIT Press. 2nd
 
 # Trial and error learning
 
-
-![Source: <https://sites.google.com/site/acrader4th2014/home/part-3-unity-and-diversity-of-life/trialanderrorlearning>](img/trialerror.jpg)
-
+::: {}
+![Source: <https://sites.google.com/site/acrader4th2014/home/part-3-unity-and-diversity-of-life/trialanderrorlearning>](img/trialerror.jpg){width=60%}
+:::
 
 * The key concept of RL is **trial and error** learning.
 

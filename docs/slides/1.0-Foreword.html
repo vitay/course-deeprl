@@ -30,6 +30,22 @@
     }
   </style>
   <link rel="stylesheet" href="1.0-Foreword_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
   <link href="1.0-Foreword_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="1.0-Foreword_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="1.0-Foreword_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -384,20 +400,6 @@
 <section id="course-description" class="title-slide slide level1 center">
 <h1>Course description</h1>
 <ul>
-<li><p><strong>Neurocomputing</strong> (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.</p></li>
-<li><p>The content is available for everybody, but the exam is only for:</p>
-<ul>
-<li><p>Master Neurorobotik.</p></li>
-<li><p>Master Informatik (Multi-Agent systems).</p></li>
-<li><p>Master angewandte Informatik (Themenschwerpunkte Informatik I/II).</p></li>
-<li><p>Master Data Science.</p></li>
-</ul></li>
-</ul>
-</section>
-
-<section id="course-description-1" class="title-slide slide level1 center">
-<h1>Course description</h1>
-<ul>
 <li>Registration and forum on OPAL:</li>
 </ul>
 <p><a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457" class="uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457</a>.</p>
@@ -409,6 +411,21 @@
 <ul>
 <li><p>The videos might be slightly outdated.</p></li>
 <li><p>Written exam, 90 minutes, 5 credit points, based on a research paper.</p></li>
+</ul>
+</section>
+
+<section id="course-description-1" class="title-slide slide level1 center">
+<h1>Course description</h1>
+<ul>
+<li><p><strong>Neurocomputing</strong> (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.</p></li>
+<li><p>The content is available for everybody, but the exam is only for:</p>
+<ul>
+<li><p>Master Neurorobotik.</p></li>
+<li><p>Master Data Science.</p></li>
+<li><p>Master Informatik (<span class="math inline">\rightarrow</span> Multi-Agent systems).</p></li>
+<li><p>Master angewandte Informatik (<span class="math inline">\rightarrow</span> Themenschwerpunkte Informatik I/II).</p></li>
+</ul></li>
+<li><p>The course is quite math-heavy: calculus, statistics, information theory.</p></li>
 </ul>
 </section>
 
