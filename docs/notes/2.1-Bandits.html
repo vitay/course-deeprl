@@ -446,10 +446,12 @@ div.csl-indent {
 <p><span class="math display">
     Q^*(a) = \mathbb{E} [r(a)]
 </span></p>
-<p>The reward distribution also has a <strong>variance</strong>: we usually ignore it in RL, as all we care about is the <strong>optimal action</strong> (but see distributional RL later). If we take the optimal action an infinity of times, we maximize the reward intake <strong>on average</strong>. The question is how to find out the optimal action through <strong>trial and error</strong>, i.e.&nbsp;without knowing the exact reward distribution <span class="math inline">r(a)</span>.</p>
-<p>The <strong>true value</strong> (or <strong>utility</strong>) of an action is:</p>
-<p><span class="math display">Q^*(a) = \mathbb{E} [r(a)]</span></p>
-<p>We only have access to <strong>samples</strong> of <span class="math inline">r(a)</span> by taking the action at time <span class="math inline">t</span> (a <strong>trial</strong>, <strong>play</strong> or <strong>step</strong>). The received rewards <span class="math inline">r_t</span> vary around the true value over time. We need to build <strong>estimates</strong> <span class="math inline">Q_t(a)</span> of the value of each action based on the samples. These estimates will be very wrong at the beginning, but should get better over time.</p>
+<p>The reward distribution also has a <strong>variance</strong>: we usually ignore it in RL, as all we care about is the <strong>optimal action</strong> (but see distributional RL later).</p>
+<p><span class="math display">a^* = \text{argmax}_a Q^*(a)</span></p>
+<p>If we take the optimal action an infinity of times, we maximize the reward intake <strong>on average</strong>. The question is how to find out the optimal action through <strong>trial and error</strong>, i.e.&nbsp;without knowing the exact reward distribution <span class="math inline">r(a)</span>.</p>
+<p>We only have access to <strong>samples</strong> of <span class="math inline">r(a)</span> by taking the action <span class="math inline">a</span> at time <span class="math inline">t</span> (a <strong>trial</strong>, <strong>play</strong> or <strong>step</strong>).</p>
+<p><span class="math display">r_t \sim r(a)</span></p>
+<p>The received rewards <span class="math inline">r_t</span> vary around the true value over time. We need to build <strong>estimates</strong> <span class="math inline">Q_t(a)</span> of the value of each action based on the samples. These estimates will be very wrong at the beginning, but should get better over time.</p>
 </section>
 <section id="sampling-based-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="sampling-based-evaluation">Sampling-based evaluation</h2>
@@ -509,6 +511,13 @@ div.csl-indent {
 \end{aligned}
 </span></p>
 <p>The computed value is called a <strong>moving average</strong> (or sliding average), as if one used only a small window of the past history.</p>
+<p><span class="math display">
+    Q_{t+1}(a) = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a))
+</span></p>
+<p>or:</p>
+<p><span class="math display">
+    \Delta Q(a) = \alpha \, (r_{t+1} - Q_t(a))
+</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/bandit-nonstationary2.png" class="img-fluid figure-img"></p>
@@ -518,9 +527,9 @@ div.csl-indent {
 <p>The moving average adapts very fast to changes in the reward distribution and should be used in <strong>non-stationary problems</strong>. It is however not exact and sensible to noise. Choosing the right value for <span class="math inline">\alpha</span> can be difficult.</p>
 <p>The form of this <strong>update rule</strong> is very important to remember:</p>
 <p><span class="math display">
-    \text{new estimate} = \text{old estimate} + \alpha \, (\text{target} - \text{old estimate})
+    \text{new estimate} = \text{current estimate} + \alpha \, (\text{target} - \text{current estimate})
 </span></p>
-<p>Estimates following this update rule track the mean of their sampled target values. <span class="math inline">\text{target} - \text{old estimate}</span> is the <strong>prediction error</strong> between the target and the estimate.</p>
+<p>Estimates following this update rule track the mean of their sampled target values. <span class="math inline">\text{target} - \text{current estimate}</span> is the <strong>prediction error</strong> between the target and the estimate.</p>
 </section>
 <section id="action-selection" class="level2">
 <h2 class="anchored" data-anchor-id="action-selection">Action selection</h2>
@@ -606,7 +615,7 @@ div.csl-indent {
 </div>
 <p><strong>Softmax action selection</strong> defines the probability of choosing an action using all estimated value. It represents the policy using a Gibbs (or Boltzmann) distribution:</p>
 <p><span class="math display">
-    \pi(a) = \frac{\exp \frac{Q_t(a)}{\tau}}{ \sum_b \exp \frac{Q_t(b)}{\tau}}
+    \pi(a) = \dfrac{\exp \dfrac{Q_t(a)}{\tau}}{ \displaystyle\sum_{a'} \exp \dfrac{Q_t(a')}{\tau}}
 </span></p>
 <p>where <span class="math inline">\tau</span> is a positive parameter called the <strong>temperature</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -746,7 +755,7 @@ div.csl-indent {
 <p><span class="math inline">\beta &gt; 0</span> and <span class="math inline">0 &lt; \alpha &lt; 1</span> are two constant parameters.</p>
 <p>The preferences can be used to select the action using the softmax method just like the Q-values (without temperature):</p>
 <p><span class="math display">
-    \pi_t (a) = \frac{\exp p_t(a)}{ \sum_b \exp p_t(b)}
+    \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
 </span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -770,15 +779,15 @@ div.csl-indent {
 </section>
 <section id="gradient-bandit-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-bandit-algorithm">Gradient bandit algorithm</h3>
-<p>One can even go further than reinforcement comparison: Instead of only increasing the preference for the executed action if it brings more usual than rewards, we could also decrease the preference for the other actions. The preferences are used to select an action <span class="math inline">a_t</span> <em>via</em> softmax:</p>
+<p>One can even go further than reinforcement comparison: Instead of only increasing the preference for the executed action if it brings more reward than usual, we could also decrease the preference for the other actions. The preferences are used to select an action <span class="math inline">a_t</span> <em>via</em> softmax:</p>
 <p><span class="math display">
-    \pi_t (a) = \frac{\exp p_t(a)}{ \sum_b \exp p_t(b)}
+    \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
 </span></p>
 <p>The update rule for the <strong>action taken</strong> <span class="math inline">a_t</span> is:</p>
 <p><span class="math display">
     p_{t+1}(a_t) =    p_{t}(a_t) + \beta \, (r_t - \tilde{r}_t) \, (1 - \pi_t(a_t))
 </span></p>
-<p>The update rule for the <strong>other actions</strong> <span class="math inline">a</span> is:</p>
+<p>The update rule for the <strong>other actions</strong> <span class="math inline">a a \neq a_t</span> is:</p>
 <p><span class="math display">
     p_{t+1}(a) =    p_{t}(a) - \beta \, (r_t - \tilde{r}_t) \, \pi_t(a)
 </span></p>

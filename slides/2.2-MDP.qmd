@@ -69,12 +69,13 @@ resources: pdf/2.2-MDP.pdf
 
 * Usually implemented by a series of if/then/else statements:
 
-    * if state == "hover" and press == true:
+```python
+if state == "hover" and press == true:
 
-        * state = "pressed"
+    state = "pressed"
 
-    * elif ...
-
+elif ...
+```
 
 :::
 :::

@@ -24,14 +24,17 @@ $$
     Q^*(a) = \mathbb{E} [r(a)]
 $$
 
-The reward distribution also has a **variance**: we usually ignore it in RL, as all we care about is the **optimal action** (but see distributional RL later). If we take the optimal action an infinity of times, we maximize the reward intake **on average**. The question is how to find out the optimal action through **trial and error**, i.e. without knowing the exact reward distribution $r(a)$.
+The reward distribution also has a **variance**: we usually ignore it in RL, as all we care about is the **optimal action** (but see distributional RL later). 
 
+$$a^* = \text{argmax}_a Q^*(a)$$
 
-The **true value** (or **utility**) of an action is: 
+If we take the optimal action an infinity of times, we maximize the reward intake **on average**. The question is how to find out the optimal action through **trial and error**, i.e. without knowing the exact reward distribution $r(a)$.
 
-$$Q^*(a) = \mathbb{E} [r(a)]$$
+We only have access to **samples** of $r(a)$ by taking the action $a$ at time $t$ (a **trial**, **play** or **step**).
 
-We only have access to **samples** of $r(a)$ by taking the action at time $t$ (a **trial**, **play** or **step**). The received rewards $r_t$ vary around the true value over time. We need to build **estimates** $Q_t(a)$ of the value of each action based on the samples. These estimates will be very wrong at the beginning, but should get better over time.
+$$r_t \sim r(a)$$
+
+The received rewards $r_t$ vary around the true value over time. We need to build **estimates** $Q_t(a)$ of the value of each action based on the samples. These estimates will be very wrong at the beginning, but should get better over time.
 
 
 ## Sampling-based evaluation
@@ -105,6 +108,16 @@ $$
 
 The computed value is called a **moving average** (or sliding average), as if one used only a small window of the past history. 
 
+$$
+    Q_{t+1}(a) = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a)) 
+$$
+
+or:
+
+$$
+    \Delta Q(a) = \alpha \, (r_{t+1} - Q_t(a)) 
+$$
+
 ![The moving average is much more flexible for non-stationary distributions.](../slides/img/bandit-nonstationary2.png)
 
 The moving average adapts very fast to changes in the reward distribution and should be used in **non-stationary problems**. It is however not exact and sensible to noise. Choosing the right value for $\alpha$ can be difficult.
@@ -112,10 +125,10 @@ The moving average adapts very fast to changes in the reward distribution and sh
 The form of this **update rule** is very important to remember:
 
 $$
-    \text{new estimate} = \text{old estimate} + \alpha \, (\text{target} - \text{old estimate}) 
+    \text{new estimate} = \text{current estimate} + \alpha \, (\text{target} - \text{current estimate}) 
 $$
 
-Estimates following this update rule track the mean of their sampled target values. $\text{target} - \text{old estimate}$ is the **prediction error** between the target and the estimate.
+Estimates following this update rule track the mean of their sampled target values. $\text{target} - \text{current estimate}$ is the **prediction error** between the target and the estimate.
 
 ## Action selection
 
@@ -187,7 +200,7 @@ The parameter $\epsilon$ controls the level of exploration: the higher $\epsilon
 **Softmax action selection**  defines the probability of choosing an action using all estimated value. It represents the policy using a Gibbs (or Boltzmann) distribution:
 
 $$
-    \pi(a) = \frac{\exp \frac{Q_t(a)}{\tau}}{ \sum_b \exp \frac{Q_t(b)}{\tau}}
+    \pi(a) = \dfrac{\exp \dfrac{Q_t(a)}{\tau}}{ \displaystyle\sum_{a'} \exp \dfrac{Q_t(a')}{\tau}}
 $$ 
 
 where $\tau$ is a positive parameter called the **temperature**.
@@ -310,7 +323,7 @@ $\beta > 0$ and $0 < \alpha < 1$ are two constant parameters.
 The preferences can be used to select the action using the softmax method just like the Q-values (without temperature):
 
 $$
-    \pi_t (a) = \frac{\exp p_t(a)}{ \sum_b \exp p_t(b)}
+    \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
 $$    
 
 
@@ -324,11 +337,11 @@ Reinforcement comparison can be very effective, as it does not rely only on the 
 
 ### Gradient bandit algorithm
 
-One can even go further than reinforcement comparison: Instead of only increasing the preference for the executed action if it brings more usual than rewards, we could also decrease the preference for the other actions. The preferences are used to select an action $a_t$ *via* softmax:
+One can even go further than reinforcement comparison: Instead of only increasing the preference for the executed action if it brings more reward than usual, we could also decrease the preference for the other actions. The preferences are used to select an action $a_t$ *via* softmax:
 
 $$
-    \pi_t (a) = \frac{\exp p_t(a)}{ \sum_b \exp p_t(b)}
-$$ 
+    \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
+$$  
 
 The update rule for the **action taken** $a_t$ is:
 
@@ -336,7 +349,7 @@ $$
     p_{t+1}(a_t) =    p_{t}(a_t) + \beta \, (r_t - \tilde{r}_t) \, (1 - \pi_t(a_t))
 $$
 
-The update rule for the **other actions** $a$ is:
+The update rule for the **other actions** $a a \neq a_t$ is:
 
 $$
     p_{t+1}(a) =    p_{t}(a) - \beta \, (r_t - \tilde{r}_t) \, \pi_t(a)
