@@ -554,32 +554,6 @@
 </div>
 </section>
 
-<section id="markov-property-2" class="title-slide slide level1 center">
-<h1>Markov property</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/markov-example.jpeg"></p>
-<p></p><figcaption>Source: <a href="https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc" class="uri">https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc</a></figcaption><p></p>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p>Where is the ball going? To the little girl or to the player?</p></li>
-<li><p>Single <strong>video frames</strong> are not Markov states: you cannot generally predict what will happen based on a single image.</p></li>
-<li><p>A simple solution is to <strong>stack</strong> or <strong>concatenate</strong> multiple frames:</p>
-<ul>
-<li>By measuring the displacement of the ball between two consecutive frames, we can predict where it is going.</li>
-</ul></li>
-</ul>
-</div>
-</div>
-<ul>
-<li>One can also <strong>learn</strong> state representations containing the history using recurrent neural networks (see later).</li>
-</ul>
-</section>
-
 <section id="state-transition-matrix" class="title-slide slide level1 center">
 <h1>State transition matrix</h1>
 <div class="columns">
@@ -776,10 +750,37 @@
 <p><span class="math display">\begin{aligned}
      P( s_{t+1} = s, r_{t+1} = r &amp; | s_t, a_t, r_t, s_{t-1}, a_{t-1}, ..., s_0, a_0) = P( s_{t+1} = s, r_{t+1} = r | s_t, a_t ) \\
      &amp;\text{for all s, r, and past histories} \quad (s_{t}, a_{t}, ..., s_0, a_0)
-\end{aligned}</span></p>
+\end{aligned}
+</span></p>
 <ul>
 <li><p>This means that the current state representation <span class="math inline">s</span> contains enough information to predict the probability of arriving in the next state <span class="math inline">s'</span> given the chosen action <span class="math inline">a</span>.</p></li>
 <li><p>When the Markovian property is not met, we have a <strong>Partially-Observable Markov Decision Process</strong> (POMDP).</p></li>
+</ul>
+</section>
+
+<section id="markov-property-2" class="title-slide slide level1 center">
+<h1>Markov property</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/markov-example.jpeg"></p>
+<p></p><figcaption>Source: <a href="https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc" class="uri">https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc</a></figcaption><p></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>Where is the ball going? To the little girl or to the player?</p></li>
+<li><p>Single <strong>video frames</strong> are not Markov states: you cannot generally predict what will happen based on a single image.</p></li>
+<li><p>A simple solution is to <strong>stack</strong> or <strong>concatenate</strong> multiple frames:</p>
+<ul>
+<li>By measuring the displacement of the ball between two consecutive frames, we can predict where it is going.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<ul>
+<li>One can also <strong>learn</strong> state representations containing the history using recurrent neural networks (see later).</li>
 </ul>
 </section>
 
@@ -1147,8 +1148,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>RL is an <strong>adaptive optimal control</strong> method for Markov Decision Processes using (sparse) rewards as a partial feedback.</p></li>
 <li><p>At each time step <span class="math inline">t</span>, the agent observes its Markov state <span class="math inline">s_t \in \mathcal{S}</span>, produces an action <span class="math inline">a_t \in \mathcal{A}(s_t)</span>, receives a reward according to this action <span class="math inline">r_{t+1} \in \Re</span> and updates its state: <span class="math inline">s_{t+1} \in \mathcal{S}</span>.</p></li>
 </ul>
-
-<img data-src="img/rl-sequence.jpg" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rl-sequence.jpg" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
 <li><p>The agent generates trajectories <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span> depending on its policy <span class="math inline">\pi(s ,a)</span>.</p></li>
 <li><p>The return of a trajectory is the (discounted) sum of rewards accumulated during the sequence: <span class="math display"> R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} </span></p></li>
 <li><p>The goal is to find the <strong>optimal policy</strong> <span class="math inline">\pi^* (s, a)</span> that maximizes in expectation the return of each possible trajectory under that policy:</p></li>
@@ -1248,8 +1255,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 
 <section id="the-v-and-q-value-functions-are-inter-dependent" class="title-slide slide level1 center">
 <h1>The V and Q value functions are inter-dependent</h1>
-
-<img data-src="img/backup.png" style="width:30.0%" class="r-stretch quarto-figure-center"><ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup.png" style="width:30.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
 <li>The value of a state <span class="math inline">V^{\pi}(s)</span> depends on the value <span class="math inline">Q^{\pi} (s, a)</span> of the action that will be chosen by the policy <span class="math inline">\pi</span> in <span class="math inline">s</span>:</li>
 </ul>
 <p><span class="math display">
@@ -1293,8 +1306,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 
 <section id="the-v-and-q-value-functions-are-inter-dependent-1" class="title-slide slide level1 center">
 <h1>The V and Q value functions are inter-dependent</h1>
-
-<img data-src="img/backup.png" style="width:30.0%" class="r-stretch quarto-figure-center"><ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup.png" style="width:30.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
 <li>Taking transition probabilities into account, one can obtain the Q-values when the V-values are known:</li>
 </ul>
 <p><span class="math display">
@@ -1344,8 +1363,14 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <ul>
 <li>The following <strong>backup diagrams</strong> denote these recursive relationships.</li>
 </ul>
-
-<img data-src="img/backup-V.png" class="r-stretch quarto-figure-center"></section>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup-V.png" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</section>
 
 <section id="bellman-optimality-equations" class="title-slide slide level1 center">
 <h1>3 - Bellman optimality equations</h1>
@@ -1356,16 +1381,26 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <h1>Optimal policy</h1>
 <ul>
 <li><p>The optimal policy is the policy that gathers the maximum of reward on the long term.</p></li>
-<li><p>Value functions define a partial ordering over policies:</p>
-<ul>
-<li>a policy <span class="math inline">\pi</span> is better than another policy <span class="math inline">\pi'</span> if its expected return is greater or equal than that of <span class="math inline">\pi'</span> for all states <span class="math inline">s</span>.</li>
-</ul></li>
+<li><p>Value functions define a partial ordering over policies:</p></li>
 </ul>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Partial ordering</strong></p>
+</div>
+<div class="callout-content">
+<p>A policy <span class="math inline">\pi</span> is better than another policy <span class="math inline">\pi'</span> if its expected return is greater or equal than that of <span class="math inline">\pi'</span> for all states <span class="math inline">s</span>.</p>
 <p><span class="math display">
         \pi \geq \pi' \Leftrightarrow V^{\pi}(s) \geq V^{\pi'}(s) \quad \forall s \in \mathcal{S}
 </span></p>
+</div>
+</div>
+</div>
 <ul>
-<li><p>There exists at least one policy that is better than all the others: this is the <strong>optimal policy</strong> <span class="math inline">\pi^*</span>.</p></li>
+<li><p>For a MDP, there exists at least one policy that is better than all the others: this is the <strong>optimal policy</strong> <span class="math inline">\pi^*</span>.</p></li>
 <li><p>We note <span class="math inline">V^*(s)</span> and <span class="math inline">Q^*(s, a)</span> the optimal value of the different states and actions under <span class="math inline">\pi^*</span>.</p></li>
 </ul>
 <p><span class="math display">
@@ -1376,8 +1411,8 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </span></p>
 </section>
 
-<section id="optimal-value-functions" class="title-slide slide level1 center">
-<h1>Optimal value functions</h1>
+<section id="the-optimal-policy-is-greedy" class="title-slide slide level1 center">
+<h1>The optimal policy is greedy</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>

@@ -821,8 +821,10 @@
 <section id="advantages-of-off-policy-methods" class="title-slide slide level1 center">
 <h1>Advantages of off-policy methods</h1>
 <ul>
-<li><p>The main advantage of <strong>off-policy</strong> strategies is that you can learn from other’s actions, you don’t have to rely on your initially wrong policies to discover the solution by chance.</p></li>
-<li><p>Example: learning to play chess by studying thousands/millions of plays by chess masters.</p></li>
+<li><p>The main advantage of <strong>off-policy</strong> strategies is that you can learn from other’s actions, you don’t have to rely on your initially wrong policies to discover the solution by chance.</p>
+<ul>
+<li>Example: learning to play chess by studying thousands/millions of plays by chess masters.</li>
+</ul></li>
 <li><p>In a given state, only a subset of the possible actions are actually executed by experts: the others may be too obviously wrong.</p></li>
 <li><p>The exploration is then guided by this expert knowledge, not randomly among all possible actions.</p></li>
 <li><p>Off-policy methods greatly reduce the number of transitions needed to learn a policy: very stupid actions are not even considered, but the estimation policy learns an optimal strategy from the “classical” moves.</p></li>

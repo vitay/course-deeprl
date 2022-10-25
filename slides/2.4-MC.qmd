@@ -489,7 +489,7 @@ If $\frac{\pi(s_k, a_k)}{b(s_k, a_k)}$ is smaller than 1, the products go to 0. 
 
 * The main advantage of **off-policy** strategies is that you can learn from other's actions, you don't have to rely on your initially wrong policies to discover the solution by chance.
 
-* Example: learning to play chess by studying thousands/millions of plays by chess masters.
+    * Example: learning to play chess by studying thousands/millions of plays by chess masters.
 
 * In a given state, only a subset of the possible actions are actually executed by experts: the others may be too obviously wrong.
 

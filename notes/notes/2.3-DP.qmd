@@ -287,6 +287,7 @@ The **optimal policy** being deterministic, policy improvement can be greedy ove
     * **if** $\pi$ has not changed: **break**
 :::
 
+<!--
 ### Gridworld example
 
 ![Gridworld example. Credit: David Silver](../slides/img/dp-gridworld1.png){width=100%}
@@ -311,6 +312,7 @@ Two things to notice:
 
 * There is no actually no need to wait until the end of policy evaluation to improve the policy, as the greedy policy might already be optimal.
 * There can be more than one optimal policy: some actions may have the same Q-value: choosing one or other is equally optimal.
+-->
 
 ## Value iteration
 
@@ -396,7 +398,10 @@ Asynchronous DP updates instead each state independently and asynchronously (**i
       V(s) =  \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]
     $$
 
-We must still ensure that all states are visited, but their frequency and order is irrelevant. Is it possible to select the states to backup intelligently? 
+We must still ensure that all states are visited, but their frequency and order is irrelevant. 
+
+<!--
+Is it possible to select the states to backup intelligently? 
 
 **Prioritized sweeping** selects in priority the states with the largest remaining **Bellman error**:
 
@@ -407,6 +412,7 @@ A large Bellman error means that the current estimate $V(s)$ is very different f
 $$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]$$
 
 States with a high error should be updated in priority. If the Bellman error is small, this means that the current estimate $V(s)$ is already close to what it should be: there is no hurry in evaluating this state. The main advantage is that the DP algorithm can be applied as the agent is actually experiencing its environment (no need for the dynamics of environment to be fully known). 
+-->
 
 ## Curse of dimensionality
 
