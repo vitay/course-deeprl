@@ -54,27 +54,36 @@ resources: pdf/2.3-DP.pdf
 
 # Policy evaluation
 
+::: {.columns}
+::: {.column width=70%}
+
 * Bellman equation for the state $s$ and a fixed policy $\pi$:
 
 $$
       V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
 $$
 
+
+:::
+::: {.column width=30%}
+
+![](img/backup.png)
+
+:::
+:::
+
 * Let's note $\mathcal{P}_{ss'}^\pi$ the transition probability between $s$ and $s'$ (dependent on the policy $\pi$) and $\mathcal{R}_{s}^\pi$ the expected reward in $s$ (also dependent):
 
 $$
-  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a)
+  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, p(s' | s, a)
 $$
 
 $$
   \mathcal{R}_{s}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \ r(s, a, s')
 $$
 
-* The Bellman equation becomes:
 
-$$
-      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
-$$
+* The Bellman equation becomes $V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \displaystyle\sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')$
 
 * As we have a fixed policy during the evaluation (MRP), the Bellman equation is simplified.
 
@@ -102,10 +111,10 @@ $$
 ::: {.column width=50%}
 
 
-* and the **vector of expected reward** $\mathcal{R}^\pi$:
+* and the **vector of expected reward** $\mathbf{R}^\pi$:
 
 $$
-  \mathcal{R}^\pi = \begin{bmatrix}
+  \mathbf{R}^\pi = \begin{bmatrix}
       \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
   \end{bmatrix}
 $$
@@ -150,7 +159,7 @@ $$
 leads to the same equations as:
 
 $$
-      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+      V^{\pi} (s)  = \mathbf{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
 $$
 
 for all states $s$.
@@ -158,7 +167,7 @@ for all states $s$.
 * The Bellman equations for all states $s$ can therefore be written with a matrix-vector notation as:
 
 $$
-  \mathbf{V}^\pi = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi 
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi 
 $$
 
 # Policy evaluation
@@ -166,19 +175,19 @@ $$
 * The Bellman equations for all states $s$ is:
 
 $$
-  \mathbf{V}^\pi = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi 
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi 
 $$
 
-* If we know $\mathcal{P}^\pi$ and $\mathcal{R}^\pi$ (dynamics of the MDP for the policy $\pi$), we can simply obtain the state values:
+* If we know $\mathcal{P}^\pi$ and $\mathbf{R}^\pi$ (dynamics of the MDP for the policy $\pi$), we can simply obtain the state values:
 
 $$
-  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathcal{R}^\pi
+  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathbf{R}^\pi
 $$
 
 where $\mathbb{I}$ is the identity matrix, what gives:
 
 $$
-  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathcal{R}^\pi
+  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathbf{R}^\pi
 $$
 
 * Done!
@@ -214,7 +223,7 @@ $$
 * In vector notation:
 
 $$
-  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 $$
 
 
@@ -252,7 +261,7 @@ $$
 * The **Bellman operator** $\mathcal{T}^\pi$ is a mapping between two vector spaces:
 
 $$
-  \mathcal{T}^\pi (\mathbf{V}) = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
+  \mathcal{T}^\pi (\mathbf{V}) = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
 $$
 
 * If you apply repeatedly the Bellman operator on any initial vector $\mathbf{V}_0$, it converges towards the solution of the Bellman equations $\mathbf{V}^\pi$.
@@ -266,7 +275,7 @@ $$
 
 * The **contraction mapping theorem** ensures that $\mathcal{T}^\pi$ converges to an unique fixed point:
 
-  * existence and uniqueness of the solution of the Bellman equations. 
+  * Existence and uniqueness of the solution of the Bellman equations. 
 
 
 # Backup diagram of IPE
@@ -286,7 +295,7 @@ $$
 * The backups are **synchronous**: all states are backed up in parallel.
 
 $$
-  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 $$
 
 * The termination of iterative policy evaluation has to be controlled by hand, as the convergence of the algorithm is only at the limit.
@@ -438,7 +447,7 @@ $$
 
 * **while** $\pi$ is not optimal:
 
-    * **while** not converged: # Policy evaluation
+    * **while** not converged: *# Policy evaluation*
 
         * **for** all states $s$:
 
@@ -448,7 +457,7 @@ $$
 
             * $V(s) = V_\text{target}(s)$
 
-    * **for** each state $s \in \mathcal{S}$: # Policy improvement
+    * **for** each state $s \in \mathcal{S}$: *# Policy improvement*
 
         * $\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]$
 

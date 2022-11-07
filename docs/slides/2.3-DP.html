@@ -391,29 +391,34 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 
 <section id="policy-evaluation" class="title-slide slide level1 center">
 <h1>Policy evaluation</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
 <ul>
 <li>Bellman equation for the state <span class="math inline">s</span> and a fixed policy <span class="math inline">\pi</span>:</li>
 </ul>
 <p><span class="math display">
       V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
 </span></p>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup.png"></p>
+</figure>
+</div>
+</div>
+</div>
 <ul>
 <li>Let’s note <span class="math inline">\mathcal{P}_{ss'}^\pi</span> the transition probability between <span class="math inline">s</span> and <span class="math inline">s'</span> (dependent on the policy <span class="math inline">\pi</span>) and <span class="math inline">\mathcal{R}_{s}^\pi</span> the expected reward in <span class="math inline">s</span> (also dependent):</li>
 </ul>
 <p><span class="math display">
-  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a)
+  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, p(s' | s, a)
 </span></p>
 <p><span class="math display">
   \mathcal{R}_{s}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \ r(s, a, s')
 </span></p>
 <ul>
-<li>The Bellman equation becomes:</li>
-</ul>
-<p><span class="math display">
-      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
-</span></p>
-<ul>
-<li>As we have a fixed policy during the evaluation (MRP), the Bellman equation is simplified.</li>
+<li><p>The Bellman equation becomes <span class="math inline">V^{\pi} (s) = \mathcal{R}_{s}^\pi + \gamma \, \displaystyle\sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')</span></p></li>
+<li><p>As we have a fixed policy during the evaluation (MRP), the Bellman equation is simplified.</p></li>
 </ul>
 </section>
 
@@ -437,10 +442,10 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 </span></p>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>and the <strong>vector of expected reward</strong> <span class="math inline">\mathcal{R}^\pi</span>:</li>
+<li>and the <strong>vector of expected reward</strong> <span class="math inline">\mathbf{R}^\pi</span>:</li>
 </ul>
 <p><span class="math display">
-  \mathcal{R}^\pi = \begin{bmatrix}
+  \mathbf{R}^\pi = \begin{bmatrix}
       \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
   \end{bmatrix}
 </span></p>
@@ -482,14 +487,14 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 </span></p>
 <p>leads to the same equations as:</p>
 <p><span class="math display">
-      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+      V^{\pi} (s)  = \mathbf{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
 </span></p>
 <p>for all states <span class="math inline">s</span>.</p>
 <ul>
 <li>The Bellman equations for all states <span class="math inline">s</span> can therefore be written with a matrix-vector notation as:</li>
 </ul>
 <p><span class="math display">
-  \mathbf{V}^\pi = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
 </span></p>
 </section>
 
@@ -499,17 +504,17 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <li>The Bellman equations for all states <span class="math inline">s</span> is:</li>
 </ul>
 <p><span class="math display">
-  \mathbf{V}^\pi = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
 </span></p>
 <ul>
-<li>If we know <span class="math inline">\mathcal{P}^\pi</span> and <span class="math inline">\mathcal{R}^\pi</span> (dynamics of the MDP for the policy <span class="math inline">\pi</span>), we can simply obtain the state values:</li>
+<li>If we know <span class="math inline">\mathcal{P}^\pi</span> and <span class="math inline">\mathbf{R}^\pi</span> (dynamics of the MDP for the policy <span class="math inline">\pi</span>), we can simply obtain the state values:</li>
 </ul>
 <p><span class="math display">
-  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathcal{R}^\pi
+  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathbf{R}^\pi
 </span></p>
 <p>where <span class="math inline">\mathbb{I}</span> is the identity matrix, what gives:</p>
 <p><span class="math display">
-  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathcal{R}^\pi
+  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathbf{R}^\pi
 </span></p>
 <ul>
 <li><p>Done!</p></li>
@@ -542,7 +547,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <li><p>In vector notation:</p></li>
 </ul>
 <p><span class="math display">
-  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 </span></p>
 </div>
 </div>
@@ -580,7 +585,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <li>The <strong>Bellman operator</strong> <span class="math inline">\mathcal{T}^\pi</span> is a mapping between two vector spaces:</li>
 </ul>
 <p><span class="math display">
-  \mathcal{T}^\pi (\mathbf{V}) = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
+  \mathcal{T}^\pi (\mathbf{V}) = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
 </span></p>
 <ul>
 <li><p>If you apply repeatedly the Bellman operator on any initial vector <span class="math inline">\mathbf{V}_0</span>, it converges towards the solution of the Bellman equations <span class="math inline">\mathbf{V}^\pi</span>.</p></li>
@@ -592,7 +597,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <ul>
 <li><p>The <strong>contraction mapping theorem</strong> ensures that <span class="math inline">\mathcal{T}^\pi</span> converges to an unique fixed point:</p>
 <ul>
-<li>existence and uniqueness of the solution of the Bellman equations.</li>
+<li>Existence and uniqueness of the solution of the Bellman equations.</li>
 </ul></li>
 </ul>
 </section>
@@ -613,7 +618,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <li>The backups are <strong>synchronous</strong>: all states are backed up in parallel.</li>
 </ul>
 <p><span class="math display">
-  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 </span></p>
 <ul>
 <li><p>The termination of iterative policy evaluation has to be controlled by hand, as the convergence of the algorithm is only at the limit.</p></li>
@@ -775,7 +780,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <li><p>Initialize a deterministic policy <span class="math inline">\pi(s)</span> and set <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
 <li><p><strong>while</strong> <span class="math inline">\pi</span> is not optimal:</p>
 <ul>
-<li><p><strong>while</strong> not converged: # Policy evaluation</p>
+<li><p><strong>while</strong> not converged: <em># Policy evaluation</em></p>
 <ul>
 <li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
 <ul>
@@ -786,7 +791,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <li><span class="math inline">V(s) = V_\text{target}(s)</span></li>
 </ul></li>
 </ul></li>
-<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>: # Policy improvement</p>
+<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>: <em># Policy improvement</em></p>
 <ul>
 <li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
 </ul></li>

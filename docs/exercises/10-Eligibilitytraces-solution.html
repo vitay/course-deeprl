@@ -460,26 +460,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> google.colab</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    IN_COLAB <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> IN_COLAB:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>pip install gym <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> running_average(x, N):</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    cumsum <span class="op">=</span> np.cumsum(np.insert(np.array(x), <span class="dv">0</span>, <span class="dv">0</span>)) </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (cumsum[N:] <span class="op">-</span> cumsum[:<span class="op">-</span>N]) <span class="op">/</span> N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> running_average(x, N):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    cumsum <span class="op">=</span> np.cumsum(np.insert(np.array(x), <span class="dv">0</span>, <span class="dv">0</span>)) </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (cumsum[N:] <span class="op">-</span> cumsum[:<span class="op">-</span>N]) <span class="op">/</span> N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="q-learning-in-gridworld" class="level2">
 <h2 class="anchored" data-anchor-id="q-learning-in-gridworld">Q-learning in Gridworld</h2>
@@ -493,8 +481,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The environment is created with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> Gridworld()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>env.render()</code> allows to display the Gridworld. If you pass it a Q-table (one row per state, one column per action) <code>env.render(Q)</code>, it will print the Q_value of each action at the corresponding location.</p>
-<p><code>state, info = env.reset()</code> allows to start an episode. The agent is placed at the top-left of the grid.</p>
-<p><code>next_state, reward, terminal, truncated, info = env.step(action)</code> allows to perform an action on the environment. <code>action</code> must be a number between 0 and 3. It returns the next state, the reward received during the transition, the booleans <code>terminal</code> and <code>truncated</code> which are <code>True</code> when the agent moved to a blue circle or a green triangle, or when 100 steps have been done, respectively, <code>False</code> otherwise. <code>info</code> contains the current undiscounted return of the episode.</p>
+<p><code>state = env.reset()</code> allows to start an episode. The agent is placed at the top-left of the grid.</p>
+<p><code>next_state, reward, done, info = env.step(action)</code> allows to perform an action on the environment. <code>action</code> must be a number between 0 and 3. It return the next state, the reward received during the transition, as well as a boolean <code>done</code> which is <code>True</code> when the episode is terminated (the agent moved to a blue circle or a green triangle, or 100 steps have been done), <code>False</code> otherwise. <code>info</code> contains the current undiscounted return of the episode.</p>
 <p><strong>Q:</strong> Understand and run the code. Does the agent succeed often? How complex is the task compared to Taxi?</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GridWorld(gym.Env):</span>
@@ -528,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sum_rewards <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.state, {}</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.state</span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>, action):</span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
@@ -536,83 +524,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">        and a dictionary with additional info (optional).</span></span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
 <span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._t <span class="op">+=</span><span class="dv">1</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.terminal <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.truncated <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> <span class="va">self</span>.coordinates(<span class="va">self</span>.state)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> action <span class="op">==</span> <span class="dv">0</span>: <span class="co"># up</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(y <span class="op">+</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> action <span class="op">==</span> <span class="dv">1</span>: <span class="co"># down</span></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(y <span class="op">-</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> action <span class="op">==</span> <span class="dv">2</span>: <span class="co"># left</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(x <span class="op">-</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> action <span class="op">==</span> <span class="dv">3</span>: <span class="co"># right</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(x <span class="op">+</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.state <span class="op">=</span> <span class="va">self</span>.rank((x, y))</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.state <span class="op">==</span> <span class="va">self</span>.rank(<span class="va">self</span>.target):</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reward <span class="op">=</span> <span class="va">self</span>.rewards[<span class="dv">0</span>]</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.terminal <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> <span class="va">self</span>.state <span class="op">==</span> <span class="va">self</span>.rank(<span class="va">self</span>.distractor1) <span class="kw">or</span> <span class="va">self</span>.state <span class="op">==</span> <span class="va">self</span>.rank(<span class="va">self</span>.distractor2):</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reward <span class="op">=</span> <span class="va">self</span>.rewards[<span class="dv">1</span>]</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.terminal <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reward <span class="op">=</span> <span class="va">self</span>.rewards[<span class="dv">2</span>]</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>._t <span class="op">&gt;=</span> <span class="va">self</span>.t_max:</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.truncated <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sum_rewards <span class="op">+=</span> <span class="va">self</span>.reward</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.info <span class="op">=</span> {<span class="st">'return'</span>: <span class="va">self</span>.sum_rewards}</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.state, <span class="va">self</span>.reward, <span class="va">self</span>.terminal, <span class="va">self</span>.truncated, <span class="va">self</span>.info</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> render(<span class="va">self</span>, Q):</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Displays the current state of the environment."</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">2</span><span class="op">*</span><span class="va">self</span>.size, <span class="dv">2</span><span class="op">*</span><span class="va">self</span>.size))</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>        <span class="co"># grid</span></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="va">self</span>.size):</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>            plt.plot([i, i], [<span class="dv">0</span>, <span class="va">self</span>.size], color<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="va">self</span>.size):</span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>            plt.plot([<span class="dv">0</span>, <span class="va">self</span>.size], [i, i], color<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Q-values</span></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.size<span class="op">*</span><span class="va">self</span>.size):</span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> <span class="va">self</span>.coordinates(s)</span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.5</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.9</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.5</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.1</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.05</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">2</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'left'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.95</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">3</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>        <span class="co"># target</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        plt.scatter([<span class="va">self</span>.target[<span class="dv">0</span>] <span class="op">+</span><span class="fl">0.5</span>], [<span class="va">self</span>.target[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        plt.scatter([<span class="va">self</span>.distractor1[<span class="dv">0</span>] <span class="op">+</span><span class="fl">0.5</span>], [<span class="va">self</span>.distractor1[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"^"</span>, color<span class="op">=</span><span class="st">"green"</span>)</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>        plt.scatter([<span class="va">self</span>.distractor2[<span class="dv">0</span>] <span class="op">+</span><span class="fl">0.5</span>], [<span class="va">self</span>.distractor2[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"^"</span>, color<span class="op">=</span><span class="st">"green"</span>)</span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>        <span class="co"># state</span></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> <span class="va">self</span>.coordinates(<span class="va">self</span>.state)</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>        plt.scatter([s[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.5</span>], [s[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"s"</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>        plt.xticks([])</span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>        plt.yticks([])</span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>        plt.xlim((<span class="dv">0</span>, <span class="va">self</span>.size))</span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>        plt.ylim((<span class="dv">0</span>, <span class="va">self</span>.size))</span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="st">"Step "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="va">self</span>._t) <span class="op">+</span> <span class="st">" - undiscounted return "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="va">self</span>.sum_rewards))</span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>        clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> coordinates(<span class="va">self</span>, state):</span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Returns coordinates of a state."</span></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (state <span class="op">%</span> <span class="va">self</span>.size, <span class="bu">int</span>(state<span class="op">/</span><span class="va">self</span>.size))</span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rank(<span class="va">self</span>, coord):</span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Returns rank from coordinates."</span></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> coord[<span class="dv">0</span>] <span class="op">+</span> <span class="va">self</span>.size<span class="op">*</span>coord[<span class="dv">1</span>]</span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> <span class="va">self</span>.coordinates(<span class="va">self</span>.state)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> action <span class="op">==</span> <span class="dv">0</span>: <span class="co"># up</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(y <span class="op">+</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> action <span class="op">==</span> <span class="dv">1</span>: <span class="co"># down</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(y <span class="op">-</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> action <span class="op">==</span> <span class="dv">2</span>: <span class="co"># left</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(x <span class="op">-</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> action <span class="op">==</span> <span class="dv">3</span>: <span class="co"># right</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="bu">max</span>(<span class="bu">min</span>(x <span class="op">+</span> <span class="dv">1</span>, <span class="va">self</span>.size<span class="op">-</span><span class="dv">1</span>), <span class="dv">0</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.state <span class="op">=</span> <span class="va">self</span>.rank((x, y))</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.state <span class="op">==</span> <span class="va">self</span>.rank(<span class="va">self</span>.target):</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reward <span class="op">=</span> <span class="va">self</span>.rewards[<span class="dv">0</span>]</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.done <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> <span class="va">self</span>.state <span class="op">==</span> <span class="va">self</span>.rank(<span class="va">self</span>.distractor1) <span class="kw">or</span> <span class="va">self</span>.state <span class="op">==</span> <span class="va">self</span>.rank(<span class="va">self</span>.distractor2):</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reward <span class="op">=</span> <span class="va">self</span>.rewards[<span class="dv">1</span>]</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.done <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reward <span class="op">=</span> <span class="va">self</span>.rewards[<span class="dv">2</span>]</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>._t <span class="op">&gt;=</span> <span class="va">self</span>.t_max:</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.done <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sum_rewards <span class="op">+=</span> <span class="va">self</span>.reward</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.info <span class="op">=</span> {<span class="st">'return'</span>: <span class="va">self</span>.sum_rewards}</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.state, <span class="va">self</span>.reward, <span class="va">self</span>.done, <span class="va">self</span>.info</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> render(<span class="va">self</span>, Q):</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Displays the current state of the environment."</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">2</span><span class="op">*</span><span class="va">self</span>.size, <span class="dv">2</span><span class="op">*</span><span class="va">self</span>.size))</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>        <span class="co"># grid</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="va">self</span>.size):</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>            plt.plot([i, i], [<span class="dv">0</span>, <span class="va">self</span>.size], color<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="va">self</span>.size):</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>            plt.plot([<span class="dv">0</span>, <span class="va">self</span>.size], [i, i], color<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Q-values</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.size<span class="op">*</span><span class="va">self</span>.size):</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> <span class="va">self</span>.coordinates(s)</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.5</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.9</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.5</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.1</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'center'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.05</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">2</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'left'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>            plt.text(c[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.95</span>, c[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>, <span class="ss">f"</span><span class="sc">{</span>Q[s, <span class="dv">3</span>]<span class="sc">:.2f}</span><span class="ss">"</span>, horizontalalignment<span class="op">=</span><span class="st">'right'</span>, verticalalignment<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="co"># target</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>        plt.scatter([<span class="va">self</span>.target[<span class="dv">0</span>] <span class="op">+</span><span class="fl">0.5</span>], [<span class="va">self</span>.target[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        plt.scatter([<span class="va">self</span>.distractor1[<span class="dv">0</span>] <span class="op">+</span><span class="fl">0.5</span>], [<span class="va">self</span>.distractor1[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"^"</span>, color<span class="op">=</span><span class="st">"green"</span>)</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        plt.scatter([<span class="va">self</span>.distractor2[<span class="dv">0</span>] <span class="op">+</span><span class="fl">0.5</span>], [<span class="va">self</span>.distractor2[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"^"</span>, color<span class="op">=</span><span class="st">"green"</span>)</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        <span class="co"># state</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> <span class="va">self</span>.coordinates(<span class="va">self</span>.state)</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>        plt.scatter([s[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.5</span>], [s[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.5</span>], s<span class="op">=</span><span class="dv">5000</span>, marker<span class="op">=</span><span class="st">"s"</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>        plt.xticks([])</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>        plt.yticks([])</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>        plt.xlim((<span class="dv">0</span>, <span class="va">self</span>.size))</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>        plt.ylim((<span class="dv">0</span>, <span class="va">self</span>.size))</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="st">"Step "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="va">self</span>._t) <span class="op">+</span> <span class="st">" - undiscounted return "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="va">self</span>.sum_rewards))</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>        clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> coordinates(<span class="va">self</span>, state):</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Returns coordinates of a state."</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (state <span class="op">%</span> <span class="va">self</span>.size, <span class="bu">int</span>(state<span class="op">/</span><span class="va">self</span>.size))</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rank(<span class="va">self</span>, coord):</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Returns rank from coordinates."</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> coord[<span class="dv">0</span>] <span class="op">+</span> <span class="va">self</span>.size<span class="op">*</span>coord[<span class="dv">1</span>]</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RandomAgent:</span>
@@ -635,44 +622,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> episode <span class="kw">in</span> <span class="bu">range</span>(nb_episodes):</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Reset</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            state, info <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store rewards</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            rewards <span class="op">=</span> []</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                    </span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                next_state, reward, terminal, truncated, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Append reward</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                rewards.append(reward)</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.env.render(<span class="va">self</span>.Q)</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> terminal <span class="kw">or</span> truncated: </span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Compute the discounted return of the episode.</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> np.<span class="bu">sum</span>(rewards)    </span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            state <span class="op">=</span> <span class="va">self</span>.env.reset()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            nb_steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store rewards</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            rewards <span class="op">=</span> []</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Sample the episode</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Render the current state</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> render:</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.env.render(<span class="va">self</span>.Q)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                    </span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Select an action </span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                action <span class="op">=</span> <span class="va">self</span>.act(state)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Perform the action</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                next_state, reward, done, info <span class="op">=</span> <span class="va">self</span>.env.step(action)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Append reward</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                rewards.append(reward)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Go in the next state</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                state <span class="op">=</span> next_state</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Increment time</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>                nb_steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> done: </span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.env.render(<span class="va">self</span>.Q)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Compute the discounted return of the episode.</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>            return_episode <span class="op">=</span> np.<span class="bu">sum</span>(rewards)    </span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Store info</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            returns.append(return_episode)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> returns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
@@ -693,7 +681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[-103, 67]</code></pre>
+<pre><code>[-105, -118]</code></pre>
 </div>
 </div>
 <p><strong>Q:</strong> Adapt your Q-learning agent from last exercise to the problem. The main difference is the call to <code>render()</code>, the rest is similar. Train it for 100 episodes with the right hyperparameters and without rendering.</p>

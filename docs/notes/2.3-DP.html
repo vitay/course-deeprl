@@ -431,7 +431,7 @@ div.csl-indent {
 </span></p>
 <p>Let’s note <span class="math inline">\mathcal{P}_{ss'}^\pi</span> the transition probability between <span class="math inline">s</span> and <span class="math inline">s'</span> (dependent on the policy <span class="math inline">\pi</span>) and <span class="math inline">\mathcal{R}_{s}^\pi</span> the expected reward in <span class="math inline">s</span> (also dependent):</p>
 <p><span class="math display">
-  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a)
+  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, p(s' | s, a)
 </span></p>
 <p><span class="math display">
   \mathcal{R}_{s}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \ r(s, a, s')
@@ -451,9 +451,9 @@ div.csl-indent {
       V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
   \end{bmatrix}
 </span></p>
-<p>and the <strong>vector of expected reward</strong> <span class="math inline">\mathcal{R}^\pi</span>:</p>
+<p>and the <strong>vector of expected reward</strong> <span class="math inline">\mathbf{R}^\pi</span>:</p>
 <p><span class="math display">
-  \mathcal{R}^\pi = \begin{bmatrix}
+  \mathbf{R}^\pi = \begin{bmatrix}
       \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
   \end{bmatrix}
 </span></p>
@@ -485,20 +485,20 @@ div.csl-indent {
 </span></p>
 <p>leads to the same equations as:</p>
 <p><span class="math display">
-      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+      V^{\pi} (s)  = \mathbf{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
 </span></p>
 <p>for all states <span class="math inline">s</span>.</p>
 <p>The Bellman equations for all states <span class="math inline">s</span> can therefore be written with a matrix-vector notation as:</p>
 <p><span class="math display">
-  \mathbf{V}^\pi = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
 </span></p>
 <p>or:</p>
 <p><span class="math display">
-  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathcal{R}^\pi
+  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathbf{R}^\pi
 </span></p>
-<p>where <span class="math inline">\mathbb{I}</span> is the identity matrix. If we know <span class="math inline">\mathcal{P}^\pi</span> and <span class="math inline">\mathcal{R}^\pi</span> (dynamics of the MDP for the policy <span class="math inline">\pi</span>), we can simply obtain the state values with a matrix inversion:</p>
+<p>where <span class="math inline">\mathbb{I}</span> is the identity matrix. If we know <span class="math inline">\mathcal{P}^\pi</span> and <span class="math inline">\mathbf{R}^\pi</span> (dynamics of the MDP for the policy <span class="math inline">\pi</span>), we can simply obtain the state values with a matrix inversion:</p>
 <p><span class="math display">
-  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathcal{R}^\pi
+  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathbf{R}^\pi
 </span></p>
 <p>Done! <strong>But</strong>, if we have <span class="math inline">n</span> states, the matrix <span class="math inline">\mathcal{P}^\pi</span> has <span class="math inline">n^2</span> elements. Inverting <span class="math inline">\mathbb{I} - \gamma \, \mathcal{P}^\pi</span> requires at least <span class="math inline">\mathcal{O}(n^{2.37})</span> operations. Forget it if you have more than a thousand states (<span class="math inline">1000^{2.37} \approx 13</span> million operations). In dynamic programming, we will therefore use <strong>iterative methods</strong> to estimate <span class="math inline">\mathbf{V}^\pi</span> with (hopefully) less operations.</p>
 </section>
@@ -511,13 +511,13 @@ div.csl-indent {
 </span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../slides/img/iterativepolicyevaluation2.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="../slides/img/iterativepolicyevaluation2.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <p></p><figcaption class="figure-caption">Backup diagram of iterative policy evaluation. Credit: David Silver.</figcaption><p></p>
 </figure>
 </div>
 <p>The value function at step <span class="math inline">k+1</span> <span class="math inline">V_{k+1}(s)</span> is computed using the previous estimates <span class="math inline">V_{k}(s)</span> and the Bellman equation transformed into an <strong>update rule</strong>. In vector notation:</p>
 <p><span class="math display">
-  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 </span></p>
 <p>Let’s start with dummy (e.g.&nbsp;random) initial estimates <span class="math inline">V_0(s)</span> for the value of every state <span class="math inline">s</span>. We can obtain new estimates <span class="math inline">V_1(s)</span> which are slightly less wrong by applying once the <strong>Bellman operator</strong>:</p>
 <p><span class="math display">
@@ -534,7 +534,7 @@ div.csl-indent {
 <p><span class="math inline">V_\infty = V^{\pi}</span> is a fixed point of this update rule because of the uniqueness of the solution to the Bellman equation.</p>
 <p>The <strong>Bellman operator</strong> <span class="math inline">\mathcal{T}^\pi</span> is a mapping between two vector spaces:</p>
 <p><span class="math display">
-  \mathcal{T}^\pi (\mathbf{V}) = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
+  \mathcal{T}^\pi (\mathbf{V}) = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
 </span></p>
 <p>If you apply repeatedly the Bellman operator on any initial vector <span class="math inline">\mathbf{V}_0</span>, it converges towards the solution of the Bellman equations <span class="math inline">\mathbf{V}^\pi</span>. Mathematically speaking, <span class="math inline">\mathcal{T}^\pi</span> is a <span class="math inline">\gamma</span>-contraction, i.e.&nbsp;it makes value functions closer by at least <span class="math inline">\gamma</span>:</p>
 <p><span class="math display">
@@ -547,7 +547,7 @@ div.csl-indent {
 </span></p>
 <p>The backups are <strong>synchronous</strong>: all states are backed up in parallel.</p>
 <p><span class="math display">
-  \mathbf{V}_{k+1} = \mathcal{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 </span></p>
 <p>The termination of iterative policy evaluation has to be controlled by hand, as the convergence of the algorithm is only at the limit. It is good practice to look at the variations on the values of the different states, and stop the iteration when this variation falls below a predefined threshold.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -645,7 +645,7 @@ Policy iteration
 <li><p>Initialize a deterministic policy <span class="math inline">\pi(s)</span> and set <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
 <li><p><strong>while</strong> <span class="math inline">\pi</span> is not optimal:</p>
 <ul>
-<li><p><strong>while</strong> not converged: # Policy evaluation</p>
+<li><p><strong>while</strong> not converged: <em># Policy evaluation</em></p>
 <ul>
 <li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
 <ul>
@@ -656,7 +656,7 @@ Policy iteration
 <li><span class="math inline">V(s) = V_\text{target}(s)</span></li>
 </ul></li>
 </ul></li>
-<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>: # Policy improvement</p>
+<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>: <em># Policy improvement</em></p>
 <ul>
 <li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
 </ul></li>
