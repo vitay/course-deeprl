@@ -357,7 +357,7 @@
 <section id="temporal-difference-td-learning" class="title-slide slide level1 center">
 <h1>Temporal-Difference (TD) learning</h1>
 <ul>
-<li>MC methods wait until the end of the episode to compute the obtained return, and update the estimates of all encountered states:</li>
+<li>MC methods wait until the end of the episode to compute the obtained return:</li>
 </ul>
 <p><span class="math display">
     V(s_t) = V(s_t) + \alpha (R_t - V(s_t))
@@ -621,7 +621,8 @@
 <p><span class="math display">\pi(s_t, a) = \begin{cases}
                   1\; \text{if} \; a = \text{argmax} \, Q(s_t, a) \\
                   0 \; \text{otherwise.} \\
-                \end{cases}</span></p>
+                \end{cases}
+  </span></p>
 <ul>
 <li><strong>if</strong> <span class="math inline">s_{t+1}</span> is terminal: <strong>break</strong></li>
 </ul></li>
@@ -643,7 +644,8 @@
 <ul>
 <li><p>As we only sample <strong>transitions</strong> using <span class="math inline">b</span> and not episodes, there is no need to correct the returns:</p>
 <ul>
-<li>The returns use estimates <span class="math inline">Q^\pi</span>, which depend on <span class="math inline">\pi</span> and not <span class="math inline">b</span>.</li>
+<li><p>The returns use estimates <span class="math inline">Q^\pi</span>, which depend on <span class="math inline">\pi</span> and not <span class="math inline">b</span>.</p></li>
+<li><p>The immediate reward <span class="math inline">r_{t+1}</span> is stochastic, but is the same whether you sample <span class="math inline">a_t</span> from <span class="math inline">\pi</span> or from <span class="math inline">b</span>.</p></li>
 </ul></li>
 </ul>
 </section>

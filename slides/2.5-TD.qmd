@@ -14,7 +14,7 @@ resources: pdf/2.5-TD.pdf
 # Temporal-Difference (TD) learning
 
 
-* MC methods wait until the end of the episode to compute the obtained return, and update the estimates of all encountered states:
+* MC methods wait until the end of the episode to compute the obtained return:
 
 $$
     V(s_t) = V(s_t) + \alpha (R_t - V(s_t))
@@ -287,7 +287,8 @@ $$Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, \max_a Q(s_{t+1}, a
         $$\pi(s_t, a) = \begin{cases}
                         1\; \text{if} \; a = \text{argmax} \, Q(s_t, a) \\
                         0 \; \text{otherwise.} \\
-                      \end{cases}$$
+                      \end{cases}
+        $$
 
 
         * **if** $s_{t+1}$ is terminal: **break**
@@ -307,6 +308,8 @@ $$Q^\pi(s, a) = \mathbb{E}_{s_t \sim \rho_b, a_t \sim b}[ r_{t+1} + \gamma \, \m
 * As we only sample **transitions** using $b$ and not episodes, there is no need to correct the returns:
 
     * The returns use estimates $Q^\pi$, which depend on $\pi$ and not $b$.
+
+    * The immediate reward $r_{t+1}$ is stochastic, but is the same whether you sample $a_t$ from $\pi$ or from $b$.
 
 
 
