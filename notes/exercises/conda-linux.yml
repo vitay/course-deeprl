@@ -7,7 +7,11 @@ dependencies:
   - pip
   - numpy
   - matplotlib
-  - jupyter
+  - jupyterlab
   - pip:
     - tensorflow
-    - gym[all]
+    - pygame
+    - moviepy
+    - gymnasium
+    - gymnasium[classic_control]
+    - gymnasium[box2d]

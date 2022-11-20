@@ -484,7 +484,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Keep the general structure of the class: <code>train()</code> for the main loop, <code>test()</code> to run one episode without exploration, etc. Add a method to compute the discounted return of each episode, as it will not be done automatically by the <code>update()</code> method anymore. Plot the training and test performance in the end and render the learned deterministic policy for 10 episodes.</p>
 <p><em>Note:</em> if <span class="math inline">s_{t+1}</span> is terminal (<code>done</code> is true after the transition), the target should not be <span class="math inline">r_{t+1} + \gamma \, \max_{a'} \, Q(s_{t+1}, a')</span>, but simply <span class="math inline">r_{t+1}</span> as there is no next action.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> QLearningAgent:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Q-learning agent.</span></span>
@@ -627,7 +627,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>            ret <span class="op">=</span> reward <span class="op">+</span> <span class="va">self</span>.gamma<span class="op">*</span>ret</span>
 <span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">0.9</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">1.0</span></span>
@@ -671,9 +671,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: 5.9432300000000025
- steps: 7
- epsilon: 0.0190286448954996</code></pre>
+ return: -1.5271139055699985
+ steps: 13
+ epsilon: 0.01856884818045739</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -683,7 +683,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance 7.787</code></pre>
+<pre><code>Test performance 7.888</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -693,7 +693,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize some episodes</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> []</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>length_episode <span class="op">=</span> []</span>
@@ -719,12 +719,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 |Y| : |B: |
 +---------+
   (North)
-Returns: [6, 8, 9, 9, 12]
-Number of steps [15, 13, 12, 12, 9]</code></pre>
+Returns: [6, 7, 7, 8, 4]
+Number of steps [15, 14, 14, 13, 17]</code></pre>
 </div>
 </div>
 <p><strong>Q:</strong> Compare the performance of Q-learning to online MC. Experiment with parameters (gamma, epsilon, alpha, etc.).</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">1.0</span></span>
@@ -768,9 +768,9 @@ Number of steps [15, 13, 12, 12, 9]</code></pre>
 <span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Episode 19900 :
- return: 4.0
- steps: 17
- epsilon: 0.012511064005448906</code></pre>
+ return: 8.0
+ steps: 13
+ epsilon: 0.012423419219646946</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -780,7 +780,7 @@ Number of steps [15, 13, 12, 12, 9]</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test performance 7.962</code></pre>
+<pre><code>Test performance 8.019</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -790,7 +790,7 @@ Number of steps [15, 13, 12, 12, 9]</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize some episodes</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> []</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>length_episode <span class="op">=</span> []</span>
@@ -816,8 +816,8 @@ Number of steps [15, 13, 12, 12, 9]</code></pre>
 |Y| : |B: |
 +---------+
   (North)
-Returns: [6, 12, 4, 8, 5]
-Number of steps [15, 9, 17, 13, 16]</code></pre>
+Returns: [9, 11, 5, 8, 4]
+Number of steps [12, 10, 16, 13, 17]</code></pre>
 </div>
 </div>
 <p><strong>A:</strong> Q-learning accepts much higher values of gamma than MC, because the returns have a much lower variance. With the right parameters, Q-learning can learn much faster than MC.</p>

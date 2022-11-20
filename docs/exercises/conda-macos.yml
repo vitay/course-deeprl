@@ -8,9 +8,13 @@ dependencies:
   - pip
   - numpy 
   - matplotlib
-  - jupyter
+  - jupyterlab
   - tensorflow-deps # macos only
   - pip:
     - tensorflow-macos # macos only
     - tensorflow-metal # macos only
-    - gym[all]
+    - pygame
+    - moviepy
+    - gymnasium
+    - gymnasium[classic_control]
+    - gymnasium[box2d]

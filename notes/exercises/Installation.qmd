@@ -32,7 +32,7 @@ Here are the main Python dependencies necessary for the exercises:
 * matplotlib >= 3.5
 * jupyterlab >= 3.0 (jupyter notebook is fine)
 * tensorflow >= 2.7
-* gym >= 0.25 (see the corresponding [exercise](7-Gym-solution.ipynb)).
+* gymnasium >= 0.25 (see the corresponding [exercise](7-Gym-solution.ipynb)).
 
 If you are using Linux, you can probably install all the dependencies (except gym) from your package manager. For the others, use either Anaconda or Colab.
 
@@ -168,7 +168,7 @@ conda install -c conda-forge numpy matplotlib jupyterlab
 
 Alternatively, you can use one of the following files and install everything in one shot:
 
-* [conda-linux.yml](./conda-linux.yml) for Linux and (possibly) Windows, but gym will not work.
+* [conda-linux.yml](./conda-linux.yml) for Linux and (possibly) Windows.
 * [conda-macos.yml](./conda-macos.yml) for MacOS arm64 (M1). Untested on Intel-based macs.
 
 ```bash

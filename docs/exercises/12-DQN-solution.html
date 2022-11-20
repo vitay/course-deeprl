@@ -124,9 +124,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -528,66 +525,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> wrap_env(env):</span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        env <span class="op">=</span> Monitor(env, <span class="st">'./video'</span>, force<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Requirement already satisfied: gym[atari] in /usr/local/lib/python3.6/dist-packages (0.17.3)
-Requirement already satisfied: scipy in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.4.1)
-Requirement already satisfied: pyglet&lt;=1.5.0,&gt;=1.4.0 in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.5.0)
-Requirement already satisfied: cloudpickle&lt;1.7.0,&gt;=1.2.0 in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.3.0)
-Requirement already satisfied: numpy&gt;=1.10.4 in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (1.19.5)
-Requirement already satisfied: atari-py~=0.2.0; extra == "atari" in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (0.2.6)
-Requirement already satisfied: opencv-python; extra == "atari" in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (4.1.2.30)
-Requirement already satisfied: Pillow; extra == "atari" in /usr/local/lib/python3.6/dist-packages (from gym[atari]) (7.0.0)
-Requirement already satisfied: future in /usr/local/lib/python3.6/dist-packages (from pyglet&lt;=1.5.0,&gt;=1.4.0-&gt;gym[atari]) (0.16.0)
-Requirement already satisfied: six in /usr/local/lib/python3.6/dist-packages (from atari-py~=0.2.0; extra == "atari"-&gt;gym[atari]) (1.15.0)</code></pre>
-</div>
 </div>
 <section id="cartpole-balancing-task" class="level2">
 <h2 class="anchored" data-anchor-id="cartpole-balancing-task">Cartpole balancing task</h2>
 <p>We are going to use the Cartpole balancing problem, which can be loaded with:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> wrap_env(gym.make(<span class="st">'CartPole-v0'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> wrap_env(gym.make(<span class="st">'CartPole-v0'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>States have 4 continuous values (position and speed of the cart, angle and speed of the pole) and 2 discrete outputs (going left or right). The reward is +1 for each transition where the pole is still standing (angle of less than 30° with the vertical). The episode ends when the pole fails or after 200 steps. The maximal (undiscounted) return is therefore 200. Can DQN learn this?</p>
 <div class="cell" data-outputid="58411c0e-4248-4e15-9f5e-b284aeea321e" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> wrap_env(gym.make(<span class="st">'CartPole-v0'</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample the initial state</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> env.reset()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># One episode:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>done <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>return_episode <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> done:</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Render the current state</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    env.render()</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select an action randomly</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> env.action_space.sample()</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a single transition</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    next_state, reward, done, info <span class="op">=</span> env.step(action)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update undiscounted return</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    return_episode <span class="op">+=</span> reward</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Go in the next state</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> next_state</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Return:"</span>, return_episode)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Exit cleanly</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>env.close()</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>show_video()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Return: 12.0</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the environment</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> wrap_env(gym.make(<span class="st">'CartPole-v0'</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample the initial state</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> env.reset()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># One episode:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>return_episode <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="kw">not</span> done:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Render the current state</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    env.render()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select an action randomly</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    action <span class="op">=</span> env.action_space.sample()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a single transition</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    next_state, reward, done, info <span class="op">=</span> env.step(action)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update undiscounted return</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    return_episode <span class="op">+=</span> reward</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Go in the next state</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> next_state</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Return:"</span>, return_episode)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Exit cleanly</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>env.close()</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>show_video()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/vitay/Applications/miniforge3/lib/python3.9/site-packages/gym/envs/registration.py:555: UserWarning: WARN: The environment CartPole-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.warn(</code></pre>
 </div>
-<div class="cell-output cell-output-display">
-<video alt="test" autoplay="" loop="" controls="" style="height: 400px;">
-                    <source src="data:video/mp4;base64,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" type="video/mp4"></video>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: too many values to unpack (expected 4)</code></pre>
 </div>
 </div>
 <p>As the problem is quite simple (4 state variables, 2 actions), DQN can run on a single CPU. However, we advise that you run the notebook on a GPU in Colab to avoid emptying the battery of your laptop too fast or making it too warm as training takes quite a long time.</p>
-<p>We will forget from now on to display the cartpole on colab, it does not work well.</p>
+<p>We will stop from now on to display the cartpole on colab, it does not work well.</p>
 </section>
 <section id="creating-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-model">Creating the model</h2>
@@ -1495,9 +1480,6 @@ Predictions: [-0.0029409   0.00551502] [0.00421481 0.0009347 ]</code></pre>
 </div>
 </div>
 <p><strong>Q:</strong> Depending on the time left and your motivation, vary the different parameters to understand their influence: learning rate, target update frequency, training update frequency, epsilon decay, gamma, etc. Change the size of the network. If you find better hyperparameters than what is proposed, please report them for next year!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
 </section>
