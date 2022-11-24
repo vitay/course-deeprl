@@ -533,7 +533,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            rewards.append(reward)</span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Optimal action</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> action <span class="op">==</span> bandit.a_star:</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> action <span class="op">==</span> <span class="va">self</span>.bandit.a_star:</span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                optimal.append(<span class="fl">1.0</span>)</span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
 <span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                optimal.append(<span class="fl">0.0</span>)</span>
@@ -883,7 +883,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    rewards, optimal <span class="op">=</span> agent.train(<span class="dv">1000</span>)    </span>
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    rewards_softmax.append(rewards)</span>
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    optimal_softmax.append(optimal)</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>rewards_greedy <span class="op">=</span> np.mean(rewards_greedy, axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>optimal_greedy <span class="op">=</span> np.mean(optimal_greedy, axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>rewards_egreedy <span class="op">=</span> np.mean(rewards_egreedy, axis<span class="op">=</span><span class="dv">0</span>)</span>

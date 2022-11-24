@@ -834,7 +834,8 @@ $$
     A^{n}_t = \sum_{l=0}^{n-1} \gamma^l \, \delta_{t+l}
 $$
 
-* Proof with $n=2$:
+::: {.callout-note}
+## Proof with $n=2$:
 
 $$\begin{aligned}
 A^2_t &= r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, V(s_{t+2}) - V(s_{t}) \\
@@ -846,7 +847,7 @@ A^2_t &= r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, V(s_{t+2}) - V(s_{t}) \\
 &= \delta_t + \gamma \, \delta_{t+1}
 \end{aligned}
 $$
-
+:::
 
 ::: footer
 Schulman, J., Moritz, P., Levine, S., Jordan, M., and Abbeel, P. (2015). High-Dimensional Continuous Control Using Generalized Advantage Estimation. arXiv:1506.02438.

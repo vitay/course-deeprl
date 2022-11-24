@@ -186,7 +186,7 @@ $$ \min_\varphi \mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s
 
 # Learning the state value approximation
 
-* Let's suppose that we know the true state values $V^\pi(s)$ for all states and that the parametrized function is **differentiable**.
+* Let's suppose that we know the true state values $V^\pi(s)$ for all states and that the parameterized function is **differentiable**.
 
 ::: {.columns}
 ::: {.column width=50%}
