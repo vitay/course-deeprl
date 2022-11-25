@@ -440,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>The goal of this tutorial is to very quickly present keras, the high-level API of tensorflow, as it has already been seen in the Neurocomputing exercises. We will train a small fully-connected network on MNIST and observe what happens when the inputs or outputs are correlated, by training successively on the 0 digits, then the 1, etc.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -451,7 +451,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>keras</code> is now available as a submodule of tensorflow (you can also install it as a separate package):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Keras provides a lot of ready-made layer types, activation functions, optimizers and so on. Do not hesitate to read its documentation on <a href="https://keras.io" class="uri">https://keras.io</a>.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The most important object in keras is <code>Sequential</code>. It is a container where you sequentially add layers of neurons (fully-connected, convolutional, recurrent, etc) and other stuff. It represents your model, i.e.&nbsp;the neural network itself.</p>
@@ -481,7 +481,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This defines fully the structure of your desired neural network.</p>
 <p><strong>Q:</strong> Implement a neural network for classification with 10 input neurons, two hidden layers with 100 neurons each (using ReLU) and 3 output neurons.</p>
 <p><em>Hint:</em> <code>print(model.summary())</code> gives you a summary of the architecture of your model. Note in particular the number of trainable parameters (weights and biases).</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.models.Sequential()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Input((<span class="dv">10</span>,)))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">100</span>, activation<span class="op">=</span><span class="st">"relu"</span>))</span>
@@ -489,15 +489,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">3</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model: "sequential_3"
+<pre><code>Metal device set to: Apple M1 Pro
+
+systemMemory: 16.00 GB
+maxCacheSize: 5.33 GB
+
+Model: "sequential"
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
 =================================================================
- dense_9 (Dense)             (None, 100)               1100      
+ dense (Dense)               (None, 100)               1100      
                                                                  
- dense_10 (Dense)            (None, 100)               10100     
+ dense_1 (Dense)             (None, 100)               10100     
                                                                  
- dense_11 (Dense)            (None, 3)                 303       
+ dense_2 (Dense)             (None, 3)                 303       
                                                                  
 =================================================================
 Total params: 11,503
@@ -506,21 +511,25 @@ Non-trainable params: 0
 _________________________________________________________________
 None</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-11-24 18:31:35.132826: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:306] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+2022-11-24 18:31:35.133149: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:272] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -&gt; physical PluggableDevice (device: 0, name: METAL, pci bus id: &lt;undefined&gt;)</code></pre>
+</div>
 </div>
 <p>The next step is to choose an <strong>optimizer</strong> for the neural network, i.e.&nbsp;a variant of gradient descent that will be used to iteratively modify the parameters.</p>
 <p><code>keras</code> provides an extensive list of optimizers: <a href="https://keras.io/optimizers/" class="uri">https://keras.io/optimizers/</a>. The most useful in practice are:</p>
 <ul>
 <li><code>SGD</code>, the vanilla stochastic gradient descent.</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.SGD(learning_rate<span class="op">=</span><span class="fl">0.001</span>, momentum<span class="op">=</span><span class="fl">0.9</span>, nesterov<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.SGD(learning_rate<span class="op">=</span><span class="fl">0.001</span>, momentum<span class="op">=</span><span class="fl">0.9</span>, nesterov<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><code>RMSprop</code>, using second moments:</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.RMSprop(learning_rate<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.RMSprop(learning_rate<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><code>Adam</code>:</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Choosing a optimizer is a matter of taste and trial-and-error. In deep RL, a good choice is Adam: the default values for its other parameters are usually good, it converges well, so your only job is to find the right learning rate.</p>
 <p>Finally, the model must be <strong>compiled</strong> by defining:</p>
 <ul>
@@ -528,28 +537,28 @@ None</code></pre>
 <li><p>The chosen optimizer.</p></li>
 <li><p>The metrics, i.e.&nbsp;what you want tensorflow to print during training. By default it only prints the current value of the loss function. For classification tasks, it usually makes more sense to also print the <code>accuracy</code>.</p></li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>optimizer,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[<span class="st">'accuracy'</span>]</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>optimizer,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[<span class="st">'accuracy'</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Q:</strong> Compile the model for classification, using the Adam optimizer and a learning rate of 0.01.</p>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>optimizer,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[<span class="st">'accuracy'</span>]</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>optimizer,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[<span class="st">'accuracy'</span>]</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s now train the model on some dummy data. To show the power of deep neural networks, we will try to learn noise by heart.</p>
 <p>The following cell creates an input tensor <code>X</code> with 1000 random vectors of 10 elements, with values sampled between -1 and 1. The targets (desired outputs) <code>t</code> are class indices (0, 1 or 2), also randomly selected.</p>
 <p>However, neural networks expect <strong>one-hot encoded vectors</strong> for the target, i.e.&nbsp;(1, 0, 0), (0, 1, 0), (0, 0, 1) instead of 0, 1, 2. The method <code>tf.keras.utils.to_categorical</code> allows you to do that.</p>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>, (<span class="dv">1000</span>, <span class="dv">10</span>))</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">3</span>, (<span class="dv">1000</span>, ))</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> tf.keras.utils.to_categorical(t, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>, (<span class="dv">1000</span>, <span class="dv">10</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">3</span>, (<span class="dv">1000</span>, ))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> tf.keras.utils.to_categorical(t, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s learn it. The <code>Sequential</code> model has a method called <code>fit()</code> where you simply pass the training data <code>(X, T)</code> and some other parameters, such as:</p>
 <ul>
@@ -557,136 +566,137 @@ None</code></pre>
 <li>the total number of epochs,</li>
 <li>the proportion of training examples to keep in order to compute the validation loss/accuracy (optional but recommmended).</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> tf.keras.callbacks.History()</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    X, T,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">100</span>, </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    callbacks<span class="op">=</span>[history]</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> tf.keras.callbacks.History()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    X, T,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    callbacks<span class="op">=</span>[history]</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Q:</strong> Train the model on the data, using a batch size of 100 for 50 epochs. Explain why you obtained this result.</p>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    X, T,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">100</span>, </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    verbose<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    X, T,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    verbose<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-11-15 13:09:40.852114: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-11-24 18:31:37.930309: W tensorflow/core/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz
+2022-11-24 18:31:38.157447: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>9/9 - 0s - loss: 1.1150 - accuracy: 0.3489 - val_loss: 1.1119 - val_accuracy: 0.3500 - 395ms/epoch - 44ms/step
+<pre><code>9/9 - 1s - loss: 1.1183 - accuracy: 0.3244 - val_loss: 1.1404 - val_accuracy: 0.3300 - 1s/epoch - 162ms/step
 Epoch 2/50
-9/9 - 0s - loss: 1.0725 - accuracy: 0.4256 - val_loss: 1.0961 - val_accuracy: 0.3900 - 88ms/epoch - 10ms/step
+9/9 - 0s - loss: 1.0802 - accuracy: 0.3878 - val_loss: 1.1295 - val_accuracy: 0.2700 - 96ms/epoch - 11ms/step
 Epoch 3/50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-11-15 13:09:41.054430: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-11-24 18:31:39.375487: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>9/9 - 0s - loss: 1.0460 - accuracy: 0.4667 - val_loss: 1.1063 - val_accuracy: 0.4000 - 93ms/epoch - 10ms/step
+<pre><code>9/9 - 0s - loss: 1.0632 - accuracy: 0.4667 - val_loss: 1.1320 - val_accuracy: 0.2500 - 93ms/epoch - 10ms/step
 Epoch 4/50
-9/9 - 0s - loss: 1.0227 - accuracy: 0.4778 - val_loss: 1.1037 - val_accuracy: 0.4000 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 1.0375 - accuracy: 0.4767 - val_loss: 1.1671 - val_accuracy: 0.2500 - 89ms/epoch - 10ms/step
 Epoch 5/50
-9/9 - 0s - loss: 1.0023 - accuracy: 0.4911 - val_loss: 1.1187 - val_accuracy: 0.4000 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 1.0111 - accuracy: 0.5111 - val_loss: 1.1752 - val_accuracy: 0.3100 - 89ms/epoch - 10ms/step
 Epoch 6/50
-9/9 - 0s - loss: 0.9796 - accuracy: 0.5222 - val_loss: 1.1354 - val_accuracy: 0.4100 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.9863 - accuracy: 0.5033 - val_loss: 1.2184 - val_accuracy: 0.2800 - 90ms/epoch - 10ms/step
 Epoch 7/50
-9/9 - 0s - loss: 0.9424 - accuracy: 0.5444 - val_loss: 1.1634 - val_accuracy: 0.3800 - 85ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.9553 - accuracy: 0.5433 - val_loss: 1.2167 - val_accuracy: 0.2800 - 89ms/epoch - 10ms/step
 Epoch 8/50
-9/9 - 0s - loss: 0.9101 - accuracy: 0.5856 - val_loss: 1.1859 - val_accuracy: 0.3800 - 84ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.9197 - accuracy: 0.5678 - val_loss: 1.3535 - val_accuracy: 0.3000 - 90ms/epoch - 10ms/step
 Epoch 9/50
-9/9 - 0s - loss: 0.8892 - accuracy: 0.5933 - val_loss: 1.2218 - val_accuracy: 0.3700 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.8824 - accuracy: 0.5900 - val_loss: 1.3571 - val_accuracy: 0.3200 - 88ms/epoch - 10ms/step
 Epoch 10/50
-9/9 - 0s - loss: 0.8288 - accuracy: 0.6411 - val_loss: 1.2725 - val_accuracy: 0.3800 - 80ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.8560 - accuracy: 0.6267 - val_loss: 1.3682 - val_accuracy: 0.2400 - 90ms/epoch - 10ms/step
 Epoch 11/50
-9/9 - 0s - loss: 0.7997 - accuracy: 0.6500 - val_loss: 1.3129 - val_accuracy: 0.3900 - 81ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.8125 - accuracy: 0.6467 - val_loss: 1.4521 - val_accuracy: 0.2900 - 89ms/epoch - 10ms/step
 Epoch 12/50
-9/9 - 0s - loss: 0.7529 - accuracy: 0.6922 - val_loss: 1.3128 - val_accuracy: 0.3500 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.7604 - accuracy: 0.6667 - val_loss: 1.4538 - val_accuracy: 0.2700 - 88ms/epoch - 10ms/step
 Epoch 13/50
-9/9 - 0s - loss: 0.6836 - accuracy: 0.7289 - val_loss: 1.3802 - val_accuracy: 0.4000 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.6953 - accuracy: 0.7289 - val_loss: 1.5755 - val_accuracy: 0.2900 - 87ms/epoch - 10ms/step
 Epoch 14/50
-9/9 - 0s - loss: 0.6284 - accuracy: 0.7467 - val_loss: 1.4751 - val_accuracy: 0.3600 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.6484 - accuracy: 0.7500 - val_loss: 1.6463 - val_accuracy: 0.3000 - 88ms/epoch - 10ms/step
 Epoch 15/50
-9/9 - 0s - loss: 0.5829 - accuracy: 0.7867 - val_loss: 1.4785 - val_accuracy: 0.3800 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.6264 - accuracy: 0.7433 - val_loss: 1.7369 - val_accuracy: 0.2800 - 89ms/epoch - 10ms/step
 Epoch 16/50
-9/9 - 0s - loss: 0.5330 - accuracy: 0.7967 - val_loss: 1.7002 - val_accuracy: 0.3700 - 81ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.5558 - accuracy: 0.8022 - val_loss: 1.8089 - val_accuracy: 0.2600 - 88ms/epoch - 10ms/step
 Epoch 17/50
-9/9 - 0s - loss: 0.4989 - accuracy: 0.8278 - val_loss: 1.6326 - val_accuracy: 0.4000 - 81ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.4886 - accuracy: 0.8300 - val_loss: 1.9365 - val_accuracy: 0.2700 - 93ms/epoch - 10ms/step
 Epoch 18/50
-9/9 - 0s - loss: 0.4842 - accuracy: 0.8189 - val_loss: 1.9201 - val_accuracy: 0.3500 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.4341 - accuracy: 0.8644 - val_loss: 2.0011 - val_accuracy: 0.3100 - 101ms/epoch - 11ms/step
 Epoch 19/50
-9/9 - 0s - loss: 0.4380 - accuracy: 0.8356 - val_loss: 1.7465 - val_accuracy: 0.3900 - 81ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.3999 - accuracy: 0.8700 - val_loss: 2.1024 - val_accuracy: 0.2900 - 106ms/epoch - 12ms/step
 Epoch 20/50
-9/9 - 0s - loss: 0.3821 - accuracy: 0.8744 - val_loss: 1.9561 - val_accuracy: 0.3500 - 85ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.3671 - accuracy: 0.8833 - val_loss: 2.3319 - val_accuracy: 0.3400 - 99ms/epoch - 11ms/step
 Epoch 21/50
-9/9 - 0s - loss: 0.3353 - accuracy: 0.8911 - val_loss: 2.0040 - val_accuracy: 0.2600 - 90ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.3761 - accuracy: 0.8667 - val_loss: 2.4605 - val_accuracy: 0.2700 - 100ms/epoch - 11ms/step
 Epoch 22/50
-9/9 - 0s - loss: 0.2960 - accuracy: 0.9100 - val_loss: 2.1072 - val_accuracy: 0.3400 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.3324 - accuracy: 0.8822 - val_loss: 2.4886 - val_accuracy: 0.3200 - 97ms/epoch - 11ms/step
 Epoch 23/50
-9/9 - 0s - loss: 0.2388 - accuracy: 0.9456 - val_loss: 2.1638 - val_accuracy: 0.3500 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.2755 - accuracy: 0.9100 - val_loss: 2.5855 - val_accuracy: 0.3200 - 98ms/epoch - 11ms/step
 Epoch 24/50
-9/9 - 0s - loss: 0.2336 - accuracy: 0.9322 - val_loss: 2.2757 - val_accuracy: 0.2900 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.2489 - accuracy: 0.9256 - val_loss: 2.7775 - val_accuracy: 0.3400 - 98ms/epoch - 11ms/step
 Epoch 25/50
-9/9 - 0s - loss: 0.1806 - accuracy: 0.9633 - val_loss: 2.4390 - val_accuracy: 0.3400 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.2084 - accuracy: 0.9489 - val_loss: 2.7613 - val_accuracy: 0.2900 - 93ms/epoch - 10ms/step
 Epoch 26/50
-9/9 - 0s - loss: 0.1815 - accuracy: 0.9544 - val_loss: 2.4587 - val_accuracy: 0.3400 - 81ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.1561 - accuracy: 0.9744 - val_loss: 3.0682 - val_accuracy: 0.3000 - 97ms/epoch - 11ms/step
 Epoch 27/50
-9/9 - 0s - loss: 0.1586 - accuracy: 0.9656 - val_loss: 2.5464 - val_accuracy: 0.3000 - 84ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.1364 - accuracy: 0.9756 - val_loss: 3.0417 - val_accuracy: 0.2900 - 91ms/epoch - 10ms/step
 Epoch 28/50
-9/9 - 0s - loss: 0.1457 - accuracy: 0.9722 - val_loss: 2.6396 - val_accuracy: 0.3300 - 83ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.1177 - accuracy: 0.9833 - val_loss: 3.2456 - val_accuracy: 0.2900 - 92ms/epoch - 10ms/step
 Epoch 29/50
-9/9 - 0s - loss: 0.1386 - accuracy: 0.9789 - val_loss: 2.5508 - val_accuracy: 0.3300 - 82ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.0996 - accuracy: 0.9933 - val_loss: 3.3559 - val_accuracy: 0.3000 - 90ms/epoch - 10ms/step
 Epoch 30/50
-9/9 - 0s - loss: 0.1091 - accuracy: 0.9833 - val_loss: 2.8272 - val_accuracy: 0.3400 - 87ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0882 - accuracy: 0.9911 - val_loss: 3.4259 - val_accuracy: 0.3000 - 90ms/epoch - 10ms/step
 Epoch 31/50
-9/9 - 0s - loss: 0.0816 - accuracy: 0.9944 - val_loss: 2.8505 - val_accuracy: 0.3500 - 90ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0788 - accuracy: 0.9944 - val_loss: 3.6843 - val_accuracy: 0.2800 - 90ms/epoch - 10ms/step
 Epoch 32/50
-9/9 - 0s - loss: 0.0709 - accuracy: 0.9967 - val_loss: 2.8556 - val_accuracy: 0.3400 - 92ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0636 - accuracy: 0.9978 - val_loss: 3.6871 - val_accuracy: 0.3000 - 89ms/epoch - 10ms/step
 Epoch 33/50
-9/9 - 0s - loss: 0.0604 - accuracy: 0.9978 - val_loss: 2.9199 - val_accuracy: 0.3400 - 89ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0502 - accuracy: 1.0000 - val_loss: 3.8740 - val_accuracy: 0.3000 - 87ms/epoch - 10ms/step
 Epoch 34/50
-9/9 - 0s - loss: 0.0495 - accuracy: 0.9989 - val_loss: 2.9985 - val_accuracy: 0.3300 - 90ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0451 - accuracy: 0.9989 - val_loss: 3.7788 - val_accuracy: 0.3100 - 87ms/epoch - 10ms/step
 Epoch 35/50
-9/9 - 0s - loss: 0.0407 - accuracy: 1.0000 - val_loss: 3.2302 - val_accuracy: 0.3200 - 88ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0377 - accuracy: 1.0000 - val_loss: 4.1327 - val_accuracy: 0.2900 - 89ms/epoch - 10ms/step
 Epoch 36/50
-9/9 - 0s - loss: 0.0325 - accuracy: 1.0000 - val_loss: 3.1978 - val_accuracy: 0.3300 - 89ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0320 - accuracy: 1.0000 - val_loss: 3.9984 - val_accuracy: 0.2900 - 91ms/epoch - 10ms/step
 Epoch 37/50
-9/9 - 0s - loss: 0.0313 - accuracy: 0.9989 - val_loss: 3.1832 - val_accuracy: 0.3500 - 99ms/epoch - 11ms/step
+9/9 - 0s - loss: 0.0261 - accuracy: 1.0000 - val_loss: 4.1676 - val_accuracy: 0.2900 - 88ms/epoch - 10ms/step
 Epoch 38/50
-9/9 - 0s - loss: 0.0322 - accuracy: 0.9978 - val_loss: 3.3745 - val_accuracy: 0.3200 - 87ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0223 - accuracy: 1.0000 - val_loss: 4.2871 - val_accuracy: 0.2800 - 91ms/epoch - 10ms/step
 Epoch 39/50
-9/9 - 0s - loss: 0.0271 - accuracy: 1.0000 - val_loss: 3.4600 - val_accuracy: 0.3100 - 85ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.0198 - accuracy: 1.0000 - val_loss: 4.3003 - val_accuracy: 0.2900 - 89ms/epoch - 10ms/step
 Epoch 40/50
-9/9 - 0s - loss: 0.0230 - accuracy: 1.0000 - val_loss: 3.4435 - val_accuracy: 0.3200 - 88ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0175 - accuracy: 1.0000 - val_loss: 4.4379 - val_accuracy: 0.2800 - 90ms/epoch - 10ms/step
 Epoch 41/50
-9/9 - 0s - loss: 0.0179 - accuracy: 1.0000 - val_loss: 3.5294 - val_accuracy: 0.3400 - 88ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0164 - accuracy: 1.0000 - val_loss: 4.4096 - val_accuracy: 0.2800 - 89ms/epoch - 10ms/step
 Epoch 42/50
-9/9 - 0s - loss: 0.0156 - accuracy: 1.0000 - val_loss: 3.5217 - val_accuracy: 0.3200 - 85ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.0145 - accuracy: 1.0000 - val_loss: 4.5412 - val_accuracy: 0.2900 - 90ms/epoch - 10ms/step
 Epoch 43/50
-9/9 - 0s - loss: 0.0139 - accuracy: 1.0000 - val_loss: 3.5561 - val_accuracy: 0.3300 - 88ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0134 - accuracy: 1.0000 - val_loss: 4.5190 - val_accuracy: 0.2900 - 89ms/epoch - 10ms/step
 Epoch 44/50
-9/9 - 0s - loss: 0.0126 - accuracy: 1.0000 - val_loss: 3.5808 - val_accuracy: 0.3300 - 89ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0124 - accuracy: 1.0000 - val_loss: 4.6218 - val_accuracy: 0.2900 - 89ms/epoch - 10ms/step
 Epoch 45/50
-9/9 - 0s - loss: 0.0119 - accuracy: 1.0000 - val_loss: 3.6306 - val_accuracy: 0.3200 - 87ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0115 - accuracy: 1.0000 - val_loss: 4.6663 - val_accuracy: 0.2800 - 87ms/epoch - 10ms/step
 Epoch 46/50
-9/9 - 0s - loss: 0.0108 - accuracy: 1.0000 - val_loss: 3.6863 - val_accuracy: 0.3200 - 87ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0108 - accuracy: 1.0000 - val_loss: 4.6790 - val_accuracy: 0.3000 - 91ms/epoch - 10ms/step
 Epoch 47/50
-9/9 - 0s - loss: 0.0100 - accuracy: 1.0000 - val_loss: 3.6891 - val_accuracy: 0.3200 - 87ms/epoch - 10ms/step
+9/9 - 0s - loss: 0.0101 - accuracy: 1.0000 - val_loss: 4.7649 - val_accuracy: 0.2900 - 87ms/epoch - 10ms/step
 Epoch 48/50
-9/9 - 0s - loss: 0.0094 - accuracy: 1.0000 - val_loss: 3.7300 - val_accuracy: 0.3200 - 85ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.0096 - accuracy: 1.0000 - val_loss: 4.8301 - val_accuracy: 0.2900 - 95ms/epoch - 11ms/step
 Epoch 49/50
-9/9 - 0s - loss: 0.0089 - accuracy: 1.0000 - val_loss: 3.7520 - val_accuracy: 0.3200 - 84ms/epoch - 9ms/step
+9/9 - 0s - loss: 0.0089 - accuracy: 1.0000 - val_loss: 4.8164 - val_accuracy: 0.2900 - 90ms/epoch - 10ms/step
 Epoch 50/50
-9/9 - 0s - loss: 0.0084 - accuracy: 1.0000 - val_loss: 3.8023 - val_accuracy: 0.3200 - 86ms/epoch - 10ms/step</code></pre>
+9/9 - 0s - loss: 0.0084 - accuracy: 1.0000 - val_loss: 4.9097 - val_accuracy: 0.2900 - 88ms/epoch - 10ms/step</code></pre>
 </div>
 </div>
 <p><strong>A:</strong> The final training is 100%, the validation accuracy is 33% (may vary depending on initialization). The network has learned the training examples by heart, although they are totally random, but totally fails to generalize.</p>
@@ -696,23 +706,23 @@ Epoch 50/50
 <h2 class="anchored" data-anchor-id="training-a-mlp-on-mnist">Training a MLP on MNIST</h2>
 <p>Let’s now try to learn something a bit more serious, the MNIST dataset. The following cell load the MNIST data (training set 60000 28x28 monochrome images, test set of 10000 images), normalizes it (values betwen 0 and 1 for each pixel), removes the mean image from the training set and transforms the targets to one-hot encoded vectors for the 10 classes. See the neurocomputing exercise for more details.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the MNIST dataset</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>(X_train, t_train), (X_test, t_test) <span class="op">=</span> tf.keras.datasets.mnist.load_data()</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training data:"</span>, X_train.shape, t_train.shape)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Test data:"</span>, X_test.shape, t_test.shape)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the images to vectors and normalize</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X_train.reshape(X_train.shape[<span class="dv">0</span>], <span class="dv">784</span>).astype(<span class="st">'float32'</span>) <span class="op">/</span> <span class="fl">255.</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> X_test.reshape(X_test.shape[<span class="dv">0</span>], <span class="dv">784</span>).astype(<span class="st">'float32'</span>) <span class="op">/</span> <span class="fl">255.</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean removal</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>X_mean <span class="op">=</span> np.mean(X_train, axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">-=</span> X_mean</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">-=</span> X_mean</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encoded outputs</span></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>T_train <span class="op">=</span> tf.keras.utils.to_categorical(t_train, <span class="dv">10</span>)</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>T_test <span class="op">=</span> tf.keras.utils.to_categorical(t_test, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the MNIST dataset</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>(X_train, t_train), (X_test, t_test) <span class="op">=</span> tf.keras.datasets.mnist.load_data()</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training data:"</span>, X_train.shape, t_train.shape)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Test data:"</span>, X_test.shape, t_test.shape)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the images to vectors and normalize</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X_train.reshape(X_train.shape[<span class="dv">0</span>], <span class="dv">784</span>).astype(<span class="st">'float32'</span>) <span class="op">/</span> <span class="fl">255.</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> X_test.reshape(X_test.shape[<span class="dv">0</span>], <span class="dv">784</span>).astype(<span class="st">'float32'</span>) <span class="op">/</span> <span class="fl">255.</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean removal</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>X_mean <span class="op">=</span> np.mean(X_train, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">-=</span> X_mean</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">-=</span> X_mean</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encoded outputs</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>T_train <span class="op">=</span> tf.keras.utils.to_categorical(t_train, <span class="dv">10</span>)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>T_test <span class="op">=</span> tf.keras.utils.to_categorical(t_test, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training data: (60000, 28, 28) (60000,)
 Test data: (10000, 28, 28) (10000,)</code></pre>
@@ -725,52 +735,52 @@ Test data: (10000, 28, 28) (10000,)</code></pre>
 <li>Do not exagerate with the number of layers and neurons. Two or there hidden layers with 100 to 300 neurons are more than enough.</li>
 <li>You will quickly observe that the network overfits: the training accuracy is higher than the validation accuracy. The training accuracy actually goes to 100% if your network is too big. In that case, feel free to add a dropout layer after each fully-connected layer:</li>
 </ul>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dropout(<span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dropout(<span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_model():</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the model</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> tf.keras.models.Sequential()</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Input layer with 784 pixels</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Input((<span class="dv">784</span>,)))</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hidden layer with 150 neurons</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">150</span>, activation<span class="op">=</span><span class="st">"relu"</span>))</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dropout(<span class="fl">0.5</span>))</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Second hidden layer with 100 neurons</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">100</span>, activation<span class="op">=</span><span class="st">"relu"</span>))</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dropout(<span class="fl">0.5</span>))</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Softmax output layer with 10 neurons</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>))</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Learning rule</span></span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>)</span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loss function</span></span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">compile</span>(</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>        loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, <span class="co"># loss</span></span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>        optimizer<span class="op">=</span>optimizer, <span class="co"># learning rule</span></span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>        metrics<span class="op">=</span>[<span class="st">'accuracy'</span>] <span class="co"># show accuracy</span></span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.summary())</span>
-<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_model():</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the model</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> tf.keras.models.Sequential()</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Input layer with 784 pixels</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Input((<span class="dv">784</span>,)))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hidden layer with 150 neurons</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">150</span>, activation<span class="op">=</span><span class="st">"relu"</span>))</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dropout(<span class="fl">0.5</span>))</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Second hidden layer with 100 neurons</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">100</span>, activation<span class="op">=</span><span class="st">"relu"</span>))</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dropout(<span class="fl">0.5</span>))</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Softmax output layer with 10 neurons</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    model.add(tf.keras.layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>))</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Learning rule</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>)</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loss function</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">compile</span>(</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>        loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, <span class="co"># loss</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>        optimizer<span class="op">=</span>optimizer, <span class="co"># learning rule</span></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>        metrics<span class="op">=</span>[<span class="st">'accuracy'</span>] <span class="co"># show accuracy</span></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.summary())</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> create_model()</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Training</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> tf.keras.callbacks.History()</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    X_train, T_train,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">100</span>, </span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    callbacks<span class="op">=</span>[history]</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> create_model()</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Training</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> tf.keras.callbacks.History()</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    X_train, T_train,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    callbacks<span class="op">=</span>[history]</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "sequential_1"
 _________________________________________________________________
@@ -795,109 +805,102 @@ None
 Epoch 1/20</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/Users/vitay/Applications/miniforge3/lib/python3.9/site-packages/keras/optimizers/optimizer_v2/adam.py:114: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
-  super().__init__(name, **kwargs)</code></pre>
+<pre><code>2022-11-24 18:31:53.203907: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  1/540 [..............................] - ETA: 3:03 - loss: 2.6045 - accuracy: 0.0500</code></pre>
+<pre><code>538/540 [============================&gt;.] - ETA: 0s - loss: 0.5194 - accuracy: 0.8409</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-11-15 13:05:05.914474: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-11-24 18:31:58.951897: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>539/540 [============================&gt;.] - ETA: 0s - loss: 0.5274 - accuracy: 0.8360</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>2022-11-15 13:05:10.488618: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>540/540 [==============================] - 5s 9ms/step - loss: 0.5271 - accuracy: 0.8361 - val_loss: 0.1576 - val_accuracy: 0.9532
+<pre><code>540/540 [==============================] - 6s 11ms/step - loss: 0.5185 - accuracy: 0.8411 - val_loss: 0.1482 - val_accuracy: 0.9577
 Epoch 2/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.2489 - accuracy: 0.9263 - val_loss: 0.1201 - val_accuracy: 0.9650
+540/540 [==============================] - 6s 10ms/step - loss: 0.2497 - accuracy: 0.9261 - val_loss: 0.1195 - val_accuracy: 0.9637
 Epoch 3/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.2015 - accuracy: 0.9406 - val_loss: 0.1029 - val_accuracy: 0.9680
+540/540 [==============================] - 5s 10ms/step - loss: 0.2007 - accuracy: 0.9414 - val_loss: 0.0993 - val_accuracy: 0.9705
 Epoch 4/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1756 - accuracy: 0.9461 - val_loss: 0.0901 - val_accuracy: 0.9732
+540/540 [==============================] - 5s 10ms/step - loss: 0.1732 - accuracy: 0.9485 - val_loss: 0.0932 - val_accuracy: 0.9718
 Epoch 5/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1529 - accuracy: 0.9546 - val_loss: 0.0822 - val_accuracy: 0.9772
+540/540 [==============================] - 5s 10ms/step - loss: 0.1580 - accuracy: 0.9530 - val_loss: 0.0823 - val_accuracy: 0.9747
 Epoch 6/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1419 - accuracy: 0.9568 - val_loss: 0.0832 - val_accuracy: 0.9758
+540/540 [==============================] - 5s 10ms/step - loss: 0.1453 - accuracy: 0.9562 - val_loss: 0.0819 - val_accuracy: 0.9752
 Epoch 7/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1312 - accuracy: 0.9599 - val_loss: 0.0786 - val_accuracy: 0.9765
+540/540 [==============================] - 5s 10ms/step - loss: 0.1319 - accuracy: 0.9602 - val_loss: 0.0800 - val_accuracy: 0.9747
 Epoch 8/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1219 - accuracy: 0.9629 - val_loss: 0.0735 - val_accuracy: 0.9772
+540/540 [==============================] - 5s 10ms/step - loss: 0.1238 - accuracy: 0.9616 - val_loss: 0.0740 - val_accuracy: 0.9780
 Epoch 9/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1145 - accuracy: 0.9643 - val_loss: 0.0768 - val_accuracy: 0.9767
+540/540 [==============================] - 5s 10ms/step - loss: 0.1178 - accuracy: 0.9639 - val_loss: 0.0726 - val_accuracy: 0.9772
 Epoch 10/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1094 - accuracy: 0.9659 - val_loss: 0.0681 - val_accuracy: 0.9803
+540/540 [==============================] - 6s 10ms/step - loss: 0.1109 - accuracy: 0.9657 - val_loss: 0.0719 - val_accuracy: 0.9785
 Epoch 11/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1031 - accuracy: 0.9670 - val_loss: 0.0698 - val_accuracy: 0.9793
+540/540 [==============================] - 6s 10ms/step - loss: 0.1055 - accuracy: 0.9670 - val_loss: 0.0729 - val_accuracy: 0.9772
 Epoch 12/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.1032 - accuracy: 0.9685 - val_loss: 0.0679 - val_accuracy: 0.9793
+540/540 [==============================] - 5s 10ms/step - loss: 0.1029 - accuracy: 0.9681 - val_loss: 0.0718 - val_accuracy: 0.9777
 Epoch 13/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0983 - accuracy: 0.9682 - val_loss: 0.0683 - val_accuracy: 0.9788
+540/540 [==============================] - 6s 10ms/step - loss: 0.1007 - accuracy: 0.9683 - val_loss: 0.0664 - val_accuracy: 0.9803
 Epoch 14/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0911 - accuracy: 0.9710 - val_loss: 0.0687 - val_accuracy: 0.9790
+540/540 [==============================] - 5s 10ms/step - loss: 0.0939 - accuracy: 0.9701 - val_loss: 0.0688 - val_accuracy: 0.9778
 Epoch 15/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0918 - accuracy: 0.9714 - val_loss: 0.0641 - val_accuracy: 0.9818
+540/540 [==============================] - 5s 10ms/step - loss: 0.0916 - accuracy: 0.9716 - val_loss: 0.0684 - val_accuracy: 0.9793
 Epoch 16/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0881 - accuracy: 0.9727 - val_loss: 0.0645 - val_accuracy: 0.9800
+540/540 [==============================] - 5s 10ms/step - loss: 0.0889 - accuracy: 0.9723 - val_loss: 0.0661 - val_accuracy: 0.9822
 Epoch 17/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0841 - accuracy: 0.9734 - val_loss: 0.0652 - val_accuracy: 0.9805
+540/540 [==============================] - 5s 10ms/step - loss: 0.0845 - accuracy: 0.9740 - val_loss: 0.0687 - val_accuracy: 0.9807
 Epoch 18/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0826 - accuracy: 0.9738 - val_loss: 0.0644 - val_accuracy: 0.9798
+540/540 [==============================] - 5s 10ms/step - loss: 0.0840 - accuracy: 0.9733 - val_loss: 0.0685 - val_accuracy: 0.9812
 Epoch 19/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0803 - accuracy: 0.9742 - val_loss: 0.0671 - val_accuracy: 0.9792
+540/540 [==============================] - 6s 11ms/step - loss: 0.0791 - accuracy: 0.9755 - val_loss: 0.0717 - val_accuracy: 0.9808
 Epoch 20/20
-540/540 [==============================] - 5s 9ms/step - loss: 0.0826 - accuracy: 0.9742 - val_loss: 0.0603 - val_accuracy: 0.9810</code></pre>
+540/540 [==============================] - 5s 10ms/step - loss: 0.0817 - accuracy: 0.9740 - val_loss: 0.0669 - val_accuracy: 0.9815</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;keras.callbacks.History at 0x1598b4f40&gt;</code></pre>
+<pre><code>&lt;keras.callbacks.History at 0x16579a610&gt;</code></pre>
 </div>
 </div>
 <p>After training, one should evaluate the model on the test set. <code>keras</code> provides an <code>evaluate()</code> method that computes the different metrics (in our case the loss) on the data:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> model.evaluate(X_test, T_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> model.evaluate(X_test, T_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Another solution would be to <code>predict()</code> labels on the test set and manually compare them to the ground truth:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> <span class="op">-</span> np.mean(T_test <span class="op">*</span> np.log(Y))</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="op">=</span> np.argmax(Y, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> np.<span class="bu">sum</span>(predicted_classes <span class="op">!=</span> t_test)<span class="op">/</span>t_test.shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> <span class="op">-</span> np.mean(T_test <span class="op">*</span> np.log(Y))</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="op">=</span> np.argmax(Y, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> np.<span class="bu">sum</span>(predicted_classes <span class="op">!=</span> t_test)<span class="op">/</span>t_test.shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Another important thing to visualize after training is how the training and validation loss (or accuracy) evolved during training. The <code>fit()</code> method updates a <code>History</code> object which contains the history of your metrics (loss and accuracy) after each epoch of training. These are simple numpy arrays, accessible with:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'loss'</span>]</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'val_loss'</span>]</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'accuracy'</span>]</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'val_accuracy'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'loss'</span>]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'val_loss'</span>]</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'accuracy'</span>]</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>history.history[<span class="st">'val_accuracy'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Q:</strong> Compute the test loss and accuracy of your model. Plot the history of the training and validation loss/accuracy.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Testing</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> model.evaluate(X_test, T_test)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test loss:'</span>, score[<span class="dv">0</span>])</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test accuracy:'</span>, score[<span class="dv">1</span>])</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_loss'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Loss'</span>)</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'accuracy'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_accuracy'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Testing</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> model.evaluate(X_test, T_test)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test loss:'</span>, score[<span class="dv">0</span>])</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test accuracy:'</span>, score[<span class="dv">1</span>])</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_loss'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Loss'</span>)</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'accuracy'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_accuracy'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> 15/313 [&gt;.............................] - ETA: 2s - loss: 0.0563 - accuracy: 0.9833</code></pre>
+<pre><code> 14/313 [&gt;.............................] - ETA: 2s - loss: 0.0518 - accuracy: 0.9866</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-11-15 13:06:45.877919: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-11-24 18:33:42.354208: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>313/313 [==============================] - 2s 7ms/step - loss: 0.0717 - accuracy: 0.9789
-Test loss: 0.07174411416053772
-Test accuracy: 0.9789000749588013</code></pre>
+<pre><code>313/313 [==============================] - 3s 9ms/step - loss: 0.0763 - accuracy: 0.9782
+Test loss: 0.07633379101753235
+Test accuracy: 0.9782000184059143</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -913,50 +916,50 @@ Test accuracy: 0.9789000749588013</code></pre>
 <p>Now that we have a basic NN working on MNIST, let’s investigate why deep NN hate sequentially correlated inputs (which is the main justification for the experience replay memory in DQN). Is that really true, or is just some mathematical assumption that does not matter in practice?</p>
 <p>The idea of this part is the following: we will train the same network as before for 20 epochs, but each epoch will train the network on all the 0s first, then all the 1s, etc. Each epoch will contain the same number of training examples as before, but the order of presentation will simply be different.</p>
 <p>To get all examples of the training set which have the target 3 (for example), you just have to slice the matrices accordingly:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X_train[t_train<span class="op">==</span><span class="dv">3</span>, :]</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> T_train[t_train<span class="op">==</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X_train[t_train<span class="op">==</span><span class="dv">3</span>, :]</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> T_train[t_train<span class="op">==</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Q:</strong> Train the same network as before (but reinitialize it!) for 20 epochs, with each epoch sequentially iterating over the classes 0, 1, 2, 3, etc. Plot the loss and accurary during training. What do you observe?</p>
 <p><em>Hint:</em> you will have two for loops to write: one over the epochs, one over the digits.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>        model.fit(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>        model.fit(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You should only do one epoch for each call to <code>fit()</code>. Set <code>verbose=0</code> in <code>fit()</code> to avoid printing too much info.</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> create_model()</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> tf.keras.callbacks.History()</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Epoch: "</span>, e<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Training</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>        model.fit(</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>            X_train[t_train<span class="op">==</span>c, :], T_train[t_train<span class="op">==</span>c, :],</span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>            batch_size<span class="op">=</span><span class="dv">100</span>, </span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>            epochs<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>            validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>            verbose <span class="op">=</span> <span class="dv">0</span>,</span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>            callbacks<span class="op">=</span>[history]</span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Training loss:"</span>, history.history[<span class="st">"loss"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Training accuracy:"</span>, history.history[<span class="st">"accuracy"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Validation loss:"</span>, history.history[<span class="st">"val_loss"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Validation accuracy:"</span>, history.history[<span class="st">"val_accuracy"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_loss'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Loss'</span>)</span>
-<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
-<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'accuracy'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
-<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_accuracy'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
-<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
-<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
-<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> create_model()</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> tf.keras.callbacks.History()</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Epoch: "</span>, e<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Training</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>        model.fit(</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>            X_train[t_train<span class="op">==</span>c, :], T_train[t_train<span class="op">==</span>c, :],</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>            batch_size<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>            epochs<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>            validation_split<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>            verbose <span class="op">=</span> <span class="dv">0</span>,</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>            callbacks<span class="op">=</span>[history]</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Training loss:"</span>, history.history[<span class="st">"loss"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Training accuracy:"</span>, history.history[<span class="st">"accuracy"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Validation loss:"</span>, history.history[<span class="st">"val_loss"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Validation accuracy:"</span>, history.history[<span class="st">"val_accuracy"</span>][<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'loss'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_loss'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Loss'</span>)</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'accuracy'</span>], <span class="st">'-r'</span>, label<span class="op">=</span><span class="st">"Training"</span>)</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>plt.plot(history.history[<span class="st">'val_accuracy'</span>], <span class="st">'-b'</span>, label<span class="op">=</span><span class="st">"Validation"</span>)</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Epoch #'</span>)</span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "sequential_2"
 _________________________________________________________________
@@ -981,109 +984,109 @@ None
 Epoch:  1</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-11-15 13:06:51.648645: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.
-2022-11-15 13:06:52.409437: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-11-24 18:33:52.698762: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.
+2022-11-24 18:33:53.547791: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Training loss: 2.029949426651001
- Training accuracy: 0.4409787058830261
- Validation loss: 0.06199435144662857
- Validation accuracy: 0.9848739504814148
+<pre><code> Training loss: 2.1789441108703613
+ Training accuracy: 0.4577885866165161
+ Validation loss: 0.06307889521121979
+ Validation accuracy: 0.9831932783126831
 Epoch:  2
- Training loss: 0.9748570322990417
- Training accuracy: 0.7392603754997253
- Validation loss: 0.028808292001485825
+ Training loss: 1.1442071199417114
+ Training accuracy: 0.7080687284469604
+ Validation loss: 0.027842853218317032
  Validation accuracy: 0.9899159669876099
 Epoch:  3
- Training loss: 0.6735117435455322
- Training accuracy: 0.7979081273078918
- Validation loss: 0.041012201458215714
- Validation accuracy: 0.9865546226501465
+ Training loss: 0.8554081320762634
+ Training accuracy: 0.7674636244773865
+ Validation loss: 0.06736434251070023
+ Validation accuracy: 0.9831932783126831
 Epoch:  4
- Training loss: 0.6233999133110046
- Training accuracy: 0.7984684705734253
- Validation loss: 0.046713244169950485
+ Training loss: 0.6917049288749695
+ Training accuracy: 0.7822189331054688
+ Validation loss: 0.052796363830566406
  Validation accuracy: 0.9865546226501465
 Epoch:  5
- Training loss: 0.644547700881958
- Training accuracy: 0.8083676099777222
- Validation loss: 0.046737030148506165
- Validation accuracy: 0.9882352948188782
+ Training loss: 0.5919428467750549
+ Training accuracy: 0.8147180080413818
+ Validation loss: 0.04681151360273361
+ Validation accuracy: 0.9831932783126831
 Epoch:  6
- Training loss: 0.5482434034347534
+ Training loss: 0.4891780614852905
  Training accuracy: 0.8408666849136353
- Validation loss: 0.04225711524486542
- Validation accuracy: 0.9865546226501465
-Epoch:  7
- Training loss: 0.48833325505256653
- Training accuracy: 0.8541277647018433
- Validation loss: 0.041813675314188004
- Validation accuracy: 0.9815126061439514
-Epoch:  8
- Training loss: 0.48677706718444824
- Training accuracy: 0.8425476551055908
- Validation loss: 0.04213647544384003
- Validation accuracy: 0.9865546226501465
-Epoch:  9
- Training loss: 0.45263180136680603
- Training accuracy: 0.8576765060424805
- Validation loss: 0.03567739576101303
+ Validation loss: 0.043771397322416306
  Validation accuracy: 0.9882352948188782
+Epoch:  7
+ Training loss: 0.44778183102607727
+ Training accuracy: 0.8599178194999695
+ Validation loss: 0.03981785476207733
+ Validation accuracy: 0.9882352948188782
+Epoch:  8
+ Training loss: 0.48525184392929077
+ Training accuracy: 0.8421741127967834
+ Validation loss: 0.038229942321777344
+ Validation accuracy: 0.9882352948188782
+Epoch:  9
+ Training loss: 0.4880279004573822
+ Training accuracy: 0.8502054810523987
+ Validation loss: 0.04261568561196327
+ Validation accuracy: 0.9899159669876099
 Epoch:  10
- Training loss: 0.43333420157432556
- Training accuracy: 0.862906277179718
- Validation loss: 0.036885034292936325
- Validation accuracy: 0.9899159669876099
+ Training loss: 0.41330939531326294
+ Training accuracy: 0.86720210313797
+ Validation loss: 0.043336544185876846
+ Validation accuracy: 0.9865546226501465
 Epoch:  11
- Training loss: 0.42501774430274963
- Training accuracy: 0.8658946752548218
- Validation loss: 0.03803431615233421
- Validation accuracy: 0.9899159669876099
+ Training loss: 0.42511239647865295
+ Training accuracy: 0.8647740483283997
+ Validation loss: 0.042776186019182205
+ Validation accuracy: 0.9865546226501465
 Epoch:  12
- Training loss: 0.42635124921798706
- Training accuracy: 0.8709376454353333
- Validation loss: 0.03939447179436684
+ Training loss: 0.43565788865089417
+ Training accuracy: 0.8683227896690369
+ Validation loss: 0.037856556475162506
  Validation accuracy: 0.9865546226501465
 Epoch:  13
- Training loss: 0.3924403488636017
- Training accuracy: 0.8813971281051636
- Validation loss: 0.04728272929787636
- Validation accuracy: 0.9848739504814148
-Epoch:  14
- Training loss: 0.3904794454574585
- Training accuracy: 0.8800897002220154
- Validation loss: 0.03570760041475296
- Validation accuracy: 0.9915966391563416
-Epoch:  15
- Training loss: 0.3419549763202667
- Training accuracy: 0.8940979242324829
- Validation loss: 0.03474016487598419
- Validation accuracy: 0.9915966391563416
-Epoch:  16
- Training loss: 0.33528366684913635
- Training accuracy: 0.8946582078933716
- Validation loss: 0.042798422276973724
+ Training loss: 0.4058941900730133
+ Training accuracy: 0.8754202723503113
+ Validation loss: 0.033589139580726624
  Validation accuracy: 0.9882352948188782
+Epoch:  14
+ Training loss: 0.4229739308357239
+ Training accuracy: 0.8685095310211182
+ Validation loss: 0.04102521017193794
+ Validation accuracy: 0.9848739504814148
+Epoch:  15
+ Training loss: 0.40655088424682617
+ Training accuracy: 0.8804632425308228
+ Validation loss: 0.03230886533856392
+ Validation accuracy: 0.9899159669876099
+Epoch:  16
+ Training loss: 0.40451598167419434
+ Training accuracy: 0.8726186156272888
+ Validation loss: 0.035236991941928864
+ Validation accuracy: 0.9848739504814148
 Epoch:  17
- Training loss: 0.34141793847084045
- Training accuracy: 0.8899888396263123
- Validation loss: 0.03723347559571266
+ Training loss: 0.3949117362499237
+ Training accuracy: 0.8808367848396301
+ Validation loss: 0.03679860755801201
  Validation accuracy: 0.9882352948188782
 Epoch:  18
- Training loss: 0.3221873641014099
- Training accuracy: 0.9064251184463501
- Validation loss: 0.038093291223049164
- Validation accuracy: 0.9882352948188782
-Epoch:  19
- Training loss: 0.30312439799308777
- Training accuracy: 0.9045573472976685
- Validation loss: 0.04427587613463402
+ Training loss: 0.377407431602478
+ Training accuracy: 0.8825177550315857
+ Validation loss: 0.04177376627922058
  Validation accuracy: 0.9848739504814148
+Epoch:  19
+ Training loss: 0.35344383120536804
+ Training accuracy: 0.8911094665527344
+ Validation loss: 0.03944191709160805
+ Validation accuracy: 0.9865546226501465
 Epoch:  20
- Training loss: 0.30541884899139404
- Training accuracy: 0.9013821482658386
- Validation loss: 0.03604322671890259
- Validation accuracy: 0.9882352948188782</code></pre>
+ Training loss: 0.3501055836677551
+ Training accuracy: 0.8866268396377563
+ Validation loss: 0.03972172364592552
+ Validation accuracy: 0.9848739504814148</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1096,54 +1099,54 @@ Epoch:  20
 <p><strong>A:</strong> The training accuracy slowly increases (with some oscillations, some numbers are harder to learn than others), but the validation accuracy is suspiciously high right from the start…</p>
 <p><strong>Q:</strong> Evaluate the model after training on the whole test set. What happens?</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Testing</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> model.evaluate(X_test, T_test, verbose<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test loss:'</span>, score[<span class="dv">0</span>])</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test accuracy:'</span>, score[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Testing</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> model.evaluate(X_test, T_test, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test loss:'</span>, score[<span class="dv">0</span>])</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test accuracy:'</span>, score[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test loss: 0.9087441563606262
-Test accuracy: 0.7581000328063965</code></pre>
+<pre><code>Test loss: 0.7852121591567993
+Test accuracy: 0.778700053691864</code></pre>
 </div>
 </div>
 <p><strong>A:</strong> Horror! The test accuracy is now awful, although the training and validation accuracies were fine after 20 epochs.</p>
 <p><strong>Q:</strong> To better understand what happened, compute the test accuracy of the network on each class of the test set individually: all the 0s of the test set, then all the 1s, etc. What happens?</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> model.evaluate(X_test[t_test<span class="op">==</span>c, :], T_test[t_test<span class="op">==</span>c, :], verbose<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Class"</span>, c)</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Test loss:'</span>, score[<span class="dv">0</span>])</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Test accuracy:'</span>, score[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> model.evaluate(X_test[t_test<span class="op">==</span>c, :], T_test[t_test<span class="op">==</span>c, :], verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Class"</span>, c)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Test loss:'</span>, score[<span class="dv">0</span>])</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Test accuracy:'</span>, score[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Class 0
-Test loss: 0.3669024407863617
-Test accuracy: 0.9132653474807739
+Test loss: 0.41480857133865356
+Test accuracy: 0.9061225056648254
 Class 1
-Test loss: 0.7315441966056824
-Test accuracy: 0.8651982545852661
+Test loss: 0.5983759164810181
+Test accuracy: 0.882819414138794
 Class 2
-Test loss: 0.9564369320869446
-Test accuracy: 0.7509689927101135
+Test loss: 0.9812650084495544
+Test accuracy: 0.7490310072898865
 Class 3
-Test loss: 1.3005502223968506
-Test accuracy: 0.5534653663635254
+Test loss: 1.302044153213501
+Test accuracy: 0.5524752736091614
 Class 4
-Test loss: 1.6715565919876099
-Test accuracy: 0.5274949073791504
+Test loss: 1.409988284111023
+Test accuracy: 0.5346232652664185
 Class 5
-Test loss: 1.3488402366638184
-Test accuracy: 0.6502242684364319
+Test loss: 1.21005380153656
+Test accuracy: 0.6838565468788147
 Class 6
-Test loss: 0.165551096200943
-Test accuracy: 0.960334062576294
+Test loss: 0.16447730362415314
+Test accuracy: 0.9530271887779236
 Class 7
-Test loss: 2.2395598888397217
-Test accuracy: 0.42704281210899353
+Test loss: 1.548042893409729
+Test accuracy: 0.5661478638648987
 Class 8
-Test loss: 0.25550350546836853
-Test accuracy: 0.9414784908294678
+Test loss: 0.17124219238758087
+Test accuracy: 0.9691992402076721
 Class 9
-Test loss: 0.042239751666784286
-Test accuracy: 0.9871159791946411</code></pre>
+Test loss: 0.05847443267703056
+Test accuracy: 0.9831516742706299</code></pre>
 </div>
 </div>
 <p><strong>A:</strong> The last digits to be seen during training are the 9s: they have a good test accuracy. The 8s were seen not too long ago, they are also OK. But the other digits have been forgotten! The memory has been erased. This explains why you cannot train a deep network on-policy: the last episode would be remembered, but all the previous ones would be erased (catastrophic forgetting).</p>
