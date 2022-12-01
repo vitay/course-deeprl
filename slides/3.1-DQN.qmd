@@ -529,6 +529,7 @@ model.compile(optimizer, loss='mse')
 
 ```python
 def q_iteration(env, model, state, memory):
+
     # Choose the action with epsilon-greedy
     if np.random.random() < epsilon:
         action = env.action_space.sample()
@@ -538,7 +539,7 @@ def q_iteration(env, model, state, memory):
         action = values.argmax()
 
     # Play one game iteration
-    new_state, reward, done, _ = env.step(action)
+    new_state, reward, terminal, truncated, info = env.step(action)
 
     # Append the transition to the replay buffer 
     memory.add(state, action, new_state, reward, done)

@@ -528,11 +528,11 @@
 <ul>
 <li>This is a <strong>regression</strong> problem.</li>
 </ul></li>
-<li><p>We want to minimize the <strong>mean-square error</strong> between the two quantities:</p></li>
+<li><p>We want to minimize the <strong>mean square error</strong> between the two quantities:</p></li>
 </ul>
 <p><span class="math display"> \min_\varphi \mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2]</span></p>
 <ul>
-<li>The <strong>loss function</strong> <span class="math inline">\mathcal{L}(\varphi)</span> is minimal when the predicted values are close to the true ones on average.</li>
+<li>The <strong>loss function</strong> <span class="math inline">\mathcal{L}(\varphi)</span> is minimal when the predicted values are close to the true ones on average for all states.</li>
 </ul>
 </section>
 
@@ -582,9 +582,7 @@
 <p>we will iteratively modify the parameters <span class="math inline">\varphi</span> according to:</p>
 <p><span class="math display">
 \begin{aligned}
-    \Delta \varphi = \varphi_{k+1} - \varphi_n &amp; = - \eta \, \nabla_\varphi \mathcal{L}(\varphi) \\
-    &amp;\\
-    &amp; = - \eta \, \nabla_\varphi \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2] \\
+    \Delta \varphi = \varphi_{k+1} - \varphi_n &amp; = - \eta \, \nabla_\varphi \mathcal{L}(\varphi) = - \eta \, \nabla_\varphi \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2] \\
     &amp;\\
     &amp; = \mathbb{E}_{s \in \mathcal{S}} [- \eta \, \nabla_\varphi  (V^\pi(s) - V_\varphi(s))^2] \\
     &amp;\\

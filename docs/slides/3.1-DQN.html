@@ -54,44 +54,44 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
-        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
     div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
+      { color: #24292e;  }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
   </style>
   <link rel="stylesheet" href="3.1-DQN_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
@@ -895,23 +895,23 @@
 <ul>
 <li>Creating the CNN in keras / tensorflow / pytorch is straightforward:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>model <span class="op">=</span> Sequential()</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>model.add(Input((<span class="dv">4</span>, <span class="dv">84</span>, <span class="dv">84</span>)))</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>model.add(Conv2D(<span class="dv">16</span>, (<span class="dv">8</span>, <span class="dv">8</span>), strides<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>)), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a>model.add(Conv2D(<span class="dv">32</span>, (<span class="dv">4</span>, <span class="dv">4</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a>model.add(Flatten())</span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a>model.add(Dense(<span class="dv">256</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a>model.add(Dense(nb_actions, activation<span class="op">=</span><span class="st">'linear'</span>))</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a>optimizer <span class="op">=</span> RMSprop(lr<span class="op">=</span><span class="fl">0.00025</span>, rho<span class="op">=</span><span class="fl">0.95</span>, epsilon<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a>model.<span class="bu">compile</span>(optimizer, loss<span class="op">=</span><span class="st">'mse'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>model.add(Input((<span class="dv">4</span>, <span class="dv">84</span>, <span class="dv">84</span>)))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">16</span>, (<span class="dv">8</span>, <span class="dv">8</span>), strides<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>)), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">32</span>, (<span class="dv">4</span>, <span class="dv">4</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>model.add(Flatten())</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">256</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>model.add(Dense(nb_actions, activation<span class="op">=</span><span class="st">'linear'</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> RMSprop(lr<span class="op">=</span><span class="fl">0.00025</span>, rho<span class="op">=</span><span class="fl">0.95</span>, epsilon<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer, loss<span class="op">=</span><span class="st">'mse'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="footer">
 <p><a href="https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26" class="uri">https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26</a></p>
 </div>
@@ -922,24 +922,25 @@
 <ul>
 <li>Each step of the algorithm follows the GPI approach:</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> q_iteration(env, model, state, memory):</span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="co"># Choose the action with epsilon-greedy</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>    <span class="cf">if</span> np.random.random() <span class="op">&lt;</span> epsilon:</span>
-<span id="cb2-4"><a href="#cb2-4"></a>        action <span class="op">=</span> env.action_space.sample()</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    <span class="cf">else</span>:</span>
-<span id="cb2-6"><a href="#cb2-6"></a>        <span class="co"># Predict the Q-values for the current state and take the greedy action</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>        values <span class="op">=</span> model.predict([state])[<span class="dv">0</span>]</span>
-<span id="cb2-8"><a href="#cb2-8"></a>        action <span class="op">=</span> values.argmax()</span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a>    <span class="co"># Play one game iteration</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>    new_state, reward, done, _ <span class="op">=</span> env.step(action)</span>
-<span id="cb2-12"><a href="#cb2-12"></a></span>
-<span id="cb2-13"><a href="#cb2-13"></a>    <span class="co"># Append the transition to the replay buffer </span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>    memory.add(state, action, new_state, reward, done)</span>
-<span id="cb2-15"><a href="#cb2-15"></a></span>
-<span id="cb2-16"><a href="#cb2-16"></a>    <span class="co"># Sample a minibatch from the memory and fit the DQN</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>    s, a, r, s_, d <span class="op">=</span> memory.sample_batch(<span class="dv">32</span>)</span>
-<span id="cb2-18"><a href="#cb2-18"></a>    fit_batch(model, s, a, r, s_, d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> q_iteration(env, model, state, memory):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Choose the action with epsilon-greedy</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.random.random() <span class="op">&lt;</span> epsilon:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> env.action_space.sample()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values for the current state and take the greedy action</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        values <span class="op">=</span> model.predict([state])[<span class="dv">0</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> values.argmax()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Play one game iteration</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    new_state, reward, terminal, truncated, info <span class="op">=</span> env.step(action)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the transition to the replay buffer </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    memory.add(state, action, new_state, reward, done)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a minibatch from the memory and fit the DQN</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    s, a, r, s_, d <span class="op">=</span> memory.sample_batch(<span class="dv">32</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    fit_batch(model, s, a, r, s_, d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="footer">
 <p><a href="https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26" class="uri">https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26</a></p>
 </div>
@@ -950,24 +951,24 @@
 <ul>
 <li>The only slight difficulty is actually to compute the targets for learning:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> fit_batch(model, states, actions, rewards, next_states, dones)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="co"># Predict the Q-values in the current state</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>    Q_values <span class="op">=</span> model.predict(states)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    </span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="co"># Predict the Q-values in the next state using the target model</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>    next_Q_value <span class="op">=</span> target_model.predict(next_states).<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a>    </span>
-<span id="cb3-9"><a href="#cb3-9"></a>    <span class="co"># Terminal states have a value of 0</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>    next_Q_value[dones] <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a>    </span>
-<span id="cb3-12"><a href="#cb3-12"></a>    <span class="co"># Compute the target</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>    targets <span class="op">=</span> Q_values.copy()</span>
-<span id="cb3-14"><a href="#cb3-14"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(batch_size):</span>
-<span id="cb3-15"><a href="#cb3-15"></a>        targets[i, actions[i]] <span class="op">=</span> rewards[i] <span class="op">+</span> <span class="va">self</span>.gamma <span class="op">*</span> next_Q_value[i]</span>
-<span id="cb3-16"><a href="#cb3-16"></a>        </span>
-<span id="cb3-17"><a href="#cb3-17"></a>    <span class="co"># Train the model on the minibatch</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a>    <span class="va">self</span>.model.fit(states, targets, epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span>batch_size, verbose<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_batch(model, states, actions, rewards, next_states, dones)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the Q-values in the current state</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Q_values <span class="op">=</span> model.predict(states)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the Q-values in the next state using the target model</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    next_Q_value <span class="op">=</span> target_model.predict(next_states).<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Terminal states have a value of 0</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    next_Q_value[dones] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the target</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    targets <span class="op">=</span> Q_values.copy()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(batch_size):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        targets[i, actions[i]] <span class="op">=</span> rewards[i] <span class="op">+</span> <span class="va">self</span>.gamma <span class="op">*</span> next_Q_value[i]</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Train the model on the minibatch</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.model.fit(states, targets, epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span>batch_size, verbose<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="footer">
 <p><a href="https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26" class="uri">https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26</a></p>
 </div>

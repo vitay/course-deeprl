@@ -383,7 +383,7 @@
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ ||\mathbf{t} - \mathbf{y}||^2 ]</span></p></li>
 <li><p><strong>Classification:</strong></p>
 <ul>
-<li><p>The output layer uses the <strong>softmax</strong> operator to produce a probabilty distribution: <span class="math inline">y_j = \frac{e^{z_j}}{\sum_k e^{z_k}}</span></p></li>
+<li><p>The output layer uses the <strong>softmax</strong> operator to produce a probability distribution: <span class="math inline">y_j = \frac{e^{z_j}}{\sum_k e^{z_k}}</span></p></li>
 <li><p>The network minimizes the <strong>cross-entropy</strong> or <strong>negative log-likelihood</strong> of the model on the training set:</p></li>
 </ul>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \mathbf{t} \, \log \mathbf{y} ]</span></p></li>
@@ -420,7 +420,7 @@
 <section id="backpropagation" class="title-slide slide level1 center">
 <h1>Backpropagation</h1>
 <ul>
-<li>In both cases, we want to minimize the loss variant by applying <strong>Stochastic Gradient Descent</strong> (SGD) or a variant (Adam, RMSprop).</li>
+<li>In both cases, we want to minimize the loss function by applying <strong>Stochastic Gradient Descent</strong> (SGD) or a variant (Adam, RMSprop).</li>
 </ul>
 <p><span class="math display">
     \Delta \theta = - \eta \, \nabla_\theta \mathcal{L}(\theta)

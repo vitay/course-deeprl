@@ -45,7 +45,7 @@ $$\mathbf{y} = F_\theta (\mathbf{x})$$
 
 * **Classification:**
 
-    * The output layer uses the **softmax** operator to produce a probabilty distribution: $y_j = \frac{e^{z_j}}{\sum_k e^{z_k}}$
+    * The output layer uses the **softmax** operator to produce a probability distribution: $y_j = \frac{e^{z_j}}{\sum_k e^{z_k}}$
 
     * The network minimizes the **cross-entropy** or **negative log-likelihood** of the model on the training set:
 
@@ -77,7 +77,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - 
 
 # Backpropagation
 
-* In both cases, we want to minimize the loss variant by applying **Stochastic Gradient Descent** (SGD) or a variant (Adam, RMSprop).
+* In both cases, we want to minimize the loss function by applying **Stochastic Gradient Descent** (SGD) or a variant (Adam, RMSprop).
 
 $$
     \Delta \theta = - \eta \, \nabla_\theta \mathcal{L}(\theta)

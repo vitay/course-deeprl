@@ -177,11 +177,11 @@ $$V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)$$
 
     * This is a **regression** problem.
 
-* We want to minimize the **mean-square error** between the two quantities:
+* We want to minimize the **mean square error** between the two quantities:
 
 $$ \min_\varphi \mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2]$$
 
-* The **loss function** $\mathcal{L}(\varphi)$ is minimal when the predicted values are close to the true ones on average.
+* The **loss function** $\mathcal{L}(\varphi)$ is minimal when the predicted values are close to the true ones on average for all states.
 
 
 # Learning the state value approximation
@@ -232,9 +232,7 @@ we will iteratively modify the parameters $\varphi$ according to:
 
 $$
 \begin{aligned}
-    \Delta \varphi = \varphi_{k+1} - \varphi_n & = - \eta \, \nabla_\varphi \mathcal{L}(\varphi) \\
-    &\\
-    & = - \eta \, \nabla_\varphi \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2] \\
+    \Delta \varphi = \varphi_{k+1} - \varphi_n & = - \eta \, \nabla_\varphi \mathcal{L}(\varphi) = - \eta \, \nabla_\varphi \mathbb{E}_{s \in \mathcal{S}} [ (V^\pi(s) - V_\varphi(s))^2] \\
     &\\
     & = \mathbb{E}_{s \in \mathcal{S}} [- \eta \, \nabla_\varphi  (V^\pi(s) - V_\varphi(s))^2] \\
     &\\
