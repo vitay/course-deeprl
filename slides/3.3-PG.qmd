@@ -2,10 +2,8 @@
 title: Deep Reinforcement Learning
 subtitle: Policy gradient
 
-author: Julien Vitay - Professur für Künstliche Intelligenz - Fakultät für Informatik
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 resources: pdf/3.3-PG.pdf
 ---

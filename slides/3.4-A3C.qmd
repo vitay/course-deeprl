@@ -4,7 +4,6 @@ subtitle: Advantage actor-critic (A2C, A3C)
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 resources: pdf/3.4-A3C.pdf
 ---

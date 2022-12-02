@@ -4,7 +4,6 @@ subtitle: Beyond DQN
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 resources: pdf/3.2-BeyondDQN.pdf
 ---

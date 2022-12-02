@@ -4,7 +4,6 @@ subtitle: Temporal Difference learning
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 resources: pdf/2.5-TD.pdf
 ---

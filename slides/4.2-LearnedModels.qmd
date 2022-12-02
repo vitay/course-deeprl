@@ -4,7 +4,6 @@ subtitle: Learned world models
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 resources: pdf/4.2-LearnedModels.pdf
 ---

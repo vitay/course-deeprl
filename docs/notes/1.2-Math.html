@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -118,7 +118,7 @@ div.csl-indent {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../" class="sidebar-logo-link">
+      <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
@@ -432,6 +432,7 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -561,17 +562,14 @@ a_{43} \\
 \alpha\, a_{41} + \beta \, b_{41} &amp; \alpha\, a_{42} + \beta \, b_{42} &amp; \alpha\, a_{43} + \beta \, b_{43} \\
 \end{bmatrix}
 </span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>Beware, you can only add matrices of the same dimensions <span class="math inline">m\times n</span>. You cannot add a <span class="math inline">2\times 3</span> matrix to a <span class="math inline">5 \times 4</span> one.</p>
+</div>
 </div>
 </div>
 <p>The <strong>transpose</strong> <span class="math inline">A^T</span> of a <span class="math inline">m \times n</span> matrix <span class="math inline">A</span> is a <span class="math inline">n \times m</span> matrix, where the row and column indices are swapped:</p>
@@ -619,17 +617,14 @@ c_{m1} &amp; c_{m2} &amp; \cdots &amp; c_{mp} \\
 <p>where each element <span class="math inline">c_{ij}</span> is the dot product of the <span class="math inline">i</span>th row of <span class="math inline">A</span> and <span class="math inline">j</span>th column of <span class="math inline">B</span>:</p>
 <p><span class="math display">c_{ij} = \langle A_{i, :} \cdot B_{:, j} \rangle = a_{i1}b_{1j} + a_{i2}b_{2j} +\cdots + a_{in}b_{nj}= \sum_{k=1}^n a_{ik}b_{kj}
 </span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p><span class="math inline">n</span>, the number of columns of <span class="math inline">A</span> and rows of <span class="math inline">B</span>, must be the same!</p>
+</div>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -723,17 +718,14 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 <p></p><figcaption class="figure-caption">Vector field associating to each point of <span class="math inline">\Re^2</span> another vector. Source: <a href="https://en.wikipedia.org/wiki/Vector_field" class="uri">https://en.wikipedia.org/wiki/Vector_field</a></figcaption><p></p>
 </figure>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>The matrix-vector multiplication <span class="math inline">\mathbf{y} = A \times \mathbf{x}</span> is a linear vector field, mapping any vector <span class="math inline">\mathbf{x}</span> into another vector <span class="math inline">\mathbf{y}</span>.</p>
+</div>
 </div>
 </div>
 </section>
@@ -758,18 +750,15 @@ Note
 </ul>
 <p>It basically allows you to measure the local influence of <span class="math inline">x</span> on <span class="math inline">f(x)</span>: if I change a little bit the value <span class="math inline">x</span>, what happens to <span class="math inline">f(x)</span>? This will be very useful in machine learning.</p>
 <p>A special case is when the derivative is equal to 0 in <span class="math inline">x</span>. <span class="math inline">x</span> is then called an <strong>extremum</strong> (or optimum) of the function, i.e.&nbsp;it can be a maximum or minimum.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>If you differentiate <span class="math inline">f'(x)</span> itself, you obtain the <strong>second-order derivative</strong> <span class="math inline">f''(x)</span>. You can repeat that process and obtain higher order derivatives.</p>
 <p>For example, if <span class="math inline">x(t)</span> represents the position <span class="math inline">x</span> of an object depending on time <span class="math inline">t</span>, the first-order derivative <span class="math inline">x'(t)</span> denotes the <strong>speed</strong> of the object and the second-order derivative <span class="math inline">x''(t)</span> its <strong>acceleration</strong>.</p>
+</div>
 </div>
 </div>
 <p>You can tell whether an extremum is a maximum or a minimum by looking at its second-order derivative:</p>
@@ -852,10 +841,10 @@ J = \begin{bmatrix}
 <p><span class="math display">h'(x) = a \, f'(x) + b \, g'(x)</span></p>
 <p>A product of functions can also be differentiated analytically:</p>
 <p><span class="math display">(f(x) \times g(x))' = f'(x) \times g(x) + f(x) \times g'(x)</span></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
 Example
@@ -877,10 +866,10 @@ Example
 <p><span class="math display">\frac{d f \circ g (x)}{dx} = \frac{d f (g (x))}{d g(x)} \times \frac{d g (x)}{dx}</span></p>
 <p>By posing <span class="math inline">y = g(x)</span> as an intermediary variable, it becomes:</p>
 <p><span class="math display">\frac{d f(y)}{dx} = \frac{d f(y)}{dy} \times \frac{dy}{dx}</span></p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
 Example
@@ -1089,10 +1078,10 @@ Example
 <li>6 like none of them.</li>
 </ul>
 <p>We consider loving cats and dogs as random variables (and that our sample size is big enough to use probabilities…). Among the 23 who love cats, which proportion also loves dogs?</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
 Answer
@@ -1131,10 +1120,10 @@ Answer
 <p>When a patient does not have the disease, the test is still positive 10% of the time (false positives):</p>
 <p><span class="math display">P(T=1 | D=0) = 0.1 \qquad \qquad P(T=0 | D=0) = 0.9</span></p>
 <p>Given that the test is positive, what is the probability that the patient is ill?</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
 Answer
@@ -1360,17 +1349,14 @@ Answer
 <p><span class="math display">
     H(X, Y) = \mathbb{E}_{x \sim X}[- \log P(Y=x)]
 </span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>Beware that the notation <span class="math inline">H(X, Y)</span> is the same as the joint entropy, but it is a different concept!</p>
+</div>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -1393,17 +1379,14 @@ Note
     \text{KL}(X ||Y) = H(X, Y) - H(X)
 </span></p>
 <p>If the two distributions are the same <em>almost anywhere</em>, the KL divergence is zero. If the two distributions are different, the KL divergence is positive. Minimizing the KL between two distributions is the same as making the two distributions “equal”. But remember: the KL is not a metric, as it is not symmetric.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>Refer <a href="https://towardsdatascience.com/entropy-cross-entropy-and-kl-divergence-explained-b09cdae917a" class="uri">https://towardsdatascience.com/entropy-cross-entropy-and-kl-divergence-explained-b09cdae917a</a> for nice visual explanations of the cross-entropy.</p>
+</div>
 </div>
 </div>
 
@@ -1458,7 +1441,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1494,24 +1494,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

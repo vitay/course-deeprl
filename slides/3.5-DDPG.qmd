@@ -4,7 +4,6 @@ subtitle: Deep Deterministic Policy Gradient
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-date: "<https://tu-chemnitz.de/informatik/KI/edu/deeprl>"
 
 resources: pdf/3.5-DDPG.pdf
 ---
