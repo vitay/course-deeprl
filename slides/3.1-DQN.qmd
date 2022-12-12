@@ -760,7 +760,7 @@ Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
 
 # Prioritized Experience Replay
 
-* The main drawback is that inserting and sampling can be computationally expensive is we simply sort the transitions based on $(|\delta_k| + \epsilon)^\alpha$:
+* The main drawback is that inserting and sampling can be computationally expensive if we simply sort the transitions based on $(|\delta_k| + \epsilon)^\alpha$:
 
     * Insertion: $\mathcal{O}(N \, \log N)$.
 

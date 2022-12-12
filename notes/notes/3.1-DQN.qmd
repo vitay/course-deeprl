@@ -410,7 +410,7 @@ $$P(k) = \frac{(|\delta_k| + \epsilon)^\alpha}{\sum_k (|\delta_k| + \epsilon)^\a
 
 $\epsilon$ is a small parameter ensuring that transition with no TD error still get sampled from time to time. $\alpha$ allows to change the behavior from uniform sampling ($\alpha=0$, as in DQN) to fully prioritized sampling ($\alpha=1$). $\alpha$ should be annealed from 0 to 1 during training. Think of it as a "kind of" **softmax** over the TD errors. After the samples have been used for learning, their TD error $\delta$ is updated in the PER.
 
-The main drawback is that inserting and sampling can be computationally expensive is we simply sort the transitions based on $(|\delta_k| + \epsilon)^\alpha$:
+The main drawback is that inserting and sampling can be computationally expensive if we simply sort the transitions based on $(|\delta_k| + \epsilon)^\alpha$:
 
 * Insertion: $\mathcal{O}(N \, \log N)$.
 * Sampling: $\mathcal{O}(N)$.

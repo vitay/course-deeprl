@@ -547,11 +547,11 @@ Kullback-Leibler (KL) divergence
 </div>
 <div class="callout-body-container callout-body">
 <p>Let’s consider a parameterized discrete distribution <span class="math inline">X_\theta</span> and a discrete target distribution <span class="math inline">T</span>. The KL divergence between the two distributions is:</p>
-<p><span class="math display">\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, \frac{X_\theta}{T}]</span></p>
+<p><span class="math display">\text{KL}(X_\theta || T) = \mathbb{E}_T [- \log \, \frac{X_\theta}{T}]</span></p>
 <p>It can be rewritten as the sum of the <strong>cross-entropy</strong> and the entropy of <span class="math inline">T</span>:</p>
-<p><span class="math display">\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, X_\theta + T \, \log T] = H(X_\theta, T) - H(T)</span></p>
+<p><span class="math display">\text{KL}(X_\theta || T) = \mathbb{E}_T [- \log \, X_\theta + \log T] = H(X_\theta, T) - H(T)</span></p>
 <p>As <span class="math inline">T</span> does not depend on <span class="math inline">\theta</span>, the gradient of the KL divergence w.r.t to <span class="math inline">\theta</span> is the same as the gradient of the cross-entropy.</p>
-<p><span class="math display">\nabla_\theta \, \text{KL}(X_\theta || T) = \nabla_\theta \,  \mathbb{E}_T [- T \, \log \, X_\theta]</span></p>
+<p><span class="math display">\nabla_\theta \, \text{KL}(X_\theta || T) = \nabla_\theta \,  \mathbb{E}_T [- \log \, X_\theta]</span></p>
 <p><strong>Minimizing the KL divergence is the same as minimizing the cross-entropy.</strong> Neural networks with a softmax output layer and the cross-entropy loss function can do that.</p>
 </div>
 </div>

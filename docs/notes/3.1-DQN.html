@@ -918,7 +918,7 @@ DQN code in Keras
 <p>In practice, we insert the transition <span class="math inline">(s, a, r, s', \delta)</span> into the replay buffer. To create a minibatch, the sampling algorithm select a transition <span class="math inline">k</span> based on the probability:</p>
 <p><span class="math display">P(k) = \frac{(|\delta_k| + \epsilon)^\alpha}{\sum_k (|\delta_k| + \epsilon)^\alpha}</span></p>
 <p><span class="math inline">\epsilon</span> is a small parameter ensuring that transition with no TD error still get sampled from time to time. <span class="math inline">\alpha</span> allows to change the behavior from uniform sampling (<span class="math inline">\alpha=0</span>, as in DQN) to fully prioritized sampling (<span class="math inline">\alpha=1</span>). <span class="math inline">\alpha</span> should be annealed from 0 to 1 during training. Think of it as a “kind of” <strong>softmax</strong> over the TD errors. After the samples have been used for learning, their TD error <span class="math inline">\delta</span> is updated in the PER.</p>
-<p>The main drawback is that inserting and sampling can be computationally expensive is we simply sort the transitions based on <span class="math inline">(|\delta_k| + \epsilon)^\alpha</span>:</p>
+<p>The main drawback is that inserting and sampling can be computationally expensive if we simply sort the transitions based on <span class="math inline">(|\delta_k| + \epsilon)^\alpha</span>:</p>
 <ul>
 <li>Insertion: <span class="math inline">\mathcal{O}(N \, \log N)</span>.</li>
 <li>Sampling: <span class="math inline">\mathcal{O}(N)</span>.</li>

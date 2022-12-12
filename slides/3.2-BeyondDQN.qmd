@@ -261,18 +261,18 @@ $$
 
 * The KL divergence between the two distributions is:
 
-$$\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, \frac{X_\theta}{T}]$$
+$$\text{KL}(T || X_\theta) = \mathbb{E}_{t \sim T} [- \log \, \frac{X_\theta}{T}]$$
 
 
 * It can be rewritten as the sum of the **cross-entropy** and the entropy of $T$:
 
 
-$$\text{KL}(X_\theta || T) = \mathbb{E}_T [- T \, \log \, X_\theta + T \, \log T] = H(X_\theta, T) - H(T)$$
+$$\text{KL}(X_\theta || T) = \mathbb{E}_{t \sim T} [- \log \, X_\theta + \log T] = H(X_\theta, T) - H(T)$$
 
 * As $T$ does not depend on $\theta$, the gradient of the KL divergence w.r.t to $\theta$ is the same as the gradient of the cross-entropy.
 
 
-$$\nabla_\theta \, \text{KL}(X_\theta || T) = \nabla_\theta \,  \mathbb{E}_T [- T \, \log \, X_\theta]$$
+$$\nabla_\theta \, \text{KL}(X_\theta || T) =  \mathbb{E}_{t \sim T} [- \nabla_\theta \,  \log \, X_\theta]$$
 
 * **Minimizing the KL divergence is the same as minimizing the cross-entropy.**
 
