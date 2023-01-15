@@ -619,8 +619,7 @@ A3C: asynchronous updates
 </div>
 </div>
 <p>A3C does not use an <em>experience replay memory</em> as DQN. Instead, it uses <strong>multiple parallel workers</strong> to distribute learning. Each worker has a copy of the actor and critic networks, as well as an instance of the environment. Weight updates are synchronized regularly though a <strong>master network</strong> using Hogwild!-style updates (every <span class="math inline">n=5</span> steps!). Because the workers learn different parts of the state-action space, the weight updates are not very correlated.</p>
-<p>A3C still needs target networks to ensure stability. It works best on shared-memory systems (multi-core) as communication costs between GPUs are huge.</p>
-<p>A3C set a new record for Atari games in 2016. The main advantage is that the workers gather experience in parallel: training is much faster than with DQN. LSTMs can be used to improve the performance.</p>
+<p>A3C works best on shared-memory systems (multi-core) as communication costs between GPUs are huge. A3C set a new record for Atari games in 2016. The main advantage is that the workers gather experience in parallel: training is much faster than with DQN. LSTMs can be used to improve the performance.</p>
 <p><img src="../slides/img/a3c-comparison.png" class="img-fluid" style="width:100.0%" data-fig-align="center" alt="A3C results (Mnih et al., 2016)."> <img src="../slides/img/a3c-time.png" class="img-fluid" style="width:100.0%" data-fig-align="center" alt="A3C results (Mnih et al., 2016)."></p>
 <p>Learning is only marginally better with more threads:</p>
 <div class="quarto-figure quarto-figure-center">

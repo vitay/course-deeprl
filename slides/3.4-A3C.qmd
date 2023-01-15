@@ -303,9 +303,6 @@ Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et 
 :::
 
 
-
-* A3C still needs target networks to ensure stability.
-
 * It works best on shared-memory systems (multi-core) as communication costs between GPUs are huge.
 
 ::: footer

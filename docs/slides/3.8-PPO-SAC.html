@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="3.8-PPO-SAC_files/libs/clipboard/clipboard.min.js"></script>
+<script src="3.8-PPO-SAC_files/libs/quarto-html/tabby.min.js"></script>
+<script src="3.8-PPO-SAC_files/libs/quarto-html/popper.min.js"></script>
+<script src="3.8-PPO-SAC_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="3.8-PPO-SAC_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="3.8-PPO-SAC_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="3.8-PPO-SAC_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.2.269">
+
+  <meta name="author" content="Julien Vitay">
+  <title>Deep Reinforcement Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="3.8-PPO-SAC_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="3.8-PPO-SAC_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="3.8-PPO-SAC_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <link href="3.8-PPO-SAC_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="3.8-PPO-SAC_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="img/tuc-new-large.png" data-background-opacity="1" data-background-position="top" data-background-size="30%" class="quarto-title-block center">
+  <h1 class="title">Deep Reinforcement Learning</h1>
+  <p class="subtitle">PPO - SAC</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Julien Vitay 
+</div>
+        <p class="quarto-title-affiliation">
+            Professur für Künstliche Intelligenz - Fakultät für Informatik
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="trust-regions" class="title-slide slide level1 center">
+<h1>1 - Trust regions</h1>
+
+</section>
+
+<section id="on-policy-and-off-policy-methods" class="title-slide slide level1 center">
+<h1>On-policy and off-policy methods</h1>
+<ul>
+<li><p>DQN and DDPG are <strong>off-policy</strong> methods, so we can use a replay memory.</p>
+<ul>
+<li><p>They need less samples to converge as they re-use past experiences (<strong>sample efficient</strong>).</p></li>
+<li><p>The critic is biased (overestimation), so learning is <strong>unstable</strong> and <strong>suboptimal</strong>.</p></li>
+</ul></li>
+<li><p>A3C is <strong>on-policy</strong>, we have to use distributed learning.</p>
+<ul>
+<li><p>The critic is less biased, so it learns better policies (<strong>optimality</strong>).</p></li>
+<li><p>It however need a lot of samples (<strong>sample complexity</strong>) as it must collect transitions with the current learned policy.</p></li>
+</ul></li>
+<li><p>All suffer from <strong>parameter brittleness</strong>: choosing the right hyperparameters for a task is extremely difficult.</p></li>
+<li><p>For example a learning rate of <span class="math inline">10^{-5}</span> might work, but not <span class="math inline">1.1 * 10^{-5}</span>.</p></li>
+<li><p>Other hyperparameters: size of the ERM, update frequency of the target networks, training frequency.</p></li>
+<li><p>Can’t we do better?</p></li>
+</ul>
+</section>
+
+<section id="trust-regions-and-gradients" class="title-slide slide level1 center">
+<h1>Trust regions and gradients</h1>
+
+<img data-src="img/natural-gradient-reason1.jpeg" style="width:80.0%" class="r-stretch quarto-figure-center"><p class="caption">Source: <a href="https://medium.com/@jonathan_hui/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9" class="uri">https://medium.com/@jonathan_hui/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9</a></p><ul>
+<li><p>The policy gradient tells you in <strong>which direction</strong> of the parameter space <span class="math inline">\theta</span> the return is increasing the most.</p></li>
+<li><p>If you take too big a step in that direction, the new policy might become completely bad (<strong>policy collapse</strong>).</p></li>
+<li><p>Once the policy has collapsed, the new samples will all have a small return: the previous progress is lost.</p></li>
+<li><p>This is especially true when the parameter space has a <strong>high curvature</strong>, which is the case with deep NN.</p></li>
+</ul>
+</section>
+
+<section id="policy-collapse" class="title-slide slide level1 center">
+<h1>Policy collapse</h1>
+<ul>
+<li><p>Policy collapse is a huge problem in deep RL: the network starts learning correctly but suddenly collapses to a random agent.</p></li>
+<li><p>For on-policy methods, all progress is lost: the network has to relearn from scratch, as the new samples will be generated by a bad policy.</p></li>
+</ul>
+
+<img data-src="img/policy-collapse.png" style="width:50.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<p>Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.</p>
+</div>
+</section>
+
+<section id="where-is-the-problem-with-on-policy-methods" class="title-slide slide level1 center">
+<h1>Where is the problem with on-policy methods?</h1>
+<ul>
+<li>The policy gradient is <strong>unbiased</strong> only when the critic <span class="math inline">Q_\varphi(s, a)</span> accurately approximates the true Q-values of the <strong>current policy</strong>.</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+    \nabla_\theta J(\theta) &amp; =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a)] \\
+    &amp; \approx  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q_\varphi(s, a)]
+\end{aligned}
+</span></p>
+<ul>
+<li><p>If transitions are generated by a different (older) policy <span class="math inline">b</span>, the policy gradient will be wrong.</p></li>
+<li><p>With the PG, we can update the weights <span class="math inline">\theta</span> in the direction of that gradient:</p></li>
+</ul>
+<p><span class="math display">
+    \theta \leftarrow \theta + \eta \, \nabla_\theta J(\theta)
+</span></p>
+<ul>
+<li><p>We search for the <strong>smallest parameter change</strong> (controlled by the learning rate <span class="math inline">\eta</span>) that produces the <strong>biggest positive change</strong> in the returns.</p></li>
+<li><p>Choosing the learning rate <span class="math inline">\eta</span> is extremely difficult in deep RL:</p>
+<ul>
+<li><p>If the learning rate is too small, the network converges very slowly, requiring a lot of samples to converge (<strong>sample complexity</strong>).</p></li>
+<li><p>If the learning rate is too high, parameter updates can totally destroy the policy (<strong>instability</strong>).</p></li>
+</ul></li>
+<li><p>The learning rate should adapt to the current parameter values in order to stay in a <strong>trust region</strong>.</p></li>
+</ul>
+</section>
+
+<section id="trust-regions-and-gradients-1" class="title-slide slide level1 center">
+<h1>Trust regions and gradients</h1>
+
+<img data-src="img/natural-gradient-reason2.jpeg" class="r-stretch quarto-figure-center"><p class="caption">Source: <a href="https://medium.com/@jonathan_hui/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9" class="uri">https://medium.com/@jonathan_hui/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9</a></p><ul>
+<li><p><strong>Trust region</strong> optimization searches in the <strong>neighborhood</strong> of the current parameters <span class="math inline">\theta</span> which new value would maximize the return the most.</p></li>
+<li><p>This is a <strong>constrained optimization</strong> problem: we still want to maximize the return of the policy, but by keeping the policy as close as possible from its previous value.</p></li>
+</ul>
+</section>
+
+<section id="trust-regions-and-gradients-2" class="title-slide slide level1 center">
+<h1>Trust regions and gradients</h1>
+
+<img data-src="img/natural-gradient-reason3.jpeg" style="width:70.0%" class="r-stretch quarto-figure-center"><p class="caption">Source: <a href="https://medium.com/@jonathan_hui/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9" class="uri">https://medium.com/@jonathan_hui/rl-trust-region-policy-optimization-trpo-explained-a6ee04eeeee9</a></p><ul>
+<li><p>The size of the neighborhood determines the safety of the parameter change.</p></li>
+<li><p>In safe regions, we can take big steps. In dangerous regions, we have to take small steps.</p></li>
+<li><p><strong>Problem:</strong> how can we estimate the safety of a parameter change?</p></li>
+</ul>
+</section>
+
+<section id="trpo-trust-region-policy-optimization" class="title-slide slide level1 center">
+<h1>2 - TRPO: Trust Region Policy Optimization</h1>
+
+<img data-src="img/paper-trpo.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p>Schulman, J., Levine, S., Abbeel, P., Jordan, M., and Moritz, P. (2015). Trust Region Policy Optimization. 1889–1897. <a href="http://proceedings.mlr.press/v37/schulman15.html" class="uri">http://proceedings.mlr.press/v37/schulman15.html</a>.</p>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-1" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>We want to maximize the expected return of a policy <span class="math inline">\pi_\theta</span>, which is equivalent to maximizing the Q-value of every state-action pair visited by the policy:</li>
+</ul>
+<p><span class="math display">\max_\theta \, \mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]</span></p>
+<ul>
+<li><p>Let’s note <span class="math inline">\theta_\text{old}</span> the current value of the parameters of the policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>We search for a new policy <span class="math inline">\pi_\theta</span> with parameters <span class="math inline">\theta</span> which is always <strong>better</strong> than the current policy, i.e.&nbsp;where the Q-value of all actions is higher than with the current policy:</p></li>
+</ul>
+<p><span class="math display">\max_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)]</span></p>
+<ul>
+<li>The quantity</li>
+</ul>
+<p><span class="math display">A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)</span></p>
+<p>is the <strong>advantage</strong> of taking the action <span class="math inline">(s, a)</span> and thereafter following <span class="math inline">\pi_\theta</span>, compared to following the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p>
+<div class="footer">
+<p>Kakade, S., and Langford, J. (2002). Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267–274.</p>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-2" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>If we can estimate the advantages and maximize them, we can find a new policy <span class="math inline">\pi_\theta</span> with a higher return than the current one.</li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<ul>
+<li>By definition, <span class="math inline">\mathcal{L}(\theta_\text{old}) = 0</span>, so the policy maximizing <span class="math inline">\mathcal{L}(\theta)</span> has positive advantages and is better than <span class="math inline">\pi_{\theta_\text{old}}</span>.</li>
+</ul>
+<p><span class="math display">\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})</span></p>
+<ul>
+<li>Maximizing the advantages ensures <strong>monotonic improvement</strong>: the new policy is always better than the previous one. Policy collapse is not possible!</li>
+</ul>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-3" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li><p>The problem is that we have to take samples <span class="math inline">(s, a)</span> from <span class="math inline">\pi_\theta</span>: we do not know it yet, as it is what we search. The only policy at our disposal to estimate the advantages is the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>We could use <strong>importance sampling</strong> to sample from <span class="math inline">\pi_{\theta_\text{old}}</span>, but it would introduce a lot of variance:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)} \, A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<ul>
+<li><p>In TRPO, we are adding a <strong>constraint</strong> instead:</p>
+<ul>
+<li><p>the new policy <span class="math inline">\pi_{\theta_\text{new}}</span> should not be (very) different from <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>the importance sampling weight <span class="math inline">\frac{\pi_{\theta_\text{new}}(s, a)}{\pi_{\theta_\text{old}}(s, a)}</span> will not be very different from 1, so we can omit it.</p></li>
+</ul></li>
+<li><p>If the new policy is not very different from the current one, we can sample the states from <span class="math inline">\pi_{\theta_\text{old}}</span> without needing importance sampling:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-4" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>TRPO takes a <strong>constrained optimization</strong> approach (Lagrange optimization):</li>
+</ul>
+<p><span class="math display">
+    \max_\theta \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]
+</span></p>
+<p><span class="math display">
+    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
+</span></p>
+<ul>
+<li><p>The KL divergence between the distributions <span class="math inline">\pi_{\theta_\text{old}}</span> and <span class="math inline">\pi_\theta</span> must be below a threshold <span class="math inline">\delta</span>.</p></li>
+<li><p>A first version of TRPO uses a <strong>hard constraint</strong>, forcing the policy <span class="math inline">\pi_\theta</span> to stay within the <strong>trust region</strong> around <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>A second version <strong>regularizes</strong> the objective function with the KL divergence:</p></li>
+</ul>
+<p><span class="math display">
+    \max_\theta \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)] - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)
+</span></p>
+<p>where <span class="math inline">C</span> is a regularization parameter controlling the importance of the <strong>soft constraint</strong>.</p>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-5" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>The policy <span class="math inline">\pi_\theta</span> maximizing the surrogate objective <span class="math inline">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)] - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)</span>:</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ol type="1">
+<li>has a higher expected return than <span class="math inline">\pi_{\theta_\text{old}}</span>:</li>
+</ol>
+<p><span class="math display">\mathcal{J}(\theta) &gt; \mathcal{J}(\theta_\text{old})</span></p>
+<ol start="2" type="1">
+<li>is very close to <span class="math inline">\pi_{\theta_\text{old}}</span>:</li>
+</ol>
+<p><span class="math display">D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \approx 0</span></p>
+<ol start="3" type="1">
+<li>but the parameters <span class="math inline">\theta</span> are much closer to the optimal parameters <span class="math inline">\theta^*</span>.</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/trustregion2.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>The version with a soft constraint necessitates a prohibitively small learning rate in practice.</p></li>
+<li><p>The implementation of TRPO uses the hard constraint with Lagrange optimization, what necessitates using conjugate gradients optimization, the Fisher Information matrix and natural gradients: very complex to implement…</p></li>
+<li><p>However, there is a <strong>monotonic improvement guarantee</strong>: the successive policies can only get better over time, no policy collapse!</p></li>
+</ul>
+</section>
+
+<section id="ppo-proximal-policy-optimization" class="title-slide slide level1 center">
+<h1>3 - PPO: Proximal Policy Optimization</h1>
+
+<img data-src="img/paper-ppo.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
+</div>
+</section>
+
+<section id="ppo-proximal-policy-optimization-1" class="title-slide slide level1 center">
+<h1>PPO: Proximal Policy Optimization</h1>
+<ul>
+<li>In order to avoid sampling action from the <strong>unknown</strong> policy <span class="math inline">\pi_\theta</span>, we can use importance sampling with the current policy:</li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<p>with <span class="math inline">\rho(s, a) = \dfrac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)}</span> being the <strong>importance sampling weight</strong>.</p>
+<ul>
+<li><p>But the importance sampling weight <span class="math inline">\rho(s, a)</span> introduces a lot of variance, worsening the sample complexity.</p></li>
+<li><p>Is there another way to make sure that <span class="math inline">\pi_\theta</span> is not very different from <span class="math inline">\pi_{\theta_\text{old}}</span>, therefore reducing the variance of the importance sampling weight?</p></li>
+</ul>
+</section>
+
+<section id="ppo-proximal-policy-optimization-2" class="title-slide slide level1 center">
+<h1>PPO: Proximal Policy Optimization</h1>
+<ul>
+<li>The solution introduced by PPO is simply to <strong>clip</strong> the importance sampling weight when it is too different from 1:</li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\min(\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a), \text{clip}(\rho(s, a), 1-\epsilon, 1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a))]</span></p>
+<ul>
+<li><p>For each sampled action <span class="math inline">(s, a)</span>, we use the minimum between:</p>
+<ul>
+<li><p>the TRPO unconstrained objective with IS <span class="math inline">\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
+<li><p>the same, but with the IS weight clipped between <span class="math inline">1-\epsilon</span> and <span class="math inline">1+\epsilon</span>.</p></li>
+</ul></li>
+</ul>
+
+<img data-src="img/ppo-clippingfunction.svg" style="width:40.0%" class="r-stretch quarto-figure-center"></section>
+
+<section id="ppo-proximal-policy-optimization-3" class="title-slide slide level1 center">
+<h1>PPO: Proximal Policy Optimization</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ppo-clipped.png" style="width:65.0%"></p>
+</figure>
+</div>
+<ul>
+<li><p>If the advantage <span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a)</span> is positive (better action than usual) and:</p>
+<ul>
+<li><p>the IS is higher than <span class="math inline">1+\epsilon</span>, we use <span class="math inline">(1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
+<li><p>otherwise, we use <span class="math inline">\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ppo-clipped2.png" style="width:60.0%"></p>
+</figure>
+</div>
+<ul>
+<li><p>If the advantage <span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a)</span> is negative (worse action than usual) and:</p>
+<ul>
+<li><p>the IS is lower than <span class="math inline">1-\epsilon</span>, we use <span class="math inline">(1-\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
+<li><p>otherwise, we use <span class="math inline">\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="footer">
+<p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
+</div>
+</section>
+
+<section id="ppo-proximal-policy-optimization-4" class="title-slide slide level1 center">
+<h1>PPO: Proximal Policy Optimization</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ppo-clipped.png" style="width:65.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ppo-clipped2.png" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>This avoids changing too much the policy between two updates:</p>
+<ul>
+<li><p>Good actions (<span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a) &gt; 0</span>) do not become much more likely than before.</p></li>
+<li><p>Bad actions (<span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a) &lt; 0</span>) do not become much less likely than before.</p></li>
+</ul></li>
+</ul>
+<div class="footer">
+<p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
+</div>
+</section>
+
+<section id="ppo-proximal-policy-optimization-5" class="title-slide slide level1 center">
+<h1>PPO: Proximal Policy Optimization</h1>
+<ul>
+<li>The PPO <strong>clipped objective</strong> ensures than the importance sampling weight stays around one, so the new policy is not very different from the old one. It can learn from single transitions.</li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\min(\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a), \text{clip}(\rho(s, a), 1-\epsilon, 1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a))]</span></p>
+<ul>
+<li>The advantage of an action can be learned using any advantage estimator, for example the <strong>n-step advantage</strong>:</li>
+</ul>
+<p><span class="math display">A^{\pi_{\theta_\text{old}}}(s_t, a_t) =  \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_{t})</span></p>
+<ul>
+<li><p>Most implementations use <strong>Generalized Advantage Estimation</strong> (GAE, Schulman et al., 2015).</p></li>
+<li><p>PPO is therefore an <strong>actor-critic</strong> method (as TRPO).</p></li>
+<li><p>PPO is <strong>on-policy</strong>: it collects samples using <strong>distributed learning</strong> (as A3C) and then applies several updates to the actor and critic.</p></li>
+</ul>
+<div class="footer">
+<p>Schulman, J., Moritz, P., Levine, S., Jordan, M., and Abbeel, P. (2015). High-Dimensional Continuous Control Using Generalized Advantage Estimation. arXiv:1506.02438.</p>
+</div>
+</section>
+
+<section id="ppo-mujoco-control" class="title-slide slide level1 center">
+<h1>PPO : Mujoco control</h1>
+
+<img data-src="img/ppo-results-mujoco.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
+</div>
+</section>
+
+<section id="ppo-parkour" class="title-slide slide level1 center">
+<h1>PPO : Parkour</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/faDKMMwOS2Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>Check more robotic videos at: <a href="https://openai.com/blog/openai-baselines-ppo/" target="_blank">https://openai.com/blog/openai-baselines-ppo/</a></p>
+</section>
+
+<section>
+<section id="ppo-dexterity-learning" class="title-slide slide level1 center">
+<h1>PPO: dexterity learning</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/jwSbzNHGflM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section class="slide level2">
+
+
+<img data-src="img/deeprl-dota.jpeg" class="r-stretch quarto-figure-center"><div class="footer">
+<p>twitter:ai-memes</p>
+</div>
+</section></section>
+<section id="openai-five-dota-2" class="title-slide slide level1 center">
+<h1>3 - OpenAI Five: Dota 2</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/eHipy_j29Xw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<div class="footer">
+<p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
+</div>
+</section>
+
+<section id="why-is-dota-2-hard" class="title-slide slide level1 center">
+<h1>Why is Dota 2 hard?</h1>
+
+<img data-src="img/ppo-dota-reasons.png" style="width:70.0%" class="r-stretch quarto-figure-center"><table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Chess</th>
+<th style="text-align: left;">Go</th>
+<th style="text-align: left;">Dota 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Total number of moves</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">150</td>
+<td style="text-align: left;">20000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of possible actions</td>
+<td style="text-align: left;">35</td>
+<td style="text-align: left;">250</td>
+<td style="text-align: left;">1000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of inputs</td>
+<td style="text-align: left;">70</td>
+<td style="text-align: left;">400</td>
+<td style="text-align: left;">20000</td>
+</tr>
+</tbody>
+</table>
+<div class="footer">
+<p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
+</div>
+</section>
+
+<section id="openai-five-dota-2-1" class="title-slide slide level1 center">
+<h1>OpenAI Five: Dota 2</h1>
+<ul>
+<li>OpenAI Five is composed of 5 PPO networks (one per player), using 128,000 CPUs and 256 V100 GPUs.</li>
+</ul>
+
+<img data-src="img/ppo-dota-architecture.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
+</div>
+</section>
+
+<section id="openai-five-dota-2-2" class="title-slide slide level1 center">
+<h1>OpenAI Five: Dota 2</h1>
+
+<img data-src="img/ppo-dota-facts.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
+</div>
+</section>
+
+<section id="openai-five-dota-2-3" class="title-slide slide level1 center">
+<h1>OpenAI Five: Dota 2</h1>
+
+<img data-src="img/ppo-dota-inputs.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
+</div>
+</section>
+
+<section id="openai-five-dota-2-4" class="title-slide slide level1 center">
+<h1>OpenAI Five: Dota 2</h1>
+
+<img data-src="img/ppo-dota-nn.png" class="r-stretch quarto-figure-center"><p><a href="https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf" class="uri">https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf</a></p>
+</section>
+
+<section id="openai-five-dota-2-5" class="title-slide slide level1 center">
+<h1>OpenAI Five: Dota 2</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>The agents are trained by <strong>self-play</strong>. Each worker plays against:</p>
+<ul>
+<li><p>the current version of the network 80% of the time.</p></li>
+<li><p>an older version of the network 20% of the time.</p></li>
+</ul></li>
+<li><p>Reward is hand-designed using human heuristics:</p>
+<ul>
+<li>net worth, kills, deaths, assists, last hits…</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/ppo-dota-example.png"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>The discount factor <span class="math inline">\gamma</span> is annealed from 0.998 (valuing future rewards with a half-life of 46 seconds) to 0.9997 (valuing future rewards with a half-life of five minutes).</p></li>
+<li><p>Coordinating all the resources (CPU, GPU) is actually the main difficulty:</p>
+<ul>
+<li>Kubernetes, Azure, and GCP backends for Rapid, TensorBoard, Sentry and Grafana for monitoring…</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="maximum-entropy-rl---sac" class="title-slide slide level1 center">
+<h1>4 - Maximum Entropy RL - SAC</h1>
+
+<img data-src="img/paper-sac.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p>Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al.&nbsp;(2018). Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>
+</div>
+</section>
+
+<section id="hard-rl" class="title-slide slide level1 center">
+<h1>Hard RL</h1>
+<ul>
+<li>All methods seen so far search the optimal policy that maximizes the return:</li>
+</ul>
+<p><span class="math display">\pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]</span></p>
+<ul>
+<li>The optimal policy is deterministic and greedy by definition.</li>
+</ul>
+<p><span class="math display">\pi^*(s) = \text{arg} \max_a Q^*(s, a)</span></p>
+<ul>
+<li><p>Exploration is ensured externally by :</p>
+<ul>
+<li><p>applying <span class="math inline">\epsilon</span>-greedy or softmax on the Q-values (DQN),</p></li>
+<li><p>adding exploratory noise (DDPG),</p></li>
+<li><p>learning stochastic policies that become deterministic over time (A3C, PPO).</p></li>
+</ul></li>
+<li><p>Is “hard” RL, caring only about <strong>exploitation</strong>, always the best option?</p></li>
+</ul>
+</section>
+
+<section id="need-for-soft-rl" class="title-slide slide level1 center">
+<h1>Need for soft RL</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/chess.gif" style="width:70.0%"></p>
+<p></p><figcaption>Source: <a href="https://www.chess.com/article/view/announcing-the-chess-com-gif-maker" class="uri">https://www.chess.com/article/view/announcing-the-chess-com-gif-maker</a></figcaption><p></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>The optimal policy is only greedy for a MDP, not obligatorily for a POMDP.</p></li>
+<li><p>Games like chess are POMDPs: you do not know what your opponent is going to play (missing information).</p></li>
+<li><p>If you always play the same moves (e.g.&nbsp;opening moves), your opponent will adapt and you will end up losing systematically.</p></li>
+<li><p><strong>Variety</strong> in playing is beneficial in POMDPs: it can counteract the uncertainty about the environment.</p></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="need-for-soft-rl-1" class="title-slide slide level1 center">
+<h1>Need for soft RL</h1>
+<ul>
+<li><p>There are sometimes more than one way to collect rewards, especially with sparse rewards.</p></li>
+<li><p>If exploration decreases too soon, the RL agent will “overfit” one of the paths.</p></li>
+<li><p>If one of the paths is suddenly blocked, the agent would have to completely re-learn its policy.</p></li>
+<li><p>It would be more efficient if the agent had learned all possibles paths, even if some of them are less optimal.</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_ex1.png"></p>
+<p></p><figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_ex2.png"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="maximum-entropy-rl" class="title-slide slide level1 center">
+<h1>Maximum Entropy RL</h1>
+<ul>
+<li><p>A solution is to force it to be as stochastic as possible by <strong>maximizing its entropy</strong>.</p></li>
+<li><p>Instead of searching for the policy that “only” maximizes the returns:</p></li>
+</ul>
+<p><span class="math display">
+    \pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]
+</span></p>
+<p>we search for the policy that maximizes the returns while being as stochastic as possible:</p>
+<p><span class="math display">
+    \pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) + \alpha \, H(\pi(s_t))]
+</span></p>
+<ul>
+<li><p>This new objective function defines the <strong>maximum entropy RL</strong> framework.</p></li>
+<li><p>The entropy of the policy <strong>regularizes</strong> the objective function: the policy should still maximize the returns, but stay as stochastic as possible depending on the parameter <span class="math inline">\alpha</span>.</p></li>
+</ul>
+<p><span class="math display">H(\pi(s_t)) = \mathbb{E}_{a \sim \pi(s_t)} [- \log \pi(s_t, a)]</span></p>
+<ul>
+<li><p>Entropy regularization can always be added to PG methods such as A3C.</p></li>
+<li><p>It is always possible to fall back to hard RL by setting <span class="math inline">\alpha</span> to 0.</p></li>
+</ul>
+<div class="footer">
+<p>Haarnoja, T., Tang, H., Abbeel, P., and Levine, S. (2017). Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165</p>
+</div>
+</section>
+
+<section id="entropy-of-a-policy" class="title-slide slide level1 center">
+<h1>Entropy of a policy</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>A <strong>deterministic</strong> (greedy) policy has zero entropy, the same action is always taken: <strong>exploitation</strong>.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>A <strong>random</strong> policy has a high entropy, you cannot predict which action will be taken: <strong>exploration</strong>.</li>
+</ul>
+</div>
+</div>
+
+<img data-src="img/bandit-estimates-softmax2.png" class="r-stretch quarto-figure-center"><ul>
+<li>Maximum entropy RL embeds the exploration-exploitation trade-off inside the objective function instead of relying on external mechanisms such as the softmax temperature.</li>
+</ul>
+</section>
+
+<section id="soft-actor-critic-sac" class="title-slide slide level1 center">
+<h1>Soft Actor-Critic (SAC)</h1>
+<ul>
+<li><strong>Soft Actor-Critic</strong> (SAC) is an <strong>off-policy actor-critic</strong> architecture for <strong>maximum entropy RL</strong>:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{J}(\theta) = \sum_t \gamma^t \, \mathbb{E}_{\pi} [ r(s_t, a_t, s_{t+1}) + \alpha \, H(\pi(s_t))]
+</span></p>
+<ul>
+<li><p>Maximizing the entropy of the policy ensures an efficient exploration. It is even possible to learn the value of the parameter <span class="math inline">\alpha</span>.</p></li>
+<li><p>The critic learns to estimate soft Q-values that take the entropy of the policy into account:</p></li>
+</ul>
+<p><span class="math display">
+    \mathcal{L}(\varphi) = \mathbb{E}_{s_t, a_t, s_{t+1} \sim \rho_\theta} [(r_{t+1} + \gamma \, Q_\varphi(s_{t+1}, a_{t+1}) - \log \pi_\theta(s_{t+1}, a_{t+1}) - Q_\varphi(s_{t}, a_{t}) )^2]
+</span></p>
+<ul>
+<li>The actor learns a Gaussian policy that becomes close to a softmax over the soft Q-values:</li>
+</ul>
+<p><span class="math display">
+    \pi_\theta(s, a) \propto \exp \dfrac{Q_\varphi (s, a)}{\alpha}
+</span></p>
+<p><span class="math display">
+   \nabla_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s, a} [\alpha \, \nabla_\theta \log \pi_\theta(s, a) - Q_\varphi (s, a)]
+</span></p>
+<div class="footer">
+<p>Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al.&nbsp;(2018). Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>
+</div>
+</section>
+
+<section id="sac-results" class="title-slide slide level1 center">
+<h1>SAC results</h1>
+<ul>
+<li>The enhanced exploration strategy through maximum entropy RL allows to learn robust and varied strategies that can cope with changes in the environment.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac-walker.gif" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_ant.gif" style="width:50.0%"></p>
+<p></p><figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+</figure>
+</div>
+</section>
+
+<section id="real-world-robotics" class="title-slide slide level1 center">
+<h1>Real-world robotics</h1>
+<ul>
+<li>The low sample complexity of SAC allows to train a real-world robot in less than 2 hours!</li>
+</ul>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/FmMPHL3TcrE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="real-world-robotics-1" class="title-slide slide level1 center">
+<h1>Real-world robotics</h1>
+<ul>
+<li>Although trained on a flat surface, the rich learned stochastic policy can generalize to complex terrains.</li>
+</ul>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/KOObeIjzXTY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="real-world-robotics-2" class="title-slide slide level1 center">
+<h1>Real-world robotics</h1>
+<ul>
+<li>When trained to stack lego bricks, the robotic arm learns to explore the whole state-action space.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_lego1.gif"></p>
+</figure>
+</div>
+<ul>
+<li>This makes it more robust to external perturbations after training:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_lego2.gif"></p>
+<p></p><figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption><p></p>
+</figure>
+</div>
+</section>
+
+<section id="references" class="title-slide slide level1 center">
+<h1>References</h1>
+<ul>
+<li><p><a href="https://ai.googleblog.com/2019/01/soft-actor-critic-deep-reinforcement.html" class="uri">https://ai.googleblog.com/2019/01/soft-actor-critic-deep-reinforcement.html</a></p></li>
+<li><p><a href="https://towardsdatascience.com/in-depth-review-of-soft-actor-critic-91448aba63d4" class="uri">https://towardsdatascience.com/in-depth-review-of-soft-actor-critic-91448aba63d4</a></p></li>
+<li><p><a href="https://towardsdatascience.com/soft-actor-critic-demystified-b8427df61665" class="uri">https://towardsdatascience.com/soft-actor-critic-demystified-b8427df61665</a></p></li>
+<li><p><a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning</a></p></li>
+<li><p><a href="https://arxiv.org/abs/1805.00909" class="uri">https://arxiv.org/abs/1805.00909</a></p></li>
+</ul>
+<div class="footer footer-default">
+
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="3.8-PPO-SAC_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
