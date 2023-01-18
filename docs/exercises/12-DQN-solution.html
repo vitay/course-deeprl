@@ -1225,7 +1225,7 @@ MoviePy - Building file videos/cartpole-dqn.gif with imageio.</code></pre>
 </div>
 </div>
 <p><strong>Q:</strong> How does the loss evolve? Does it make sense?</p>
-<p><strong>A:</strong> The Q-values are non-stationary: the initial Q-values are very small (the agent fails almost immediately), while they are around 40 after training (200 steps, but discounted with gamma). The mse increases with the magnitude of the Q-values, so the loss is a poor indicator of the convergence of the network.</p>
+<p><strong>A:</strong> The Q-values are non-stationary: the initial Q-values are very small (the agent fails almost immediately), while they are around 100 after training (200 steps with a reward of +1, but discounted with gamma). The mse increases with the magnitude of the Q-values, so the loss is a poor indicator of the convergence of the network.</p>
 </section>
 </section>
 <section id="reward-scaling" class="level2">
@@ -1263,7 +1263,7 @@ MoviePy - Building file videos/cartpole-dqn.gif with imageio.</code></pre>
 </div>
 </div>
 </div>
-<p><strong>A:</strong> The predicted Q-values at the beginning of learning are close to 0, as the weights are randomly initialized. They must grow to around 40, which takes a lot of time. If the target Q-values were around 1, learning might be much faster.</p>
+<p><strong>A:</strong> The predicted Q-values at the beginning of learning are close to 0, as the weights are randomly initialized. They should grow to around 100, which takes a lot of time. If the target Q-values were around 1, learning might be much faster.</p>
 <p><strong>Q:</strong> Implement <strong>reward scaling</strong> by dividing the received rewards by a fixed factor of 100 when computing the Bellman targets. That way, the final Q-values will be around 1, what may be much easier to learned.</p>
 <p><em>Tip:</em> in order to avoid a huge copy and paste, you can inherit from your DQNAgent and only reimplement the desired function:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ScaledDQNAgent (DQNAgent):</span>

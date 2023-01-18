@@ -679,7 +679,8 @@ Julien Vitay
 </ul>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\min(\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a), \text{clip}(\rho(s, a), 1-\epsilon, 1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a))]</span></p>
 <ul>
-<li>The advantage of an action can be learned using any advantage estimator, for example the <strong>n-step advantage</strong>:</li>
+<li><p>It also has the <strong>monotonic improvement guarantee</strong> if <span class="math inline">\epsilon</span> is chosen correctly.</p></li>
+<li><p>The advantage of an action can be learned using any advantage estimator, for example the <strong>n-step advantage</strong>:</p></li>
 </ul>
 <p><span class="math display">A^{\pi_{\theta_\text{old}}}(s_t, a_t) =  \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_{t})</span></p>
 <ul>
@@ -842,7 +843,7 @@ Julien Vitay
 <ul>
 <li>All methods seen so far search the optimal policy that maximizes the return:</li>
 </ul>
-<p><span class="math display">\pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]</span></p>
+<p><span class="math display">\pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ R ] = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]</span></p>
 <ul>
 <li>The optimal policy is deterministic and greedy by definition.</li>
 </ul>

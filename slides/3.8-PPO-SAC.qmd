@@ -344,6 +344,8 @@ Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Prox
 
 $$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\min(\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a), \text{clip}(\rho(s, a), 1-\epsilon, 1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a))]$$
 
+* It also has the **monotonic improvement guarantee** if $\epsilon$ is chosen correctly.
+
 * The advantage of an action can be learned using any advantage estimator, for example the **n-step advantage**:
 
 $$A^{\pi_{\theta_\text{old}}}(s_t, a_t) =  \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_{t})$$
@@ -490,7 +492,7 @@ Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (20
 
 * All methods seen so far search the optimal policy that maximizes the return:
 
-$$\pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]$$
+$$\pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ R ] = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]$$
 
 * The optimal policy is deterministic and greedy by definition. 
 
