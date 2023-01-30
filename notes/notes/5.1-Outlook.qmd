@@ -283,3 +283,45 @@ Additional references on meta RL:
 * <https://eng.uber.com/poet-open-ended-deep-learning/>
 
 
+## Offline RL
+
+Even off-policy algorithms need to interact with the environment: the behavior policy is $\epsilon$-soft around the learned policy.
+
+Is it possible to learn purely **offline** from recorded transitions using another policy (experts)? Data efficiency. This would bring safety: the agent would not explore dangerous actions.
+
+![Source: <https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html>](../slides/img/offlinerl.gif)
+
+D4RL (<https://sites.google.com/view/d4rl/home>) provides offline data recorded using expert policies to test offline algorithms.
+
+![https://ai.googleblog.com/2020/08/tackling-open-challenges-in-offline.html](../slides/img/d4rl.png)
+
+As no exploration is allowed, the model is limited by the quality of the data: if the acquisition policy is random, there is not much to hope. If we have already a good policy, but slow or expensive to compute, we could try to transfer it to a fast neural network. If the policy is a human expert, it is called **learning from demonstrations** (lfd) or **imitation learning**.
+
+The simplest approach to offline RL is **behavioral cloning**: simply supervised learning of $(s, a)$ pairs...
+
+![@Bojarski2016](../slides/img/dave2-training.png)
+
+{{< youtube qhUvQiKec2U >}}
+
+The main problem in offline RL is the **distribution shift**: what if the trained policy assigns a non-zero probability to a $(s, a)$ pair that is **outside** the training data?
+
+Most offline RL methods are **conservative** methods, which try to learn policies staying close to the known distribution of the data. See @Levine2020 for a review. Examples:
+
+* Batch-Contrained deep Q-learning (model-free) [@Fujimoto2019]
+* MOREL (model-based) [@Kidambi2021]
+
+![Source: <https://kenshinhm.tistory.com/37>](../slides/img/morel.png)
+
+
+Transformers are the new SotA method to transform sequences into sequences. Why not sequences of states into sequences of actions? 
+
+The **decision transformer** [@Chen2021] takes complete offline trajectories as inputs (s, a, r, s...) and predicts autoregressively the next action.
+
+![Source: @Chen2021](../slides/img/decisiontranformer.png)
+
+
+However, transformers will mostly shine when used as World models... See @Micheli2022.
+
+![Source: @Micheli2022](../slides/img/transformer-rl1.png){width=70%}
+
+![Source: @Micheli2022](../slides/img/transformer-rl2.png){width=60%}

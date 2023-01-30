@@ -395,6 +395,7 @@ div.csl-indent {
   <li><a href="#intrinsic-motivation-and-curiosity" id="toc-intrinsic-motivation-and-curiosity" class="nav-link" data-scroll-target="#intrinsic-motivation-and-curiosity">Intrinsic motivation and curiosity</a></li>
   <li><a href="#hierarchical-rl---learning-different-action-levels" id="toc-hierarchical-rl---learning-different-action-levels" class="nav-link" data-scroll-target="#hierarchical-rl---learning-different-action-levels">Hierarchical RL - learning different action levels</a></li>
   <li><a href="#meta-reinforcement-learning---rl2" id="toc-meta-reinforcement-learning---rl2" class="nav-link" data-scroll-target="#meta-reinforcement-learning---rl2">Meta Reinforcement learning - RL<span class="math inline">^2</span></a></li>
+  <li><a href="#offline-rl" id="toc-offline-rl" class="nav-link" data-scroll-target="#offline-rl">Offline RL</a></li>
   </ul>
 </nav>
     </div>
@@ -685,6 +686,66 @@ Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads
 <li><a href="https://towardsdatascience.com/learning-to-learn-more-meta-reinforcement-learning-f0cc92c178c1" class="uri">https://towardsdatascience.com/learning-to-learn-more-meta-reinforcement-learning-f0cc92c178c1</a></li>
 <li><a href="https://eng.uber.com/poet-open-ended-deep-learning/" class="uri">https://eng.uber.com/poet-open-ended-deep-learning/</a></li>
 </ul>
+</section>
+<section id="offline-rl" class="level2">
+<h2 class="anchored" data-anchor-id="offline-rl">Offline RL</h2>
+<p>Even off-policy algorithms need to interact with the environment: the behavior policy is <span class="math inline">\epsilon</span>-soft around the learned policy.</p>
+<p>Is it possible to learn purely <strong>offline</strong> from recorded transitions using another policy (experts)? Data efficiency. This would bring safety: the agent would not explore dangerous actions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/offlinerl.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <a href="https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html" class="uri">https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html</a></figcaption><p></p>
+</figure>
+</div>
+<p>D4RL (<a href="https://sites.google.com/view/d4rl/home" class="uri">https://sites.google.com/view/d4rl/home</a>) provides offline data recorded using expert policies to test offline algorithms.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/d4rl.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">https://ai.googleblog.com/2020/08/tackling-open-challenges-in-offline.html</figcaption><p></p>
+</figure>
+</div>
+<p>As no exploration is allowed, the model is limited by the quality of the data: if the acquisition policy is random, there is not much to hope. If we have already a good policy, but slow or expensive to compute, we could try to transfer it to a fast neural network. If the policy is a human expert, it is called <strong>learning from demonstrations</strong> (lfd) or <strong>imitation learning</strong>.</p>
+<p>The simplest approach to offline RL is <strong>behavioral cloning</strong>: simply supervised learning of <span class="math inline">(s, a)</span> pairs…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/dave2-training.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><span class="citation" data-cites="Bojarski2016">Bojarski et al. (<a href="../references.html#ref-Bojarski2016" role="doc-biblioref">2016</a>)</span></figcaption><p></p>
+</figure>
+</div>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/qhUvQiKec2U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>The main problem in offline RL is the <strong>distribution shift</strong>: what if the trained policy assigns a non-zero probability to a <span class="math inline">(s, a)</span> pair that is <strong>outside</strong> the training data?</p>
+<p>Most offline RL methods are <strong>conservative</strong> methods, which try to learn policies staying close to the known distribution of the data. See <span class="citation" data-cites="Levine2020">Levine et al. (<a href="../references.html#ref-Levine2020" role="doc-biblioref">2020</a>)</span> for a review. Examples:</p>
+<ul>
+<li>Batch-Contrained deep Q-learning (model-free) <span class="citation" data-cites="Fujimoto2019">(<a href="../references.html#ref-Fujimoto2019" role="doc-biblioref">Fujimoto et al., 2019</a>)</span></li>
+<li>MOREL (model-based) <span class="citation" data-cites="Kidambi2021">(<a href="../references.html#ref-Kidambi2021" role="doc-biblioref">Kidambi et al., 2021</a>)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/morel.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <a href="https://kenshinhm.tistory.com/37" class="uri">https://kenshinhm.tistory.com/37</a></figcaption><p></p>
+</figure>
+</div>
+<p>Transformers are the new SotA method to transform sequences into sequences. Why not sequences of states into sequences of actions?</p>
+<p>The <strong>decision transformer</strong> <span class="citation" data-cites="Chen2021">(<a href="../references.html#ref-Chen2021" role="doc-biblioref">Chen et al., 2021</a>)</span> takes complete offline trajectories as inputs (s, a, r, s…) and predicts autoregressively the next action.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/decisiontranformer.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Chen2021">Chen et al. (<a href="../references.html#ref-Chen2021" role="doc-biblioref">2021</a>)</span></figcaption><p></p>
+</figure>
+</div>
+<p>However, transformers will mostly shine when used as World models… See <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/transformer-rl1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span></figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../slides/img/transformer-rl2.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span></figcaption><p></p>
+</figure>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -697,14 +758,32 @@ Barto, A. G. (2013). <span>“Intrinsic <span>Motivation</span> and <span>Reinfo
 <div id="ref-Belkhale2021" class="csl-entry" role="doc-biblioentry">
 Belkhale, S., Li, R., Kahn, G., McAllister, R., Calandra, R., and Levine, S. (2021). Model-<span>Based Meta-Reinforcement Learning</span> for <span>Flight</span> with <span>Suspended Payloads</span>. <em>IEEE Robot. Autom. Lett.</em>, 1–1. doi:<a href="https://doi.org/10.1109/LRA.2021.3057046">10.1109/LRA.2021.3057046</a>.
 </div>
+<div id="ref-Bojarski2016" class="csl-entry" role="doc-biblioentry">
+Bojarski, M., Del Testa, D., Dworakowski, D., Firner, B., Flepp, B., Goyal, P., et al. (2016). End to <span>End Learning</span> for <span>Self-Driving Cars</span>. <a href="http://arxiv.org/abs/1604.07316">http://arxiv.org/abs/1604.07316</a>.
+</div>
 <div id="ref-Burda2018" class="csl-entry" role="doc-biblioentry">
 Burda, Y., Edwards, H., Pathak, D., Storkey, A., Darrell, T., and Efros, A. A. (2018). Large-<span>Scale Study</span> of <span>Curiosity-Driven Learning</span>. <a href="http://arxiv.org/abs/1808.04355">http://arxiv.org/abs/1808.04355</a>.
+</div>
+<div id="ref-Chen2021" class="csl-entry" role="doc-biblioentry">
+Chen, L., Lu, K., Rajeswaran, A., Lee, K., Grover, A., Laskin, M., et al. (2021). Decision <span>Transformer</span>: <span>Reinforcement Learning</span> via <span>Sequence Modeling</span>. <a href="http://arxiv.org/abs/2106.01345">http://arxiv.org/abs/2106.01345</a>.
 </div>
 <div id="ref-Duan2016a" class="csl-entry" role="doc-biblioentry">
 Duan, Y., Schulman, J., Chen, X., Bartlett, P. L., Sutskever, I., and Abbeel, P. (2016). <span>RL</span>$2̂$: <span>Fast Reinforcement Learning</span> via <span>Slow Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1611.02779">http://arxiv.org/abs/1611.02779</a>.
 </div>
 <div id="ref-Frans2017" class="csl-entry" role="doc-biblioentry">
 Frans, K., Ho, J., Chen, X., Abbeel, P., and Schulman, J. (2017). Meta <span>Learning Shared Hierarchies</span>. <a href="http://arxiv.org/abs/1710.09767">http://arxiv.org/abs/1710.09767</a>.
+</div>
+<div id="ref-Fujimoto2019" class="csl-entry" role="doc-biblioentry">
+Fujimoto, S., Meger, D., and Precup, D. (2019). Off-<span>Policy Deep Reinforcement Learning</span> without <span>Exploration</span>. in <em>Proceedings of the 36th <span>International Conference</span> on <span>Machine Learning</span></em> (<span>PMLR</span>), 2052–2062. <a href="https://proceedings.mlr.press/v97/fujimoto19a.html">https://proceedings.mlr.press/v97/fujimoto19a.html</a>.
+</div>
+<div id="ref-Kidambi2021" class="csl-entry" role="doc-biblioentry">
+Kidambi, R., Rajeswaran, A., Netrapalli, P., and Joachims, T. (2021). <span>MOReL</span> : <span>Model-Based Offline Reinforcement Learning</span>. <a href="http://arxiv.org/abs/2005.05951">http://arxiv.org/abs/2005.05951</a>.
+</div>
+<div id="ref-Levine2020" class="csl-entry" role="doc-biblioentry">
+Levine, S., Kumar, A., Tucker, G., and Fu, J. (2020). Offline <span>Reinforcement Learning</span>: <span>Tutorial</span>, <span>Review</span>, and <span>Perspectives</span> on <span>Open Problems</span>. <a href="http://arxiv.org/abs/2005.01643">http://arxiv.org/abs/2005.01643</a>.
+</div>
+<div id="ref-Micheli2022" class="csl-entry" role="doc-biblioentry">
+Micheli, V., Alonso, E., and Fleuret, F. (2022). Transformers are <span>Sample Efficient World Models</span>. doi:<a href="https://doi.org/10.48550/arXiv.2209.00588">10.48550/arXiv.2209.00588</a>.
 </div>
 <div id="ref-Pathak2017" class="csl-entry" role="doc-biblioentry">
 Pathak, D., Agrawal, P., Efros, A. A., and Darrell, T. (2017). Curiosity-driven <span>Exploration</span> by <span class="nocase">Self-supervised Prediction</span>. <a href="http://arxiv.org/abs/1705.05363">http://arxiv.org/abs/1705.05363</a>.

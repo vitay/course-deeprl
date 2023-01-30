@@ -138,9 +138,9 @@ Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018). Model-Ens
 
 # MPC - Model Predictive Control
 
-* The solution is to **replan** at each time step and execute the first planned action **in the real environment**.
+* The solution is to **replan** at each time step and execute only the first planned action **in the real environment**.
 
-![Source: <https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323>](img/mpc-drift2.jpeg){width=90%}
+![Source: <https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323>](img/mpc-drift2.jpeg){width=80%}
 
 * **Model Predictive Control** iteratively plans complete trajectories, but only selects the first action.
 
@@ -178,7 +178,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 
     1. in the current state, select a set of possible actions.
 
-    2. generate rollouts with these action and compute their returns using the model.
+    2. generate rollouts with these actions and compute their returns using the model.
 
     3. select the action whose rollout has the highest return.
 
@@ -273,7 +273,7 @@ Sutton, R. S. (1990). Integrated Architectures for Learning, Planning, and React
 
     * Update the model:
 
-    $$M(s, a) \leftarrow (s_{t+1}, r_{t+1})$$
+    $$M(s_t, a_t) \leftarrow (s_{t+1}, r_{t+1})$$
 
     * **for** $K$ steps:
 

@@ -240,7 +240,7 @@ This proves the algorithm is generic and can be applied to any board game.
 
 ## MuZero
 
-MuZero [@Schrittwieser2019] is the latest extension of AlphaZero. 
+MuZero [@Schrittwieser2019] is the latest extension of AlphaZero (but see EfficientZero [@Ye2021]). 
 Instead of relying on a perfect simulator for the MCTS, it learns the dynamics model instead.
 
 $$s_{t+1}, r_{t+1} = f(s_t, a_t)$$

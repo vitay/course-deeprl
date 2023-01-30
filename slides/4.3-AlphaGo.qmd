@@ -570,7 +570,7 @@ Schrittwieser et al. (2019). Mastering Atari, Go, Chess and Shogi by Planning wi
 
 # MuZero
 
-* MuZero is the latest extension of AlphaZero. 
+* MuZero is the latest extension of AlphaZero (but see EfficientZero <https://arxiv.org/abs/2111.00210>). 
 
 * Instead of relying on a perfect simulator for the MCTS, it learns the dynamics model instead.
 

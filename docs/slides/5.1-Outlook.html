@@ -904,6 +904,113 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p><a href="https://towardsdatascience.com/learning-to-learn-more-meta-reinforcement-learning-f0cc92c178c1" class="uri">https://towardsdatascience.com/learning-to-learn-more-meta-reinforcement-learning-f0cc92c178c1</a></p></li>
 <li><p><a href="https://eng.uber.com/poet-open-ended-deep-learning/" class="uri">https://eng.uber.com/poet-open-ended-deep-learning/</a></p></li>
 </ul>
+</section>
+
+<section id="offline-rl" class="title-slide slide level1 center">
+<h1>6 - Offline RL</h1>
+
+</section>
+
+<section id="offline-rl-1" class="title-slide slide level1 center">
+<h1>Offline RL</h1>
+<ul>
+<li><p>Even off-policy algorithms need to interact with the environment: the behavior policy is <span class="math inline">\epsilon</span>-soft around the learned policy.</p></li>
+<li><p>Is it possible to learn purely <strong>offline</strong> from recorded transitions using another policy (experts)? Data efficiency.</p></li>
+<li><p>This would bring safety: the agent would not explore dangerous actions.</p></li>
+</ul>
+
+<img data-src="img/offlinerl.gif" class="r-stretch quarto-figure-center"><p class="caption">Source: <a href="https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html" class="uri">https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html</a></p></section>
+
+<section id="d4rl" class="title-slide slide level1 center">
+<h1>D4RL</h1>
+<ul>
+<li>D4RL (<a href="https://sites.google.com/view/d4rl/home" class="uri">https://sites.google.com/view/d4rl/home</a>) provides offline data recorded using expert policies to test offline algorithms.</li>
+</ul>
+
+<img data-src="img/d4rl.png" class="r-stretch quarto-figure-center"><p class="caption">https://ai.googleblog.com/2020/08/tackling-open-challenges-in-offline.html</p></section>
+
+<section id="behavioral-cloning" class="title-slide slide level1 center">
+<h1>Behavioral cloning</h1>
+<ul>
+<li><p>As no exploration is allowed, the model is limited by the quality of the data: if the acquisition policy is random, there is not much to hope.</p></li>
+<li><p>If we have already a good policy, but slow or expensive to compute, we could try to transfer it to a fast neural network.</p></li>
+<li><p>If the policy is a human expert, it is called <strong>learning from demonstrations</strong> (lfd) or <strong>imitation learning</strong>.</p></li>
+<li><p>The simplest approach to offline RL is <strong>behavioral cloning</strong>: simply supervised learning of <span class="math inline">(s, a)</span> pairs…</p></li>
+</ul>
+
+<img data-src="img/dave2-training.png" class="r-stretch quarto-figure-center"><div class="footer">
+<p>M Bojarski, D Del Testa, D Dworakowski, B Firner (2016). End to end learning for self-driving cars. arXiv:1604.07316</p>
+</div>
+</section>
+
+<section id="dave2-nvidias-self-driving-car" class="title-slide slide level1 center">
+<h1>Dave2 : NVIDIA’s self-driving car</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/qhUvQiKec2U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="distribution-shift" class="title-slide slide level1 center">
+<h1>Distribution shift</h1>
+<ul>
+<li><p>The main problem in offline RL is the <strong>distribution shift</strong>: what if the trained policy assigns a non-zero probability to a <span class="math inline">(s, a)</span> pair that is <strong>outside</strong> the training data?</p></li>
+<li><p>Most offline RL methods are <strong>conservative</strong> methods, which try to learn policies staying close to the known distribution of the data. Examples:</p>
+<ul>
+<li>Batch-Contrained deep Q-learning (model-free), MOREL (model-based)…</li>
+</ul></li>
+</ul>
+
+<img data-src="img/morel.png" class="r-stretch quarto-figure-center"><p class="caption">Source: <a href="https://kenshinhm.tistory.com/37" class="uri">https://kenshinhm.tistory.com/37</a></p></section>
+
+<section id="decision-transformer" class="title-slide slide level1 center">
+<h1>Decision transformer</h1>
+<ul>
+<li><p>Transformers are the new SotA method to transform sequences into sequences.</p></li>
+<li><p>Why not sequences of states into sequences of actions?</p></li>
+<li><p>The <strong>decision transformer</strong> takes complete offline trajectories as inputs (s, a, r, s…) and predicts autoregressively the next action.</p></li>
+</ul>
+<div class="columns">
+<div class="column">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/decisiontranformer.png"></p>
+<p></p><figcaption>Source: <a href="https://arxiv.org/abs/2106.01345" class="uri">https://arxiv.org/abs/2106.01345</a></figcaption><p></p>
+</figure>
+</div>
+</div><div class="column">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/decisiontransformer-results.png"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="transformers-as-world-models" class="title-slide slide level1 center">
+<h1>Transformers as World models</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/transformer-rl1.png" style="width:70.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/transformer-rl2.png" style="width:60.0%"></p>
+</figure>
+</div>
+<div class="footer">
+<p>Micheli, V., Alonso, E., &amp; Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588</p>
+</div>
+</section>
+
+<section id="references-3" class="title-slide slide level1 center">
+<h1>References</h1>
+<ul>
+<li><p>Levine, S., Kumar, A., Tucker, G., &amp; Fu, J. (2020). Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems. ArXiv:2005.01643 [Cs, Stat]. http://arxiv.org/abs/2005.01643</p></li>
+<li><p>Kidambi, R., Rajeswaran, A., Netrapalli, P., &amp; Joachims, T. (2021). MOReL: Model-Based Offline Reinforcement Learning. ArXiv:2005.05951 [Cs, Stat]. http://arxiv.org/abs/2005.05951</p></li>
+<li><p>Fujimoto, S., Meger, D., &amp; Precup, D. (2019). Off-Policy Deep Reinforcement Learning without Exploration. Proceedings of the 36th International Conference on Machine Learning, 2052–2062. https://proceedings.mlr.press/v97/fujimoto19a.html</p></li>
+<li><p>Chen, L., Lu, K., Rajeswaran, A., Lee, K., Grover, A., Laskin, M., Abbeel, P., Srinivas, A., &amp; Mordatch, I. (2021). Decision Transformer: Reinforcement Learning via Sequence Modeling. ArXiv:2106.01345 [Cs]. http://arxiv.org/abs/2106.01345</p></li>
+<li><p>Micheli, V., Alonso, E., &amp; Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). arXiv. https://doi.org/10.48550/arXiv.2209.00588</p></li>
+</ul>
 <div class="footer footer-default">
 
 </div>

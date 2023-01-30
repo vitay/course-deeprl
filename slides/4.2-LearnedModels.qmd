@@ -979,3 +979,15 @@ Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behav
 
 
 ![Source: <https://dreamrl.github.io/>](img/dreamer-resultsatari.png){width=70%}
+
+# DayDreamer
+
+* A recent extension of Dreamer, DayDreamer, allows physical robots to learn complex tasks in a few hours.
+
+<https://danijar.com/daydreamer>
+
+![](img/daydreamer.png)
+
+::: footer
+Wu, P., Escontrela, A., Hafner, D., Goldberg, K., & Abbeel, P. (2022). DayDreamer: World Models for Physical Robot Learning (arXiv:2206.14176).
+:::

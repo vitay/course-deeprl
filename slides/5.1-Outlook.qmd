@@ -607,3 +607,98 @@ Belkhale et al. (2021). Model-Based Meta-Reinforcement Learning for Flight with 
 * <https://eng.uber.com/poet-open-ended-deep-learning/>
 
 
+# 6 - Offline RL
+
+# Offline RL
+
+* Even off-policy algorithms need to interact with the environment: the behavior policy is $\epsilon$-soft around the learned policy.
+
+* Is it possible to learn purely **offline** from recorded transitions using another policy (experts)? Data efficiency.
+
+* This would bring safety: the agent would not explore dangerous actions.
+
+![Source: <https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html>](img/offlinerl.gif)
+
+
+# D4RL
+
+* D4RL (<https://sites.google.com/view/d4rl/home>) provides offline data recorded using expert policies to test offline algorithms.
+
+![https://ai.googleblog.com/2020/08/tackling-open-challenges-in-offline.html](img/d4rl.png)
+
+# Behavioral cloning
+
+* As no exploration is allowed, the model is limited by the quality of the data: if the acquisition policy is random, there is not much to hope.
+
+* If we have already a good policy, but slow or expensive to compute, we could try to transfer it to a fast neural network.
+
+* If the policy is a human expert, it is called **learning from demonstrations** (lfd) or **imitation learning**.
+
+* The simplest approach to offline RL is **behavioral cloning**: simply supervised learning of $(s, a)$ pairs...
+
+![](img/dave2-training.png)
+
+::: footer  
+M Bojarski, D Del Testa, D Dworakowski, B Firner (2016). End to end learning for self-driving cars. arXiv:1604.07316
+:::
+
+
+# Dave2 : NVIDIA's self-driving car
+
+
+{{< youtube qhUvQiKec2U >}}
+
+# Distribution shift
+
+* The main problem in offline RL is the **distribution shift**: what if the trained policy assigns a non-zero probability to a $(s, a)$ pair that is **outside** the training data?
+
+* Most offline RL methods are **conservative** methods, which try to learn policies staying close to the known distribution of the data. Examples:
+
+    * Batch-Contrained deep Q-learning (model-free), MOREL (model-based)...
+
+![Source: <https://kenshinhm.tistory.com/37>](img/morel.png)
+
+
+# Decision transformer
+
+* Transformers are the new SotA method to transform sequences into sequences.
+
+* Why not sequences of states into sequences of actions? 
+
+* The **decision transformer** takes complete offline trajectories as inputs (s, a, r, s...) and predicts autoregressively the next action.
+
+::: {.columns}
+::: {.column}
+
+![Source: <https://arxiv.org/abs/2106.01345>](img/decisiontranformer.png)
+
+:::
+::: {.column}
+
+![](img/decisiontransformer-results.png)
+
+:::
+:::
+
+# Transformers as World models
+
+![](img/transformer-rl1.png){width=70%}
+
+![](img/transformer-rl2.png){width=60%}
+
+::: footer
+Micheli, V., Alonso, E., & Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588
+:::
+
+# References
+
+* Levine, S., Kumar, A., Tucker, G., & Fu, J. (2020). Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems. ArXiv:2005.01643 [Cs, Stat]. http://arxiv.org/abs/2005.01643
+
+* Kidambi, R., Rajeswaran, A., Netrapalli, P., & Joachims, T. (2021). MOReL: Model-Based Offline Reinforcement Learning. ArXiv:2005.05951 [Cs, Stat]. http://arxiv.org/abs/2005.05951
+
+* Fujimoto, S., Meger, D., & Precup, D. (2019). Off-Policy Deep Reinforcement Learning without Exploration. Proceedings of the 36th International Conference on Machine Learning, 2052–2062. https://proceedings.mlr.press/v97/fujimoto19a.html
+
+* Chen, L., Lu, K., Rajeswaran, A., Lee, K., Grover, A., Laskin, M., Abbeel, P., Srinivas, A., & Mordatch, I. (2021). Decision Transformer: Reinforcement Learning via Sequence Modeling. ArXiv:2106.01345 [Cs]. http://arxiv.org/abs/2106.01345
+
+* Micheli, V., Alonso, E., & Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). arXiv. https://doi.org/10.48550/arXiv.2209.00588
+
