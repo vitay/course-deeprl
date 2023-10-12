@@ -4,8 +4,6 @@ subtitle: Foreword
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
-
-
 ---
 
 # Dr. habil. Julien Vitay
@@ -74,7 +72,7 @@ institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
 
 <https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457>.
 
-* One lecture (Monday 09:15) and one exercise (Thursday 13:45).
+* One lecture (Wednesday 09:15) and one exercise (Wednesday 15:30).
 
 * All materials are at:
 

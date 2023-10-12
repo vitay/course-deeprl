@@ -11,7 +11,7 @@ book:
     type: light
     background: white
     logo: notes/img/tuc-new.png
-  page-footer: "Copyright 2022, Julien Vitay - <julien.vitay@informatik.tu-chemnitz.de>" 
+  page-footer: "Copyright Julien Vitay - <julien.vitay@informatik.tu-chemnitz.de>" 
 
   chapters:
     - index.qmd

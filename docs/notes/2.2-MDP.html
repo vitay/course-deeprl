@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 4&nbsp; Markov Decision Processes</title>
+<title>Deep Reinforcement Learning - Markov Decision Processes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,7 +76,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -104,11 +105,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Markov Decision Processes</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/2.1-Bandits.html"><strong>Tabular RL</strong></a></li><li class="breadcrumb-item"><a href="../notes/2.2-MDP.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markov Decision Processes</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -116,7 +122,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -125,22 +131,24 @@ div.csl-indent {
       <a href="../">Deep Reinforcement Learning</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Introduction</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Introduction</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -159,8 +167,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Tabular RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>Tabular RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -204,8 +213,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true"><strong>Model-free RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>Model-free RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -249,8 +259,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Model-based RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>Model-based RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -279,8 +290,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Outlook</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text"><strong>Outlook</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -294,8 +306,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true"><strong>Exercises</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text"><strong>Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -374,12 +387,14 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -412,7 +427,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-title">Markov Decision Processes</span></h1>
+<h1 class="title"><span class="chapter-title">Markov Decision Processes</span></h1>
 </div>
 
 
@@ -435,10 +450,10 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/rl-loop.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Agent-environment interface for video games. Source: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<figcaption class="figure-caption">Agent-environment interface for video games. Source: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption>
 </figure>
 </div>
-<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -454,7 +469,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/fsm.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Finite state machine. Source: <a href="https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/" class="uri">https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/</a></figcaption><p></p>
+<figcaption class="figure-caption">Finite state machine. Source: <a href="https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/" class="uri">https://web.stanford.edu/class/archive/cs/cs103/cs103.1142/button-fsm/</a></figcaption>
 </figure>
 </div>
 <p>A FSM is fully defined by:</p>
@@ -477,7 +492,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/student-markovchain.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Markov chain. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<figcaption class="figure-caption">Markov chain. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption>
 </figure>
 </div>
 <p>A first-order <strong>Markov Chain</strong> (or Markov process) is a stochastic process generated by a FSM, where transitions between states are governed by <strong>state transition probabilities</strong>.</p>
@@ -503,7 +518,7 @@ div.csl-indent {
     P(s_{t+1} | s_t) = P(s_{t+1} | s_t, s_{t-1}, \ldots, s_0)
 </span></p>
 <p>The knowledge of the current state <span class="math inline">s_t</span> is <strong>enough</strong> to predict in which state <span class="math inline">s_{t+1}</span> the system will be at the next time step. We do not need the whole <strong>history</strong> <span class="math inline">\{s_0, s_1, \ldots, s_t\}</span> of the system to predict what will happen.</p>
-<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -526,7 +541,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/student-transitionmatrix.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">State transition matrix. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<figcaption class="figure-caption">State transition matrix. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption>
 </figure>
 </div>
 <p>Each element of the state transition matrix corresponds to <span class="math inline">p(s' | s)</span>. Each row of the state transition matrix sums to 1:</p>
@@ -540,7 +555,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/student-mrp.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Markov Reward Process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<figcaption class="figure-caption">Markov Reward Process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption>
 </figure>
 </div>
 <p>A Markov Reward Process is defined by the tuple <span class="math inline">&lt;\mathcal{S}, \mathcal{P}, \mathcal{R}, \gamma&gt;</span>.</p>
@@ -580,7 +595,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/student-mdp.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Markov decision process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption><p></p>
+<figcaption class="figure-caption">Markov decision process. Credit: David Silver <a href="https://www.davidsilver.uk/teaching/" class="uri">https://www.davidsilver.uk/teaching/</a></figcaption>
 </figure>
 </div>
 <p>A finite MDP is defined by the tuple <span class="math inline">&lt;\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma&gt;</span>:</p>
@@ -650,12 +665,12 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li>if <span class="math inline">\gamma</span> is close to 0, only the immediately available rewards will count: the agent is greedy or <strong>myopic</strong>.</li>
 <li>if <span class="math inline">\gamma</span> is close to 1, even far-distance rewards will be taken into account: the agent is <strong>farsighted</strong>.</li>
 </ul>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Why the reward on the long term?
 </div>
 </div>
@@ -680,7 +695,7 @@ Why the reward on the long term?
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/cartpole-after.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Cartpole balancing task</figcaption><p></p>
+<figcaption class="figure-caption">Cartpole balancing task</figcaption>
 </figure>
 </div>
 <ul>
@@ -708,7 +723,7 @@ Why the reward on the long term?
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/recyclingrobot.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Recycling robot. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Recycling robot. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption>
 </figure>
 </div>
 <p>At each step, the recycling robot has to decide whether it should:</p>
@@ -925,7 +940,7 @@ Why the reward on the long term?
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/backup-V.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagrams of the Bellman equations. Left: the value of a state <span class="math inline">s</span> depends on the policy <span class="math inline">\pi</span> and the value of the succeeding states <span class="math inline">s'</span>. Right: the value of an action depends on the value of the action that can be taken in the next states. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Backup diagrams of the Bellman equations. Left: the value of a state <span class="math inline">s</span> depends on the policy <span class="math inline">\pi</span> and the value of the succeeding states <span class="math inline">s'</span>. Right: the value of an action depends on the value of the action that can be taken in the next states. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption>
 </figure>
 </div>
 </section>
@@ -953,7 +968,7 @@ Why the reward on the long term?
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/fullvi.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Backup diagrams of the Bellman optimality equations. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Backup diagrams of the Bellman optimality equations. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption>
 </figure>
 </div>
 <p><strong>The optimal action <span class="math inline">a^*</span> to perform in the state <span class="math inline">s</span> is the one with the highest optimal Q-value <span class="math inline">Q^*(s, a)</span></strong>.</p>
@@ -1034,7 +1049,7 @@ Why the reward on the long term?
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/gpi-scheme.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Generalized Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Generalized Policy Iteration. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span></figcaption>
 </figure>
 </div>
 <p>RL algorithms iterate over two steps:</p>
@@ -1053,12 +1068,12 @@ Why the reward on the long term?
 </ul></li>
 </ol>
 <p>After enough iterations, the policy converges to the <strong>optimal policy</strong> (if the states are Markov).</p>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Different notations in RL
 </div>
 </div>
@@ -1134,8 +1149,8 @@ Different notations in RL
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Sutton1998" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Sutton1998" class="csl-entry" role="listitem">
 Sutton, R. S., and Barto, A. G. (1998). <em>Reinforcement <span>Learning</span>: <span>An</span> introduction</em>. <span>Cambridge, MA</span>: <span>MIT press</span>.
 </div>
 </div>
@@ -1169,9 +1184,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1236,6 +1265,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1290,7 +1405,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

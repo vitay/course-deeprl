@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 19&nbsp; AlphaGo</title>
+<title>Deep Reinforcement Learning - AlphaGo</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,7 +76,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -104,11 +105,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">AlphaGo</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/4.1-MB.html"><strong>Model-based RL</strong></a></li><li class="breadcrumb-item"><a href="../notes/4.3-AlphaGo.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">AlphaGo</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -116,7 +122,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -125,22 +131,24 @@ div.csl-indent {
       <a href="../">Deep Reinforcement Learning</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Introduction</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Introduction</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -159,8 +167,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Tabular RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>Tabular RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -204,8 +213,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true"><strong>Model-free RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>Model-free RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -249,8 +259,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Model-based RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>Model-based RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -279,8 +290,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Outlook</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text"><strong>Outlook</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -294,8 +306,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true"><strong>Exercises</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text"><strong>Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -374,12 +387,14 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -405,7 +420,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-title">AlphaGo</span></h1>
+<h1 class="title"><span class="chapter-title">AlphaGo</span></h1>
 </div>
 
 
@@ -424,12 +439,12 @@ div.csl-indent {
 <section id="the-game-of-go" class="level2">
 <h2 class="anchored" data-anchor-id="the-game-of-go">The game of Go</h2>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/kTguIv-D8NI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Play Go in Chemnitz:
 </div>
 </div>
@@ -440,7 +455,7 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/go.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">The Goban.</figcaption><p></p>
+<figcaption class="figure-caption">The Goban.</figcaption>
 </figure>
 </div>
 <p><strong>Go</strong> is an ancient two-opponents board game, where each player successively places stones on a 19x19 grid. When a stone is surrounded by four opponents, it dies. The goal is to ensure strategical position in order to cover the biggest territory. There are around <span class="math inline">10^{170}</span> possible states and 250 actions available at each turn (<span class="math inline">10^{761}</span> possible games), making it a much harder game than chess for a computer (35 possible actions, <span class="math inline">10^{120}</span> possible games). A game lasts 150 moves on average (80 in chess). Up until 2015 and <strong>AlphaGo</strong>, Go AIs could not compete with world-class experts, and people usually considered AI would need at least another 20 years to solve it.</p>
@@ -449,14 +464,14 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/minimax.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Example of a game tree.</figcaption><p></p>
+<figcaption class="figure-caption">Example of a game tree.</figcaption>
 </figure>
 </div>
 <p><strong>Minimax</strong> algorithm expand the whole game tree, simulating the moves of the MAX (you) and MIN (your opponent) players. The final outcome (win or lose) is assigned to the leaves. It allows to solve <strong>zero sum games</strong>: what MAX wins is lost by MIN, and vice-versa. We suppose MIN plays optimally (i.e.&nbsp;in his own interest).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/minimax-sol.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Minimax iteratively backpropagates the value of the leaves according to who plays.</figcaption><p></p>
+<figcaption class="figure-caption">Minimax iteratively backpropagates the value of the leaves according to who plays.</figcaption>
 </figure>
 </div>
 <p>The value of the leaves is propagated backwards to the starting position: MAX chooses the action leading to the state with the highest value, MIN does the opposite. For most games, the tree becomes too huge for such a systematic search: * The value of all states further than a couple of moves away are approximated by a <strong>heuristic function</strong>: the value <span class="math inline">V(s)</span> of these states. * Obviously useless parts of the tree are pruned: <strong>Alpha-Beta</strong> algorithm.</p>
@@ -464,7 +479,7 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/tictactoe.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Game tree of tic-tac-toe.</figcaption><p></p>
+<figcaption class="figure-caption">Game tree of tic-tac-toe.</figcaption>
 </figure>
 </div>
 <p>It also works when precise heuristics can be derived in a reasonable time. This is the principle of <strong>IBM DeepBlue</strong> which was the first Chess AI to beat a world champion (Garry Kasparov) in 1995. Carefully engineered heuristics (with the help of chess masters) allowed DeepBlue to search 6 moves away what is the best situation it can arrive in.</p>
@@ -472,7 +487,7 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/gotree.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Game (sub-)tree of Go. Source: <a href="https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias" class="uri">https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias</a></figcaption><p></p>
+<figcaption class="figure-caption">Game (sub-)tree of Go. Source: <a href="https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias" class="uri">https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias</a></figcaption>
 </figure>
 </div>
 </section>
@@ -492,7 +507,7 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/alphago.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Architecture of AlphaGo <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Architecture of AlphaGo <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Supervised learning is used for bootstrapping the policy network.</p>
@@ -518,13 +533,13 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/alphago-policy.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">The policy network learns the probability of selecting different moves. Source: <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">The policy network learns the probability of selecting different moves. Source: <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/alphago-value.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">The value network learns to predict the value of any possible state under the learned policy. Source: <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">The value network learns to predict the value of any possible state under the learned policy. Source: <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -533,7 +548,7 @@ Play Go in Chemnitz:
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mcts.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Monte-Carlo Tree Search (MCTS). Source: <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Monte-Carlo Tree Search (MCTS). Source: <span class="citation" data-cites="Silver2016">(<a href="../references.html#ref-Silver2016" role="doc-biblioref">Silver et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The final AlphaGo player uses <strong>Monte-Carlo Tree Search</strong> (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions. The game tree is traversed depth-first from the current state, but the order of the visits depends on the value of the transition. MCTS was previously the standard approach for Go AIs, but based on expert moves only, not deep networks. One step of MCTS consists of four phases:</p>
@@ -572,12 +587,12 @@ Play Go in Chemnitz:
 <p>The four phases are then repeated as long as possible (time is limited in Go), to expand the game tree as efficiently as possible. The game tree is repeatedly sampled and grows after each sample. When the time is up, the greedy action (highest Q-value) in the initial state is chosen and played. For the next move, the tree is reset and expanded again (MPC replanning).</p>
 <p>In the end, during MCTS, only the value network <span class="math inline">\nu_\theta</span>, the SL policy network <span class="math inline">\rho_\sigma</span> and the fast rollout policy <span class="math inline">\rho_\pi</span> are used. The RL policy network <span class="math inline">\rho_\rho</span> is only used to train the value network <span class="math inline">\nu_\theta</span>. i.e.&nbsp;to predict which positions are interesting or not. However, the RL policy network can discover new strategies by playing many times against itself, without relying on averaging expert moves like the previous approaches.</p>
 <p>AlphaGo was able to beat Lee Sedol in 2016, 19 times World champion. It relies on human knowledge to <strong>bootstrap</strong> a RL agent (supervised learning). The RL agent discovers new strategies by using self-play: during the games against Lee Sedol, it was able to use <strong>novel</strong> moves which were never played before and surprised its opponent. The neural networks are only used to guide random search using MCTS: the policy network alone is not able to beat grandmasters. Training took several weeks on 1202 CPUs and 176 GPUs.</p>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 But is Go that hard compared to robotics?
 </div>
 </div>
@@ -603,14 +618,14 @@ But is Go that hard compared to robotics?
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/AlphaZero-perf.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Performance of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>. Source: <a href="https://deepmind.com/blog/alphago-zero-learning-scratch/" class="uri">https://deepmind.com/blog/alphago-zero-learning-scratch/</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Performance of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>. Source: <a href="https://deepmind.com/blog/alphago-zero-learning-scratch/" class="uri">https://deepmind.com/blog/alphago-zero-learning-scratch/</a>.</figcaption>
 </figure>
 </div>
 <p>AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span> totally skips the <strong>supervised learning</strong> part: the RL policy network starts self-play from scratch!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/alphazero.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Architecture of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Architecture of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The RL policy network uses MCTS to select moves, not a softmax-like selection as in AlphaGo. The policy and value networks are merged into a <strong>two-headed monster</strong>: the convolutional residual layers are shared to predict both:</p>
@@ -626,12 +641,12 @@ But is Go that hard compared to robotics?
     \mathcal{L}(\theta) = (R − V_\varphi(s))^2 - \pi_\text{MCTS}(s) \, \log \pi_\theta(s) + c ||\theta||^2
 </span></p>
 <p>The policy head <span class="math inline">\pi_\theta(s)</span> learns to mimic the actions selected by MCTS by minimizing the cross-entropy (or KL). The value network <span class="math inline">V_\varphi(s)</span> learns to predict the return by minimizing the mse.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 AlphaZero
 </div>
 </div>
@@ -651,14 +666,14 @@ AlphaZero
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/alphazero-efficiency.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Power consumption of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>. Source: <a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go" class="uri">https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Power consumption of AlphaZero <span class="citation" data-cites="Silver2018">(<a href="../references.html#ref-Silver2018" role="doc-biblioref">Silver et al., 2018</a>)</span>. Source: <a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go" class="uri">https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go</a>.</figcaption>
 </figure>
 </div>
 <p><strong>The same algorithm can also play Chess and Shogi!</strong> The network weights are reset for each game, but it uses the same architecture and hyperparameters. After only 8 hours of training, AlphaZero beats Stockfish with 28-72-00, the best Chess AI at the time, which itself beats any human. This proves the algorithm is generic and can be applied to any board game.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/alphazero.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">AlphaZero can reach sota performance on Go, Cjess and Shogi. Source: <a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go" class="uri">https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go</a></figcaption><p></p>
+<figcaption class="figure-caption">AlphaZero can reach sota performance on Go, Cjess and Shogi. Source: <a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go" class="uri">https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go</a></figcaption>
 </figure>
 </div>
 </section>
@@ -669,7 +684,7 @@ AlphaZero
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/muzero.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Architecture of MuZero <span class="citation" data-cites="Schrittwieser2019">(<a href="../references.html#ref-Schrittwieser2019" role="doc-biblioref">Schrittwieser et al., 2019</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Architecture of MuZero <span class="citation" data-cites="Schrittwieser2019">(<a href="../references.html#ref-Schrittwieser2019" role="doc-biblioref">Schrittwieser et al., 2019</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>MuZero is composed of three neural networks:</p>
@@ -690,22 +705,22 @@ AlphaZero
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/muzero-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Performance of MuZero <span class="citation" data-cites="Schrittwieser2019">(<a href="../references.html#ref-Schrittwieser2019" role="doc-biblioref">Schrittwieser et al., 2019</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Performance of MuZero <span class="citation" data-cites="Schrittwieser2019">(<a href="../references.html#ref-Schrittwieser2019" role="doc-biblioref">Schrittwieser et al., 2019</a>)</span>.</figcaption>
 </figure>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Schrittwieser2019" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Schrittwieser2019" class="csl-entry" role="listitem">
 Schrittwieser, J., Antonoglou, I., Hubert, T., Simonyan, K., Sifre, L., Schmitt, S., et al. (2019). Mastering <span>Atari</span>, <span>Go</span>, <span>Chess</span> and <span>Shogi</span> by <span>Planning</span> with a <span>Learned Model</span>. <a href="http://arxiv.org/abs/1911.08265">http://arxiv.org/abs/1911.08265</a>.
 </div>
-<div id="ref-Silver2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Silver2016" class="csl-entry" role="listitem">
 Silver, D., Huang, A., Maddison, C. J., Guez, A., Sifre, L., van den Driessche, G., et al. (2016). Mastering the game of <span>Go</span> with deep neural networks and tree search. <em>Nature</em> 529, 484–489. doi:<a href="https://doi.org/10.1038/nature16961">10.1038/nature16961</a>.
 </div>
-<div id="ref-Silver2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Silver2018" class="csl-entry" role="listitem">
 Silver, D., Hubert, T., Schrittwieser, J., Antonoglou, I., Lai, M., Guez, A., et al. (2018). A general reinforcement learning algorithm that masters chess, shogi, and <span>Go</span> through self-play. <em>Science</em> 362, 1140–1144. doi:<a href="https://doi.org/10.1126/science.aar6404">10.1126/science.aar6404</a>.
 </div>
-<div id="ref-Ye2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Ye2021" class="csl-entry" role="listitem">
 Ye, W., Liu, S., Kurutach, T., Abbeel, P., and Gao, Y. (2021). Mastering <span>Atari Games</span> with <span>Limited Data</span>. doi:<a href="https://doi.org/10.48550/arXiv.2111.00210">10.48550/arXiv.2111.00210</a>.
 </div>
 </div>
@@ -739,9 +754,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -806,6 +835,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -860,7 +975,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

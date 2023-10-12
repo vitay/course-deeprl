@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 11&nbsp; Beyond DQN</title>
+<title>Deep Reinforcement Learning - Beyond DQN</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,7 +76,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -104,11 +105,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Beyond DQN</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/3.1-DQN.html"><strong>Model-free RL</strong></a></li><li class="breadcrumb-item"><a href="../notes/3.2-BeyondDQN.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Beyond DQN</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -116,7 +122,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -125,22 +131,24 @@ div.csl-indent {
       <a href="../">Deep Reinforcement Learning</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Introduction</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Introduction</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -159,8 +167,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Tabular RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>Tabular RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -204,8 +213,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true"><strong>Model-free RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>Model-free RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -249,8 +259,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Model-based RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>Model-based RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -279,8 +290,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Outlook</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text"><strong>Outlook</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -294,8 +306,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true"><strong>Exercises</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text"><strong>Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -374,12 +387,14 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -413,7 +428,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-title">Beyond DQN</span></h1>
+<h1 class="title"><span class="chapter-title">Beyond DQN</span></h1>
 </div>
 
 
@@ -444,12 +459,12 @@ div.csl-indent {
 <li><span class="math inline">R(a_2) = \{-100, 400\}</span></li>
 </ul>
 <p>Their Q-value is the same: <span class="math inline">Q(a_1) = Q(a_2) = 150</span>, so if you play them an <strong>infinity</strong> of times, they are both optimal. But suppose that, after learning, you can only try a <strong>single</strong> action. Which one do you chose? RL does not distinguish safe from risky actions.</p>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example
 </div>
 </div>
@@ -470,7 +485,7 @@ Example
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/distributionallearning.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Distribution of returns for a given state.</figcaption><p></p>
+<figcaption class="figure-caption">Distribution of returns for a given state.</figcaption>
 </figure>
 </div>
 <p>Note that we can always obtain the Q-values back:</p>
@@ -489,7 +504,7 @@ Example
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/categorical-dqn.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Categorical DQN outputs the distribution of returns for each action using a softmax output layer. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<figcaption class="figure-caption">Categorical DQN outputs the distribution of returns for each action using a softmax output layer. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption>
 </figure>
 </div>
 <p>The only thing we need is a neural network <span class="math inline">\theta</span> returning for each action <span class="math inline">a</span> in the state <span class="math inline">s</span> a discrete probability distribution <span class="math inline">\mathcal{Z}_\theta(s, a)</span> instead of a single Q-value <span class="math inline">Q_\theta(s, a)</span>. The NN uses a <strong>softmax activation function</strong> for each action. Action selection is similar to DQN: we first compute the <span class="math inline">Q_\theta(s, a)</span> and apply greedy / <span class="math inline">\epsilon</span>-greedy / softmax over the actions.</p>
@@ -513,7 +528,7 @@ Example
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/distributional_bellman1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">Multiplying the returns by <span class="math inline">\gamma &lt; 1</span> shrinks the supports of the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<figcaption class="figure-caption">Multiplying the returns by <span class="math inline">\gamma &lt; 1</span> shrinks the supports of the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption>
 </figure>
 </div>
 <p>Adding a reward <span class="math inline">r</span> <strong>translates</strong> the distribution. The probabilities do not change, but the new position of the atoms is:</p>
@@ -521,7 +536,7 @@ Example
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/distributional_bellman2.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">Adding the reward translates the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<figcaption class="figure-caption">Adding the reward translates the distribution. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption>
 </figure>
 </div>
 <p>But now we have a problem: the atoms <span class="math inline">z'_i</span> of <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> do not match with the atoms <span class="math inline">z_i</span> of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. We need to <strong>interpolate</strong> the target distribution to compare it with the predicted distribution.</p>
@@ -532,16 +547,16 @@ Example
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/distributional_bellman3.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">The Bellman target distribution <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> must be projected to match the support of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption><p></p>
+<figcaption class="figure-caption">The Bellman target distribution <span class="math inline">\mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> must be projected to match the support of <span class="math inline">\mathcal{Z}_\theta(s, a)</span>. Source: <a href="https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf" class="uri">https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf</a></figcaption>
 </figure>
 </div>
 <p>We now have two distributions <span class="math inline">\mathcal{Z}_\theta(s, a)</span> and <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> sharing the same support. We now want to have the prediction <span class="math inline">\mathcal{Z}_\theta(s, a)</span> close from the target <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span>. These are probability distributions, not numbers, so we cannot use the mse. We instead minimize the <strong>Kullback-Leibler (KL) divergence</strong> between the two distributions.</p>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Kullback-Leibler (KL) divergence
 </div>
 </div>
@@ -559,12 +574,12 @@ Kullback-Leibler (KL) divergence
 <section id="categorical-dqn" class="level3">
 <h3 class="anchored" data-anchor-id="categorical-dqn">Categorical DQN</h3>
 <p>The categorical DQN algorithm follows the main lines of DQN, with the additional step of prohecting the distributions:</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Categorical DQN
 </div>
 </div>
@@ -603,26 +618,26 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/categorical-dqn-algo.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Computation of the cross-entropy loss in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Computation of the cross-entropy loss in <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Having the full distribution of returns allow to deal with <strong>uncertainty</strong>. For certain actions in critical states, one could get a high return (killing an enemy) or no return (death). The distribution reflects that the agent is not certain of the goodness of the action. Expectations would not provide this information.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/categorical_dqn_animation.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">The distribution of returns for each action allows to estimate the uncertainty. Source: <a href="https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning" class="uri">https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning</a></figcaption><p></p>
+<figcaption class="figure-caption">The distribution of returns for each action allows to estimate the uncertainty. Source: <a href="https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning" class="uri">https://deepmind.com/blog/article/going-beyond-average-reinforcement-learning</a></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/categorical-dqn-results1.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">C51 outperforms both DQN and humans on Atari games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">C51 outperforms both DQN and humans on Atari games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/categorical-dqn-results2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">C51 outperforms double DQN on most games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">C51 outperforms double DQN on most games. Source <span class="citation" data-cites="Bellemare2017">(<a href="../references.html#ref-Bellemare2017" role="doc-biblioref">Bellemare et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/yFBwyPuO2Vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
@@ -642,17 +657,17 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/epsilonschedule.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">The exploration parameter <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span> is <strong>annealed</strong> during learning to solve the exploration/exploitation trade-off. Source: <a href="https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg" class="uri">https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg</a></figcaption><p></p>
+<figcaption class="figure-caption">The exploration parameter <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span> is <strong>annealed</strong> during learning to solve the exploration/exploitation trade-off. Source: <a href="https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg" class="uri">https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg</a></figcaption>
 </figure>
 </div>
 <p><span class="math inline">\epsilon</span>-greedy and softmax add <strong>exploratory noise</strong> to the output of DQN: The Q-values predict a greedy action, but another action is taken. What about adding noise to the <strong>parameters</strong> (weights and biases) of the DQN, what would change the greedy action everytime? Controlling the level of noise inside the neural network indirectly controls the exploration level.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/ddpg-parameternoise.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Instead of adding noise to the output (greedy action), we could add noise to the parameters of the neural network. Source: <a href="https://openai.com/blog/better-exploration-with-parameter-noise/" class="uri">https://openai.com/blog/better-exploration-with-parameter-noise/</a></figcaption><p></p>
+<figcaption class="figure-caption">Instead of adding noise to the output (greedy action), we could add noise to the parameters of the neural network. Source: <a href="https://openai.com/blog/better-exploration-with-parameter-noise/" class="uri">https://openai.com/blog/better-exploration-with-parameter-noise/</a></figcaption>
 </figure>
 </div>
-<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -674,7 +689,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/noisydqn.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<p></p><figcaption class="figure-caption">Bayesian deep learning learns a distribution of weights. Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption><p></p>
+<figcaption class="figure-caption">Bayesian deep learning learns a distribution of weights. Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption>
 </figure>
 </div>
 <p>As the random variables <span class="math inline">\epsilon_i \sim \mathcal{N}(0, 1)</span> are not correlated with anything, the variances <span class="math inline">\sigma_\theta^2</span> should decay to 0. The variances <span class="math inline">\sigma_\theta^2</span> represent the <strong>uncertainty</strong> about the prediction <span class="math inline">y</span>.</p>
@@ -683,7 +698,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/noisydqn2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Noisy networks outperform their <span class="math inline">\epsilon</span>-soft variants. Source: <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Noisy networks outperform their <span class="math inline">\epsilon</span>-soft variants. Source: <span class="citation" data-cites="Fortunato2017">(<a href="../references.html#ref-Fortunato2017" role="doc-biblioref">Fortunato et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -719,7 +734,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/rainbow-results1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">The Rainbow network combines all DQN improvements and outperforms each of them. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">The Rainbow network combines all DQN improvements and outperforms each of them. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Answer: all of them. The <strong>rainbow network</strong> <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span> combines :</p>
@@ -734,7 +749,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/rainbow-results2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Ablation studies on the Rainbow network. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Ablation studies on the Rainbow network. Source: <span class="citation" data-cites="Hessel2017">(<a href="../references.html#ref-Hessel2017" role="doc-biblioref">Hessel et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Most of these mechanisms are necessary to achieve optimal performance (<strong>ablation studies</strong>). n-step returns, PER and distributional learning are the most critical. Interestingly, double Q-learning does not have a huge effect on the Rainbow network: The other mechanisms (especially distributional learning) already ensure that Q-values are not over-estimated.</p>
@@ -754,7 +769,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/gorila1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">The DQN value network is both an actor and a learner, as it needs to sequentially select actions and learn from the replay memory. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">The DQN value network is both an actor and a learner, as it needs to sequentially select actions and learn from the replay memory. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: <strong>computational bottleneck</strong>. DQN cannot benefit from <strong>parallel computing</strong>: multi-core CPU, clusters of CPU/GPU, etc.</p>
@@ -762,21 +777,21 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/gorila2.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">The Gorila framework uses multiple actors to collect transitions and store them in the ERM. The learners sample the ERM and compute the gradients of the DQN loss function. The parameter servers collect the gradients and synchronize the parameters of the actors and learners. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">The Gorila framework uses multiple actors to collect transitions and store them in the ERM. The learners sample the ERM and compute the gradients of the DQN loss function. The parameter servers collect the gradients and synchronize the parameters of the actors and learners. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Gorila allows to train DQN on parallel hardware (e.g.&nbsp;clusters of GPU) as long as the environment can be copied (simulation).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/gorila-results1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">The Gorila framework allows to slightly improve the performance of DQN on Atari games… Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">The Gorila framework allows to slightly improve the performance of DQN on Atari games… Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/gorila-results2.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">… but that performance is achieved in a much smaller wall-clock time. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">… but that performance is achieved in a much smaller wall-clock time. Source: <span class="citation" data-cites="Nair2015">(<a href="../references.html#ref-Nair2015" role="doc-biblioref">Nair et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -811,7 +826,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/drqn3.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Most Atari games have frames which do not respect the Markov property. Source: <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Most Atari games have frames which do not respect the Markov property. Source: <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The trick used by DQN and its variants is to <strong>stack</strong> the last four frames and provide them as inputs to the CNN. The last 4 frames have (almost) the Markov property.</p>
@@ -827,7 +842,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/drqn-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Value-based network with a LSTM layer before the Q-value output layer. Source: <a href="https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/" class="uri">https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/</a></figcaption><p></p>
+<figcaption class="figure-caption">Value-based network with a LSTM layer before the Q-value output layer. Source: <a href="https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/" class="uri">https://blog.acolyer.org/2016/11/23/playing-fps-games-with-deep-reinforcement-learning/</a></figcaption>
 </figure>
 </div>
 <p>For the neural network, it is just a matter of adding a LSTM layer before the output layer. The convolutional layers are <strong>feature extractors</strong> for the LSTM layer. The loss function does not change: backpropagation (through time) all along.</p>
@@ -835,7 +850,7 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/drqn-architecture2.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">DRQN architecture <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">DRQN architecture <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The only problem is that RNNs are trained using truncated <strong>backpropagation through time</strong> (BPTT). One needs to provide a partial history of <span class="math inline">T = 10</span> inputs to the network in order to learn one output:</p>
@@ -846,14 +861,14 @@ Categorical DQN
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/drqn4.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">DRQN performance compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">DRQN performance compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Beware: LSTMs are extremely slow to train (but not to use). Stacking frames is still a reasonable option in many cases.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/drqn5.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Training and inference times of DRQN compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Training and inference times of DRQN compared to DQN <span class="citation" data-cites="Hausknecht2015">(<a href="../references.html#ref-Hausknecht2015" role="doc-biblioref">Hausknecht and Stone, 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -873,50 +888,50 @@ Categorical DQN
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Bellemare2017" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Bellemare2017" class="csl-entry" role="listitem">
 Bellemare, M. G., Dabney, W., and Munos, R. (2017). A <span>Distributional Perspective</span> on <span>Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1707.06887">http://arxiv.org/abs/1707.06887</a>.
 </div>
-<div id="ref-Dabney2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Dabney2018" class="csl-entry" role="listitem">
 Dabney, W., Ostrovski, G., Silver, D., and Munos, R. (2018). Implicit <span>Quantile Networks</span> for <span>Distributional Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1806.06923">http://arxiv.org/abs/1806.06923</a>.
 </div>
-<div id="ref-Dabney2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Dabney2017" class="csl-entry" role="listitem">
 Dabney, W., Rowland, M., Bellemare, M. G., and Munos, R. (2017). Distributional <span>Reinforcement Learning</span> with <span>Quantile Regression</span>. <a href="http://arxiv.org/abs/1710.10044">http://arxiv.org/abs/1710.10044</a>.
 </div>
-<div id="ref-Fortunato2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Fortunato2017" class="csl-entry" role="listitem">
 Fortunato, M., Azar, M. G., Piot, B., Menick, J., Osband, I., Graves, A., et al. (2017). Noisy <span>Networks</span> for <span>Exploration</span>. <a href="http://arxiv.org/abs/1706.10295">http://arxiv.org/abs/1706.10295</a>.
 </div>
-<div id="ref-Gruslys2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gruslys2017" class="csl-entry" role="listitem">
 Gruslys, A., Dabney, W., Azar, M. G., Piot, B., Bellemare, M., and Munos, R. (2017). The <span>Reactor</span>: <span>A</span> fast and sample-efficient <span>Actor-Critic</span> agent for <span>Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1704.04651">http://arxiv.org/abs/1704.04651</a>.
 </div>
-<div id="ref-Hausknecht2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hausknecht2015" class="csl-entry" role="listitem">
 Hausknecht, M., and Stone, P. (2015). Deep <span>Recurrent Q-Learning</span> for <span>Partially Observable MDPs</span>. <a href="http://arxiv.org/abs/1507.06527">http://arxiv.org/abs/1507.06527</a>.
 </div>
-<div id="ref-Hessel2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hessel2017" class="csl-entry" role="listitem">
 Hessel, M., Modayil, J., van Hasselt, H., Schaul, T., Ostrovski, G., Dabney, W., et al. (2017). Rainbow: <span>Combining Improvements</span> in <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1710.02298">http://arxiv.org/abs/1710.02298</a>.
 </div>
-<div id="ref-Horgan2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Horgan2018" class="csl-entry" role="listitem">
 Horgan, D., Quan, J., Budden, D., Barth-Maron, G., Hessel, M., van Hasselt, H., et al. (2018). Distributed <span>Prioritized Experience Replay</span>. <a href="http://arxiv.org/abs/1803.00933">http://arxiv.org/abs/1803.00933</a>.
 </div>
-<div id="ref-Kapturowski2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Kapturowski2019" class="csl-entry" role="listitem">
 Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. in, 19. <a href="https://openreview.net/pdf?id=r1lyTjAqYX">https://openreview.net/pdf?id=r1lyTjAqYX</a>.
 </div>
-<div id="ref-Mnih2013" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Mnih2013" class="csl-entry" role="listitem">
 Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing <span>Atari</span> with <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1312.5602">http://arxiv.org/abs/1312.5602</a>.
 </div>
-<div id="ref-Nair2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Nair2015" class="csl-entry" role="listitem">
 Nair, A., Srinivasan, P., Blackwell, S., Alcicek, C., Fearon, R., De Maria, A., et al. (2015). Massively <span>Parallel Methods</span> for <span>Deep Reinforcement Learning</span>. <a href="https://arxiv.org/pdf/1507.04296.pdf">https://arxiv.org/pdf/1507.04296.pdf</a>.
 </div>
-<div id="ref-Plappert2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Plappert2018" class="csl-entry" role="listitem">
 Plappert, M., Houthooft, R., Dhariwal, P., Sidor, S., Chen, R. Y., Chen, X., et al. (2018). Parameter <span>Space Noise</span> for <span>Exploration</span>. <a href="http://arxiv.org/abs/1706.01905">http://arxiv.org/abs/1706.01905</a>.
 </div>
-<div id="ref-Schaul2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Schaul2015" class="csl-entry" role="listitem">
 Schaul, T., Quan, J., Antonoglou, I., and Silver, D. (2015). Prioritized <span>Experience Replay</span>. <a href="http://arxiv.org/abs/1511.05952">http://arxiv.org/abs/1511.05952</a>.
 </div>
-<div id="ref-vanHasselt2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-vanHasselt2015" class="csl-entry" role="listitem">
 van Hasselt, H., Guez, A., and Silver, D. (2015). Deep <span>Reinforcement Learning</span> with <span class="nocase">Double Q-learning</span>. <a href="http://arxiv.org/abs/1509.06461">http://arxiv.org/abs/1509.06461</a>.
 </div>
-<div id="ref-Wang2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wang2016" class="csl-entry" role="listitem">
 Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling <span>Network Architectures</span> for <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1511.06581">http://arxiv.org/abs/1511.06581</a>.
 </div>
 </div>
@@ -951,9 +966,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1018,6 +1047,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1072,7 +1187,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

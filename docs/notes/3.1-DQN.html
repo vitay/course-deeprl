@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 10&nbsp; Deep Q-Learning (DQN)</title>
+<title>Deep Reinforcement Learning - Deep Q-Learning (DQN)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -139,7 +110,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -167,11 +139,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Deep Q-Learning (DQN)</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/3.1-DQN.html"><strong>Model-free RL</strong></a></li><li class="breadcrumb-item"><a href="../notes/3.1-DQN.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep Q-Learning (DQN)</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -179,7 +156,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -188,22 +165,24 @@ div.csl-indent {
       <a href="../">Deep Reinforcement Learning</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Introduction</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Introduction</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -222,8 +201,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Tabular RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>Tabular RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -267,8 +247,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true"><strong>Model-free RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>Model-free RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -312,8 +293,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Model-based RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>Model-based RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -342,8 +324,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Outlook</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text"><strong>Outlook</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -357,8 +340,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true"><strong>Exercises</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text"><strong>Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -437,12 +421,14 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -475,7 +461,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-title">Deep Q-Learning (DQN)</span></h1>
+<h1 class="title"><span class="chapter-title">Deep Q-Learning (DQN)</span></h1>
 </div>
 
 
@@ -507,7 +493,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/functionapproximation-action1.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Action value approximation for a single action.</figcaption><p></p>
+<figcaption class="figure-caption">Action value approximation for a single action.</figcaption>
 </figure>
 </div>
 <ul>
@@ -516,16 +502,16 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/functionapproximation-action2.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Action value approximation for all actions.</figcaption><p></p>
+<figcaption class="figure-caption">Action value approximation for all actions.</figcaption>
 </figure>
 </div>
 <p>We could simply adapt Q-learning with FA to the DNN:</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Naive deep Q-learning with function approximation
 </div>
 </div>
@@ -548,12 +534,12 @@ Naive deep Q-learning with function approximation
     \mathcal{L}(\theta) = E_\mathcal{D} (||\textbf{t} - \textbf{y}||^2) \approx \frac{1}{K} \sum_{i=1}^K ||\textbf{t}_i - \textbf{y}_i||^2
 </span></p>
 <p>The loss function is estimated by <strong>sampling</strong> a minibatch of <span class="math inline">K</span> <strong>i.i.d</strong> samples from the training set to compute the loss function and update the parameters <span class="math inline">\theta</span>. This is necessary to avoid local minima of the loss function. Although Q-learning can learn from single transitions, it is not possible using DNN. Why not using the last <span class="math inline">K</span> transitions to train the network? We could store them in a <strong>transition buffer</strong> and train the network on it.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Naive deep Q-learning with a transition buffer
 </div>
 </div>
@@ -584,7 +570,7 @@ Naive deep Q-learning with a transition buffer
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/breakout.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Successive video frames are extremely correlated.</figcaption><p></p>
+<figcaption class="figure-caption">Successive video frames are extremely correlated.</figcaption>
 </figure>
 </div>
 <p>The actions are also correlated: you move the paddle to the left for several successive steps.</p>
@@ -592,7 +578,7 @@ Naive deep Q-learning with a transition buffer
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/erm-sequential.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Correlated vs.&nbsp;uniformaly sampled MNIST digits.</figcaption><p></p>
+<figcaption class="figure-caption">Correlated vs.&nbsp;uniformaly sampled MNIST digits.</figcaption>
 </figure>
 </div>
 <p>In SL, we have all the training data <strong>before</strong> training: it is possible to get i.i.d samples by shuffling the training set between two epochs. In RL, we create the “training set” (transitions) <strong>during</strong> training: the samples are not i.i.d as we act sequentially over time.</p>
@@ -612,7 +598,7 @@ Naive deep Q-learning with a transition buffer
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/nonstationarity.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Supervised learning has stationary targets, not RL. Learning is much less efficient and optimal in RL.</figcaption><p></p>
+<figcaption class="figure-caption">Supervised learning has stationary targets, not RL. Learning is much less efficient and optimal in RL.</figcaption>
 </figure>
 </div>
 </section>
@@ -636,16 +622,16 @@ Naive deep Q-learning with a transition buffer
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/ERM.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Experience replay memory / replay buffer.</figcaption><p></p>
+<figcaption class="figure-caption">Experience replay memory / replay buffer.</figcaption>
 </figure>
 </div>
 <p>When the buffer is full, we simply overwrite old transitions. The Q-learning update is only applied on a <strong>random minibatch</strong> of those past experiences, not the last transitions. This ensure the independence of the samples (non-correlated samples).</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Naive deep Q-learning with experience replay memory
 </div>
 </div>
@@ -683,7 +669,7 @@ Naive deep Q-learning with experience replay memory
 <p>Here, the behavior policy <span class="math inline">b</span> is a kind of “superset” of all past policies <span class="math inline">\pi</span> used to fill the ERM, so it “covers” the current policy.</p>
 <p><span class="math display">b = \{\pi_{\theta_0}, \pi_{\theta_1}, \ldots, \pi_{\theta_t}\}</span></p>
 <p>Samples from <span class="math inline">b</span> are i.i.d, so Q-learning is going to work.</p>
-<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -711,7 +697,7 @@ Naive deep Q-learning with experience replay memory
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/targetnetwork.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Target network.</figcaption><p></p>
+<figcaption class="figure-caption">Target network.</figcaption>
 </figure>
 </div>
 <p>The DQN loss function becomes:</p>
@@ -722,7 +708,7 @@ Naive deep Q-learning with experience replay memory
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/nonstationarity2.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">The target network keeps the target constant long enough for the DNN to catch up.</figcaption><p></p>
+<figcaption class="figure-caption">The target network keeps the target constant long enough for the DNN to catch up.</figcaption>
 </figure>
 </div>
 <p>The target network is updated by simply replacing the parameters <span class="math inline">\theta'</span> with the current trained parameters <span class="math inline">\theta</span>:</p>
@@ -731,12 +717,12 @@ Naive deep Q-learning with experience replay memory
 </section>
 <section id="dqn-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="dqn-algorithm">DQN algorithm</h3>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 DQN: Deep Q-network algorithm
 </div>
 </div>
@@ -770,18 +756,18 @@ DQN: Deep Q-network algorithm
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/DeepQNetwork.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>Why no max-pooling? The goal of max-pooling is to get rid of the spatial information in the image. For object recognition, you do not care whether the object is in the center or on the side of the image. Max-pooling brings <strong>spatial invariance</strong>. In video games, you <strong>want</strong> to keep the spatial information: the optimal action depends on where the ball is relative to the paddle.</p>
 <p>Are individual frames good representations of states? Using video frames as states breaks the Markov property: the speed and direction of the ball is a very relevant information for the task, but not contained in a single frame. This characterizes a <strong>Partially-observable Markov Decision Process</strong> (POMDP).</p>
 <p>The simple solution retained in the original DQN paper is to <strong>stack</strong> the last four frames to form the state representation. Having the previous positions of the ball, the network can <strong>learn</strong> to infer its direction of movement.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 DQN code in Keras
 </div>
 </div>
@@ -858,13 +844,13 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dqn-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Training curves of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Training curves of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/atari-results.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Performance of DQN on Atari games <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Performance of DQN on Atari games <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -880,7 +866,7 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/ddqn-results1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Q-learning methods overstimate Q-values <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Q-learning methods overstimate Q-values <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>To avoid optimistic estimations, the target is computed by both the value network <span class="math inline">\theta</span> and the target network <span class="math inline">\theta'</span>:</p>
@@ -899,7 +885,7 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/ddqn-results1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Estimated Q-values by Double DQN compared to DQN and the ground truth <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Estimated Q-values by Double DQN compared to DQN and the ground truth <span class="citation" data-cites="vanHasselt2015">(<a href="../references.html#ref-vanHasselt2015" role="doc-biblioref">van Hasselt et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -926,26 +912,26 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/per_bar_1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Sorting transitions w.r.t their advantage is expensive. Source: <a href="https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/" class="uri">https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/</a></figcaption><p></p>
+<figcaption class="figure-caption">Sorting transitions w.r.t their advantage is expensive. Source: <a href="https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/" class="uri">https://jaromiru.com/2016/11/07/lets-make-a-dqn-double-learning-and-prioritized-experience-replay/</a></figcaption>
 </figure>
 </div>
 <p>Using binary <strong>sumtrees</strong> instead of a linear queue, prioritized experience replay can be made efficient in both insertion (<span class="math inline">\mathcal{O}(\log N)</span>) and sampling (<span class="math inline">\mathcal{O}(1)</span>).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/per_tree.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Sumtrees allow efficient insertion and sampling of the PER. Source: <a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682</a></figcaption><p></p>
+<figcaption class="figure-caption">Sumtrees allow efficient insertion and sampling of the PER. Source: <a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682</a></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/per_results1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/per_results2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">DQN with PER outperforms DQN <span class="citation" data-cites="Schaul2015">(<a href="../references.html#ref-Schaul2015" role="doc-biblioref">Schaul et al., 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -955,7 +941,7 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/duelling1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">DQN predicts directly the Q-values. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">DQN predicts directly the Q-values. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>There are several problems with predicting Q-values with a DNN:</p>
@@ -967,7 +953,7 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dueling-principle.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">The variance of the Q-values between good and bad states is high.</figcaption><p></p>
+<figcaption class="figure-caption">The variance of the Q-values between good and bad states is high.</figcaption>
 </figure>
 </div>
 <p>The exact Q-values of all actions are not equally important.</p>
@@ -990,7 +976,7 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dueling-principle2.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">The variance of the advantages is much lower.</figcaption><p></p>
+<figcaption class="figure-caption">The variance of the advantages is much lower.</figcaption>
 </figure>
 </div>
 <p>In <strong>dueling networks</strong> <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>, the network is forced to decompose the estimated Q-value <span class="math inline">Q_\theta(s, a)</span> into a state value <span class="math inline">V_\alpha(s)</span> and an advantage function <span class="math inline">A_\beta(s, a)</span>:</p>
@@ -1000,7 +986,7 @@ DQN code in Keras
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/duelling2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Dueling DQN decomposes the Q-values as the sum of the V-value and the advantage of the action. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Dueling DQN decomposes the Q-values as the sum of the V-value and the advantage of the action. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The parameters <span class="math inline">\alpha</span> and <span class="math inline">\beta</span> are just two shared subparts of the NN <span class="math inline">\theta</span>. The loss function</p>
@@ -1029,15 +1015,15 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dueling-result.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Dueling DQN network improves over double DQN with PER on most Atari games. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Dueling DQN network improves over double DQN with PER on most Atari games. Source: <span class="citation" data-cites="Wang2016">(<a href="../references.html#ref-Wang2016" role="doc-biblioref">Wang et al., 2016</a>)</span>.</figcaption>
 </figure>
 </div>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Summary of DQN algorithms
 </div>
 </div>
@@ -1045,7 +1031,7 @@ Summary of DQN algorithms
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/DeepQNetwork.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Architecture of DQN <span class="citation" data-cites="Mnih2013">(<a href="../references.html#ref-Mnih2013" role="doc-biblioref">Mnih et al., 2013</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>DQN and its early variants (double duelling DQN with PER) are an example of <strong>value-based deep RL</strong>. The value <span class="math inline">Q_\theta(s, a)</span> of each possible action in a given state is approximated by a convolutional neural network. The NN has to minimize the mse between the predicted Q-values and the target value corresponding to the Bellman equation:</p>
@@ -1055,20 +1041,20 @@ Summary of DQN algorithms
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Mnih2013" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Mnih2013" class="csl-entry" role="listitem">
 Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing <span>Atari</span> with <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1312.5602">http://arxiv.org/abs/1312.5602</a>.
 </div>
-<div id="ref-Moore1993" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Moore1993" class="csl-entry" role="listitem">
 Moore, A. W., and Atkeson, C. G. (1993). Prioritized sweeping: <span>Reinforcement</span> learning with less data and less time. <em>Mach Learn</em> 13, 103–130. doi:<a href="https://doi.org/10.1007/BF00993104">10.1007/BF00993104</a>.
 </div>
-<div id="ref-Schaul2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Schaul2015" class="csl-entry" role="listitem">
 Schaul, T., Quan, J., Antonoglou, I., and Silver, D. (2015). Prioritized <span>Experience Replay</span>. <a href="http://arxiv.org/abs/1511.05952">http://arxiv.org/abs/1511.05952</a>.
 </div>
-<div id="ref-vanHasselt2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-vanHasselt2015" class="csl-entry" role="listitem">
 van Hasselt, H., Guez, A., and Silver, D. (2015). Deep <span>Reinforcement Learning</span> with <span class="nocase">Double Q-learning</span>. <a href="http://arxiv.org/abs/1509.06461">http://arxiv.org/abs/1509.06461</a>.
 </div>
-<div id="ref-Wang2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wang2016" class="csl-entry" role="listitem">
 Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling <span>Network Architectures</span> for <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1511.06581">http://arxiv.org/abs/1511.06581</a>.
 </div>
 </div>
@@ -1103,9 +1089,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1170,6 +1170,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1224,7 +1310,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

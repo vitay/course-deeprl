@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 21&nbsp; Outlook</title>
+<title>Deep Reinforcement Learning - Outlook</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,7 +76,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -104,11 +105,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Outlook</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/5.1-Outlook.html"><strong>Outlook</strong></a></li><li class="breadcrumb-item"><a href="../notes/5.1-Outlook.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Outlook</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -116,7 +122,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -125,22 +131,24 @@ div.csl-indent {
       <a href="../">Deep Reinforcement Learning</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Introduction</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Introduction</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -159,8 +167,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Tabular RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>Tabular RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -204,8 +213,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true"><strong>Model-free RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>Model-free RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -249,8 +259,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Model-based RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>Model-based RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -279,8 +290,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Outlook</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text"><strong>Outlook</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -294,8 +306,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true"><strong>Exercises</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text"><strong>Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -374,12 +387,14 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -404,7 +419,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-title">Outlook</span></h1>
+<h1 class="title"><span class="chapter-title">Outlook</span></h1>
 </div>
 
 
@@ -430,7 +445,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/drl-overview.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Overview of deep RL methods. Source: <a href="https://github.com/avillemin/RL-Personnal-Notebook" class="uri">https://github.com/avillemin/RL-Personnal-Notebook</a></figcaption><p></p>
+<figcaption class="figure-caption">Overview of deep RL methods. Source: <a href="https://github.com/avillemin/RL-Personnal-Notebook" class="uri">https://github.com/avillemin/RL-Personnal-Notebook</a></figcaption>
 </figure>
 </div>
 <p>Deep RL is still very unstable. Depending on initialization, deep RL networks may or may not converge (30% of runs converge to a worse policy than a random agent). Careful optimization such as TRPO / PPO help, but not completely. You never know if failure is your fault (wrong network, bad hyperparameters, bug), or just bad luck.</p>
@@ -488,7 +503,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/coach.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Deep RL algorithms available in Coach. Source: <a href="https://github.com/NervanaSystems/coach" class="uri">https://github.com/NervanaSystems/coach</a></figcaption><p></p>
+<figcaption class="figure-caption">Deep RL algorithms available in Coach. Source: <a href="https://github.com/NervanaSystems/coach" class="uri">https://github.com/NervanaSystems/coach</a></figcaption>
 </figure>
 </div>
 <ul>
@@ -500,7 +515,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/rllib.svg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Architecture of rllib. Source: <a href="https://docs.ray.io/en/master/rllib.html" class="uri">https://docs.ray.io/en/master/rllib.html</a></figcaption><p></p>
+<figcaption class="figure-caption">Architecture of rllib. Source: <a href="https://docs.ray.io/en/master/rllib.html" class="uri">https://docs.ray.io/en/master/rllib.html</a></figcaption>
 </figure>
 </div>
 </section>
@@ -516,7 +531,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/lego_reward.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Lego stacking handmade reward function <span class="citation" data-cites="Popov2017">(<a href="../references.html#ref-Popov2017" role="doc-biblioref">Popov et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Lego stacking handmade reward function <span class="citation" data-cites="Popov2017">(<a href="../references.html#ref-Popov2017" role="doc-biblioref">Popov et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The goal of <strong>inverse RL</strong> (see <span class="citation" data-cites="Arora2019">(<a href="../references.html#ref-Arora2019" role="doc-biblioref">Arora and Doshi, 2019</a>)</span> for a review) is to learn from <strong>demonstrations</strong> (e.g.&nbsp;from humans) which reward function is maximized. This is not <strong>imitation learning</strong>, where you try to learn and reproduce actions. The goal if to find a <strong>parametrized representation</strong> of the reward function:</p>
@@ -525,7 +540,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/inverseRL.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Inverse RL allows to learn from demonstrations. Source: <a href="http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/" class="uri">http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/</a></figcaption><p></p>
+<figcaption class="figure-caption">Inverse RL allows to learn from demonstrations. Source: <a href="http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/" class="uri">http://www.miubiq.cs.titech.ac.jp/modeling-risk-anticipation-and-defensive-driving-on-residential-roads-using-inverse-reinforcement-learning/</a></figcaption>
 </figure>
 </div>
 </section>
@@ -540,7 +555,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/intrinsicmotivation.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">In intrinsic motivation, rewards are generated internally depending on the achieved states. Source: <span class="citation" data-cites="Barto2013">(<a href="../references.html#ref-Barto2013" role="doc-biblioref">Barto, 2013</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">In intrinsic motivation, rewards are generated internally depending on the achieved states. Source: <span class="citation" data-cites="Barto2013">(<a href="../references.html#ref-Barto2013" role="doc-biblioref">Barto, 2013</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>What is <strong>intrinsically</strong> rewarding / motivating / fun? Mostly what has <strong>unexpected</strong> consequences.</p>
@@ -551,7 +566,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/intrinsicreward.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption><p></p>
+<figcaption class="figure-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption>
 </figure>
 </div>
 <p>The <strong>intrinsic reward</strong> (IR) of an action is defined as the sensory prediction error:</p>
@@ -563,14 +578,14 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/intrinsicreward-hard.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption><p></p>
+<figcaption class="figure-caption">Intrinsic rewards are defined by the ability to predict states. Source: <a href="https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa" class="uri">https://medium.com/data-from-the-trenches/curiosity-driven-learning-through-next-state-prediction-f7f4e2f592fa</a></figcaption>
 </figure>
 </div>
 <p>Moreover, they can be noisy and unpredictable, without being particularly interesting.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/leaves.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Falling leaves are hard to predict, but hardly interesting. Source: Giphy.</figcaption><p></p>
+<figcaption class="figure-caption">Falling leaves are hard to predict, but hardly interesting. Source: Giphy.</figcaption>
 </figure>
 </div>
 <p>What can we do? As usual, predict in a latent space!</p>
@@ -578,16 +593,16 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/icm.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">intrinsic curiosity module. <span class="citation" data-cites="Pathak2017">(<a href="../references.html#ref-Pathak2017" role="doc-biblioref">Pathak et al., 2017</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">intrinsic curiosity module. <span class="citation" data-cites="Pathak2017">(<a href="../references.html#ref-Pathak2017" role="doc-biblioref">Pathak et al., 2017</a>)</span></figcaption>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/J3FHOyhUn3A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018">(<a href="../references.html#ref-Burda2018" role="doc-biblioref">Burda et al., 2018</a>)</span>:
 </div>
 </div>
@@ -603,14 +618,14 @@ Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018"
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/hierarchicalRL.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Hierarchical structure of preparing a boeuf bourguignon. Source: <a href="https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/" class="uri">https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/</a></figcaption><p></p>
+<figcaption class="figure-caption">Hierarchical structure of preparing a boeuf bourguignon. Source: <a href="https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/" class="uri">https://thegradient.pub/the-promise-of-hierarchical-reinforcement-learning/</a></figcaption>
 </figure>
 </div>
 <p>Sub-policies (<strong>options</strong>) can be trained to solve simple tasks (going left, right, etc). A <strong>meta-learner</strong> or controller then learns to call each sub-policy when needed, at a much lower frequency <span class="citation" data-cites="Frans2017">(<a href="../references.html#ref-Frans2017" role="doc-biblioref">Frans et al., 2017</a>)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/MLSH.gif" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Meta Learning Shared Hierarchies <span class="citation" data-cites="Frans2017">(<a href="../references.html#ref-Frans2017" role="doc-biblioref">Frans et al., 2017</a>)</span>. Source: <a href="https://openai.com/blog/learning-a-hierarchy/" class="uri">https://openai.com/blog/learning-a-hierarchy/</a></figcaption><p></p>
+<figcaption class="figure-caption">Meta Learning Shared Hierarchies <span class="citation" data-cites="Frans2017">(<a href="../references.html#ref-Frans2017" role="doc-biblioref">Frans et al., 2017</a>)</span>. Source: <a href="https://openai.com/blog/learning-a-hierarchy/" class="uri">https://openai.com/blog/learning-a-hierarchy/</a></figcaption>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/zkJmH4NlzPs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
@@ -633,14 +648,14 @@ Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018"
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/metarl-lstm.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<p></p><figcaption class="figure-caption">Meta RL uses a LSTM layer to encode past actions and rewards in the state representation. Source: <span class="citation" data-cites="Wang2017a">(<a href="../references.html#ref-Wang2017a" role="doc-biblioref">Wang et al., 2017</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Meta RL uses a LSTM layer to encode past actions and rewards in the state representation. Source: <span class="citation" data-cites="Wang2017a">(<a href="../references.html#ref-Wang2017a" role="doc-biblioref">Wang et al., 2017</a>)</span></figcaption>
 </figure>
 </div>
 <p>The policy of the agent becomes <strong>memory-guided</strong>: it selects an action depending on what it did before, not only the state.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/RL_2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Meta RL algorithms are trained on a set of similar MDPs. Source: <span class="citation" data-cites="Duan2016a">(<a href="../references.html#ref-Duan2016a" role="doc-biblioref">Duan et al., 2016</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Meta RL algorithms are trained on a set of similar MDPs. Source: <span class="citation" data-cites="Duan2016a">(<a href="../references.html#ref-Duan2016a" role="doc-biblioref">Duan et al., 2016</a>)</span></figcaption>
 </figure>
 </div>
 <p>The algorithm is trained on a set of similar MDPs:</p>
@@ -654,16 +669,16 @@ Curiosity-driven RL on Atari games <span class="citation" data-cites="Burda2018"
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/metarl-twoarmed.gif" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Classical bandit (left) and meta-bandit (right) learning a new two-armed bandit problem. Source: <a href="https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf" class="uri">https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf</a></figcaption><p></p>
+<figcaption class="figure-caption">Classical bandit (left) and meta-bandit (right) learning a new two-armed bandit problem. Source: <a href="https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf" class="uri">https://hackernoon.com/learning-policies-for-learning-policies-meta-reinforcement-learning-rl%C2%B2-in-tensorflow-b15b592a2ddf</a></figcaption>
 </figure>
 </div>
 <p>The meta bandit has learned that the best strategy for any 2-armed bandit is to sample both actions randomly at the beginning and then stick to the best one. The meta bandit does not learn to solve each problem, it learns <strong>how</strong> to solve them.</p>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads
 </div>
 </div>
@@ -694,14 +709,14 @@ Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/offlinerl.gif" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: <a href="https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html" class="uri">https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html</a></figcaption><p></p>
+<figcaption class="figure-caption">Source: <a href="https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html" class="uri">https://ai.googleblog.com/2020/04/an-optimistic-perspective-on-offline.html</a></figcaption>
 </figure>
 </div>
 <p>D4RL (<a href="https://sites.google.com/view/d4rl/home" class="uri">https://sites.google.com/view/d4rl/home</a>) provides offline data recorded using expert policies to test offline algorithms.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/d4rl.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">https://ai.googleblog.com/2020/08/tackling-open-challenges-in-offline.html</figcaption><p></p>
+<figcaption class="figure-caption">https://ai.googleblog.com/2020/08/tackling-open-challenges-in-offline.html</figcaption>
 </figure>
 </div>
 <p>As no exploration is allowed, the model is limited by the quality of the data: if the acquisition policy is random, there is not much to hope. If we have already a good policy, but slow or expensive to compute, we could try to transfer it to a fast neural network. If the policy is a human expert, it is called <strong>learning from demonstrations</strong> (lfd) or <strong>imitation learning</strong>.</p>
@@ -709,7 +724,7 @@ Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dave2-training.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption"><span class="citation" data-cites="Bojarski2016">Bojarski et al. (<a href="../references.html#ref-Bojarski2016" role="doc-biblioref">2016</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption"><span class="citation" data-cites="Bojarski2016">Bojarski et al. (<a href="../references.html#ref-Bojarski2016" role="doc-biblioref">2016</a>)</span></figcaption>
 </figure>
 </div>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/qhUvQiKec2U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
@@ -722,7 +737,7 @@ Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/morel.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: <a href="https://kenshinhm.tistory.com/37" class="uri">https://kenshinhm.tistory.com/37</a></figcaption><p></p>
+<figcaption class="figure-caption">Source: <a href="https://kenshinhm.tistory.com/37" class="uri">https://kenshinhm.tistory.com/37</a></figcaption>
 </figure>
 </div>
 <p>Transformers are the new SotA method to transform sequences into sequences. Why not sequences of states into sequences of actions?</p>
@@ -730,68 +745,68 @@ Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/decisiontranformer.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Chen2021">Chen et al. (<a href="../references.html#ref-Chen2021" role="doc-biblioref">2021</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Source: <span class="citation" data-cites="Chen2021">Chen et al. (<a href="../references.html#ref-Chen2021" role="doc-biblioref">2021</a>)</span></figcaption>
 </figure>
 </div>
 <p>However, transformers will mostly shine when used as World models… See <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/transformer-rl1.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Source: <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/transformer-rl2.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Source: <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Source: <span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="../references.html#ref-Micheli2022" role="doc-biblioref">2022</a>)</span></figcaption>
 </figure>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Arora2019" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Arora2019" class="csl-entry" role="listitem">
 Arora, S., and Doshi, P. (2019). A <span>Survey</span> of <span>Inverse Reinforcement Learning</span>: <span>Challenges</span>, <span>Methods</span> and <span>Progress</span>. <a href="http://arxiv.org/abs/1806.06877">http://arxiv.org/abs/1806.06877</a>.
 </div>
-<div id="ref-Barto2013" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Barto2013" class="csl-entry" role="listitem">
 Barto, A. G. (2013). <span>“Intrinsic <span>Motivation</span> and <span>Reinforcement Learning</span>,”</span> in <em>Intrinsically <span>Motivated Learning</span> in <span>Natural</span> and <span>Artificial Systems</span></em>, eds. G. Baldassarre and M. Mirolli (<span>Berlin, Heidelberg</span>: <span>Springer</span>), 17–47. doi:<a href="https://doi.org/10.1007/978-3-642-32375-1_2">10.1007/978-3-642-32375-1_2</a>.
 </div>
-<div id="ref-Belkhale2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Belkhale2021" class="csl-entry" role="listitem">
 Belkhale, S., Li, R., Kahn, G., McAllister, R., Calandra, R., and Levine, S. (2021). Model-<span>Based Meta-Reinforcement Learning</span> for <span>Flight</span> with <span>Suspended Payloads</span>. <em>IEEE Robot. Autom. Lett.</em>, 1–1. doi:<a href="https://doi.org/10.1109/LRA.2021.3057046">10.1109/LRA.2021.3057046</a>.
 </div>
-<div id="ref-Bojarski2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Bojarski2016" class="csl-entry" role="listitem">
 Bojarski, M., Del Testa, D., Dworakowski, D., Firner, B., Flepp, B., Goyal, P., et al. (2016). End to <span>End Learning</span> for <span>Self-Driving Cars</span>. <a href="http://arxiv.org/abs/1604.07316">http://arxiv.org/abs/1604.07316</a>.
 </div>
-<div id="ref-Burda2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Burda2018" class="csl-entry" role="listitem">
 Burda, Y., Edwards, H., Pathak, D., Storkey, A., Darrell, T., and Efros, A. A. (2018). Large-<span>Scale Study</span> of <span>Curiosity-Driven Learning</span>. <a href="http://arxiv.org/abs/1808.04355">http://arxiv.org/abs/1808.04355</a>.
 </div>
-<div id="ref-Chen2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Chen2021" class="csl-entry" role="listitem">
 Chen, L., Lu, K., Rajeswaran, A., Lee, K., Grover, A., Laskin, M., et al. (2021). Decision <span>Transformer</span>: <span>Reinforcement Learning</span> via <span>Sequence Modeling</span>. <a href="http://arxiv.org/abs/2106.01345">http://arxiv.org/abs/2106.01345</a>.
 </div>
-<div id="ref-Duan2016a" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Duan2016a" class="csl-entry" role="listitem">
 Duan, Y., Schulman, J., Chen, X., Bartlett, P. L., Sutskever, I., and Abbeel, P. (2016). <span>RL</span>$2̂$: <span>Fast Reinforcement Learning</span> via <span>Slow Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1611.02779">http://arxiv.org/abs/1611.02779</a>.
 </div>
-<div id="ref-Frans2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Frans2017" class="csl-entry" role="listitem">
 Frans, K., Ho, J., Chen, X., Abbeel, P., and Schulman, J. (2017). Meta <span>Learning Shared Hierarchies</span>. <a href="http://arxiv.org/abs/1710.09767">http://arxiv.org/abs/1710.09767</a>.
 </div>
-<div id="ref-Fujimoto2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Fujimoto2019" class="csl-entry" role="listitem">
 Fujimoto, S., Meger, D., and Precup, D. (2019). Off-<span>Policy Deep Reinforcement Learning</span> without <span>Exploration</span>. in <em>Proceedings of the 36th <span>International Conference</span> on <span>Machine Learning</span></em> (<span>PMLR</span>), 2052–2062. <a href="https://proceedings.mlr.press/v97/fujimoto19a.html">https://proceedings.mlr.press/v97/fujimoto19a.html</a>.
 </div>
-<div id="ref-Kidambi2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Kidambi2021" class="csl-entry" role="listitem">
 Kidambi, R., Rajeswaran, A., Netrapalli, P., and Joachims, T. (2021). <span>MOReL</span> : <span>Model-Based Offline Reinforcement Learning</span>. <a href="http://arxiv.org/abs/2005.05951">http://arxiv.org/abs/2005.05951</a>.
 </div>
-<div id="ref-Levine2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Levine2020" class="csl-entry" role="listitem">
 Levine, S., Kumar, A., Tucker, G., and Fu, J. (2020). Offline <span>Reinforcement Learning</span>: <span>Tutorial</span>, <span>Review</span>, and <span>Perspectives</span> on <span>Open Problems</span>. <a href="http://arxiv.org/abs/2005.01643">http://arxiv.org/abs/2005.01643</a>.
 </div>
-<div id="ref-Micheli2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Micheli2022" class="csl-entry" role="listitem">
 Micheli, V., Alonso, E., and Fleuret, F. (2022). Transformers are <span>Sample Efficient World Models</span>. doi:<a href="https://doi.org/10.48550/arXiv.2209.00588">10.48550/arXiv.2209.00588</a>.
 </div>
-<div id="ref-Pathak2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Pathak2017" class="csl-entry" role="listitem">
 Pathak, D., Agrawal, P., Efros, A. A., and Darrell, T. (2017). Curiosity-driven <span>Exploration</span> by <span class="nocase">Self-supervised Prediction</span>. <a href="http://arxiv.org/abs/1705.05363">http://arxiv.org/abs/1705.05363</a>.
 </div>
-<div id="ref-Popov2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Popov2017" class="csl-entry" role="listitem">
 Popov, I., Heess, N., Lillicrap, T., Hafner, R., Barth-Maron, G., Vecerik, M., et al. (2017). Data-efficient <span>Deep Reinforcement Learning</span> for <span>Dexterous Manipulation</span>. <a href="http://arxiv.org/abs/1704.03073">http://arxiv.org/abs/1704.03073</a>.
 </div>
-<div id="ref-Wang2017a" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wang2017a" class="csl-entry" role="listitem">
 Wang, Z., Bapst, V., Heess, N., Mnih, V., Munos, R., Kavukcuoglu, K., et al. (2017). Sample <span>Efficient Actor-Critic</span> with <span>Experience Replay</span>. <a href="http://arxiv.org/abs/1611.01224">http://arxiv.org/abs/1611.01224</a>.
 </div>
 </div>
@@ -825,9 +840,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -892,6 +921,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -946,7 +1061,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

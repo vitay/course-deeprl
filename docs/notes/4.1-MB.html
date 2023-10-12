@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deep Reinforcement Learning - 17&nbsp; Model-based RL</title>
+<title>Deep Reinforcement Learning - Model-based RL</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,7 +76,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -104,11 +105,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-title">Model-based RL</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/4.1-MB.html"><strong>Model-based RL</strong></a></li><li class="breadcrumb-item"><a href="../notes/4.1-MB.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Model-based RL</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -116,7 +122,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
       <img src="../notes/img/tuc-new.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -125,22 +131,24 @@ div.csl-indent {
       <a href="../">Deep Reinforcement Learning</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Introduction</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Introduction</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -159,8 +167,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Tabular RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>Tabular RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -204,8 +213,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true"><strong>Model-free RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>Model-free RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -249,8 +259,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Model-based RL</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>Model-based RL</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -279,8 +290,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Outlook</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text"><strong>Outlook</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -294,8 +306,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true"><strong>Exercises</strong></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text"><strong>Exercises</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -374,12 +387,14 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -397,7 +412,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-title">Model-based RL</span></h1>
+<h1 class="title"><span class="chapter-title">Model-based RL</span></h1>
 </div>
 
 
@@ -422,7 +437,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/modelbased2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Model-free vs.&nbsp;model-based RL. Source: <span class="citation" data-cites="Dayan2008">(<a href="../references.html#ref-Dayan2008" role="doc-biblioref">Dayan and Niv, 2008</a>)</span></figcaption><p></p>
+<figcaption class="figure-caption">Model-free vs.&nbsp;model-based RL. Source: <span class="citation" data-cites="Dayan2008">(<a href="../references.html#ref-Dayan2008" role="doc-biblioref">Dayan and Niv, 2008</a>)</span></figcaption>
 </figure>
 </div>
 <p>If you had a <strong>model</strong> of the environment, you could plan ahead (what would happen if I did that?) and speed up learning (do not explore stupid ideas): <strong>model-based RL</strong> (MB). In chess, players <strong>plan</strong> ahead the possible moves up to a certain horizon and evaluate moves based on their emulated consequences. In real-time strategy games, learning the environment (<strong>world model</strong>) is part of the strategy: you do not attack right away.</p>
@@ -434,7 +449,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/learningdynamics.svg" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Learning the world model.</figcaption><p></p>
+<figcaption class="figure-caption">Learning the world model.</figcaption>
 </figure>
 </div>
 <p>Such a model is called the <strong>dynamics model</strong>, the <strong>transition model</strong> or the <strong>forward model</strong>: <strong>What happens if I do that?</strong> The model can be deterministic (use neural networks) or stochastic (use Gaussian Processes). Given an initial state <span class="math inline">s_0</span> and a policy <span class="math inline">\pi</span>, you can unroll the future using the local model.</p>
@@ -445,7 +460,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-rollout.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Imaginary rollouts can be used to improve the policy. Source: <span class="citation" data-cites="Kurutach2018">(<a href="../references.html#ref-Kurutach2018" role="doc-biblioref">Kurutach et al., 2018</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Imaginary rollouts can be used to improve the policy. Source: <span class="citation" data-cites="Kurutach2018">(<a href="../references.html#ref-Kurutach2018" role="doc-biblioref">Kurutach et al., 2018</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The only sample complexity is the one needed to train the model: the rest is <strong>emulated</strong>. Drawback: This can only work when the model is close to perfect, especially for long trajectories or probabilistic MDPs.</p>
@@ -453,23 +468,23 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-drift1.jpeg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Imaginary rollouts generated by an imperfect model can drigt for long horizons. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption><p></p>
+<figcaption class="figure-caption">Imaginary rollouts generated by an imperfect model can drigt for long horizons. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption>
 </figure>
 </div>
 <p>The solution is to <strong>replan</strong> at each time step and execute only the first planned action <strong>in the real environment</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-drift2.jpeg" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Constantly replanning allows to correct the trajectories. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption><p></p>
+<figcaption class="figure-caption">Constantly replanning allows to correct the trajectories. Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption>
 </figure>
 </div>
 <p><strong>Model Predictive Control</strong> iteratively plans complete trajectories, but only selects the first action.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Model Predictive Control
 </div>
 </div>
@@ -477,7 +492,7 @@ Model Predictive Control
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-algo.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Source: <a href="http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf" class="uri">http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf</a></figcaption><p></p>
+<figcaption class="figure-caption">Source: <a href="http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf" class="uri">http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf</a></figcaption>
 </figure>
 </div>
 </div>
@@ -485,7 +500,7 @@ Model Predictive Control
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-architecture.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">A neural network can be used to learn the model in an MPC architecture. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">A neural network can be used to learn the model in an MPC architecture. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>The planner can actually be anything, it does not have to be a RL algorithm. For example, it can be iLQR (Iterative Linear Quadratic Regulator), a non-linear optimization method (see <a href="https://jonathan-hui.medium.com/rl-lqr-ilqr-linear-quadratic-regulator-a5de5104c750" class="uri">https://jonathan-hui.medium.com/rl-lqr-ilqr-linear-quadratic-regulator-a5de5104c750</a>).</p>
@@ -498,20 +513,20 @@ Model Predictive Control
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-example.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Random-sampling shooting. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Random-sampling shooting. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption>
 </figure>
 </div>
 <p>The main advantage of MPC is that you can change the reward function (the <strong>goal</strong>) on the fly: what you learn is the model, but planning is just an optimization procedure. You can set intermediary goals to the agent very flexibly: no need for a well-defined reward function. Model imperfection is not a problem as you replan all the time. The model can adapt to changes in the environment (slippery terrain, simulation to real-world).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-application1.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/mpc-application2.gif" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Application of MPC. Source: <span class="citation" data-cites="Nagabandi2017">(<a href="../references.html#ref-Nagabandi2017" role="doc-biblioref">Nagabandi et al., 2017</a>)</span>, <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a>.</figcaption>
 </figure>
 </div>
 </section>
@@ -526,16 +541,16 @@ Model Predictive Control
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dynaq.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Dyna-Q: RL with planning. Source: <a href="https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8" class="uri">https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8</a></figcaption><p></p>
+<figcaption class="figure-caption">Dyna-Q: RL with planning. Source: <a href="https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8" class="uri">https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8</a></figcaption>
 </figure>
 </div>
 <p>If the simulated transitions are good enough, the MF algorithm can converge using much less <strong>real transitions</strong>, thereby reducing its <strong>sample complexity</strong>. The <strong>Dyna-Q</strong> algorithm <span class="citation" data-cites="Sutton1990">(<a href="../references.html#ref-Sutton1990" role="doc-biblioref">Sutton, 1990</a>)</span> is an extension of Q-learning to integrate a model <span class="math inline">M(s, a) = (s', r')</span>. The model can be tabular or approximated with a NN.</p>
-<div class="callout-tip callout callout-style-simple no-icon callout-captioned">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Dyna-Q
 </div>
 </div>
@@ -567,26 +582,26 @@ Dyna-Q
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../slides/img/dynaq2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Dyna-Q: RL with planning. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Dyna-Q: RL with planning. Source: <span class="citation" data-cites="Sutton1998">(<a href="../references.html#ref-Sutton1998" role="doc-biblioref">Sutton and Barto, 1998</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>It is interesting to notice that Dyna-Q is very similar to DQN and its <strong>experience replay memory</strong>. In DQN, the ERM stores <strong>real transitions</strong> generated in the past. In Dyna-Q, the model generates <strong>imagined transitions</strong> based on past real transitions.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Dayan2008" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Dayan2008" class="csl-entry" role="listitem">
 Dayan, P., and Niv, Y. (2008). Reinforcement learning: <span>The Good</span>, <span>The Bad</span> and <span>The Ugly</span>. <em>Current Opinion in Neurobiology</em> 18, 185–196. doi:<a href="https://doi.org/10.1016/j.conb.2008.08.003">10.1016/j.conb.2008.08.003</a>.
 </div>
-<div id="ref-Kurutach2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Kurutach2018" class="csl-entry" role="listitem">
 Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018). Model-<span>Ensemble Trust-Region Policy Optimization</span>. <a href="http://arxiv.org/abs/1802.10592">http://arxiv.org/abs/1802.10592</a>.
 </div>
-<div id="ref-Nagabandi2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Nagabandi2017" class="csl-entry" role="listitem">
 Nagabandi, A., Kahn, G., Fearing, R. S., and Levine, S. (2017). Neural <span>Network Dynamics</span> for <span>Model-Based Deep Reinforcement Learning</span> with <span>Model-Free Fine-Tuning</span>. <a href="http://arxiv.org/abs/1708.02596">http://arxiv.org/abs/1708.02596</a>.
 </div>
-<div id="ref-Sutton1990" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Sutton1990" class="csl-entry" role="listitem">
 Sutton, R. S. (1990). Integrated <span>Architectures</span> for <span>Learning</span>, <span>Planning</span>, and <span>Reacting Based</span> on <span>Approximating Dynamic Programming</span>. <em>Machine Learning Proceedings 1990</em>, 216–224. doi:<a href="https://doi.org/10.1016/B978-1-55860-141-3.50030-4">10.1016/B978-1-55860-141-3.50030-4</a>.
 </div>
-<div id="ref-Sutton1998" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Sutton1998" class="csl-entry" role="listitem">
 Sutton, R. S., and Barto, A. G. (1998). <em>Reinforcement <span>Learning</span>: <span>An</span> introduction</em>. <span>Cambridge, MA</span>: <span>MIT press</span>.
 </div>
 </div>
@@ -620,9 +635,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -687,6 +716,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -741,7 +856,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright Julien Vitay - <a href="mailto:julien.vitay@informatik.tu-chemnitz.de" class="email">julien.vitay@informatik.tu-chemnitz.de</a></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 

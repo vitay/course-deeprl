@@ -9,6 +9,8 @@ resources: pdf/1.1-Introduction.pdf
 
 ---
 
+# 1 - What is reinforcement learning?
+
 ![](img/ml-areas.png)
 
 # Different types of machine learning depending on the feedback
@@ -463,7 +465,9 @@ Goal: finding the exit as soon as possible.
 :::
 
 
-# Applications of RL : Optimal control
+# 2 - Applications of RL
+
+# Optimal control
 
 
 **Pendulum**
@@ -496,7 +500,7 @@ Source: <https://keras.io/examples/rl/ddpg_pendulum/>
 :::
 
 
-# Applications of RL : Optimal control
+# Optimal control
 
 
 **Cartpole**
@@ -532,13 +536,13 @@ Source: <https://towardsdatascience.com/cartpole-introduction-to-reinforcement-l
 
 
 
-# Applications of RL : Optimal control
+# Optimal control
 
 
 {{< youtube XiigTGKZfks >}}
 
 
-# Applications of RL : Board games (Backgammon, Chess, Go, etc)
+# Board games (Backgammon, Chess, Go, etc)
 
 
 TD-Gammon (Tesauro, 1992) was one of the first AI to beat human experts at a complex game, Backgammon.
@@ -576,7 +580,7 @@ TD-Gammon (Tesauro, 1992) was one of the first AI to beat human experts at a com
 
 * Deepmind (now Google) started the deep RL hype in 2013 by learning to solve 50+ Atari games with a CNN.
 
-# Applications of RL : Atari games
+# Atari games
 
 ::: {.columns}
 ::: {.column width=20%}
@@ -606,7 +610,7 @@ score increases.
 Mnih et al. (2013). Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
 :::
 
-# Applications of RL : Atari games
+# Atari games
 
 ![](img/discrete.png)
 
@@ -615,7 +619,7 @@ Mnih et al. (2013). Playing Atari with Deep Reinforcement Learning. NIPS. <http:
 :::
 
 
-# Applications of RL : simulated cars
+# Simulated cars
 
 
 ::: {.columns}
@@ -643,7 +647,7 @@ linear velocity (+), crashes (-)
 :::
 
 
-# Applications of RL : Parkour
+# Parkour
 
 
 
@@ -672,7 +676,7 @@ linear velocity (+), crashes (-)
 :::
 
 
-# Applications of RL : AlphaGo
+# AlphaGo
 
 ![](img/alphago.png){width=80%}
 
@@ -685,16 +689,16 @@ linear velocity (+), crashes (-)
 * Training took several weeks on 1202 CPUs and 176 GPUs.
 
 ::: footer
-David Silver et al. (2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815
+Silver et al. (2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815
 :::
 
-# Applications of RL : AlphaGo
+# AlphaGo
 
 {{< youtube 8tq1C8spV_g >}}
 
 
 
-# Applications of RL: process control
+# Process control
 
 ::: {.columns}
 ::: {.column width=40%}
@@ -718,9 +722,25 @@ David Silver et al. (2016). Mastering the game of Go with deep neural networks a
 
 * **Rewards:** decrease in energy consumption
 
+# Magnetic control of tokamak plasmas
+
+![](img/tokamak.webp)
 
 
-# Applications of RL : real robotics
+::: footer
+Degrave et al. (2022). Magnetic control of tokamak plasmas through deep reinforcement learning. Nature, 602(7897). doi/10.1038/s41586-021-04301-9
+:::
+
+
+# Chip design
+
+![](img/chipdesign.png)
+
+::: footer
+Roy et al. (2022). PrefixRL: Optimization of Parallel Prefix Circuits using Deep Reinforcement Learning. doi:10.1109/DAC18074.2021.9586094
+:::
+
+# Real robotics
 
 
 ::: {.columns}
@@ -746,7 +766,7 @@ successful grasping.
 :::
 :::
 
-# Applications of RL : learning dexterity
+# Learning dexterity
 
 
 ::: {.columns}
@@ -773,7 +793,7 @@ shape obtained.
 :::
 
 
-# Applications of RL : real cars
+# Autonomous driving
 
 
 ::: {.columns}
@@ -804,7 +824,7 @@ time before humans take control.
 :::
 
 
-# Applications of RL : Dota2 (OpenAI)
+# Dota2 (OpenAI)
 
 {{< youtube eHipy_j29Xw >}}
 
@@ -812,11 +832,17 @@ time before humans take control.
 
 
 
-# Applications of RL : Starcraft II (AlphaStar)
+# Starcraft II (AlphaStar)
 
 ![Source: <https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii>](img/alphastar.gif)
 
+# ChatGPT
 
+![](img/ChatGPT.svg)
+
+::: footer
+<https://openai.com/blog/chatgpt/>
+:::
 
 # Take home messages
 
@@ -889,6 +915,7 @@ time before humans take control.
     1. Hierarchical RL
     2. Inverse RL
     3. Meta RL
+    4. Offline RL
     
 :::
 :::

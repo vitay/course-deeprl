@@ -118,6 +118,7 @@ Planning and acting occur at different time scales.
 
 A problem with RL in general is how to define the **reward function**.
 If you goal is to travel from Berkeley to the Golden State bridge, which reward function should you use?
+
 * +1 at the bridge, 0 otherwise (sparse).
 * +100 at the bridge, -1 otherwise (sparse).
 * minus the distance to the bridge (dense).
@@ -129,7 +130,7 @@ $$r(s_t, a_t, s_{t+1}) = - || s_{t+1} - s_g ||$$
 An action is good if it brings the agent closer to its goal.
 The Euclidean distance works well for the biking example (e.g. using a GPS), but the metric can be adapted to the task. 
 
-One advantage is that you can learn multiple "tasks" at the same time with a single policy, not the only one hard-coded in the reward function. Another advantage is that it makes a better use of exploration by learning from mistakes: **hindsight experience replay** (HER, [@Andrychowicz2017]).
+One advantage is that you can learn multiple "tasks" at the same time with a single policy, not the only one hard-coded in the reward function. Another advantage is that it makes a better use of exploration by learning from mistakes: **hindsight experience replay** (HER, @Andrychowicz2017).
 
 If your goal is to reach $s_g$ but the agent generates a trajectory landing in $s_{g'}$, you can learn that this trajectory is good way to reach $s_{g'}$! In football, if you try to score a goal but end up doing a pass to a teammate, you can learn that this was a bad shot **and** a good pass.
 HER is a model-based method: you implicitly learn a model of the environment by knowing how to reach any position.
