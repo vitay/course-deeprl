@@ -151,7 +151,7 @@ $$
 
     3. Compute the return $R_t = \sum_{k=0}^{\infty} \gamma^k r_{t+k+1}$ of all encountered state-action pairs.
 
-    4. Update the estimated action value $Q_k(s_t, a_t)$ of all encountered state-action pairs:
+    4. Update the estimated action value $Q(s_t, a_t)$ of all encountered state-action pairs:
 
     $$
         Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
@@ -524,3 +524,32 @@ If $\dfrac{\pi(s_k, a_k)}{b(s_k, a_k)}$ is smaller than 1, the products go to 0.
 
     * a **huge variance**: the slightest change of the policy can completely change the episode and its return. You will need a lot of samples to form correct estimates: **sample complexity**.
 
+# Estimators: bias and variance
+
+::: {.columns}
+::: {.column width=60%}
+
+![](img/biasvariance3.png)
+
+:::
+::: {.column width=40%}
+
+* The **bias** of an estimator is the mean error made by the estimator:
+
+$$
+    \mathcal{B}(\hat{\theta}) = \mathbb{E}[\hat{\theta} - \theta] = \mathbb{E}[\hat{\theta}] - \theta
+$$
+
+* The **variance** of an estimator is the deviation of the samples around the expected value:
+
+$$
+    \text{Var}(\hat{\theta}) = \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}] )^2]
+$$
+
+* Ideally, we would like estimators with:
+
+    * **low bias**: the estimations are correct on average (= equal to the true parameter).
+
+    * **low variance**: we do not need many estimates to get a correct estimate (CLT: $\frac{\sigma}{\sqrt{N}}$)
+:::
+:::

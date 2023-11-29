@@ -634,84 +634,84 @@
     "href": "exercises/Content.html#introduction-to-python",
     "title": "List of exercises",
     "section": "Introduction to Python",
-    "text": "Introduction to Python\nThis exercise is an introduction to Python for absolute beginners. If you already know Python, you can safely skip it.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Introduction to Python\nThis exercise is an introduction to Python for absolute beginners. If you already know Python, you can safely skip it.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#numpy-and-matplotlib",
     "href": "exercises/Content.html#numpy-and-matplotlib",
     "title": "List of exercises",
     "section": "Numpy and Matplotlib",
-    "text": "Numpy and Matplotlib\nThe goal of this exercise is to present the basics of the numerical library numpy as well as the visualization library matplotlib.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Numpy and Matplotlib\nThe goal of this exercise is to present the basics of the numerical library numpy as well as the visualization library matplotlib.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#sampling",
     "href": "exercises/Content.html#sampling",
     "title": "List of exercises",
     "section": "Sampling",
-    "text": "Sampling\nThe goal of this exercise is to understand how to sample rewards from a n-armed bandits and to understand the central limit theorem.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Sampling\nThe goal of this exercise is to understand how to sample rewards from a n-armed bandits and to understand the central limit theorem.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#bandits---part-1",
     "href": "exercises/Content.html#bandits---part-1",
     "title": "List of exercises",
     "section": "Bandits - part 1",
-    "text": "Bandits - part 1\nThe goal of this exercise is to implement simple action selection mechanisms for the n-armed bandit:\n\nGreedy action selection\n\\epsilon-greedy action selection\nSoftmax action selection\n\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Bandits - part 1\nThe goal of this exercise is to implement simple action selection mechanisms for the n-armed bandit:\n\nGreedy action selection\n\\epsilon-greedy action selection\nSoftmax action selection\n\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#bandits---part-2",
     "href": "exercises/Content.html#bandits---part-2",
     "title": "List of exercises",
     "section": "Bandits - part 2",
-    "text": "Bandits - part 2\nThe goal of this exercise is to further investigate the properties of the action selection algorithms for the n-armed bandit.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Bandits - part 2\nThe goal of this exercise is to further investigate the properties of the action selection algorithms for the n-armed bandit.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#dynamic-programming",
     "href": "exercises/Content.html#dynamic-programming",
     "title": "List of exercises",
     "section": "Dynamic programming",
-    "text": "Dynamic programming\nThe goal of this exercise is to apply policy iteration and value iteration on the recycling robot MDP.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Dynamic programming\nThe goal of this exercise is to apply policy iteration and value iteration on the recycling robot MDP.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#gym",
     "href": "exercises/Content.html#gym",
     "title": "List of exercises",
     "section": "Gym",
-    "text": "Gym\nThe goal of this exercise is to install gym and learn how to use its interface.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Gym\nThe goal of this exercise is to install gym and learn how to use its interface.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#monte-carlo-control",
     "href": "exercises/Content.html#monte-carlo-control",
     "title": "List of exercises",
     "section": "Monte Carlo control",
-    "text": "Monte Carlo control\nThe goal of this exercise is to implement on-policy Monte-Carlo control on the Taxi gym environment.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Monte Carlo control\nThe goal of this exercise is to implement on-policy Monte-Carlo control on the Taxi gym environment.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#temporal-difference",
     "href": "exercises/Content.html#temporal-difference",
     "title": "List of exercises",
     "section": "Temporal difference",
-    "text": "Temporal difference\nThe goal of this exercise is to implement Q-learning on the Taxi gym environment.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Temporal difference\nThe goal of this exercise is to implement Q-learning on the Taxi gym environment.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#eligibility-traces",
     "href": "exercises/Content.html#eligibility-traces",
     "title": "List of exercises",
     "section": "Eligibility traces",
-    "text": "Eligibility traces\nThe goal of this exercise is to implement Q-learning with eligibility traces on the Gridworld environment.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Eligibility traces\nThe goal of this exercise is to implement Q-learning with eligibility traces on the Gridworld environment.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#keras",
     "href": "exercises/Content.html#keras",
     "title": "List of exercises",
     "section": "Keras",
-    "text": "Keras\nThe goal of this exercise is to quickly discover keras and to understand why neural networks (and SGD) need i.i.d. samples.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "Keras\nThe goal of this exercise is to quickly discover keras and to understand why neural networks (and SGD) need i.i.d. samples.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Content.html#dqn",
     "href": "exercises/Content.html#dqn",
     "title": "List of exercises",
     "section": "DQN",
-    "text": "DQN\nThe goal of this exercise is to implement DQN on the Cartpole balancing problem.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab.\nPresentation\n\nCommented solution"
+    "text": "DQN\nThe goal of this exercise is to implement DQN on the Cartpole balancing problem.\nNotebook: download .ipynb or run on colab.\nSolution: download .ipynb or run on colab."
   },
   {
     "objectID": "exercises/Installation.html#anaconda",
@@ -851,7 +851,7 @@
     "href": "exercises/7-Gym-solution.html#installing-gym",
     "title": "Gym environments",
     "section": "Installing gym",
-    "text": "Installing gym\nIn this course, we will mostly address RL environments available in the OpenAI Gym framework:\nhttps://gym.openai.com\nIt provides a multitude of RL problems, from simple text-based problems with a few dozens of states (Gridworld, Taxi) to continuous control problems (Cartpole, Pendulum) to Atari games (Breakout, Space Invaders) to complex robotics simulators (Mujoco):\nhttps://gym.openai.com/envs\nHowever, gym is not maintained by OpenAI anymore since September 2022. We will use instead the gymnasium library maintained by the Farama foundation, which will keep on maintaining and improving the library.\nhttps://gymnasium.farama.org/\nYou can install gymnasium and its dependencies using:\npip install -U gymnasium pygame moviepy\npip install gymnasium[classic_control]\npip install gymnasium[box2d]\nFor this exercise and the following, we will focus on simple environments whose installation is straightforward: toy text, classic control and box2d. More complex environments based on Atari games or the Mujoco physics simulator are described in the last (optional) section of this notebook, as they require additional dependencies.\nOn colab, gym cannot open graphical windows for visualizing the environments, as it is not possible in the browser. We will see a workaround allowing to produce videos. Running that cell in colab should allow you to run the simplest environments:\n\ntry:\n    import google.colab\n    IN_COLAB = True\nexcept:\n    IN_COLAB = False\n\nif IN_COLAB:\n    !pip install -U gymnasium pygame moviepy\n    !pip install gymnasium[box2d]\n\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport os\n\nimport gymnasium as gym\nprint(\"gym version:\", gym.__version__)\n\nfrom moviepy.editor import ImageSequenceClip, ipython_display\n\nclass GymRecorder(object):\n    \"\"\"\n    Simple wrapper over moviepy to generate a .gif with the frames of a gym environment.\n    \n    The environment must have the render_mode `rgb_array_list`.\n    \"\"\"\n    def __init__(self, env):\n        self.env = env\n        self._frames = []\n\n    def record(self, frames):\n        \"To be called at the end of an episode.\"\n        for frame in frames:\n            self._frames.append(np.array(frame))\n\n    def make_video(self, filename):\n        \"Generates the gif video.\"\n        directory = os.path.dirname(os.path.abspath(filename))\n        if not os.path.exists(directory):\n            os.mkdir(directory)\n        self.clip = ImageSequenceClip(list(self._frames), fps=self.env.metadata[\"render_fps\"])\n        self.clip.write_gif(filename, fps=self.env.metadata[\"render_fps\"], loop=0)\n        del self._frames\n        self._frames = []\n\ngym version: 0.26.3"
+    "text": "Installing gym\nIn this course, we will mostly address RL environments available in the OpenAI Gym framework:\nhttps://gym.openai.com\nIt provides a multitude of RL problems, from simple text-based problems with a few dozens of states (Gridworld, Taxi) to continuous control problems (Cartpole, Pendulum) to Atari games (Breakout, Space Invaders) to complex robotics simulators (Mujoco):\nhttps://gym.openai.com/envs\nHowever, gym is not maintained by OpenAI anymore since September 2022. We will use instead the gymnasium library maintained by the Farama foundation, which will keep on maintaining and improving the library.\nhttps://gymnasium.farama.org/\nYou can install gymnasium and its dependencies using:\npip install -U gymnasium pygame moviepy swig\npip install gymnasium[classic_control]\npip install gymnasium[box2d]\nFor this exercise and the following, we will focus on simple environments whose installation is straightforward: toy text, classic control and box2d. More complex environments based on Atari games or the Mujoco physics simulator are described in the last (optional) section of this notebook, as they require additional dependencies.\nOn colab, gym cannot open graphical windows for visualizing the environments, as it is not possible in the browser. We will see a workaround allowing to produce videos. Running that cell in colab should allow you to run the simplest environments:\n\ntry:\n    import google.colab\n    IN_COLAB = True\nexcept:\n    IN_COLAB = False\n\nif IN_COLAB:\n    !pip install -U gymnasium pygame moviepy swig\n    !pip install gymnasium[box2d]\n\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport os\n\nimport gymnasium as gym\nprint(\"gym version:\", gym.__version__)\n\nfrom moviepy.editor import ImageSequenceClip, ipython_display\n\nclass GymRecorder(object):\n    \"\"\"\n    Simple wrapper over moviepy to generate a .gif with the frames of a gym environment.\n    \n    The environment must have the render_mode `rgb_array_list`.\n    \"\"\"\n    def __init__(self, env):\n        self.env = env\n        self._frames = []\n\n    def record(self, frames):\n        \"To be called at the end of an episode.\"\n        for frame in frames:\n            self._frames.append(np.array(frame))\n\n    def make_video(self, filename):\n        \"Generates the gif video.\"\n        directory = os.path.dirname(os.path.abspath(filename))\n        if not os.path.exists(directory):\n            os.mkdir(directory)\n        self.clip = ImageSequenceClip(list(self._frames), fps=self.env.metadata[\"render_fps\"])\n        self.clip.write_gif(filename, fps=self.env.metadata[\"render_fps\"], loop=0)\n        del self._frames\n        self._frames = []\n\ngym version: 0.26.3"
   },
   {
     "objectID": "exercises/7-Gym-solution.html#interacting-with-an-environment",

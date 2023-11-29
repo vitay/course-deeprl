@@ -8,7 +8,7 @@
 <link href="2.5-TD_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="2.5-TD_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="2.5-TD_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.433">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -657,31 +657,36 @@ Julien Vitay
 <li><p>The immediate reward <span class="math inline">r_{t+1}</span> is stochastic, but is the same whether you sample <span class="math inline">a_t</span> from <span class="math inline">\pi</span> or from <span class="math inline">b</span>.</p></li>
 </ul></li>
 </ul>
-</section>
+<!--
+# Q-learning: Gridworld example
 
-<section id="q-learning-gridworld-example" class="title-slide slide level1 center">
-<h1>Q-learning: Gridworld example</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/gridworld.png"></p>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p><strong>States:</strong> position of the red rectangle in the grid.</p></li>
-<li><p><strong>Action:</strong> left, right, up, down.</p></li>
-<li><p><strong>Rewards:</strong></p>
-<ul>
-<li><p>+100 for the blue circle</p></li>
-<li><p>-100 for the green triangles</p></li>
-<li><p>-1 otherwise.</p></li>
-</ul></li>
-<li><p>You will implement this in the exercises.</p></li>
-</ul>
-</div>
-</div>
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/gridworld.png)
+
+:::
+::: {.column width=50%}
+
+
+* **States:** position of the red rectangle in the grid.
+
+* **Action:** left, right, up, down.
+
+* **Rewards:** 
+
+    * +100 for the blue circle
+
+    * -100 for the green triangles
+
+    * -1 otherwise.
+
+* You will implement this in the exercises.
+
+:::
+:::
+-->
 </section>
 
 <section id="temporal-difference-learning-1" class="title-slide slide level1 center">
@@ -706,6 +711,11 @@ Julien Vitay
 <li><p>TD uses <strong>bootstrapping</strong> like DP: it uses other estimates to update one estimate.</p></li>
 <li><p>Q-learning is the go-to method in tabular RL.</p></li>
 </ul>
+</section>
+
+<section id="optimal-control-with-q-learning" class="title-slide slide level1 center">
+<h1>Optimal control with Q-learning</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/XiigTGKZfks" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
 
 <section id="actor-critic-methods" class="title-slide slide level1 center">
@@ -846,12 +856,12 @@ Julien Vitay
 <section id="actor-critic-methods-5" class="title-slide slide level1 center">
 <h1>Actor-critic methods</h1>
 <ul>
-<li><p><strong>Value-based</strong> methods use value estimates <span class="math inline">Q_t(s, a)</span> to infer a policy:</p>
+<li><p><strong>Value-based</strong> methods use value estimates <span class="math inline">Q(s, a)</span> to infer a policy:</p>
 <ul>
 <li><p><strong>On-policy</strong> methods learn and use a stochastic policy to explore.</p></li>
 <li><p><strong>Off-policy</strong> methods learn a deterministic policy but use a (stochastic) behavior policy to explore.</p></li>
 </ul></li>
-<li><p><strong>Policy-based</strong> methods directly learn the policy <span class="math inline">\pi_t(s, a)</span> (<strong>actor</strong>) using preferences or function approximators.</p>
+<li><p><strong>Policy-based</strong> methods directly learn the policy <span class="math inline">\pi(s, a)</span> (<strong>actor</strong>) using preferences or function approximators.</p>
 <ul>
 <li><p>A <strong>critic</strong> learning values is used to improve the policy w.r.t a performance baseline.</p></li>
 <li><p>Actor-critic architectures are strictly <strong>on-policy</strong>.</p></li>

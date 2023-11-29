@@ -1,7 +1,5 @@
 # List of exercises
 
-{{< youtube dzdXpUCo0nw >}}
-
 You will find below links to download the notebooks for the exercises (which you have to fill) and their solution (which you can look at after you finished the exercise). It is recommended not to look at the solution while doing the exercise unless you are lost. 
 
 Alternatively, you can run the notebooks directly on Colab (<https://colab.research.google.com/>) if you have a Google account. 
@@ -21,13 +19,6 @@ This exercise is an introduction to Python for absolute beginners. If you alread
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/1-Python-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/1-Python-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube _zKKnbxDOjA >}}
-
-**Commented solution**
-
-{{< youtube pBTwkxOSlpU >}}
 
 ## Numpy and Matplotlib
 
@@ -38,14 +29,6 @@ The goal of this exercise is to present the basics of the numerical library `num
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/2-Numpy-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/2-Numpy-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube 0FBuLT04r-M >}}
-
-
-**Commented solution**
-
-{{< youtube kngLlgI3eKU >}}
 
 ## Sampling
 
@@ -55,14 +38,6 @@ The goal of this exercise is to understand how to sample rewards from a n-armed 
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/3-Sampling-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/3-Sampling-solution.ipynb){target="_blank"}.
 
-
-**Presentation**
-
-{{< youtube PEsCxwjlTyU >}}
-
-**Commented solution**
-
-{{< youtube E3fB4nyhoZ8 >}}
 
 ## Bandits - part 1
 
@@ -76,13 +51,6 @@ The goal of this exercise is to implement simple action selection mechanisms for
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/4-Bandits-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/4-Bandits-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube pYxphhdmrD4 >}}
-
-**Commented solution**
-
-{{< youtube x60ffQE59Eo >}}
 
 ## Bandits - part 2 
 
@@ -92,13 +60,6 @@ The goal of this exercise is to further investigate the properties of the action
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/5-Bandits2-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/5-Bandits2-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube xKiNrBm5lvk >}}
-
-**Commented solution**
-
-{{< youtube 24cJ-y0Ye-U >}}
 
 
 ## Dynamic programming
@@ -109,14 +70,6 @@ The goal of this exercise is to apply policy iteration and value iteration on th
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/6-DP-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/6-DP-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube hEb36jiXk-Q >}}
-
-**Commented solution**
-
-{{< youtube x0vUQNgwZJI >}}
-
 ## Gym
 
 The goal of this exercise is to install `gym` and learn how to use its interface.
@@ -125,13 +78,6 @@ The goal of this exercise is to install `gym` and learn how to use its interface
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/7-Gym-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/7-Gym-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube uh-gqcIs6Gg >}}
-
-**Commented solution**
-
-{{< youtube MqTpeXPQ9jQ >}}
 
 ## Monte Carlo control
 
@@ -141,13 +87,6 @@ The goal of this exercise is to implement on-policy Monte-Carlo control on the T
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/8-MonteCarlo-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/8-MonteCarlo-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube txT9_VYFYjA >}}
-
-**Commented solution**
-
-{{< youtube jNtnaBiOZnM >}}
 
 ## Temporal difference
 
@@ -157,13 +96,6 @@ The goal of this exercise is to implement Q-learning on the Taxi gym environment
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/9-TD-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/9-TD-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube WfnS22z2JKY >}}
-
-**Commented solution**
-
-{{< youtube uxcdOwlfQHA >}}
 
 ## Eligibility traces
 
@@ -173,13 +105,6 @@ The goal of this exercise is to implement Q-learning with eligibility traces on 
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/10-Eligibilitytraces-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/10-Eligibilitytraces-solution.ipynb){target="_blank"}.
 
-**Presentation**
-
-{{< youtube OeUbBGp7Kes >}}
-
-**Commented solution**
-
-{{< youtube SUMCA8TsSX0 >}}
 
 ## Keras
 
@@ -190,14 +115,6 @@ The goal of this exercise is to quickly discover keras and to understand why neu
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/11-Keras-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/11-Keras-solution.ipynb){target="_blank"}.
 
 
-**Presentation**
-
-{{< youtube kzW9DpigQCo >}}
-
-**Commented solution**
-
-{{< youtube hbAPFC7NEqc >}}
-
 ## DQN
 
 The goal of this exercise is to implement DQN on the Cartpole balancing problem.
@@ -205,11 +122,3 @@ The goal of this exercise is to implement DQN on the Cartpole balancing problem.
 **Notebook:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/12-DQN.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/12-DQN.ipynb){target="_blank"}.
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/12-DQN-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/12-DQN-solution.ipynb){target="_blank"}.
-
-**Presentation**
-
-{{< youtube SHKuLVVq1SY >}}
-
-**Commented solution**
-
-{{< youtube cGsWOEyzYsU >}}

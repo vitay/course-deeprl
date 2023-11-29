@@ -311,7 +311,7 @@ $$Q^\pi(s, a) = \mathbb{E}_{s_t \sim \rho_b, a_t \sim b}[ r_{t+1} + \gamma \, \m
     * The immediate reward $r_{t+1}$ is stochastic, but is the same whether you sample $a_t$ from $\pi$ or from $b$.
 
 
-
+<!--
 # Q-learning: Gridworld example
 
 ::: {.columns}
@@ -340,7 +340,7 @@ $$Q^\pi(s, a) = \mathbb{E}_{s_t \sim \rho_b, a_t \sim b}[ r_{t+1} + \gamma \, \m
 
 :::
 :::
-
+-->
 
 
 # Temporal Difference learning
@@ -370,6 +370,10 @@ $$Q^\pi(s, a) = \mathbb{E}_{s_t \sim \rho_b, a_t \sim b}[ r_{t+1} + \gamma \, \m
 * Q-learning is the go-to method in tabular RL.
 
 
+# Optimal control with Q-learning
+
+
+{{< youtube XiigTGKZfks >}}
 
 
 
@@ -520,13 +524,13 @@ $$\pi(s, a) = \frac{\exp{p(s, a)}}{\sum_b \exp{p(s, b)}}$$
 
 # Actor-critic methods
 
-* **Value-based** methods use value estimates $Q_t(s, a)$ to infer a policy:
+* **Value-based** methods use value estimates $Q(s, a)$ to infer a policy:
 
     * **On-policy** methods learn and use a stochastic policy to explore.
 
     * **Off-policy** methods learn a deterministic policy but use a (stochastic) behavior policy to explore.
 
-* **Policy-based** methods directly learn the policy $\pi_t(s, a)$ (**actor**) using preferences or function approximators.
+* **Policy-based** methods directly learn the policy $\pi(s, a)$ (**actor**) using preferences or function approximators.
 
     * A **critic** learning values is used to improve the policy w.r.t a performance baseline.
 
