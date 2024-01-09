@@ -547,6 +547,13 @@ Check more robotic videos at: <https://openai.com/blog/openai-baselines-ppo/>{ta
 
 {{< youtube jwSbzNHGflM >}} 
 
+# PPO: ChatGPT
+
+![](img/ChatGPT.svg)
+
+:::footer
+Source: <https://openai.com/blog/chatgpt>
+:::
 
 ---
 

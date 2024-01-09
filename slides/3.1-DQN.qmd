@@ -541,11 +541,11 @@ def q_iteration(env, model, state, memory):
     new_state, reward, terminal, truncated, info = env.step(action)
 
     # Append the transition to the replay buffer 
-    memory.add(state, action, new_state, reward, done)
+    memory.add(state, action, new_state, reward, terminal or truncated)
 
     # Sample a minibatch from the memory and fit the DQN
-    s, a, r, s_, d = memory.sample_batch(32)
-    fit_batch(model, s, a, r, s_, d)
+    s, a, r, s_, t = memory.sample_batch(32)
+    fit_batch(model, s, a, r, s_, t)
 ```
 
 ::: footer
@@ -558,7 +558,7 @@ def q_iteration(env, model, state, memory):
 * The only slight difficulty is actually to compute the targets for learning:
 
 ```python
-def fit_batch(model, states, actions, rewards, next_states, dones)
+def fit_batch(model, states, actions, rewards, next_states, terminals)
 
     # Predict the Q-values in the current state
     Q_values = model.predict(states)
@@ -567,7 +567,7 @@ def fit_batch(model, states, actions, rewards, next_states, dones)
     next_Q_value = target_model.predict(next_states).max(axis=1)
     
     # Terminal states have a value of 0
-    next_Q_value[dones] = 0.0
+    next_Q_value[terminals] = 0.0
     
     # Compute the target
     targets = Q_values.copy()

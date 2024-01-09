@@ -622,41 +622,46 @@ Julien Vitay
     &amp;= 0
 \end{aligned}
 </span></p>
+<!--
+# REINFORCE with baseline
+
+::: {.columns}
+::: {.column width=50%}
+
+
+* A simple baseline that reduces the variance of the returns is a **moving average** of the returns obtained during all episodes:
+
+$$b = \alpha \, R(\tau) + (1 - \alpha) \, b$$
+
+* This is similar to **reinforcement comparison** for bandits, except we compute the mean return instead of the mean reward.
+
+* A trajectory $\tau$ should be **reinforced** if it brings more return than average.
+
+:::
+::: {.column width=50%}
+
+
+![](img/bandit-nonstationary2.png)
+
+:::
+:::
+
+
+* (Williams, 1992) showed that the best baseline (the one that reduces the variance the most) is actually:
+
+$$
+    b = \frac{\mathbb{E}_{\tau \sim \rho_\theta}[(\nabla_\theta \log \rho_\theta (\tau))^2 \, R(\tau)]}{\mathbb{E}_{\tau \sim \rho_\theta}[(\nabla_\theta \log \rho_\theta (\tau))^2]}
+$$
+
+but it is complex to compute in practice.
+
+::: footer
+Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.
+:::
+-->
 </section>
 
 <section id="reinforce-with-baseline-1" class="title-slide slide level1 center">
-<h1>REINFORCE with baseline</h1>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>A simple baseline that reduces the variance of the returns is a <strong>moving average</strong> of the returns obtained during all episodes:</li>
-</ul>
-<p><span class="math display">b = \alpha \, R(\tau) + (1 - \alpha) \, b</span></p>
-<ul>
-<li><p>This is similar to <strong>reinforcement comparison</strong> for bandits, except we compute the mean return instead of the mean reward.</p></li>
-<li><p>A trajectory <span class="math inline">\tau</span> should be <strong>reinforced</strong> if it brings more return than average.</p></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/bandit-nonstationary2.png"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>(Williams, 1992) showed that the best baseline (the one that reduces the variance the most) is actually:</li>
-</ul>
-<p><span class="math display">
-    b = \frac{\mathbb{E}_{\tau \sim \rho_\theta}[(\nabla_\theta \log \rho_\theta (\tau))^2 \, R(\tau)]}{\mathbb{E}_{\tau \sim \rho_\theta}[(\nabla_\theta \log \rho_\theta (\tau))^2]}
-</span></p>
-<p>but it is complex to compute in practice.</p>
-<div class="footer">
-<p>Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.</p>
-</div>
-</section>
-
-<section id="reinforce-with-baseline-2" class="title-slide slide level1 center">
 <h1>REINFORCE with baseline</h1>
 <ul>
 <li>In practice, a baseline that works well is the value of the encountered states:</li>
@@ -737,9 +742,18 @@ Julien Vitay
 <ul>
 <li>For each state-action pair <span class="math inline">(s_t, a_t)</span> encountered during the episode, the gradient of the log-policy is multiplied by the complete return of the episode:</li>
 </ul>
+<div class="columns">
+<div class="column">
 <p><span class="math display">R(\tau) = \sum_{t'=0}^T \gamma^{t'} \, r_{t'+1}</span></p>
-
-<img data-src="img/sarsa-sequence.png" class="r-stretch quarto-figure-center"><ul>
+</div><div class="column">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sarsa-sequence.png"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
 <li><p>The <strong>causality principle</strong> states that rewards obtained before time <span class="math inline">t</span> are not caused by that action.</p></li>
 <li><p>The policy gradient can be rewritten as:</p></li>
 </ul>
@@ -800,14 +814,10 @@ Julien Vitay
 <li><p>We can then <strong>sample single transitions</strong> instead of complete episodes:</p></li>
 </ul>
 <p><span class="math display">
-    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a) ]
+    \nabla_\theta \mathcal{J}(\theta) \propto  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a) ]
 </span></p>
 <ul>
-<li><p>Note that:</p>
-<ul>
-<li><p>this is not true for <span class="math inline">\mathcal{J}(\theta)</span> directly, as the value of <span class="math inline">\mathcal{J}(\theta)</span> changes (computed over single transitions instead of complete episodes, so it is smaller),</p></li>
-<li><p>but it is true for its gradient (both go in the same direction)!</p></li>
-</ul></li>
+<li>Note that this is not directly the gradient of <span class="math inline">\mathcal{J}(\theta)</span>, as the value of <span class="math inline">\mathcal{J}(\theta)</span> changes (computed over single transitions instead of complete episodes, so it is smaller), but the gradients both go in the same direction!</li>
 </ul>
 <div class="footer">
 <p>Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.</p>
@@ -870,6 +880,41 @@ Julien Vitay
 </div>
 </section>
 
+<section id="function-approximators-to-learn-the-q-values" class="title-slide slide level1 center">
+<h1>Function approximators to learn the Q-values</h1>
+<p>There are two possibilities to approximate Q-values <span class="math inline">Q_\theta(s, a)</span>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>The DNN approximates the Q-value of a single <span class="math inline">(s, a)</span> pair.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/functionapproximation1.jpeg"></p>
+</figure>
+</div>
+<ul>
+<li>The action space can be continuous.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>The DNN approximates the Q-value of all actions <span class="math inline">a</span> in a state <span class="math inline">s</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/functionapproximation2.jpeg"></p>
+</figure>
+</div>
+<ul>
+<li>The action space must be discrete (one neuron per action).</li>
+</ul>
+</div>
+</div>
+<div class="footer">
+<p>Source: <a href="https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677" class="uri">https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677</a></p>
+</div>
+</section>
+
 <section id="policy-gradient-actor-critic" class="title-slide slide level1 center">
 <h1>Policy Gradient : Actor-critic</h1>
 
@@ -899,6 +944,24 @@ Julien Vitay
       \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
   </span></p></li>
 </ul>
+</section>
+
+<section id="policy-gradient-actor-critic-2" class="title-slide slide level1 center">
+<h1>Policy Gradient : Actor-critic</h1>
+
+<img data-src="img/policygradient.svg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<li><p>The policy gradient (PG) theorem implies an <strong>actor-critic</strong> architecture.</p></li>
+<li><p>The <strong>actor</strong> learns using the PG theorem:</p></li>
+</ul>
+<p><span class="math display">
+    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q_\varphi(s, a) ]
+</span></p>
+<ul>
+<li>The <strong>critic</strong> learns using Q-learning:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
+</span></p>
 </section>
 
 <section id="policy-gradient-reducing-the-variance" class="title-slide slide level1 center">

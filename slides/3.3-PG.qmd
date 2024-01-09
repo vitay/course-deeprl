@@ -289,6 +289,7 @@ $$
 \end{aligned}
 $$
 
+<!--
 # REINFORCE with baseline
 
 ::: {.columns}
@@ -324,7 +325,7 @@ but it is complex to compute in practice.
 ::: footer
 Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.
 :::
-
+-->
 
 # REINFORCE with baseline
 
@@ -409,9 +410,14 @@ $$
 
 * For each state-action pair $(s_t, a_t)$ encountered during the episode, the gradient of the log-policy is multiplied by the complete return of the episode:
 
+:::columns
+:::column
 $$R(\tau) = \sum_{t'=0}^T \gamma^{t'} \, r_{t'+1}$$
-
+:::
+:::column
 ![](img/sarsa-sequence.png)
+:::
+:::
 
 * The **causality principle** states that rewards obtained before time $t$ are not caused by that action.
 
@@ -481,14 +487,10 @@ $$
 * We can then **sample single transitions** instead of complete episodes:
 
 $$
-    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a) ]
+    \nabla_\theta \mathcal{J}(\theta) \propto  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a) ]
 $$
 
-* Note that: 
-
-    * this is not true for $\mathcal{J}(\theta)$ directly, as the value of $\mathcal{J}(\theta)$ changes (computed over single transitions instead of complete episodes, so it is smaller), 
-
-    * but it is true for its gradient (both go in the same direction)!
+* Note that this is not directly the gradient of $\mathcal{J}(\theta)$, as the value of $\mathcal{J}(\theta)$ changes (computed over single transitions instead of complete episodes, so it is smaller), but the gradients both go in the same direction!
 
 
 ::: footer
@@ -558,6 +560,37 @@ Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradien
 :::
 
 
+# Function approximators to learn the Q-values
+
+There are two possibilities to approximate Q-values $Q_\theta(s, a)$:
+
+::: {.columns}
+::: {.column width=50%}
+
+* The DNN approximates the Q-value of a single $(s, a)$ pair.
+
+![](img/functionapproximation1.jpeg)
+
+* The action space can be continuous.
+
+:::
+::: {.column width=50%}
+
+
+* The DNN approximates the Q-value of all actions $a$ in a state $s$.
+
+![](img/functionapproximation2.jpeg)
+
+* The action space must be discrete (one neuron per action).
+
+:::
+:::
+
+
+::: footer
+Source: <https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677>
+:::
+
 
 # Policy Gradient : Actor-critic
 
@@ -590,6 +623,26 @@ Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradien
         \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
     $$
 
+
+
+# Policy Gradient : Actor-critic
+
+
+![](img/policygradient.svg){width=40%}
+
+* The policy gradient (PG) theorem implies an **actor-critic** architecture.
+
+* The **actor** learns using the PG theorem:
+
+$$
+    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q_\varphi(s, a) ]
+$$
+
+* The **critic** learns using Q-learning:
+ 
+$$
+    \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
+$$
 
 # Policy Gradient : reducing the variance
 

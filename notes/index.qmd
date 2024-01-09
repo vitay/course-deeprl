@@ -37,11 +37,15 @@ Exercises are provided in the form of Jupyter notebooks, allowing to implement i
     1. [Model-based RL](notes/4.1-MB.qmd)
     2. [Learned models](notes/4.2-LearnedModels.qmd)
     3. [AlphaGo](notes/4.3-AlphaGo.qmd)
-    4. [Successor representations](notes/4.4-SR.qmd)
+    4. [Successor representations (optional)](notes/4.4-SR.qmd)
 
 5. **Outlook**
     1. [Outlook](notes/5.1-Outlook.qmd)
 
+
+:::callout-note
+**WS2023-24:** Here are the compressed slides for A3C/DDPG/PPO: [html](slides/3.8-A3C-DDPG-PPO.html){target="_blank"}. SAC is unfortunately skipped.
+:::
 
 ### Exercises
 
