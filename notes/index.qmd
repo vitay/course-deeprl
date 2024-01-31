@@ -70,6 +70,7 @@ Notebooks and videos are in the [List of Exercises](exercises/Content.qmd). Belo
 10. [Eligibility traces](exercises/10-Eligibilitytraces-solution.ipynb)
 11. [Keras](exercises/11-Keras-solution.ipynb)
 12. [DQN](exercises/12-DQN-solution.ipynb)
+13. [PPO](exercises/13-PPO-solution.ipynb)
 
 :::
 :::

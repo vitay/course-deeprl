@@ -126,10 +126,6 @@ resources: pdf/5.1-Outlook.pdf
 
 <https://github.com/hill-a/stable-baselines>
 
-* `rlkit` from Vitchyr Pong (PhD student at Berkeley) with in particular model-based algorithms (TDM).
-
-<https://github.com/vitchyr/rlkit>
-
 * `chainer-rl` implemented in Chainer: A3C, ACER, DQN, DDPG, PGT, PCL, PPO, TRPO.
 
 <https://github.com/chainer/chainerrl>
@@ -173,6 +169,20 @@ All major model-free algorithms are implemented (DQN, Rainbow, A3C, DDPG, PPO, S
  
 
 ![](img/rllib.svg)
+
+
+
+# RL libraries
+
+* `tianshou` is a recent addition to the family. The implementation is based on pytorch and is very modular. Allows for efficient distributed RL. 
+
+Algos: DQN+/DDPG/PPO/SAC, imitation learning, offline RL... 
+
+
+<https://github.com/thu-ml/tianshou>
+ 
+
+![](img/tianshou.png)
 
 
 # 2 - Inverse RL - learning the reward function

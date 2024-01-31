@@ -122,3 +122,12 @@ The goal of this exercise is to implement DQN on the Cartpole balancing problem.
 **Notebook:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/12-DQN.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/12-DQN.ipynb){target="_blank"}.
 
 **Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/12-DQN-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/12-DQN-solution.ipynb){target="_blank"}.
+
+
+## PPO
+
+The goal of this exercise is to use the ``tianshou`` library to implement PPO on the Cartpole balancing problem.
+
+**Notebook:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/13-PPO.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/13-PPO.ipynb){target="_blank"}.
+
+**Solution:** [download .ipynb](https://raw.githubusercontent.com/vitay/course-deeprl/master/notes/exercises/13-PPO-solution.ipynb){target="_blank"} or [run on colab](https://colab.research.google.com/github/vitay/course-deeprl/blob/master/notes/exercises/13-PPO-solution.ipynb){target="_blank"}.

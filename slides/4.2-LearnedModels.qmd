@@ -274,13 +274,14 @@ Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R.,
 
 
 
-# 2 - Temporal difference models - TDM
+# 2 - Temporal difference models - TDM (skipped)
 
 ![](img/paper-tdm.png)
 
 ::: footer
 Pong V, Gu S, Dalal M, Levine S. (2018). Temporal Difference Models: Model-Free Deep RL for Model-Based Control. arXiv:1802.09081
 :::
+
 
 # TDM
 
@@ -991,3 +992,8 @@ Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behav
 ::: footer
 Wu, P., Escontrela, A., Hafner, D., Goldberg, K., & Abbeel, P. (2022). DayDreamer: World Models for Physical Robot Learning (arXiv:2206.14176).
 :::
+
+# DayDreamer
+
+
+{{< youtube xAXvfVTgqr0 >}}

@@ -62,6 +62,7 @@ book:
       - exercises/10-Eligibilitytraces-solution.ipynb
       - exercises/11-Keras-solution.ipynb
       - exercises/12-DQN-solution.ipynb
+      - exercises/13-PPO-solution.ipynb
     - references.qmd
 
 
