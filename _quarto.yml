@@ -5,12 +5,11 @@ project:
   output-dir: docs
 
 website:
-  title: "Deep Reinforcement Learning"
   search: true
 
   navbar:
-    background: black
-    foreground: white
+    background: white
+    foreground: black
     pinned: true
     right:
       - text: "Materials"
