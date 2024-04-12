@@ -4,3 +4,5 @@
 docs/.htaccess
 slides/pdf
 *.quarto
+
+/.quarto/

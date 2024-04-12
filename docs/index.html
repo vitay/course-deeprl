@@ -93,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Syllabus</span></a>
+<span class="menu-text">Materials</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://github.com/vitay/notebooks-deeprl"> 
@@ -164,8 +164,8 @@ ul.task-list li input[type="checkbox"] {
 <p>You will find below the links to the slides for each lecture (html and pdf). Outdated videos can be found in this <a href="https://www.youtube.com/playlist?list=PLIEjdhhAF7UJwegwyWUcDrUNJTQfxMcUw">playlist</a>.</p>
 <section id="introduction" class="level4">
 <h4 class="anchored" data-anchor-id="introduction">1 - Introduction</h4>
-<div id="ab256627" class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="2">
+<div id="f79b29e1" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="34">
 <table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 90%">
@@ -180,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><strong>1.1 - Introduction</strong><br>
-This lecture introduces the main concepts of reinforcement learning and showcases the current applications.</td>
+Introduction to the main concepts of reinforcement learning and showcasing of the current applications.</td>
 <td><a href="./slides/1.1-Introduction.html" target="_blank">html</a>, <a href="slides/pdf/1.1-Introduction.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
@@ -195,8 +195,8 @@ This lecture quickly reminds the main mathematical concepts needed to understand
 </section>
 <section id="tabular-rl" class="level4">
 <h4 class="anchored" data-anchor-id="tabular-rl">2 - Tabular RL</h4>
-<div id="848a63b3" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
+<div id="4b927e2e" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="35">
 <table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 90%">
@@ -211,37 +211,37 @@ This lecture quickly reminds the main mathematical concepts needed to understand
 <tbody>
 <tr class="odd">
 <td><strong>2.1 - Bandits</strong><br>
-This lecture introduces bandits, the simplest RL setting that can be solved by sampling.</td>
+n-armed bandits, the simplest RL setting that can be solved by sampling.</td>
 <td><a href="./slides/2.1-Bandits.html" target="_blank">html</a>, <a href="slides/pdf/2.1-Bandits.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
 <td><strong>2.2 - Markov Decision Processes</strong><br>
-TODO</td>
+MDPs are the basic RL framework. The value functions and the Bellman equations fully characterize a MDP.</td>
 <td><a href="./slides/2.2-MDP.html" target="_blank">html</a>, <a href="slides/pdf/2.2-MDP.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="odd">
 <td><strong>2.3 - Dynamic Programming</strong><br>
-TODO</td>
+Dynamic programming is a model-based method allowing to iteratively solve the Bellman equations.</td>
 <td><a href="./slides/2.3-DP.html" target="_blank">html</a>, <a href="slides/pdf/2.3-DP.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
 <td><strong>2.4 - Monte Carlo control</strong><br>
-TODO</td>
+Monte Carlo control estimates value functions through sampling of complete episodes and infers the optimal policy using action selection, either on- or off-policy.</td>
 <td><a href="./slides/2.4-MC.html" target="_blank">html</a>, <a href="slides/pdf/2.4-MC.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="odd">
 <td><strong>2.5 - Temporal Difference</strong><br>
-TODO</td>
+TD algorithms allow the learning of value functions using single transitions. Q-learning is the famous off-policy variant.</td>
 <td><a href="./slides/2.5-TD.html" target="_blank">html</a>, <a href="slides/pdf/2.5-TD.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
 <td><strong>2.6 - Function Approximation</strong><br>
-TODO</td>
+The value functions can actually be approximated by any function approximator, allowing to apply RL to continuous state of action spaces.</td>
 <td><a href="./slides/2.6-FunctionApproximation.html" target="_blank">html</a>, <a href="slides/pdf/2.6-FunctionApproximation.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="odd">
 <td><strong>2.7 - Deep Neural Networks</strong><br>
-TODO</td>
+Quick overview of the main neural network architectures needed for the rest of the course.</td>
 <td><a href="./slides/2.7-DeepNetworks.html" target="_blank">html</a>, <a href="slides/pdf/2.7-DeepNetworks.pdf" target="_blank">pdf</a></td>
 </tr>
 </tbody>
@@ -251,8 +251,8 @@ TODO</td>
 </section>
 <section id="model-free-rl" class="level4">
 <h4 class="anchored" data-anchor-id="model-free-rl">3 - Model-free RL</h4>
-<div id="f57745dd" class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="4">
+<div id="356ccbd6" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="36">
 <table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 90%">
@@ -267,37 +267,37 @@ TODO</td>
 <tbody>
 <tr class="odd">
 <td><strong>3.1 - DQN: Deep Q-Network</strong><br>
-TODO</td>
+DQN (Mnih et al.&nbsp;2013) was the first successful application of deep networks to the RL problem. It has been applied to Atari video games and started the interest for deep RL methods.</td>
 <td><a href="./slides/3.1-DQN.html" target="_blank">html</a>, <a href="slides/pdf/3.1-DQN.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
 <td><strong>3.2 - Beyond DQN</strong><br>
-TODO</td>
+Various extensions to the DQN algorithms have been proposed in the following years: distributional learning, parameter noise, distributed learning or recurrent architectures.</td>
 <td><a href="./slides/3.2-BeyondDQN.html" target="_blank">html</a>, <a href="slides/pdf/3.2-BeyondDQN.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="odd">
 <td><strong>3.3 - PG: Policy Gradient</strong><br>
-TODO</td>
+Policy gradient methods allow to directly learn the policy without requiring action selection over value functions.</td>
 <td><a href="./slides/3.3-PG.html" target="_blank">html</a>, <a href="slides/pdf/3.3-PG.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
 <td><strong>3.4 - A3C: Asynchronous Advantage Actor-Critic</strong><br>
-TODO</td>
+A3C (Mnih et al., 2016) is an actor-critic architecture estimating the policy gradient from multiple parallel workers.</td>
 <td><a href="./slides/3.4-A3C.html" target="_blank">html</a>, <a href="slides/pdf/3.4-A3C.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="odd">
 <td><strong>3.5 - DDPG: Deep Deterministic Policy Gradient</strong><br>
-TODO</td>
+DDPG (Lillicrap et al., is an off-policy actor-critic architecture particularly suited for continuous control problems such as robotics.</td>
 <td><a href="./slides/3.5-DDPG.html" target="_blank">html</a>, <a href="slides/pdf/3.5-DDPG.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="even">
 <td><strong>3.6 - PPO: Proximal Policy Optimization</strong><br>
-TODO</td>
+PPO (Schulman et al., 2017) allows stable learning by estimating trust regions for the policy updates.</td>
 <td><a href="./slides/3.6-PPO.html" target="_blank">html</a>, <a href="slides/pdf/3.6-PPO.pdf" target="_blank">pdf</a></td>
 </tr>
 <tr class="odd">
 <td><strong>3.7 - SAC: Soft Actor-Critic</strong><br>
-TODO</td>
+Maximum Entropy RL modifies the RL objective by learning optimal policies that also explore the environment as much as possible.. SAC (Haarnoja et al., 2018) is an off-policy actor-critic architecture for soft RL.</td>
 <td><a href="./slides/3.7-SAC.html" target="_blank">html</a>, <a href="slides/pdf/3.7-SAC.pdf" target="_blank">pdf</a></td>
 </tr>
 </tbody>
@@ -310,8 +310,75 @@ TODO</td>
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>In WS2023-24, the lectures 3.4 to 3.6 were compressed into these slides: <a href="./slides/3.8-A3C-DDPG-PPO.html" target="_blank">html</a>, <a href="slides/pdf/3.8-A3C-DDPG-PPO.pdf" target="_blank">pdf</a>. The lecture 3.7 was skipped.</p>
+<p>In WS2023-24, the lectures 3.4 to 3.6 were compressed into these slides: <a href="./slides/3.8-A3C-DDPG-PPO.html" target="_blank">html</a>. The lecture 3.7 was skipped.</p>
 </div>
+</div>
+</div>
+</section>
+<section id="model-based-rl" class="level4">
+<h4 class="anchored" data-anchor-id="model-based-rl">4 - Model-based RL</h4>
+<div id="6ffd81b7" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="37">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 90%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Slides</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>4.1 - Model-based RL</strong><br>
+Two main paradigms in model-based RL: model-based augmentation of model-free learning (Dyna architectures) and planning (model predictive control, MPC)</td>
+<td><a href="./slides/4.1-ModelBased.html" target="_blank">html</a>, <a href="slides/pdf/4.1-ModelBased.pdf" target="_blank">pdf</a></td>
+</tr>
+<tr class="even">
+<td><strong>4.2 - Learned World models</strong><br>
+Learning a world model from data is much easier than learning the optimal policy, as it is just supervised learning. Modern model-based algorithms (TDM, World models, PlaNet, Dreamer) make use of this property to reduce the sample complexity.</td>
+<td><a href="./slides/4.2-LearnedModels.html" target="_blank">html</a>, <a href="slides/pdf/4.2-LearnedModels.pdf" target="_blank">pdf</a></td>
+</tr>
+<tr class="odd">
+<td><strong>4.3 - AlphaGo</strong><br>
+AlphaGo surprised the world in 2016 by beating Lee Seedol, the world champion of Go. It combines model-free learning through policy gradient and self-play with model-based planning using MCTS (Monte Carlo Tree Search).</td>
+<td><a href="./slides/4.3-AlphaGo.html" target="_blank">html</a>, <a href="slides/pdf/4.3-AlphaGo.pdf" target="_blank">pdf</a></td>
+</tr>
+<tr class="even">
+<td><strong>4.4 - Successor representations</strong><br>
+Successor representations provide a trade-off between model-free and model-based learning.</td>
+<td><a href="./slides/4.4-SR.html" target="_blank">html</a>, <a href="slides/pdf/4.4-SR.pdf" target="_blank">pdf</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="outlook" class="level4">
+<h4 class="anchored" data-anchor-id="outlook">5 - Outlook</h4>
+<div id="d083929f" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="38">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 90%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Slides</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>5.1 - Outlook</strong><br>
+Current RL research investigates many different directions: inverse RL, intrinsic motivation, hierarchical RL, meta RL, offline RL, multi-agent RL, etc.</td>
+<td><a href="./slides/5.1-Outlook.html" target="_blank">html</a>, <a href="slides/pdf/5.1-Outlook.pdf" target="_blank">pdf</a></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
@@ -319,9 +386,9 @@ TODO</td>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <p>You will find below links to download the notebooks for the exercises (which you have to fill) and their solution (which you can look at after you have finished the exercise). It is recommended not to look at the solution while doing the exercise unless you are lost. Alternatively, you can run the notebooks directly on Colab (<a href="https://colab.research.google.com/" class="uri">https://colab.research.google.com/</a>) if you have a Google account.</p>
-<p>For instructions on how to install a Python distribution on your computer, check this <a href="./Installation.html">page</a>.</p>
-<div id="663cb61e" class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="6">
+<p>For instructions on how to install a Python distribution on your computer, check this <a href="./webpage/Installation.html">page</a>.</p>
+<div id="e368450b" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="40">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -334,80 +401,80 @@ TODO</td>
 <tr class="odd">
 <td><strong>1 - Introduction to Python</strong><br>
 Introduction to the Python programming language. Optional for students already knowing Python.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/1-Python.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/1-Python.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/1-Python-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/1-Python-solution.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/1-Python.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/1-Python.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/1-Python-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/1-Python-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="even">
 <td><strong>2 - Numpy and Matplotlib</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/2-Numpy.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/2-Numpy.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/2-Numpy-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/2-Numpy-solution.ipynb" target="_blank">colab</a></td>
+Presentation of the numpy library for numerical computations and matplotlib for visualization. Also optional for students already familiar.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/2-Numpy.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/2-Numpy.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/2-Numpy-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/2-Numpy-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="odd">
 <td><strong>3 - Sampling</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/3-Sampling.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/3-Sampling.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/3-Sampling-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/3-Sampling-solution.ipynb" target="_blank">colab</a></td>
+Simple exercise to investigate random sampling and its properties.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/3-Sampling.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/3-Sampling.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/3-Sampling-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/3-Sampling-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="even">
 <td><strong>4 - Bandits</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/4-Bandits.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/4-Bandits.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/4-Bandits-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/4-Bandits-solution.ipynb" target="_blank">colab</a></td>
+Implementation of various action selection methods to the n-armed bandit.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/4-Bandits.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/4-Bandits.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/4-Bandits-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/4-Bandits-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="odd">
 <td><strong>5 - Bandits (part 2)</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/5-Bandits2.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/5-Bandits2.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/5-Bandits2-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/5-Bandits2-solution.ipynb" target="_blank">colab</a></td>
+Advanced bandit methods.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/5-Bandits2.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/5-Bandits2.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/5-Bandits2-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/5-Bandits2-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="even">
 <td><strong>6 - Dynamic programming</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/6-DP.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/6-DP.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/6-DP-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/6-DP-solution.ipynb" target="_blank">colab</a></td>
+Calculation of the Bellman equations for the recycling robot and application of policy iteration and value iteration.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/6-DP.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/6-DP.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/6-DP-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/6-DP-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="odd">
 <td><strong>7 - Gym environments</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/7-Gym.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/7-Gym.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/7-Gym-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/7-Gym-solution.ipynb" target="_blank">colab</a></td>
+Introdcution to the gym(nasium) RL environments.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/7-Gym.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/7-Gym.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/7-Gym-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/7-Gym-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="even">
 <td><strong>8 - Monte Carlo control</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/8-MonteCarlo.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/8-MonteCarlo.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/8-MonteCarlo-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/8-MonteCarlo-solution.ipynb" target="_blank">colab</a></td>
+Study of on-policy Monte Carlo control on the Taxi environment.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/8-MonteCarlo.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/8-MonteCarlo.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/8-MonteCarlo-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/8-MonteCarlo-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="odd">
-<td><strong>9 - Temporal Difference</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/9-TD.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/9-TD.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/9-TD-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/9-TD-solution.ipynb" target="_blank">colab</a></td>
+<td><strong>9 - Temporal Difference, Q-learning</strong><br>
+Q-learning on the Taxi environment.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/9-TD.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/9-TD.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/9-TD-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/9-TD-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="even">
 <td><strong>10 - Eligibility traces</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/10-Eligibilitytraces.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/10-Eligibilitytraces.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/10-Eligibilitytraces-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/10-Eligibilitytraces-solution.ipynb" target="_blank">colab</a></td>
+Investigation of eligibility traces for Q-learning in a gridworld environment.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/10-Eligibilitytraces.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/10-Eligibilitytraces.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/10-Eligibilitytraces-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/10-Eligibilitytraces-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="odd">
 <td><strong>11 - Keras</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/11-Keras.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/11-Keras.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/11-Keras-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/11-Keras-solution.ipynb" target="_blank">colab</a></td>
+Quick tutorial for Keras.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/11-Keras.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/11-Keras.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/11-Keras-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/11-Keras-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="even">
 <td><strong>12 - DQN</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/12-DQN.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/12-DQN.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/12-DQN-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/12-DQN-solution.ipynb" target="_blank">colab</a></td>
+Implementation of the DQN algorithm for Cartpole from scratch.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/12-DQN.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/12-DQN.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/12-DQN-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/12-DQN-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 <tr class="odd">
 <td><strong>13 - PPO</strong><br>
-TODO.</td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/13-PPO.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/13-PPO.ipynb" target="_blank">colab</a></td>
-<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/13-PPO-solution.ipynb" target="_blank">.ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/13-PPO-solution.ipynb" target="_blank">colab</a></td>
+DQN and PPO on cartpole using the tianshou library.</td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/13-PPO.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/13-PPO.ipynb" target="_blank">colab</a></td>
+<td><a href="https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/13-PPO-solution.ipynb" target="_blank">ipynb</a>, <a href="https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/13-PPO-solution.ipynb" target="_blank">colab</a></td>
 </tr>
 </tbody>
 </table>

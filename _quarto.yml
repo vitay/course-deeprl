@@ -14,7 +14,7 @@ website:
     logo: slides/img/tuc-new-large.png
     pinned: true
     right:
-      - text: "Syllabus"
+      - text: "Materials"
         file: index.qmd
       - text: "Notebooks"
         href: https://github.com/vitay/notebooks-deeprl
