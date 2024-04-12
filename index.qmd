@@ -8,11 +8,20 @@ author:
     affiliation-url: https://tu-chemnitz.de
     orcid: 0000-0001-5229-2349
 
-abstract: This website contains the materials for the module **Deep Reinforcement Learning** taught by Dr. Julien Vitay at the Technische Universität Chemnitz, Faculty of Computer Science, Professorship for Artificial Intelligence. 
+abstract: This website contains the materials for the module **Deep Reinforcement Learning** (573140) taught by Dr. Julien Vitay at the Technische Universität Chemnitz. 
 
 echo: false
 ---
 
+## Information
+
+Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457) to receive updates per email.
+
+:::callout-note
+### Summer semester 2024
+
+No lectures in the summer semester. There will be a (retake) exam in July/August.
+:::
 
 ## Lectures
 
