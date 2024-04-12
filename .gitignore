@@ -3,5 +3,8 @@
 .htaccess
 docs/.htaccess
 slides/pdf
-notes/exercises/videos
-notes/exercises/staging
+exercises/videos
+exercises/staging
+*.quarto
+
+/.quarto/

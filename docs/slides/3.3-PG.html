@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="3.3-PG_files/libs/clipboard/clipboard.min.js"></script>
-<script src="3.3-PG_files/libs/quarto-html/tabby.min.js"></script>
-<script src="3.3-PG_files/libs/quarto-html/popper.min.js"></script>
-<script src="3.3-PG_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="3.3-PG_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="3.3-PG_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="3.3-PG_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="3.3-PG_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="3.3-PG_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="3.3-PG_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="3.3-PG_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="3.3-PG_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="3.3-PG_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="3.3-PG_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="3.3-PG_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="3.3-PG_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="3.3-PG_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -367,17 +368,9 @@ Julien Vitay
 <h1>Policy search</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/discrete.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dueling-principle.svg"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -393,7 +386,7 @@ Julien Vitay
 <section id="policy-search-2" class="title-slide slide level1 center">
 <h1>Policy search</h1>
 
-<img data-src="img/conv_agent.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/conv_agent.png" class="r-stretch"><ul>
 <li><p>Instead of learning the Q-values, one could approximate directly the policy <span class="math inline">\pi_\theta(s, a)</span> with a neural network.</p></li>
 <li><p><span class="math inline">\pi_\theta(s, a)</span> is called a <strong>parameterized policy</strong>: it depends directly on the parameters <span class="math inline">\theta</span> of the NN.</p></li>
 <li><p>For discrete action spaces, the output of the NN can be a <strong>softmax</strong> layer, directly giving the probability of selecting an action.</p></li>
@@ -412,7 +405,7 @@ Julien Vitay
 <section id="policy-search-4" class="title-slide slide level1 center">
 <h1>Policy search</h1>
 
-<img data-src="img/policysearch.svg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/policysearch.svg" style="width:40.0%" class="r-stretch"><ul>
 <li><strong>Policy search</strong> methods aim at maximizing directly the expected return over all possible trajectories (episodes) <span class="math inline">\tau = (s_0, a_0, \dots, s_T, a_T)</span></li>
 </ul>
 <p><span class="math display">
@@ -489,7 +482,7 @@ Julien Vitay
 <section id="reinforce" class="title-slide slide level1 center">
 <h1>2 - REINFORCE</h1>
 
-<img data-src="img/paper-reinforce.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-reinforce.png" class="r-stretch"><div class="footer">
 <p>Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.</p>
 </div>
 </section>
@@ -674,17 +667,9 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dueling-principle.svg" style="width:65.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dueling-principle2.svg" style="width:65.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -697,16 +682,8 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <h1>Application of REINFORCE to resource management</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/reinforce-cluster.png"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/reinforce-cluster2.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>REINFORCE with baseline can be used to allocate resources (CPU cores, memory, etc) when scheduling jobs on a cloud of compute servers.</p></li>
@@ -726,7 +703,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <section id="policy-gradient-theorem" class="title-slide slide level1 center">
 <h1>3 - Policy Gradient Theorem</h1>
 
-<img data-src="img/paper-pg.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-pg.png" class="r-stretch"><div class="footer">
 <p>Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.</p>
 </div>
 </section>
@@ -746,11 +723,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <div class="column">
 <p><span class="math display">R(\tau) = \sum_{t'=0}^T \gamma^{t'} \, r_{t'+1}</span></p>
 </div><div class="column">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sarsa-sequence.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -784,11 +757,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{\tau \sim \rho_\theta}[\sum_{t=0}^T \nabla_\theta \log \pi_\theta(s_t, a_t) \, Q^{\pi_\theta}(s_t, a_t) ]
 </span></p>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rewardtogo.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -868,11 +837,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/actorcritic.png" style="width:40.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="footer">
@@ -888,11 +853,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <ul>
 <li>The DNN approximates the Q-value of a single <span class="math inline">(s, a)</span> pair.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/functionapproximation1.jpeg"></p>
-</figure>
-</div>
 <ul>
 <li>The action space can be continuous.</li>
 </ul>
@@ -900,11 +861,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <ul>
 <li>The DNN approximates the Q-value of all actions <span class="math inline">a</span> in a state <span class="math inline">s</span>.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/functionapproximation2.jpeg"></p>
-</figure>
-</div>
 <ul>
 <li>The action space must be discrete (one neuron per action).</li>
 </ul>
@@ -918,12 +875,12 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <section id="policy-gradient-actor-critic" class="title-slide slide level1 center">
 <h1>Policy Gradient : Actor-critic</h1>
 
-<img data-src="img/policygradient.svg" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/policygradient.svg" class="r-stretch"></section>
 
 <section id="policy-gradient-actor-critic-1" class="title-slide slide level1 center">
 <h1>Policy Gradient : Actor-critic</h1>
 
-<img data-src="img/policygradient.svg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/policygradient.svg" style="width:40.0%" class="r-stretch"><ul>
 <li><p>But how to train the critic? We do not know <span class="math inline">Q^{\pi_\theta}(s, a)</span>. As always, we can estimate it through <strong>sampling</strong>:</p>
 <ul>
 <li><strong>Monte-Carlo</strong> critic: sampling the complete episode.</li>
@@ -949,7 +906,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <section id="policy-gradient-actor-critic-2" class="title-slide slide level1 center">
 <h1>Policy Gradient : Actor-critic</h1>
 
-<img data-src="img/policygradient.svg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/policygradient.svg" style="width:40.0%" class="r-stretch"><ul>
 <li><p>The policy gradient (PG) theorem implies an <strong>actor-critic</strong> architecture.</p></li>
 <li><p>The <strong>actor</strong> learns using the PG theorem:</p></li>
 </ul>
@@ -1023,11 +980,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 </span></p>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/biasvariance.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ol type="1">
 <li><p>the more <span class="math inline">\psi_t</span> relies on <strong>sampled rewards</strong> (e.g.&nbsp;<span class="math inline">R_t</span>), the more the gradient will be correct on average (small bias), but the more it will vary (high variance).</p>
@@ -1044,28 +997,30 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <ul>
 <li>All the methods we will see in the rest of the course are attempts at finding the best trade-off.</li>
 </ul>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="3.3-PG_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="3.3-PG_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="3.3-PG_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="3.3-PG_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1075,13 +1030,12 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1235,7 +1189,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1319,10 +1273,9 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1332,8 +1285,17 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

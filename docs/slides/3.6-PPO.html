@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="3.6-PPO_files/libs/clipboard/clipboard.min.js"></script>
-<script src="3.6-PPO_files/libs/quarto-html/tabby.min.js"></script>
-<script src="3.6-PPO_files/libs/quarto-html/popper.min.js"></script>
-<script src="3.6-PPO_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="3.6-PPO_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="3.6-PPO_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="3.6-PPO_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="3.6-PPO_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="3.6-PPO_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="3.6-PPO_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +95,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="3.6-PPO_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -112,12 +112,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="3.6-PPO_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="3.6-PPO_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="3.6-PPO_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="3.6-PPO_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="3.6-PPO_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="3.6-PPO_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -239,7 +239,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -516,7 +517,7 @@ Julien Vitay
 <li><p>For on-policy methods, all progress is lost: the network has to relearn from scratch, as the new samples will be generated by a bad policy.</p></li>
 </ul>
 
-<img data-src="img/policy-collapse.png" style="width:50.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/policy-collapse.png" style="width:50.0%" class="r-stretch"><div class="footer">
 <p>Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.</p>
 </div>
 </section>
@@ -543,7 +544,7 @@ Julien Vitay
 <section id="trpo-trust-region-policy-optimization" class="title-slide slide level1 center">
 <h1>1 - TRPO: Trust Region Policy Optimization</h1>
 
-<img data-src="img/paper-trpo.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-trpo.png" class="r-stretch"><div class="footer">
 <p>Schulman, J., Levine, S., Abbeel, P., Jordan, M., and Moritz, P. (2015). Trust Region Policy Optimization. 1889–1897. <a href="http://proceedings.mlr.press/v37/schulman15.html" class="uri">http://proceedings.mlr.press/v37/schulman15.html</a>.</p>
 </div>
 </section>
@@ -631,7 +632,7 @@ Julien Vitay
 <section id="trpo-trust-region-policy-optimization-5" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 
-<img data-src="img/trustregion1.svg" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/trustregion1.svg" class="r-stretch"></section>
 
 <section id="trpo-trust-region-policy-optimization-6" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
@@ -683,7 +684,7 @@ Julien Vitay
 <section id="trpo-trust-region-policy-optimization-8" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 
-<img data-src="img/trustregion2.svg" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/trustregion2.svg" class="r-stretch"></section>
 
 <section id="trpo-trust-region-policy-optimization-9" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
@@ -702,11 +703,7 @@ Julien Vitay
 <li>but the parameters <span class="math inline">\theta</span> are much closer to the optimal parameters <span class="math inline">\theta^*</span>.</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/trustregion2.svg"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -719,7 +716,7 @@ Julien Vitay
 <section id="ppo-proximal-policy-optimization" class="title-slide slide level1 center">
 <h1>2 - PPO: Proximal Policy Optimization</h1>
 
-<img data-src="img/paper-ppo.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-ppo.png" class="r-stretch"><div class="footer">
 <p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
 </div>
 </section>
@@ -759,17 +756,13 @@ Julien Vitay
 </ul></li>
 </ul>
 
-<img data-src="img/ppo-clippingfunction.svg" style="width:40.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/ppo-clippingfunction.svg" style="width:40.0%" class="r-stretch"></section>
 
 <section id="ppo-proximal-policy-optimization-3" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-clipped.png" style="width:65.0%"></p>
-</figure>
-</div>
 <ul>
 <li><p>If the advantage <span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a)</span> is positive (better action than usual) and:</p>
 <ul>
@@ -778,11 +771,7 @@ Julien Vitay
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-clipped2.png" style="width:60.0%"></p>
-</figure>
-</div>
 <ul>
 <li><p>If the advantage <span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a)</span> is negative (worse action than usual) and:</p>
 <ul>
@@ -801,17 +790,9 @@ Julien Vitay
 <h1>PPO: Proximal Policy Optimization</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-clipped.png" style="width:65.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-clipped2.png" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -892,22 +873,22 @@ Julien Vitay
 </ul>
 <p><a href="https://spinningup.openai.com/en/latest/algorithms/ppo.html" class="uri">https://spinningup.openai.com/en/latest/algorithms/ppo.html</a></p>
 <p><a href="https://github.com/openai/baselines/tree/master/baselines/ppo2" class="uri">https://github.com/openai/baselines/tree/master/baselines/ppo2</a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spinup <span class="im">import</span> ppo</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>env_fn <span class="op">=</span> <span class="kw">lambda</span> : gym.make(<span class="st">'LunarLander-v2'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>ppo(env_fn<span class="op">=</span>env_fn, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    ac_kwargs<span class="op">=</span>{<span class="st">'hidden_sizes'</span>: [<span class="dv">64</span>,<span class="dv">64</span>], </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>               <span class="st">'activation'</span>: tf.nn.relu}, </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    steps_per_epoch<span class="op">=</span><span class="dv">5000</span>, epochs<span class="op">=</span><span class="dv">250</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spinup <span class="im">import</span> ppo</span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>env_fn <span class="op">=</span> <span class="kw">lambda</span> : gym.make(<span class="st">'LunarLander-v2'</span>)</span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>ppo(env_fn<span class="op">=</span>env_fn, </span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a>    ac_kwargs<span class="op">=</span>{<span class="st">'hidden_sizes'</span>: [<span class="dv">64</span>,<span class="dv">64</span>], </span>
+<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>               <span class="st">'activation'</span>: tf.nn.relu}, </span>
+<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a>    steps_per_epoch<span class="op">=</span><span class="dv">5000</span>, epochs<span class="op">=</span><span class="dv">250</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
 <section id="ppo-mujoco-control" class="title-slide slide level1 center">
 <h1>PPO : Mujoco control</h1>
 
-<img data-src="img/ppo-results-mujoco.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-results-mujoco.png" class="r-stretch"><div class="footer">
 <p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
 </div>
 </section>
@@ -931,14 +912,14 @@ Julien Vitay
 <section id="ppo-chatgpt" class="title-slide slide level1 center">
 <h1>PPO: ChatGPT</h1>
 
-<img data-src="img/ChatGPT.svg" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ChatGPT.svg" class="r-stretch"><div class="footer">
 <p>Source: <a href="https://openai.com/blog/chatgpt" class="uri">https://openai.com/blog/chatgpt</a></p>
 </div>
 </section>
 <section class="slide level2">
 
 
-<img data-src="img/deeprl-dota.jpeg" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/deeprl-dota.jpeg" class="r-stretch"><div class="footer">
 <p>twitter:ai-memes</p>
 </div>
 </section></section>
@@ -953,7 +934,7 @@ Julien Vitay
 <section id="why-is-dota-2-hard" class="title-slide slide level1 center">
 <h1>Why is Dota 2 hard?</h1>
 
-<img data-src="img/ppo-dota-reasons.png" style="width:70.0%" class="r-stretch quarto-figure-center"><table>
+<img data-src="img/ppo-dota-reasons.png" style="width:70.0%" class="r-stretch"><table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Feature</th>
@@ -994,7 +975,7 @@ Julien Vitay
 <li>OpenAI Five is composed of 5 PPO networks (one per player), using 128,000 CPUs and 256 V100 GPUs.</li>
 </ul>
 
-<img data-src="img/ppo-dota-architecture.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-dota-architecture.png" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
 </div>
 </section>
@@ -1002,7 +983,7 @@ Julien Vitay
 <section id="openai-five-dota-2-2" class="title-slide slide level1 center">
 <h1>OpenAI Five: Dota 2</h1>
 
-<img data-src="img/ppo-dota-facts.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-dota-facts.png" style="width:60.0%" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
 </div>
 </section>
@@ -1010,7 +991,7 @@ Julien Vitay
 <section id="openai-five-dota-2-3" class="title-slide slide level1 center">
 <h1>OpenAI Five: Dota 2</h1>
 
-<img data-src="img/ppo-dota-inputs.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-dota-inputs.png" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
 </div>
 </section>
@@ -1018,7 +999,7 @@ Julien Vitay
 <section id="openai-five-dota-2-4" class="title-slide slide level1 center">
 <h1>OpenAI Five: Dota 2</h1>
 
-<img data-src="img/ppo-dota-nn.png" class="r-stretch quarto-figure-center"><p><a href="https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf" class="uri">https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf</a></p>
+<img data-src="img/ppo-dota-nn.png" class="r-stretch"><p><a href="https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf" class="uri">https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf</a></p>
 </section>
 
 <section id="openai-five-dota-2-5" class="title-slide slide level1 center">
@@ -1037,11 +1018,7 @@ Julien Vitay
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-dota-example.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1056,7 +1033,7 @@ Julien Vitay
 <section id="acer-actor-critic-with-experience-replay" class="title-slide slide level1 center">
 <h1>4 - ACER: Actor-Critic with Experience Replay</h1>
 
-<img data-src="img/paper-acer.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-acer.png" class="r-stretch"><div class="footer">
 <p>Wang, Z., Bapst, V., Heess, N., Mnih, V., Munos, R., Kavukcuoglu, K., et al.&nbsp;(2017). Sample Efficient Actor-Critic with Experience Replay. arXiv:1611.01224.</p>
 </div>
 </section>
@@ -1078,28 +1055,30 @@ Julien Vitay
 <div class="footer">
 <p>Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and Efficient Off-Policy Reinforcement Learning. arXiv:1606.02647.</p>
 </div>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="3.6-PPO_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="3.6-PPO_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="3.6-PPO_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="3.6-PPO_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1109,13 +1088,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1269,7 +1247,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1353,10 +1331,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1366,8 +1343,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

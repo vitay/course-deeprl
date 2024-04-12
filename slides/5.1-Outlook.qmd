@@ -6,6 +6,7 @@ author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
 
 resources: pdf/5.1-Outlook.pdf
+
 ---
 
 # 1 - Summary of DRL
@@ -72,8 +73,8 @@ resources: pdf/5.1-Outlook.pdf
 
 # Deep RL lacks generalization to different environments
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Deep RL is popular because it&#39;s the only area in ML where it&#39;s socially acceptable to train on the test set.</p>&mdash; Jacob Andreas (@jacobandreas) <a href="https://twitter.com/jacobandreas/status/924356906344267776?ref_src=twsrc%5Etfw">October 28, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<!--<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Deep RL is popular because it&#39;s the only area in ML where it&#39;s socially acceptable to train on the test set.</p>&mdash; Jacob Andreas (@jacobandreas) <a href="https://twitter.com/jacobandreas/status/924356906344267776?ref_src=twsrc%5Etfw">October 28, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+-->
 
 * As it uses neural networks, deep RL **overfits** its training data, i.e. the environment it is trained on.
 

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="1.2-Basics_files/libs/clipboard/clipboard.min.js"></script>
-<script src="1.2-Basics_files/libs/quarto-html/tabby.min.js"></script>
-<script src="1.2-Basics_files/libs/quarto-html/popper.min.js"></script>
-<script src="1.2-Basics_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="1.2-Basics_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="1.2-Basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="1.2-Basics_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="1.2-Basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="1.2-Basics_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="1.2-Basics_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="1.2-Basics_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="1.2-Basics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="1.2-Basics_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="1.2-Basics_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="1.2-Basics_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="1.2-Basics_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="1.2-Basics_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -391,12 +392,14 @@ Julien Vitay
 <li><p><strong>Matrices</strong> <span class="math inline">A</span> are 2-dimensional arrays of size (or shape) <span class="math inline">m \times n</span> (<span class="math inline">m</span> rows, <span class="math inline">n</span> columns, <span class="math inline">A \in \Re^{m \times n}</span>).</p></li>
 <li><p>They are represented by a capital letter to distinguish them from scalars (classically also in bold <span class="math inline">\mathbf{A}</span> but not here). The element <span class="math inline">a_{ij}</span> of a matrix <span class="math inline">A</span> is the element on the <span class="math inline">i</span>-th row and <span class="math inline">j</span>-th column.</p></li>
 </ul>
-<p><span class="math display">A = \begin{bmatrix}
+<p><span class="math display">
+A = \begin{bmatrix}
 a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
 a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
 a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
-\end{bmatrix}</span></p>
+\end{bmatrix}
+</span></p>
 <ul>
 <li><strong>Tensors</strong> <span class="math inline">\mathcal{A}</span> are arrays with more than two dimensions. We will not really do math on these objects, but they are useful internally (hence the name of the <code>tensorflow</code> library).</li>
 </ul>
@@ -460,11 +463,7 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <h1>Norm of a vector</h1>
 <div class="columns">
 <div class="column" style="width:15%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/vector_norms.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:85%;">
 <ul>
 <li>Vectors have a <strong>norm</strong> (or length) <span class="math inline">||\mathbf{x}||</span>. The most intuitive one (if you know the Pythagoras theorem) is the <strong>Euclidean norm</strong> or <span class="math inline">L^2</span>-norm, which sums the square of each element:</li>
@@ -733,7 +732,7 @@ f\colon \quad \Re &amp;\to \Re\\
 x &amp;\mapsto f(x),\end{align}
 </span></p>
 
-<img data-src="img/function.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/function.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 
 <section id="multivariate-functions" class="title-slide slide level1 center">
 <h1>Multivariate functions</h1>
@@ -794,11 +793,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 <li>The line passing through the points <span class="math inline">(x, f(x))</span> and <span class="math inline">(x + h, f(x + h))</span> becomes tangent to the function when <span class="math inline">h</span> becomes very small.</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/derivative-approx.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -816,11 +811,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 <li><p>It basically allows you to measure the local influence of <span class="math inline">x</span> on <span class="math inline">f(x)</span>: if I change a little bit the value <span class="math inline">x</span>, what happens to <span class="math inline">f(x)</span>? This will be very useful in machine learning.</p></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/derivative-approx.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -839,11 +830,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/optimization-example.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -877,7 +864,8 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 \displaystyle\frac{\partial f(x, y)}{\partial x} = 2 \, x + 3\, y + 4 \, y^2 \\
 \\
 \displaystyle\frac{\partial f(x, y)}{\partial y} = 3 \, x + 8\, x \, y
-\end{cases}</span></p>
+\end{cases}
+</span></p>
 </section>
 
 <section id="jacobian" class="title-slide slide level1 center">
@@ -1410,7 +1398,7 @@ J = \begin{bmatrix}
 </span></p></li>
 </ul>
 
-<img data-src="img/normaldistribution.svg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/normaldistribution.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"><ul>
 <li>More samples will be obtained where <span class="math inline">f(x)</span> is high (<span class="math inline">x</span> is probable), so the average of the sampled data will be close to the expected value of the distribution.</li>
 </ul>
 </section>
@@ -1421,7 +1409,8 @@ J = \begin{bmatrix}
 <blockquote>
 <p>As the number of identically distributed, randomly generated variables increases, their sample mean (average) approaches their theoretical mean.</p>
 </blockquote>
-<p>MC estimates are only correct when:</p>
+<ul>
+<li><p>MC estimates are only correct when:</p>
 <ul>
 <li><p>the samples are <strong>i.i.d</strong> (independent and identically distributed):</p>
 <ul>
@@ -1429,50 +1418,24 @@ J = \begin{bmatrix}
 <li><p>identically distributed: the samples must come from the same distribution <span class="math inline">X</span>.</p></li>
 </ul></li>
 <li><p>the number of samples is large enough. Usually <span class="math inline">N &gt; 30</span> for simple distributions.</p></li>
+</ul></li>
 </ul>
 </section>
 
-<section id="random-sampling-monte-carlo-sampling-2" class="title-slide slide level1 center">
-<h1>Random sampling / Monte Carlo sampling</h1>
-<ul>
-<li>One can estimate any function of the random variable with random sampling:</li>
-</ul>
+<section id="monte-carlo-sampling" class="title-slide slide level1 center">
+<h1>Monte-carlo sampling</h1>
+<p>One can estimate any function of the random variable with random sampling:</p>
 <p><span class="math display">
     \mathbb{E}[f(X)] = \mathbb{E}_{x \sim X} [f(x)] \approx \frac{1}{N} \, \sum_{i=1}^N f(x_i)
 </span></p>
-<ul>
-<li>Example of Monte Carlo sampling to estimate <span class="math inline">\pi/4</span>:</li>
-</ul>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
+<p>Example of Monte Carlo sampling to estimate <span class="math inline">\pi/4</span>: <span class="math inline">f(x_i) = 1</span> if <span class="math inline">||x_i|| \leq 1</span>, <span class="math inline">0</span> otherwise.</p>
+<div class="columns">
+<div class="column" style="width:33%;">
 <p><img data-src="img/montecarlo-1.jpeg"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
+</div><div class="column" style="width:33%;">
 <p><img data-src="img/montecarlo-2.jpeg"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
+</div><div class="column" style="width:33%;">
 <p><img data-src="img/montecarlo-3.jpeg"></p>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/montecarlo-4.jpeg"></p>
-</figure>
-</div>
-</div>
 </div>
 </div>
 <div class="footer">
@@ -1522,7 +1485,7 @@ J = \begin{bmatrix}
     M = 0.95 \, T + 0.65
 </span></p>
 
-<img data-src="img/estimators-temperature.png" style="width:70.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/estimators-temperature.png" style="width:70.0%" class="r-stretch"></section>
 
 <section id="estimators-1" class="title-slide slide level1 center">
 <h1>Estimators</h1>
@@ -1531,7 +1494,7 @@ J = \begin{bmatrix}
 <li><p>We could repeatedly take 100 random samples of the thermometer and see how the distribution of sample averages look like:</p></li>
 </ul>
 
-<img data-src="img/estimators-temperature2.png" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/estimators-temperature2.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"><ul>
 <li>But, as the expectation is linear, we actually have:</li>
 </ul>
 <p><span class="math display">
@@ -1571,11 +1534,7 @@ J = \begin{bmatrix}
 <h1>Estimators: bias and variance</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/biasvariance3.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:40%;">
 <ul>
 <li><p>Unfortunately, the perfect estimator does not exist.</p></li>
@@ -1608,11 +1567,7 @@ J = \begin{bmatrix}
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/selfinformation.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>A useful measurement of how surprising is an outcome <span class="math inline">x</span> is the <strong>self-information</strong>:</li>
@@ -1662,11 +1617,7 @@ J = \begin{bmatrix}
 <li><p>If a variable is <strong>deterministic</strong>, its entropy is minimal and equal to zero.</p></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/entropy-binomial.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1745,12 +1696,12 @@ J = \begin{bmatrix}
 <li><p>More exactly, it measures how many bits of information one would need to distinguish the two distributions <span class="math inline">X</span> and <span class="math inline">Y</span>.</p></li>
 </ul>
 
-<img data-src="img/crossentropy.svg" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/crossentropy.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
 
 <section id="cross-entropy-1" class="title-slide slide level1 center">
 <h1>Cross-entropy</h1>
 
-<img data-src="img/crossentropy.svg" style="width:80.0%" class="r-stretch quarto-figure-center"><p><span class="math display">
+<img data-src="img/crossentropy.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"><p><span class="math display">
     H(X, Y) = \mathbb{E}_{x \sim X}[- \log P(Y=x)]
 </span></p>
 <ul>
@@ -1791,28 +1742,30 @@ J = \begin{bmatrix}
 <li><p>Minimizing the KL between two distributions is the same as making the two distributions “equal”.</p></li>
 <li><p>Again, the KL is not a metric, as it is not symmetric.</p></li>
 </ul>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="1.2-Basics_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="1.2-Basics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="1.2-Basics_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="1.2-Basics_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1822,13 +1775,12 @@ J = \begin{bmatrix}
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1982,7 +1934,7 @@ J = \begin{bmatrix}
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -2066,10 +2018,9 @@ J = \begin{bmatrix}
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -2079,8 +2030,17 @@ J = \begin{bmatrix}
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="1.1-Introduction_files/libs/clipboard/clipboard.min.js"></script>
-<script src="1.1-Introduction_files/libs/quarto-html/tabby.min.js"></script>
-<script src="1.1-Introduction_files/libs/quarto-html/popper.min.js"></script>
-<script src="1.1-Introduction_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="1.1-Introduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="1.1-Introduction_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="1.1-Introduction_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="1.1-Introduction_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="1.1-Introduction_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="1.1-Introduction_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -29,8 +29,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
-  <link rel="stylesheet" href="1.1-Introduction_files/libs/revealjs/dist/theme/quarto.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +66,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="1.1-Introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="1.1-Introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="1.1-Introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="1.1-Introduction_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="1.1-Introduction_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="1.1-Introduction_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +193,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -361,7 +381,7 @@ Julien Vitay
 <section id="what-is-reinforcement-learning" class="title-slide slide level1 center">
 <h1>1 - What is reinforcement learning?</h1>
 
-<img data-src="img/ml-areas.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/ml-areas.png" style="width:80.0%" class="r-stretch"></section>
 
 <section id="different-types-of-machine-learning-depending-on-the-feedback" class="title-slide slide level1 center">
 <h1>Different types of machine learning depending on the feedback</h1>
@@ -382,16 +402,8 @@ Julien Vitay
 <h1>A brief history of reinforcement learning</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/operantconditioning.jpg"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/icub.jpg" style="width:70.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Early 20th century</strong>: animal behavior, psychology, operant conditioning</p>
@@ -428,26 +440,14 @@ Julien Vitay
 <h1>The RL bible</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/suttonbarto.jpg" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sutton.jpg" style="width:40.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/barto.jpg" style="width:30.0%"></p>
-</figure>
 </div>
 </div>
-</div>
-<p>Sutton and Barto (1998). Reinforcement Learning: An Introduction. MIT Press.</p>
-<p>Sutton and Barto (2017). Reinforcement Learning: An Introduction. MIT Press. 2nd edition.</p>
+<p><span class="citation" data-cites="Sutton1998">Sutton and Barto (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span> . Reinforcement Learning: An Introduction. MIT Press.</p>
+<p><span class="citation" data-cites="Sutton2017">Sutton and Barto (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> . Reinforcement Learning: An Introduction. MIT Press. 2nd edition.</p>
 <p><a href="http://incompleteideas.net/sutton/book/the-book.html" class="uri">http://incompleteideas.net/sutton/book/the-book.html</a></p>
 </section>
 
@@ -467,16 +467,8 @@ Julien Vitay
 <li><p><strong>Behaviorism:</strong> only behavior matters, not mental states.</p></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/operantconditioning.jpg"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rat.jpg"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="footer">
@@ -513,7 +505,7 @@ Julien Vitay
 <section id="trial-and-error-learning-1" class="title-slide slide level1 center">
 <h1>Trial and error learning</h1>
 
-<img data-src="img/boeing.jpg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/boeing.jpg" style="width:50.0%" class="r-stretch"><ul>
 <li><p>RL is merely a formalization of the trial-and-error learning paradigm.</p></li>
 <li><p>The agent has to <strong>explore</strong> its environment via trial-and-error in order to gain knowledge.</p></li>
 <li><p>The biggest issue with this approach is that exploring large action spaces might necessitate a <strong>lot</strong> of trials (<strong>sample complexity</strong>).</p></li>
@@ -544,11 +536,7 @@ Julien Vitay
 <ul>
 <li>The behavior of the agent is therefore is a sequence of <strong>state-action-reward-state</strong> <span class="math inline">(s, a, r, s')</span> transitions.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-sequence.jpg" style="width:50.0%"></p>
-</figure>
-</div>
 <ul>
 <li>Sequences <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span> are called <strong>episodes</strong>, <strong>trajectories</strong>, <strong>histories</strong> or <strong>rollouts</strong>.</li>
 </ul>
@@ -675,11 +663,7 @@ Julien Vitay
 <p><span class="math display">
     R_t = \sum_{k=0}^\infty \gamma ^k \, r_{t+k+1}
 </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-sequence.jpg"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -721,7 +705,7 @@ Julien Vitay
 <section id="simple-maze" class="title-slide slide level1 center">
 <h1>Simple maze</h1>
 
-<img data-src="img/maze.png" style="width:50.0%" class="r-stretch quarto-figure-center"><p>Goal: finding the exit as soon as possible.</p>
+<img data-src="img/maze.png" style="width:50.0%" class="r-stretch"><p>Goal: finding the exit as soon as possible.</p>
 <ul>
 <li><p><strong>States</strong>: position in the maze (1, 2, 3…).</p></li>
 <li><p><strong>Actions</strong>: up, down, left, right.</p></li>
@@ -732,7 +716,7 @@ Julien Vitay
 <section id="simple-maze-1" class="title-slide slide level1 center">
 <h1>Simple maze</h1>
 
-<img data-src="img/maze-value.png" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/maze-value.png" style="width:50.0%" class="r-stretch"><ul>
 <li><p>The value of each state indicates how good it is to be in that state.</p></li>
 <li><p>It can be learned by trial-and-error given a policy.</p></li>
 </ul>
@@ -742,7 +726,7 @@ Julien Vitay
 <section id="simple-maze-2" class="title-slide slide level1 center">
 <h1>Simple maze</h1>
 
-<img data-src="img/maze-policy.png" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/maze-policy.png" style="width:50.0%" class="r-stretch"><ul>
 <li>When the value of all states is known, we can infer the optimal policy by choosing actions leading to the states with the highest value.</li>
 </ul>
 <p><em>Note: the story is actually much more complicated…</em></p>
@@ -758,11 +742,7 @@ Julien Vitay
 <li><p>Feedback is <strong>instantaneous</strong>: the target is immediately known.</p></li>
 <li><p><strong>Time</strong> does not matter: training samples are randomly sampled from the training set.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/supervisedlearning.png" style="width:55.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <p><strong>Reinforcement learning</strong></p>
 <ul>
@@ -771,11 +751,7 @@ Julien Vitay
 <li><p>Feedback is <strong>delayed</strong>: which action caused the reward? Credit assignment.</p></li>
 <li><p><strong>Time</strong> matters: as behavior gets better, the observed data changes.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-interaction.png" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 </section></section>
@@ -790,17 +766,9 @@ Julien Vitay
 <p>Goal: maintaining the pendulum vertical.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/pendulum-before.gif" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/pendulum-after.gif" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -819,17 +787,9 @@ Julien Vitay
 <p>Goal: maintaining the pole vertical by moving the cart left or right.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/cartpole-before.gif" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/cartpole-after.gif" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -852,17 +812,9 @@ Julien Vitay
 <p>TD-Gammon (Tesauro, 1992) was one of the first AI to beat human experts at a complex game, Backgammon.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tdgammon.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tdgammon2.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -875,11 +827,7 @@ Julien Vitay
 <section id="deep-reinforcement-learning-drl" class="title-slide slide level1 center">
 <h1>Deep Reinforcement Learning (DRL)</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/deeprl.jpg" style="width:70.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li><p>Classical tabular RL was limited to toy problems, with few states and actions.</p></li>
@@ -909,15 +857,15 @@ Julien Vitay
 </div>
 </div>
 <div class="footer">
-<p>Mnih et al.&nbsp;(2013). Playing Atari with Deep Reinforcement Learning. NIPS. <a href="http://arxiv.org/abs/1312.5602" class="uri">http://arxiv.org/abs/1312.5602</a></p>
+<p><span class="citation" data-cites="Mnih2013">Mnih et al. (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span> Playing Atari with Deep Reinforcement Learning. NIPS. <a href="http://arxiv.org/abs/1312.5602" class="uri">http://arxiv.org/abs/1312.5602</a></p>
 </div>
 </section>
 
 <section id="atari-games-1" class="title-slide slide level1 center">
 <h1>Atari games</h1>
 
-<img data-src="img/discrete.png" class="r-stretch quarto-figure-center"><div class="footer">
-<p>Mnih et al.&nbsp;(2013). Playing Atari with Deep Reinforcement Learning. NIPS. <a href="http://arxiv.org/abs/1312.5602" class="uri">http://arxiv.org/abs/1312.5602</a></p>
+<img data-src="img/discrete.png" class="r-stretch"><div class="footer">
+<p><span class="citation" data-cites="Mnih2013">Mnih et al. (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span> Playing Atari with Deep Reinforcement Learning. NIPS. <a href="http://arxiv.org/abs/1312.5602" class="uri">http://arxiv.org/abs/1312.5602</a></p>
 </div>
 </section>
 
@@ -968,14 +916,14 @@ Julien Vitay
 <section id="alphago" class="title-slide slide level1 center">
 <h1>AlphaGo</h1>
 
-<img data-src="img/alphago.png" style="width:80.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/alphago.png" style="width:80.0%" class="r-stretch"><ul>
 <li><p>AlphaGo was able to beat Lee Sedol in 2016, 19 times World champion.</p></li>
 <li><p>It relies on human knowledge to <strong>bootstrap</strong> a RL agent (supervised learning).</p></li>
 <li><p>The RL agent discovers new strategies by using self-play: during the games against Lee Sedol, it was able to use <strong>novel</strong> moves which were never played before and surprised its opponent.</p></li>
 <li><p>Training took several weeks on 1202 CPUs and 176 GPUs.</p></li>
 </ul>
 <div class="footer">
-<p>Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815</p>
+<p><span class="citation" data-cites="Silver2016">Silver et al. (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span> Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815</p>
 </div>
 </section>
 
@@ -988,11 +936,7 @@ Julien Vitay
 <h1>Process control</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/googledatacenterpipes.0.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1013,16 +957,16 @@ Julien Vitay
 <section id="magnetic-control-of-tokamak-plasmas" class="title-slide slide level1 center">
 <h1>Magnetic control of tokamak plasmas</h1>
 
-<img data-src="img/tokamak.webp" class="r-stretch quarto-figure-center"><div class="footer">
-<p>Degrave et al.&nbsp;(2022). Magnetic control of tokamak plasmas through deep reinforcement learning. Nature, 602(7897). doi/10.1038/s41586-021-04301-9</p>
+<img data-src="img/tokamak.webp" class="r-stretch"><div class="footer">
+<p><span class="citation" data-cites="Degrave2022">Degrave et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span> Magnetic control of tokamak plasmas through deep reinforcement learning. Nature, 602(7897). doi/10.1038/s41586-021-04301-9</p>
 </div>
 </section>
 
 <section id="chip-design" class="title-slide slide level1 center">
 <h1>Chip design</h1>
 
-<img data-src="img/chipdesign.png" class="r-stretch quarto-figure-center"><div class="footer">
-<p>Roy et al.&nbsp;(2022). PrefixRL: Optimization of Parallel Prefix Circuits using Deep Reinforcement Learning. doi:10.1109/DAC18074.2021.9586094</p>
+<img data-src="img/chipdesign.png" class="r-stretch"><div class="footer">
+<p><span class="citation" data-cites="Roy2022">Roy et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span> PrefixRL: Optimization of Parallel Prefix Circuits using Deep Reinforcement Learning. doi:10.1109/DAC18074.2021.9586094</p>
 </div>
 </section>
 
@@ -1111,7 +1055,7 @@ Julien Vitay
 <section id="chatgpt" class="title-slide slide level1 center">
 <h1>ChatGPT</h1>
 
-<img data-src="img/ChatGPT.svg" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ChatGPT.svg" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/blog/chatgpt/" class="uri">https://openai.com/blog/chatgpt/</a></p>
 </div>
 </section>
@@ -1190,8 +1134,8 @@ Julien Vitay
 </div>
 </section>
 
-<section id="references" class="title-slide slide level1 center">
-<h1>References</h1>
+<section id="suggested-reading" class="title-slide slide level1 center">
+<h1>Suggested reading</h1>
 <ul>
 <li>Sutton and Barto (1998, 2017). Reinforcement Learning: An Introduction. MIT Press.</li>
 </ul>
@@ -1208,28 +1152,54 @@ Julien Vitay
 <li>Reinforcement Learning course by David Silver at UCL.</li>
 </ul>
 <p><a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></p>
+</section>
+
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Degrave2022" class="csl-entry" role="listitem">
+Degrave, J., Felici, F., Buchli, J., Neunert, M., Tracey, B., Carpanese, F., et al. (2022). Magnetic control of tokamak plasmas through deep reinforcement learning. <em>Nature</em> 602, 414–419. doi:<a href="https://doi.org/10.1038/s41586-021-04301-9">10.1038/s41586-021-04301-9</a>.
+</div>
+<div id="ref-Mnih2013" class="csl-entry" role="listitem">
+Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing <span>Atari</span> with <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1312.5602">http://arxiv.org/abs/1312.5602</a>.
+</div>
+<div id="ref-Roy2022" class="csl-entry" role="listitem">
+Roy, R., Raiman, J., Kant, N., Elkin, I., Kirby, R., Siu, M., et al. (2022). <span>PrefixRL</span>: <span>Optimization</span> of <span>Parallel Prefix Circuits</span> using <span>Deep Reinforcement Learning</span>. doi:<a href="https://doi.org/10.1109/DAC18074.2021.9586094">10.1109/DAC18074.2021.9586094</a>.
+</div>
+<div id="ref-Silver2016" class="csl-entry" role="listitem">
+Silver, D., Huang, A., Maddison, C. J., Guez, A., Sifre, L., van den Driessche, G., et al. (2016). Mastering the game of <span>Go</span> with deep neural networks and tree search. <em>Nature</em> 529, 484–489. doi:<a href="https://doi.org/10.1038/nature16961">10.1038/nature16961</a>.
+</div>
+<div id="ref-Sutton1998" class="csl-entry" role="listitem">
+Sutton, R. S., and Barto, A. G. (1998). <em>Reinforcement <span>Learning</span>: <span>An</span> introduction</em>. Cambridge, MA: MIT press.
+</div>
+<div id="ref-Sutton2017" class="csl-entry" role="listitem">
+Sutton, R. S., and Barto, A. G. (2017). <em>Reinforcement <span>Learning</span>: <span>An Introduction</span></em>. 2nd ed. Cambridge, MA: MIT Press <a href="http://incompleteideas.net/book/the-book-2nd.html">http://incompleteideas.net/book/the-book-2nd.html</a>.
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="1.1-Introduction_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="1.1-Introduction_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1239,13 +1209,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1399,7 +1368,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1483,10 +1452,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1496,8 +1464,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

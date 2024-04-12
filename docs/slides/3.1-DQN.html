@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="3.1-DQN_files/libs/clipboard/clipboard.min.js"></script>
-<script src="3.1-DQN_files/libs/quarto-html/tabby.min.js"></script>
-<script src="3.1-DQN_files/libs/quarto-html/popper.min.js"></script>
-<script src="3.1-DQN_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="3.1-DQN_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="3.1-DQN_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="3.1-DQN_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="3.1-DQN_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="3.1-DQN_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="3.1-DQN_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +95,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="3.1-DQN_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -112,12 +112,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="3.1-DQN_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="3.1-DQN_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="3.1-DQN_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="3.1-DQN_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="3.1-DQN_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="3.1-DQN_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -239,7 +239,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -426,7 +427,7 @@ Julien Vitay
 <section id="value-based-deep-rl" class="title-slide slide level1 center">
 <h1>Value-based deep RL</h1>
 
-<img data-src="img/deeprl.jpg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/deeprl.jpg" style="width:50.0%" class="r-stretch"><ul>
 <li>The basic idea in <strong>value-based deep RL</strong> is to approximate the Q-values in each possible state, using a <strong>deep neural network</strong> with free parameters <span class="math inline">\theta</span>:</li>
 </ul>
 <p><span class="math display">Q_\theta(s, a) \approx Q^\pi(s, a) = \mathbb{E}_\pi (R_t | s_t=s, a_t=a)</span></p>
@@ -447,11 +448,7 @@ Julien Vitay
 <ul>
 <li>The DNN approximates the Q-value of a single <span class="math inline">(s, a)</span> pair.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/functionapproximation1.jpeg"></p>
-</figure>
-</div>
 <ul>
 <li>The action space can be continuous.</li>
 </ul>
@@ -459,11 +456,7 @@ Julien Vitay
 <ul>
 <li>The DNN approximates the Q-value of all actions <span class="math inline">a</span> in a state <span class="math inline">s</span>.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/functionapproximation2.jpeg"></p>
-</figure>
-</div>
 <ul>
 <li>The action space must be discrete (one neuron per action).</li>
 </ul>
@@ -551,20 +544,12 @@ Julien Vitay
 <li><p>Unfortunately, this does not work either.</p></li>
 <li><p>The last <span class="math inline">K</span> transitions <span class="math inline">(s, a, r, s')</span> are not <strong>i.i.d</strong> (independent and identically distributed).</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sarsa-sequence.png"></p>
-</figure>
-</div>
 <ul>
 <li><p>The transition <span class="math inline">(s_{t+1}, a_{t+1}, r_{t+2}, s_{t+2})</span> <strong>depends</strong> on <span class="math inline">(s_{t}, a_{t}, r_{t+1}, s_{t+1})</span> by definition, i.e.&nbsp;the transitions are <strong>correlated</strong>.</p></li>
 <li><p>Even worse, when playing video games, successive frames will be very similar or even identical.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/breakout.png" style="width:50.0%"></p>
-</figure>
-</div>
 <ul>
 <li>The actions are also correlated: you move the paddle to the left for several successive steps.</li>
 </ul>
@@ -576,7 +561,7 @@ Julien Vitay
 <li>Feeding transitions sequentially to a DNN is the same as giving all MNIST 0’s to a DNN, then all 1’s, etc… It does not work.</li>
 </ul>
 
-<img data-src="img/erm-sequential.png" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/erm-sequential.png" style="width:70.0%" class="r-stretch"><ul>
 <li><p>In SL, we have all the training data <strong>before</strong> training: it is possible to get i.i.d samples by shuffling the training set between two epochs.</p></li>
 <li><p>In RL, we create the “training set” (transitions) <strong>during</strong> training: the samples are not i.i.d as we act sequentially over time.</p></li>
 </ul>
@@ -589,7 +574,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \sim \mathcal{D}} [||\mathbf{t} - F_\theta(\mathbf{x})||^2]</span></p>
 
-<img data-src="img/catdog.jpg" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/catdog.jpg" class="r-stretch"><ul>
 <li>The problem is said <strong>stationary</strong>, as the distribution of the data does not change over time.</li>
 </ul>
 </section>
@@ -608,7 +593,7 @@ Julien Vitay
 <li>NN do not like this. After a while, they give up and settle on a <strong>suboptimal</strong> policy.</li>
 </ul>
 
-<img data-src="img/nonstationarity.svg" style="width:70.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/nonstationarity.svg" style="width:70.0%" class="r-stretch"></section>
 
 <section id="illustration-of-non-stationary-targets" class="title-slide slide level1 center">
 <h1>Illustration of non-stationary targets</h1>
@@ -616,7 +601,7 @@ Julien Vitay
 <li>We want our value estimates to “catch” the true values.</li>
 </ul>
 
-<img data-src="img/targetshift1.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/targetshift1.png" class="r-stretch"><div class="footer">
 <p><a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/</a></p>
 </div>
 </section>
@@ -627,7 +612,7 @@ Julien Vitay
 <li>We update our estimate to come closer to the target.</li>
 </ul>
 
-<img data-src="img/targetshift2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/targetshift2.png" class="r-stretch"><div class="footer">
 <p><a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/</a></p>
 </div>
 </section>
@@ -638,7 +623,7 @@ Julien Vitay
 <li>But the target moves! We need to update again.</li>
 </ul>
 
-<img data-src="img/targetshift3.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/targetshift3.png" class="r-stretch"><div class="footer">
 <p><a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/</a></p>
 </div>
 </section>
@@ -649,7 +634,7 @@ Julien Vitay
 <li>This leads to very strange and inefficient optimization paths.</li>
 </ul>
 
-<img data-src="img/targetshift4.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/targetshift4.png" class="r-stretch"><div class="footer">
 <p><a href="https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/" class="uri">https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/</a></p>
 </div>
 </section>
@@ -657,7 +642,7 @@ Julien Vitay
 <section id="deep-q-networks-dqn" class="title-slide slide level1 center">
 <h1>1 - Deep Q-networks (DQN)</h1>
 
-<img data-src="img/paper-DQN.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-DQN.png" class="r-stretch"><div class="footer">
 <p>Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al.&nbsp;(2013). Playing Atari with Deep Reinforcement Learning. <a href="http://arxiv.org/abs/1312.5602" class="uri">http://arxiv.org/abs/1312.5602</a></p>
 </div>
 </section>
@@ -665,7 +650,7 @@ Julien Vitay
 <section id="problem-with-non-linear-approximators-and-rl" class="title-slide slide level1 center">
 <h1>Problem with non-linear approximators and RL</h1>
 
-<img data-src="img/breakout.png" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/breakout.png" style="width:50.0%" class="r-stretch"><ul>
 <li><p>Non-linear approximators never really worked with RL before 2013 because of:</p>
 <ol type="1">
 <li><p>The correlation between successive inputs or outputs.</p></li>
@@ -689,7 +674,7 @@ Julien Vitay
 <li>To avoid correlation between samples, (Mnih et al.&nbsp;2015) proposed to store the <span class="math inline">(s, a, r, s')</span> transitions in a huge <strong>experience replay memory</strong> or <strong>replay buffer</strong> <span class="math inline">\mathcal{D}</span> (e.g.&nbsp;1 million transitions).</li>
 </ul>
 
-<img data-src="img/ERM.svg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/ERM.svg" style="width:40.0%" class="r-stretch"><ul>
 <li><p>When the buffer is full, we simply overwrite old transitions.</p></li>
 <li><p>The Q-learning update is only applied on a <strong>random minibatch</strong> of those past experiences, not the last transitions.</p></li>
 <li><p>This ensure the independence of the samples (non-correlated samples).</p></li>
@@ -722,7 +707,7 @@ Julien Vitay
 <section id="experience-replay-memory-2" class="title-slide slide level1 center">
 <h1>Experience replay memory</h1>
 
-<img data-src="img/ERM.svg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/ERM.svg" style="width:40.0%" class="r-stretch"><ul>
 <li><p>But wait! The samples of the minibatch are still not i.i.d, as they are not <strong>identically distributed</strong>:</p>
 <ul>
 <li><p>Some samples were generated with a very old policy <span class="math inline">\pi_{\theta_0}</span>.</p></li>
@@ -777,11 +762,7 @@ Julien Vitay
 <li><span class="math inline">\theta'</span> is simply a copy of <span class="math inline">\theta</span> from the past.</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/targetnetwork.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -799,7 +780,7 @@ Julien Vitay
 <li><p>It leaves time for the trained network to catch up with the targets.</p></li>
 </ul>
 
-<img data-src="img/nonstationarity2.svg" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/nonstationarity2.svg" style="width:70.0%" class="r-stretch"><ul>
 <li>The update is simply replacing the parameters <span class="math inline">\theta'</span> with the trained parameters <span class="math inline">\theta</span>:</li>
 </ul>
 <p><span class="math display">\theta' \leftarrow \theta</span></p>
@@ -846,7 +827,7 @@ Julien Vitay
 <li><p>For pixel-based problems (e.g.&nbsp;video games), convolutional neural networks (without max-pooling) are the weapon of choice.</p></li>
 </ul>
 
-<img data-src="img/DeepQNetwork.jpg" style="width:70.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/DeepQNetwork.jpg" style="width:70.0%" class="r-stretch"><div class="footer">
 <p>Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al.&nbsp;(2013). Playing Atari with Deep Reinforcement Learning. <a href="http://arxiv.org/abs/1312.5602" class="uri">http://arxiv.org/abs/1312.5602</a></p>
 </div>
 </section>
@@ -855,17 +836,9 @@ Julien Vitay
 <h1>Why no max-pooling?</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/maxpooling.jpg" style="width:70.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/vgg16.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -882,7 +855,7 @@ Julien Vitay
 <li>Is the ball moving from the child to the baseball player, or the other way around?</li>
 </ul>
 
-<img data-src="img/markov-example.jpeg" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/markov-example.jpeg" class="r-stretch"><ul>
 <li><p>Using video frames as states breaks the Markov property: the speed and direction of the ball is a very relevant information for the task, but not contained in a single frame.</p></li>
 <li><p>This characterizes a <strong>Partially-observable Markov Decision Process</strong> (POMDP).</p></li>
 </ul>
@@ -894,7 +867,7 @@ Julien Vitay
 <section id="markov-property-in-video-games" class="title-slide slide level1 center">
 <h1>Markov property in video games</h1>
 
-<img data-src="img/DQNBreakoutBlocks.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/DQNBreakoutBlocks.png" class="r-stretch"><ul>
 <li><p>The simple solution retained in the original DQN paper is to <strong>stack</strong> the last four frames to form the state representation.</p></li>
 <li><p>Having the previous positions of the ball, the network can <strong>learn</strong> to infer its direction of movement.</p></li>
 </ul>
@@ -905,23 +878,23 @@ Julien Vitay
 <ul>
 <li>Creating the CNN in keras / tensorflow / pytorch is straightforward:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>model.add(Input((<span class="dv">4</span>, <span class="dv">84</span>, <span class="dv">84</span>)))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">16</span>, (<span class="dv">8</span>, <span class="dv">8</span>), strides<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>)), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">32</span>, (<span class="dv">4</span>, <span class="dv">4</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>model.add(Flatten())</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">256</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>model.add(Dense(nb_actions, activation<span class="op">=</span><span class="st">'linear'</span>))</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> RMSprop(lr<span class="op">=</span><span class="fl">0.00025</span>, rho<span class="op">=</span><span class="fl">0.95</span>, epsilon<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer, loss<span class="op">=</span><span class="st">'mse'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>model.add(Input((<span class="dv">4</span>, <span class="dv">84</span>, <span class="dv">84</span>)))</span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">16</span>, (<span class="dv">8</span>, <span class="dv">8</span>), strides<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>)), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">32</span>, (<span class="dv">4</span>, <span class="dv">4</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>model.add(Flatten())</span>
+<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">256</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb1-12"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a aria-hidden="true" tabindex="-1"></a>model.add(Dense(nb_actions, activation<span class="op">=</span><span class="st">'linear'</span>))</span>
+<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> RMSprop(lr<span class="op">=</span><span class="fl">0.00025</span>, rho<span class="op">=</span><span class="fl">0.95</span>, epsilon<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb1-16"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer, loss<span class="op">=</span><span class="st">'mse'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="footer">
 <p><a href="https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26" class="uri">https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26</a></p>
 </div>
@@ -932,25 +905,25 @@ Julien Vitay
 <ul>
 <li>Each step of the algorithm follows the GPI approach:</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> q_iteration(env, model, state, memory):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Choose the action with epsilon-greedy</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.random.random() <span class="op">&lt;</span> epsilon:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> env.action_space.sample()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values for the current state and take the greedy action</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        values <span class="op">=</span> model.predict([state])[<span class="dv">0</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> values.argmax()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Play one game iteration</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    new_state, reward, terminal, truncated, info <span class="op">=</span> env.step(action)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the transition to the replay buffer </span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    memory.add(state, action, new_state, reward, terminal <span class="kw">or</span> truncated)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a minibatch from the memory and fit the DQN</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    s, a, r, s_, t <span class="op">=</span> memory.sample_batch(<span class="dv">32</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    fit_batch(model, s, a, r, s_, t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> q_iteration(env, model, state, memory):</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Choose the action with epsilon-greedy</span></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.random.random() <span class="op">&lt;</span> epsilon:</span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> env.action_space.sample()</span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a>        <span class="co"># Predict the Q-values for the current state and take the greedy action</span></span>
+<span id="cb2-8"><a aria-hidden="true" tabindex="-1"></a>        values <span class="op">=</span> model.predict([state])[<span class="dv">0</span>]</span>
+<span id="cb2-9"><a aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> values.argmax()</span>
+<span id="cb2-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Play one game iteration</span></span>
+<span id="cb2-12"><a aria-hidden="true" tabindex="-1"></a>    new_state, reward, terminal, truncated, info <span class="op">=</span> env.step(action)</span>
+<span id="cb2-13"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the transition to the replay buffer </span></span>
+<span id="cb2-15"><a aria-hidden="true" tabindex="-1"></a>    memory.add(state, action, new_state, reward, terminal <span class="kw">or</span> truncated)</span>
+<span id="cb2-16"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample a minibatch from the memory and fit the DQN</span></span>
+<span id="cb2-18"><a aria-hidden="true" tabindex="-1"></a>    s, a, r, s_, t <span class="op">=</span> memory.sample_batch(<span class="dv">32</span>)</span>
+<span id="cb2-19"><a aria-hidden="true" tabindex="-1"></a>    fit_batch(model, s, a, r, s_, t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="footer">
 <p><a href="https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26" class="uri">https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26</a></p>
 </div>
@@ -961,24 +934,24 @@ Julien Vitay
 <ul>
 <li>The only slight difficulty is actually to compute the targets for learning:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_batch(model, states, actions, rewards, next_states, terminals)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the Q-values in the current state</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Q_values <span class="op">=</span> model.predict(states)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the Q-values in the next state using the target model</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    next_Q_value <span class="op">=</span> target_model.predict(next_states).<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Terminal states have a value of 0</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    next_Q_value[terminals] <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the target</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    targets <span class="op">=</span> Q_values.copy()</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(batch_size):</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        targets[i, actions[i]] <span class="op">=</span> rewards[i] <span class="op">+</span> <span class="va">self</span>.gamma <span class="op">*</span> next_Q_value[i]</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Train the model on the minibatch</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.model.fit(states, targets, epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span>batch_size, verbose<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_batch(model, states, actions, rewards, next_states, terminals)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the Q-values in the current state</span></span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>    Q_values <span class="op">=</span> model.predict(states)</span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the Q-values in the next state using the target model</span></span>
+<span id="cb3-7"><a aria-hidden="true" tabindex="-1"></a>    next_Q_value <span class="op">=</span> target_model.predict(next_states).<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-8"><a aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Terminal states have a value of 0</span></span>
+<span id="cb3-10"><a aria-hidden="true" tabindex="-1"></a>    next_Q_value[terminals] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb3-11"><a aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the target</span></span>
+<span id="cb3-13"><a aria-hidden="true" tabindex="-1"></a>    targets <span class="op">=</span> Q_values.copy()</span>
+<span id="cb3-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(batch_size):</span>
+<span id="cb3-15"><a aria-hidden="true" tabindex="-1"></a>        targets[i, actions[i]] <span class="op">=</span> rewards[i] <span class="op">+</span> <span class="va">self</span>.gamma <span class="op">*</span> next_Q_value[i]</span>
+<span id="cb3-16"><a aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-17"><a aria-hidden="true" tabindex="-1"></a>    <span class="co"># Train the model on the minibatch</span></span>
+<span id="cb3-18"><a aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.model.fit(states, targets, epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span>batch_size, verbose<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="footer">
 <p><a href="https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26" class="uri">https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26</a></p>
 </div>
@@ -991,7 +964,7 @@ Julien Vitay
 <li><p>Action selection: <span class="math inline">\epsilon</span>-greedy with <span class="math inline">\epsilon = 0.1</span> and annealing. Optimizer: RMSprop with a batch size of 32.</p></li>
 </ul>
 
-<img data-src="img/dqn-results.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/dqn-results.png" class="r-stretch"><div class="footer">
 <p>Mnih et al.&nbsp;(2015). Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.</p>
 </div>
 </section>
@@ -1010,11 +983,7 @@ Julien Vitay
 <h1>DQN to solve multiple Atari games</h1>
 <div class="columns">
 <div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/atari-results.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:55%;">
 <ul>
 <li><p>The DQN network was trained to solve 49 different Atari 2600 games <strong>with the same architecture and hyperparameters</strong>.</p></li>
@@ -1033,7 +1002,7 @@ Julien Vitay
 <section id="double-dqn" class="title-slide slide level1 center">
 <h1>2 - Double DQN</h1>
 
-<img data-src="img/paper-ddqn.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-ddqn.png" class="r-stretch"><div class="footer">
 <p>van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.</p>
 </div>
 </section>
@@ -1048,7 +1017,7 @@ Julien Vitay
 <li>This does not matter much in action selection, as we apply <span class="math inline">\epsilon</span>-greedy or softmax on the Q-values anyway, but it may make learning slower (sample complexity) and less optimal.</li>
 </ul>
 
-<img data-src="img/ddqn-results1.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ddqn-results1.png" style="width:100.0%" class="r-stretch"><div class="footer">
 <p>van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.</p>
 </div>
 </section>
@@ -1078,14 +1047,14 @@ Julien Vitay
 <section class="slide level2">
 
 
-<img data-src="img/ddqn-results2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ddqn-results2.png" class="r-stretch"><div class="footer">
 <p>van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.</p>
 </div>
 </section></section>
 <section id="prioritized-experience-replay" class="title-slide slide level1 center">
 <h1>3 - Prioritized Experience Replay</h1>
 
-<img data-src="img/paper-per.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-per.png" class="r-stretch"><div class="footer">
 <p>Schaul et al.&nbsp;(2015). Prioritized Experience Replay. arXiv:1511.05952</p>
 </div>
 </section>
@@ -1170,7 +1139,7 @@ Julien Vitay
 <section id="prioritized-experience-replay-6" class="title-slide slide level1 center">
 <h1>Prioritized Experience Replay</h1>
 
-<img data-src="img/per_results1.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/per_results1.png" style="width:100.0%" class="r-stretch"><div class="footer">
 <p>Schaul et al.&nbsp;(2015). Prioritized Experience Replay. arXiv:1511.05952</p>
 </div>
 </section>
@@ -1178,7 +1147,7 @@ Julien Vitay
 <section id="prioritized-experience-replay-7" class="title-slide slide level1 center">
 <h1>Prioritized Experience Replay</h1>
 
-<img data-src="img/per_results2.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/per_results2.png" style="width:100.0%" class="r-stretch"><div class="footer">
 <p>Schaul et al.&nbsp;(2015). Prioritized Experience Replay. arXiv:1511.05952</p>
 </div>
 </section>
@@ -1186,7 +1155,7 @@ Julien Vitay
 <section id="dueling-networks" class="title-slide slide level1 center">
 <h1>4 - Dueling networks</h1>
 
-<img data-src="img/paper-dueling.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-dueling.png" class="r-stretch"><div class="footer">
 <p>Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.</p>
 </div>
 </section>
@@ -1197,7 +1166,7 @@ Julien Vitay
 <li>DQN and its variants learn to predict directly the Q-value of each available action.</li>
 </ul>
 
-<img data-src="img/duelling1.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/duelling1.png" class="r-stretch"><ul>
 <li><p>Several problems with predicting Q-values with a DNN:</p>
 <ul>
 <li><p>The Q-values can take high values, especially with different values of <span class="math inline">\gamma</span>.</p></li>
@@ -1224,11 +1193,7 @@ Julien Vitay
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dueling-principle.svg"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1245,11 +1210,7 @@ Julien Vitay
 <h1>Advantage functions</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dueling-principle2.svg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>An important notion is the <strong>advantage</strong> <span class="math inline">A^\pi(s, a)</span> of an action:</li>
@@ -1278,7 +1239,7 @@ Julien Vitay
 <section id="dueling-networks-3" class="title-slide slide level1 center">
 <h1>Dueling networks</h1>
 
-<img data-src="img/duelling2.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/duelling2.png" class="r-stretch"><ul>
 <li>In <strong>dueling networks</strong>, the network is forced to decompose the estimated Q-value <span class="math inline">Q_\theta(s, a)</span> into a state value <span class="math inline">V_\alpha(s)</span> and an advantage function <span class="math inline">A_\beta(s, a)</span>:</li>
 </ul>
 <p><span class="math display">
@@ -1332,7 +1293,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <li>Which pixels change the most the value and advantage functions?</li>
 </ul>
 
-<img data-src="img/dueling-result2.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/dueling-result2.png" style="width:100.0%" class="r-stretch"><div class="footer">
 <p>Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.</p>
 </div>
 </section>
@@ -1340,7 +1301,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <section id="improvement-over-prioritized-ddqn" class="title-slide slide level1 center">
 <h1>Improvement over prioritized DDQN</h1>
 
-<img data-src="img/dueling-result.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/dueling-result.png" style="width:60.0%" class="r-stretch"><div class="footer">
 <p>Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.</p>
 </div>
 </section>
@@ -1349,11 +1310,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <h1>Summary of DQN</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/DeepQNetwork.jpg" style="width:80.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>DQN and its early variants (double duelling DQN with PER) are an example of <strong>value-based deep RL</strong>.</p></li>
@@ -1368,28 +1325,30 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <li><p>The main drawback of DQN is <strong>sample complexity</strong>: it needs huge amounts of experienced transitions to find a correct policy. The sample complexity come from the deep network itself (gradient descent is iterative and slow), but also from the ERM: it contains 1M transitions, most of which are outdated.</p></li>
 <li><p>Only works for <strong>small and discrete action spaces</strong> (one output neuron per action).</p></li>
 </ul>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="3.1-DQN_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="3.1-DQN_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="3.1-DQN_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="3.1-DQN_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1399,13 +1358,12 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1559,7 +1517,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1643,10 +1601,9 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1656,8 +1613,17 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

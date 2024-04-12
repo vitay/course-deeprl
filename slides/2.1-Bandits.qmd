@@ -595,7 +595,7 @@ $$
 
 # Reinforcement comparison
     
-* Actions followed by large rewards should be made more likely to recur, whereas actions followed by small rewards should be made less likely to recur. 
+* Actions followed by large rewards should be made more likely to reoccur, whereas actions followed by small rewards should be made less likely to reoccur. 
 
 * But what is a large/small reward? Is a reward of 5 large or small?
 

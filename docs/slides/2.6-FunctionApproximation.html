@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2.6-FunctionApproximation_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.6-FunctionApproximation_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2.6-FunctionApproximation_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.6-FunctionApproximation_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2.6-FunctionApproximation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.6-FunctionApproximation_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="2.6-FunctionApproximation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2.6-FunctionApproximation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2.6-FunctionApproximation_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2.6-FunctionApproximation_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="2.6-FunctionApproximation_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="2.6-FunctionApproximation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="2.6-FunctionApproximation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -378,7 +379,7 @@ Julien Vitay
 <li>If a state has never been visited during learning, the Q-values will still be at their initial value (0.0), no policy can be derived.</li>
 </ul>
 
-<img data-src="img/tabular-generalization.svg" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/tabular-generalization.svg" style="width:60.0%" class="r-stretch"><ul>
 <li>Similar states likely have the same optimal action: we want to be able to <strong>generalize</strong> the policy between states.</li>
 </ul>
 </section>
@@ -398,7 +399,7 @@ Julien Vitay
 <section id="tabular-rl-cannot-learn-to-play-video-games" class="title-slide slide level1 center">
 <h1>Tabular RL cannot learn to play video games</h1>
 
-<img data-src="img/rl-loop.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/rl-loop.png" class="r-stretch"></section>
 
 <section id="continuous-action-spaces" class="title-slide slide level1 center">
 <h1>Continuous action spaces</h1>
@@ -408,7 +409,7 @@ Julien Vitay
 <li><p>A joint angle could take any value in <span class="math inline">[0, \pi]</span>.</p></li>
 </ul>
 
-<img data-src="img/actionspace-robot.png" style="width:70.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/actionspace-robot.png" style="width:70.0%" class="r-stretch"></section>
 
 <section id="continuous-action-spaces-1" class="title-slide slide level1 center">
 <h1>Continuous action spaces</h1>
@@ -416,7 +417,7 @@ Julien Vitay
 <li>A solution would be to <strong>discretize</strong> the action space (one action per degree), but we would fall into the <strong>curse of dimensionality</strong>.</li>
 </ul>
 
-<img data-src="img/cursedimensionality.png" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/cursedimensionality.png" style="width:70.0%" class="r-stretch"><ul>
 <li><p>The more degrees of freedom, the more discrete actions, the more entries in the Q-table…</p></li>
 <li><p>Tabular RL cannot deal with continuous action spaces, unless we approximate the policy with an <strong>actor-critic</strong> architecture.</p></li>
 </ul>
@@ -431,11 +432,7 @@ Julien Vitay
 <h1>Feature vectors</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/cartpole-after.gif"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>Let’s represent a state <span class="math inline">s</span> by a vector of <span class="math inline">d</span> <strong>features</strong> <span class="math inline">\phi(s) = [\phi_1(s), \phi_2(s), \ldots, \phi_d(s)]^T</span>.</p></li>
@@ -457,11 +454,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/breakout.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <p><span class="math display">
     \phi(s) = \begin{bmatrix}
@@ -508,7 +501,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">V_\varphi(s) \approx V^\pi(s)</span></p>
 
-<img data-src="img/functionapproximation-state.svg" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/functionapproximation-state.svg" style="width:60.0%" class="r-stretch"><ul>
 <li>The parameterized function can have any form. Its has a set of parameters <span class="math inline">\varphi</span> used to transform the feature vector <span class="math inline">\phi(s)</span> into an approximated value <span class="math inline">V_\varphi(s)</span>.</li>
 </ul>
 </section>
@@ -519,7 +512,7 @@ Julien Vitay
 <li>The simplest function approximator (FA) is the <strong>linear approximator</strong>.</li>
 </ul>
 
-<img data-src="img/functionapproximation-state-linear.svg" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/functionapproximation-state-linear.svg" style="width:60.0%" class="r-stretch"><ul>
 <li>The approximated value is a linear combination of the features:</li>
 </ul>
 <p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
@@ -532,7 +525,7 @@ Julien Vitay
 <section id="learning-the-state-value-approximation" class="title-slide slide level1 center">
 <h1>Learning the state value approximation</h1>
 
-<img data-src="img/functionapproximation-state.svg" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/functionapproximation-state.svg" style="width:60.0%" class="r-stretch"><ul>
 <li><p>Regardless the form of the function approximator, we want to find the parameters <span class="math inline">\varphi</span> making the approximated values <span class="math inline">V_\varphi(s)</span> as close as possible from the true values <span class="math inline">V^\pi(s)</span> for all states <span class="math inline">s</span>.</p>
 <ul>
 <li>This is a <strong>regression</strong> problem.</li>
@@ -552,11 +545,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/gradient.svg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>We can find the minimum of the loss function by applying <strong>gradient descent</strong> (GD) iteratively:</li>
@@ -633,7 +622,7 @@ Julien Vitay
 <section id="linear-approximation" class="title-slide slide level1 center">
 <h1>Linear approximation</h1>
 
-<img data-src="img/functionapproximation-state-linear.svg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/functionapproximation-state-linear.svg" style="width:50.0%" class="r-stretch"><ul>
 <li>The approximated value is a linear combination of the features:</li>
 </ul>
 <p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
@@ -742,20 +731,12 @@ Julien Vitay
 <ul>
 <li>The FA takes a feature vector for both the state <span class="math inline">s</span> and the action <span class="math inline">a</span> (which can be continuous) as inputs, and outputs a single Q-value <span class="math inline">Q_\theta(s ,a)</span>.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/functionapproximation-action1.svg" style="width:80.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>The FA takes a feature vector for the state <span class="math inline">s</span> as input, and outputs one Q-value <span class="math inline">Q_\theta(s ,a)</span> per possible action (the action space must be discrete).</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/functionapproximation-action2.svg"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -799,7 +780,7 @@ Julien Vitay
 <li>Before we dive into deep RL (i.e.&nbsp;RL with non-linear FA), let’s see how we can design good <strong>feature vectors</strong> for linear function approximation.</li>
 </ul>
 
-<img data-src="img/deeprl.jpg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/deeprl.jpg" style="width:50.0%" class="r-stretch"><ul>
 <li><p>The problem with deep NN is that they need a lot of samples to converge, what worsens the fundamental problem of RL: <strong>sample efficiency</strong>.</p></li>
 <li><p>By engineering the right features, we could use linear approximators, which converge much faster.</p></li>
 <li><p>The convergence of linear FA is <strong>guaranteed</strong>, not (always) non-linear ones.</p></li>
@@ -810,11 +791,7 @@ Julien Vitay
 <h1>Why do we need to choose features?</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/cartpole-after.gif"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li>For the cartpole, the feature vector <span class="math inline">\phi(s)</span> could be:</li>
@@ -840,7 +817,7 @@ Julien Vitay
 <li><p>The true value function <span class="math inline">V^\pi(s)</span> is a non-linear function of <span class="math inline">x</span> and <span class="math inline">y</span>.</p></li>
 </ul>
 
-<img data-src="img/featurecoding-data.png" style="width:50.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/featurecoding-data.png" style="width:50.0%" class="r-stretch"></section>
 
 <section id="linear-approximation-1" class="title-slide slide level1 center">
 <h1>Linear approximation</h1>
@@ -852,17 +829,9 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-data.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-linear.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -898,17 +867,9 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-data.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-polynomial2.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -920,17 +881,9 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-data.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-polynomial6.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -945,7 +898,7 @@ Julien Vitay
 </ul></li>
 </ul>
 
-<img data-src="img/underfitting-overfitting.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/underfitting-overfitting.png" class="r-stretch"></section>
 
 <section id="fourier-transforms" class="title-slide slide level1 center">
 <h1>Fourier transforms</h1>
@@ -965,7 +918,7 @@ Julien Vitay
 <li>Fourier tells us that, if we take enough frequencies, we can reconstruct the signal <span class="math inline">V_\varphi(s)</span> perfectly.</li>
 </ul>
 
-<img data-src="img/featurecoding-fourier1.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/featurecoding-fourier1.png" class="r-stretch"><ul>
 <li>It is just a change of basis, the problem stays a linear regression to find <span class="math inline">w_0, w_1, w_2</span>, etc.</li>
 </ul>
 </section>
@@ -976,12 +929,12 @@ Julien Vitay
 <li>Fourier transforms can be applied on multivariate functions as well.</li>
 </ul>
 
-<img data-src="img/featurecoding-fourier2.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/featurecoding-fourier2.png" class="r-stretch"></section>
 
 <section id="polynomial-vs.-fourier-basis" class="title-slide slide level1 center">
 <h1>Polynomial vs.&nbsp;Fourier basis</h1>
 
-<img data-src="img/featurecoding-fourier3.png" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/featurecoding-fourier3.png" style="width:70.0%" class="r-stretch"><ul>
 <li><p>A Fourier basis tends to work better than a polynomial basis.</p></li>
 <li><p>The main problem is that the number of features increases very fast with:</p>
 <ul>
@@ -999,11 +952,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-tile1.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>The feature vector is a <strong>binary</strong> vector with a 1 when the input is inside a tile, 0 otherwise.</li>
@@ -1026,11 +975,7 @@ Julien Vitay
 <h1>Coarse coding</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-tile2.png" style="width:80.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>A more efficient solution is <strong>coarse coding</strong>.</p></li>
@@ -1043,11 +988,7 @@ Julien Vitay
 <ul>
 <li>The size and shape of the <strong>“receptive field”</strong> influences the generalization properties.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/featurecoding-tile4.png" style="width:80.0%"></p>
-</figure>
-</div>
 </section>
 
 <section id="tile-coding" class="title-slide slide level1 center">
@@ -1057,7 +998,7 @@ Julien Vitay
 <li><p>Each tiling will be <strong>coarse</strong>, but the location of a state will be quite precise as it may belong to many tiles.</p></li>
 </ul>
 
-<img data-src="img/featurecoding-tile3.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/featurecoding-tile3.png" class="r-stretch"><ul>
 <li>This helps against the curse of dimensionality: high precision, but the number of tiles does not grow exponentially.</li>
 </ul>
 </section>
@@ -1069,7 +1010,7 @@ Julien Vitay
 <li><p>We can use <strong>radial-basis functions</strong> (RBF) such as Gaussians to map the state space.</p></li>
 </ul>
 
-<img data-src="img/featurecoding-rbf.png" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/featurecoding-rbf.png" style="width:60.0%" class="r-stretch"><ul>
 <li><p>We set a set of centers <span class="math inline">\{c_i\}_{i=1}^K</span> in the input space on a regular grid (or randomly).</p></li>
 <li><p>Each element of the feature vector will be a Gaussian function of the distance between the state <span class="math inline">s</span> and one center:</p></li>
 </ul>
@@ -1079,7 +1020,7 @@ Julien Vitay
 <section id="radial-basis-functions-rbf-1" class="title-slide slide level1 center">
 <h1>Radial-basis functions (RBF)</h1>
 
-<img data-src="img/featurecoding-rbf.png" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/featurecoding-rbf.png" style="width:60.0%" class="r-stretch"><ul>
 <li>The approximated value function now represents <strong>continuously</strong> the states:</li>
 </ul>
 <p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \sum_{i=1}^d w_i \, \exp \frac{-(s - c_i)^2}{2\, \sigma_i^2}</span></p>
@@ -1092,7 +1033,7 @@ Julien Vitay
 <section id="summary-of-function-approximation" class="title-slide slide level1 center">
 <h1>Summary of function approximation</h1>
 
-<img data-src="img/functionapproximation-state.svg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/functionapproximation-state.svg" style="width:50.0%" class="r-stretch"><ul>
 <li><p>In FA, we project the state information into a <strong>feature space</strong> to get a better representation.</p></li>
 <li><p>We then apply a linear approximation algorithm to estimate the value function:</p></li>
 </ul>
@@ -1105,28 +1046,30 @@ Julien Vitay
 <li><p><strong>Deep neural networks</strong> are the most powerful function approximators in supervised learning.</p></li>
 <li><p>Do they also work with RL?</p></li>
 </ul>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2.6-FunctionApproximation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1136,13 +1079,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1296,7 +1238,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1380,10 +1322,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1393,8 +1334,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

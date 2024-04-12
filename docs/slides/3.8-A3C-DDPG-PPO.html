@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="3.8-A3C-DDPG-PPO_files/libs/clipboard/clipboard.min.js"></script>
-<script src="3.8-A3C-DDPG-PPO_files/libs/quarto-html/tabby.min.js"></script>
-<script src="3.8-A3C-DDPG-PPO_files/libs/quarto-html/popper.min.js"></script>
-<script src="3.8-A3C-DDPG-PPO_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="3.8-A3C-DDPG-PPO_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="3.8-A3C-DDPG-PPO_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="3.8-A3C-DDPG-PPO_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="3.8-A3C-DDPG-PPO_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="3.8-A3C-DDPG-PPO_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="3.8-A3C-DDPG-PPO_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="3.8-A3C-DDPG-PPO_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -361,7 +362,7 @@ Julien Vitay
 <section id="a3c-asynchronous-advantage-actor-critic" class="title-slide slide level1 center">
 <h1>1 - A3C: Asynchronous advantage actor-critic</h1>
 
-<img data-src="img/paper-a3c.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-a3c.png" class="r-stretch"><div class="footer">
 <p>Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al.&nbsp;(2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783</p>
 </div>
 </section>
@@ -389,12 +390,12 @@ Julien Vitay
 <section id="advantage-actor-critic-1" class="title-slide slide level1 center">
 <h1>Advantage actor-critic</h1>
 
-<img data-src="img/a2c.svg" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/a2c.svg" class="r-stretch"></section>
 
 <section id="advantage-actor-critic-2" class="title-slide slide level1 center">
 <h1>Advantage actor-critic</h1>
 
-<img data-src="img/a2c.svg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/a2c.svg" style="width:50.0%" class="r-stretch"><ul>
 <li><p>The advantage actor-critic is strictly <strong>on-policy</strong>:</p>
 <ul>
 <li><p>The critic <strong>must</strong> evaluate actions selected the current version of the actor <span class="math inline">\pi_\theta</span>, not an old version or another policy.</p></li>
@@ -417,11 +418,7 @@ Julien Vitay
 <ul>
 <li>We cannot get an uncorrelated batch of transitions by acting <strong>sequentially</strong> with a single agent.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sarsa-sequence.png"></p>
-</figure>
-</div>
 <ul>
 <li>A simple solution is to have <strong>multiple actors</strong> with the same weights <span class="math inline">\theta</span> interacting <strong>in parallel</strong> with different copies of the environment. See GORILA, APE-X, R2D2.</li>
 </ul>
@@ -454,7 +451,7 @@ Julien Vitay
 <li>In A3C, the workers do not simply collect experiences, but also compute gradients on their collected transitions and send them to the global network.</li>
 </ul>
 
-<img data-src="img/a3c-parallel.png" style="width:70.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/a3c-parallel.png" style="width:70.0%" class="r-stretch"><div class="footer">
 <p>Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al.&nbsp;(2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783</p>
 </div>
 </section>
@@ -471,7 +468,7 @@ Julien Vitay
 </ul></li>
 <li><p><strong>for</strong> each transition in <span class="math inline">\mathcal{D}</span>:</p>
 <ul>
-<li>Compute the <strong>n-step return</strong> in each state <span class="math inline">R^n_t = \displaystyle\sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n})</span></li>
+<li>Compute the <strong>n-step return</strong> in each state <span class="math inline">R^n_t =  \displaystyle\sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n})</span></li>
 </ul></li>
 <li><p>Compute <strong>policy gradient</strong> for the actor on the transition buffer: <span class="math display">d\theta = \nabla_\theta \mathcal{J}(\theta) = \frac{1}{n} \sum_{t=1}^n \nabla_\theta \log \pi_\theta (s_t, a_t) \, (R^n_t - V_\varphi(s_t))</span></p></li>
 <li><p>Compute <strong>value gradient</strong> for the critic on the transition buffer: <span class="math display">d\varphi = \nabla_\varphi \mathcal{L}(\varphi) = -\frac{1}{n} \sum_{t=1}^n (R^n_t - V_\varphi(s_t)) \, \nabla_\varphi V_\varphi(s_t)</span></p></li>
@@ -543,11 +540,7 @@ Julien Vitay
 <h1>A3C: Asynchronous advantage actor-critic</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/a3c-parallel.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>A3C does not use an <em>experience replay memory</em> as DQN.</p></li>
@@ -568,18 +561,10 @@ Julien Vitay
 
 <section id="a3c-results" class="title-slide slide level1 center">
 <h1>A3C : results</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/a3c-comparison.png"></p>
-</figure>
-</div>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/a3c-time.png" style="width:80.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>A3C set a new record for Atari games in 2016.</p></li>
@@ -598,17 +583,9 @@ Julien Vitay
 <ul>
 <li>Learning is only marginally better with more threads:</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/a3c-threads1.png" style="width:100.0%"></p>
-</figure>
-</div>
 <p>but much faster!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/a3c-threads2.png" style="width:100.0%"></p>
-</figure>
-</div>
 <div class="footer">
 <p>Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al.&nbsp;(2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783</p>
 </div>
@@ -620,16 +597,12 @@ Julien Vitay
 <li>A3C came up in 2016. A lot of things happened since then…</li>
 </ul>
 
-<img data-src="img/rainbow-results1.png" style="width:50.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/rainbow-results1.png" style="width:50.0%" class="r-stretch"></section>
 
 <section id="ddpg-deep-deterministic-policy-gradient" class="title-slide slide level1 center">
 <h1>2 - DDPG: Deep Deterministic Policy Gradient</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/paper-ddpg.png"></p>
-</figure>
-</div>
 </div>
 <div class="footer">
 <p>Lillicrap, T. P., Hunt, J. J., Pritzel, A., Heess, N., Erez, T., Tassa, Y., et al.&nbsp;(2015). Continuous control with deep reinforcement learning. CoRR. arXiv:1509.02971.</p>
@@ -655,11 +628,7 @@ Julien Vitay
 <p><span class="math display">\pi &gt; \pi' \Leftrightarrow V^{\pi}(s) &gt; V^{\pi'}(s) \quad \forall s \in \mathcal{S}</span></p></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/policysearch.svg" style="width:80.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -684,11 +653,7 @@ Julien Vitay
    =  \mathbb{E}_{s \sim \rho_\theta}[\nabla_\theta \, \sum_a  \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a)]
 </span></p>
 </div><div class="column" style="width:20%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -717,11 +682,7 @@ Julien Vitay
 <section id="deterministic-policy-gradient-theorem-2" class="title-slide slide level1 center">
 <h1>Deterministic policy gradient theorem</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dpg-chainrule.svg" style="width:80.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li>The deterministic policy gradient is:</li>
@@ -766,11 +727,7 @@ Julien Vitay
 <section id="deterministic-policy-gradient-as-an-actor-critic-architecture" class="title-slide slide level1 center">
 <h1>Deterministic Policy Gradient as an actor-critic architecture</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dpg.svg" style="width:90.0%"></p>
-</figure>
-</div>
 </div>
 <p><strong>Training the actor:</strong></p>
 <p><span class="math display">
@@ -832,7 +789,7 @@ Julien Vitay
 <section id="ddpg-deep-deterministic-policy-gradient-2" class="title-slide slide level1 center">
 <h1>DDPG: Deep Deterministic Policy Gradient</h1>
 
-<img data-src="img/ddpg.svg" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/ddpg.svg" class="r-stretch"><ul>
 <li><p>A deterministic actor is good for learning (less variance), but not for exploring.</p></li>
 <li><p>We cannot use <span class="math inline">\epsilon</span>-greedy or softmax, as the actor outputs directly the policy, not Q-values.</p></li>
 <li><p>For continuous actions, an <strong>exploratory noise</strong> can be added to the deterministic action:</p></li>
@@ -879,7 +836,7 @@ Julien Vitay
 <section id="ddpg-learning-to-drive-in-a-day-1" class="title-slide slide level1 center">
 <h1>DDPG: learning to drive in a day</h1>
 
-<img data-src="img/ddpg-drive.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/ddpg-drive.png" class="r-stretch"><ul>
 <li><p>The algorithm is DDPG with prioritized experience replay. The Convnet is pretrained using an autoencoder.</p></li>
 <li><p>Training is live, with an on-board NVIDIA Drive PX2 GPU.</p></li>
 <li><p>A simulated environment is first used to find the hyperparameters.</p></li>
@@ -892,7 +849,7 @@ Julien Vitay
 <section id="ppo-proximal-policy-optimization" class="title-slide slide level1 center">
 <h1>3 - PPO: Proximal Policy Optimization</h1>
 
-<img data-src="img/paper-ppo.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-ppo.png" class="r-stretch"><div class="footer">
 <p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
 </div>
 </section>
@@ -915,7 +872,7 @@ Julien Vitay
 <li><p>For on-policy methods, all progress is lost: the network has to relearn from scratch, as the new samples will be generated by a bad policy.</p></li>
 </ul>
 
-<img data-src="img/policy-collapse.png" style="width:50.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/policy-collapse.png" style="width:50.0%" class="r-stretch"><div class="footer">
 <p>Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Reinforcement Learning Algorithms. MSc thesis, TU Chemnitz.</p>
 </div>
 </section>
@@ -1008,7 +965,7 @@ Julien Vitay
 </ul></li>
 </ul>
 
-<img data-src="img/ppo-clippingfunction.svg" style="width:40.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/ppo-clippingfunction.svg" style="width:40.0%" class="r-stretch"></section>
 
 <section id="ppo-proximal-policy-optimization-2" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
@@ -1022,11 +979,7 @@ Julien Vitay
 <li><p>otherwise, we use <span class="math inline">\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
 </ul></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-clipped.png" style="width:40.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>If the advantage <span class="math inline">A^{\pi_{\theta_\text{old}}}(s, a)</span> is negative (worse action than usual) and:</p>
@@ -1036,11 +989,7 @@ Julien Vitay
 <li><p>otherwise, we use <span class="math inline">\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)</span>.</p></li>
 </ul></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-clipped2.png" style="width:40.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1079,7 +1028,7 @@ Julien Vitay
 <section id="ppo-mujoco-control" class="title-slide slide level1 center">
 <h1>PPO : Mujoco control</h1>
 
-<img data-src="img/ppo-results-mujoco.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-results-mujoco.png" class="r-stretch"><div class="footer">
 <p>Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O. (2017). Proximal Policy Optimization Algorithms. arXiv:1707.06347.</p>
 </div>
 </section>
@@ -1099,14 +1048,14 @@ Julien Vitay
 <section id="ppo-chatgpt" class="title-slide slide level1 center">
 <h1>PPO: ChatGPT</h1>
 
-<img data-src="img/ChatGPT.svg" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ChatGPT.svg" class="r-stretch"><div class="footer">
 <p>Source: <a href="https://openai.com/blog/chatgpt" class="uri">https://openai.com/blog/chatgpt</a></p>
 </div>
 </section>
 <section class="slide level2">
 
 
-<img data-src="img/deeprl-dota.jpeg" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/deeprl-dota.jpeg" class="r-stretch"><div class="footer">
 <p>twitter:ai-memes</p>
 </div>
 </section></section>
@@ -1121,7 +1070,7 @@ Julien Vitay
 <section id="why-is-dota-2-hard" class="title-slide slide level1 center">
 <h1>Why is Dota 2 hard?</h1>
 
-<img data-src="img/ppo-dota-reasons.png" style="width:70.0%" class="r-stretch quarto-figure-center"><table>
+<img data-src="img/ppo-dota-reasons.png" style="width:70.0%" class="r-stretch"><table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Feature</th>
@@ -1162,7 +1111,7 @@ Julien Vitay
 <li>OpenAI Five is composed of 5 PPO networks (one per player), using 128,000 CPUs and 256 V100 GPUs.</li>
 </ul>
 
-<img data-src="img/ppo-dota-architecture.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-dota-architecture.png" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
 </div>
 </section>
@@ -1170,7 +1119,7 @@ Julien Vitay
 <section id="openai-five-dota-2-2" class="title-slide slide level1 center">
 <h1>OpenAI Five: Dota 2</h1>
 
-<img data-src="img/ppo-dota-facts.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-dota-facts.png" style="width:60.0%" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
 </div>
 </section>
@@ -1178,7 +1127,7 @@ Julien Vitay
 <section id="openai-five-dota-2-3" class="title-slide slide level1 center">
 <h1>OpenAI Five: Dota 2</h1>
 
-<img data-src="img/ppo-dota-inputs.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/ppo-dota-inputs.png" class="r-stretch"><div class="footer">
 <p><a href="https://openai.com/projects/five/" class="uri">https://openai.com/projects/five/</a></p>
 </div>
 </section>
@@ -1186,7 +1135,7 @@ Julien Vitay
 <section id="openai-five-dota-2-4" class="title-slide slide level1 center">
 <h1>OpenAI Five: Dota 2</h1>
 
-<img data-src="img/ppo-dota-nn.png" class="r-stretch quarto-figure-center"><p><a href="https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf" class="uri">https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf</a></p>
+<img data-src="img/ppo-dota-nn.png" class="r-stretch"><p><a href="https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf" class="uri">https://d4mucfpksywv.cloudfront.net/research-covers/openai-five/network-architecture.pdf</a></p>
 </section>
 
 <section id="openai-five-dota-2-5" class="title-slide slide level1 center">
@@ -1205,11 +1154,7 @@ Julien Vitay
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/ppo-dota-example.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1219,28 +1164,30 @@ Julien Vitay
 <li>Kubernetes, Azure, and GCP backends for Rapid, TensorBoard, Sentry and Grafana for monitoring…</li>
 </ul></li>
 </ul>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="3.8-A3C-DDPG-PPO_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1250,13 +1197,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1410,7 +1356,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1494,10 +1440,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1507,8 +1452,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

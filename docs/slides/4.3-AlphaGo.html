@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="4.3-AlphaGo_files/libs/clipboard/clipboard.min.js"></script>
-<script src="4.3-AlphaGo_files/libs/quarto-html/tabby.min.js"></script>
-<script src="4.3-AlphaGo_files/libs/quarto-html/popper.min.js"></script>
-<script src="4.3-AlphaGo_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="4.3-AlphaGo_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="4.3-AlphaGo_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="4.3-AlphaGo_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="4.3-AlphaGo_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="4.3-AlphaGo_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="4.3-AlphaGo_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="4.3-AlphaGo_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="4.3-AlphaGo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="4.3-AlphaGo_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -362,11 +363,7 @@ Julien Vitay
 <h1>Solving the game of Go</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/go.png"></p>
-</figure>
-</div>
 <ul>
 <li>Play Go in Chemnitz:</li>
 </ul>
@@ -386,7 +383,7 @@ Julien Vitay
 <section id="minimax-and-alpha-beta" class="title-slide slide level1 center">
 <h1>Minimax and Alpha-Beta</h1>
 
-<img data-src="img/minimax.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/minimax.png" class="r-stretch"><ul>
 <li><p><strong>Minimax</strong> algorithm expand the whole game tree, simulating the moves of the MAX (you) and MIN (your opponent) players.</p></li>
 <li><p>The final outcome (win or lose) is assigned to the leaves.</p></li>
 <li><p>It allows to solve <strong>zero sum games</strong>: what MAX wins is lost by MIN, and vice-versa. We suppose MIN plays optimally (i.e.&nbsp;in his own interest).</p></li>
@@ -396,7 +393,7 @@ Julien Vitay
 <section id="minimax-and-alpha-beta-1" class="title-slide slide level1 center">
 <h1>Minimax and Alpha-Beta</h1>
 
-<img data-src="img/minimax-sol.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/minimax-sol.png" class="r-stretch"><ul>
 <li><p>The value of the leaves is propagated backwards to the starting position: MAX chooses the action leading to the state with the highest value, MIN does the opposite.</p></li>
 <li><p>For most games, the tree becomes too huge for such a systematic search:</p>
 <ul>
@@ -416,11 +413,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tictactoe.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>It also works when precise heuristics can be derived in a reasonable time.</p>
@@ -447,7 +440,7 @@ Julien Vitay
 <section id="alphago" class="title-slide slide level1 center">
 <h1>1 - AlphaGo</h1>
 
-<img data-src="img/paper-alphago.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-alphago.png" class="r-stretch"><div class="footer">
 <p>Silver, D., Huang, A., Maddison, C. J., Guez, A., Sifre, L., van den Driessche, G., et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature 529, 484–489. doi:10.1038/nature16961.</p>
 </div>
 </section>
@@ -464,7 +457,7 @@ Julien Vitay
 <li><p>The rollout policy and the value network are used to guide stochastic tree exploration in <strong>Monte-Carlo Tree Search (MCTS)</strong> (MPC-like planning algorithm).</p></li>
 </ul>
 
-<img data-src="img/alphago.png" style="width:80.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/alphago.png" style="width:80.0%" class="r-stretch"><div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
 </section>
@@ -476,11 +469,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/alphago-sl.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>A <strong>policy network</strong> <span class="math inline">\rho_\sigma</span> is trained to predict human expert moves:</p>
@@ -515,11 +504,7 @@ Julien Vitay
 <p>where <span class="math inline">R</span> = +1 when the game is won, -1 otherwise.</p>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/alphago-policy.png" style="width:70.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>The idea of playing against an older version of the same network (<strong>self-play</strong>) allows to learn offline.</p></li>
@@ -537,20 +522,12 @@ Julien Vitay
 <h1>AlphaGo</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/alphago-policy.jpg"></p>
-</figure>
-</div>
 <ul>
 <li>The policy network learns the probability of selecting different moves.</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/alphago-value.jpg" style="width:81.0%"></p>
-</figure>
-</div>
 <ul>
 <li>The value network learns to predict the value of any possible state under the learned policy.</li>
 </ul>
@@ -564,7 +541,7 @@ Julien Vitay
 <section id="monte-carlo-tree-search" class="title-slide slide level1 center">
 <h1>Monte-Carlo Tree Search</h1>
 
-<img data-src="img/mcts.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/mcts.png" class="r-stretch"><ul>
 <li><p>The final AlphaGo player uses <strong>Monte-Carlo Tree Search</strong> (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions.</p></li>
 <li><p>The game tree is traversed depth-first from the current state, but the order of the visits depends on the value of the transition.</p></li>
 <li><p>MCTS was previously the standard approach for Go AIs, but based on expert moves only, not deep networks.</p></li>
@@ -581,11 +558,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/mcts-selection.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>The probability of selecting an action when sampling the tree depends on:</p>
@@ -607,11 +580,7 @@ Julien Vitay
 <h1>Monte-Carlo Tree Search</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/mcts-expansion.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>In the <strong>expansion phase</strong>, a leaf state <span class="math inline">s_L</span> of the game tree is reached.</p></li>
@@ -633,11 +602,7 @@ Julien Vitay
 <h1>Monte-Carlo Tree Search</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/mcts-evaluation.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>In the <strong>evaluation phase</strong>, the leaf <span class="math inline">s_L</span> is evaluated both by</p>
@@ -663,11 +628,7 @@ Julien Vitay
 <h1>Monte-Carlo Tree Search</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/mcts-backup.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li>In the <strong>backup phase</strong>, the Q-values of all actions taken when descending the tree are updated with the value of the leaf node:</li>
@@ -695,14 +656,14 @@ Julien Vitay
 <li><p>For the next move, the tree is reset and expanded again (MPC replanning).</p></li>
 </ul>
 
-<img data-src="img/mcts.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/mcts.png" class="r-stretch"><div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
 </section>
 <section class="slide level2">
 
 
-<img data-src="img/alphago-overview.jpg" style="width:80.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/alphago-overview.jpg" style="width:80.0%" class="r-stretch"><ul>
 <li><p>In the end, during MCTS, only the value network <span class="math inline">\nu_\theta</span>, the SL policy network <span class="math inline">\rho_\sigma</span> and the fast rollout policy <span class="math inline">\rho_\pi</span> are used.</p></li>
 <li><p>The RL policy network <span class="math inline">\rho_\rho</span> is only used to train the value network <span class="math inline">\nu_\theta</span>. i.e.&nbsp;to predict which positions are interesting or not.</p></li>
 <li><p>However, the RL policy network can discover new strategies by playing many times against itself, without relying on averaging expert moves like the previous approaches.</p></li>
@@ -721,7 +682,7 @@ Julien Vitay
 <li><p>Training took several weeks on 1202 CPUs and 176 GPUs.</p></li>
 </ul>
 
-<img data-src="img/alphago.png" style="width:80.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/alphago.png" style="width:80.0%" class="r-stretch"><div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
 </section>
@@ -745,7 +706,7 @@ Julien Vitay
 <section id="alphazero" class="title-slide slide level1 center">
 <h1>2 - AlphaZero</h1>
 
-<img data-src="img/paper-alphazero.png" class="r-stretch quarto-figure-center"><p><a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go" class="uri">https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go</a></p>
+<img data-src="img/paper-alphazero.png" class="r-stretch"><p><a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go" class="uri">https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go</a></p>
 <div class="footer">
 <p>Silver et al.&nbsp;(2018). A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play. Science 362, 1140–1144. doi:10.1126/science.aar6404.</p>
 </div>
@@ -766,11 +727,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/alphazero.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>The RL policy network uses MCTS to select moves, not a softmax-like selection as in AlphaGo.</p></li>
@@ -793,7 +750,7 @@ Julien Vitay
 <section id="alphazero-3" class="title-slide slide level1 center">
 <h1>AlphaZero</h1>
 
-<img data-src="img/alphazero.jpg" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/alphazero.jpg" style="width:40.0%" class="r-stretch"><ul>
 <li>The loss function used to train the network is a <strong>compound loss</strong>:</li>
 </ul>
 <p><span class="math display">
@@ -853,7 +810,7 @@ Julien Vitay
 <section id="muzero" class="title-slide slide level1 center">
 <h1>3 - MuZero</h1>
 
-<img data-src="img/paper-muzero.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-muzero.png" class="r-stretch"><div class="footer">
 <p>Schrittwieser et al.&nbsp;(2019). Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model. arXiv:1911.08265</p>
 </div>
 </section>
@@ -866,7 +823,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">s_{t+1}, r_{t+1} = f(s_t, a_t)</span></p>
 
-<img data-src="img/muzero.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/muzero.png" class="r-stretch"><div class="footer">
 <p>Schrittwieser et al.&nbsp;(2019). Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model. arXiv:1911.08265</p>
 </div>
 </section>
@@ -893,11 +850,7 @@ Julien Vitay
 <h1>MuZero</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero1.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>The dynamics model <span class="math inline">s', r = g(s, a)</span> replaces the perfect simulator in MCTS.</p></li>
@@ -908,11 +861,7 @@ Julien Vitay
 </ul>
 </div>
 </div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero-ucb.png"></p>
-</figure>
-</div>
 <div class="footer">
 <p>Schrittwieser et al.&nbsp;(2019). Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model. arXiv:1911.08265</p>
 </div>
@@ -921,7 +870,7 @@ Julien Vitay
 <section id="muzero-5" class="title-slide slide level1 center">
 <h1>MuZero</h1>
 
-<img data-src="img/muzero2.png" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/muzero2.png" style="width:70.0%" class="r-stretch"><ul>
 <li><p>The actions taking during self-play are taken from the MCTS search as in AlphaZero.</p></li>
 <li><p>Note that the network plays each turn: there is additional information about whether the network is playing white or black.</p></li>
 <li><p>Self-played games are stored in a huge experience replay memory.</p></li>
@@ -933,19 +882,11 @@ Julien Vitay
 
 <section id="muzero-6" class="title-slide slide level1 center">
 <h1>MuZero</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero3.png" style="width:70.0%"></p>
-</figure>
-</div>
 <ul>
 <li>Finally, complete games sampled from the ERM are used to learn simultaneously the three networks <span class="math inline">f</span>, <span class="math inline">g</span> and <span class="math inline">h</span>:</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero-loss.png"></p>
-</figure>
-</div>
 <div class="footer">
 <p>Schrittwieser et al.&nbsp;(2019). Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model. arXiv:1911.08265</p>
 </div>
@@ -958,7 +899,7 @@ Julien Vitay
 <li><p>The representation network <span class="math inline">h</span> allows to encode the Atari frames in a compressed manner that allows planning over raw images.</p></li>
 </ul>
 
-<img data-src="img/muzero-results.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/muzero-results.png" class="r-stretch"><div class="footer">
 <p>Schrittwieser et al.&nbsp;(2019). Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model. arXiv:1911.08265</p>
 </div>
 </section>
@@ -976,44 +917,34 @@ Julien Vitay
 <section id="but" class="title-slide slide level1 center">
 <h1>But…</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero-results2.png"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero-tpu.png" style="width:80.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/muzero-price.png" style="width:50.0%"></p>
-</figure>
 </div>
-</div>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="4.3-AlphaGo_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1023,13 +954,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1183,7 +1113,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1267,10 +1197,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1280,8 +1209,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

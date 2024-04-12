@@ -1,21 +1,17 @@
-all: notes slides
+all: website slides
 
 slides_targets := $(wildcard slides/*.qmd)
 slides: $(slides_targets)
 	quarto render $? --to revealjs
 
-
-notes_targets := $(wildcard notes/notes/*.qmd notes/exercises/*.ipynb notes/exercises/*.qmd)
-notes: $(notes_targets)
-	quarto render $?  --to html
+website: 
+	quarto render .
 
 
 clean:
 	rm -rf docs
 	mkdir docs
-	mkdir docs/slides
-	quarto render slides --to revealjs
-	quarto render notes --to html
+	quarto render . 
 
 export: 
 	git add *

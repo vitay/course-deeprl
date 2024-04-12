@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="5.1-Outlook_files/libs/clipboard/clipboard.min.js"></script>
-<script src="5.1-Outlook_files/libs/quarto-html/tabby.min.js"></script>
-<script src="5.1-Outlook_files/libs/quarto-html/popper.min.js"></script>
-<script src="5.1-Outlook_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="5.1-Outlook_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="5.1-Outlook_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="5.1-Outlook_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="5.1-Outlook_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="5.1-Outlook_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="5.1-Outlook_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="5.1-Outlook_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="5.1-Outlook_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="5.1-Outlook_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="5.1-Outlook_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="5.1-Outlook_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="5.1-Outlook_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="5.1-Outlook_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -373,11 +374,7 @@ Julien Vitay
 <h1>Overview of deep RL methods</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/modelbased2.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p><strong>Model-free methods</strong> (DQN, A3C, DDPG, PPO, SAC) are able to find optimal policies in complex MDPs by just <strong>sampling</strong> transitions.</p></li>
@@ -408,24 +405,15 @@ Julien Vitay
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-stability2.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
 
 <section id="deep-rl-lacks-generalization-to-different-environments" class="title-slide slide level1 center">
 <h1>Deep RL lacks generalization to different environments</h1>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Deep RL is popular because it's the only area in ML where it's socially acceptable to train on the test set.
-</p>
-— Jacob Andreas (<span class="citation" data-cites="jacobandreas">@jacobandreas</span>) <a href="https://twitter.com/jacobandreas/status/924356906344267776?ref_src=twsrc%5Etfw">October 28, 2017</a>
-</blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<!--<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Deep RL is popular because it&#39;s the only area in ML where it&#39;s socially acceptable to train on the test set.</p>&mdash; Jacob Andreas (@jacobandreas) <a href="https://twitter.com/jacobandreas/status/924356906344267776?ref_src=twsrc%5Etfw">October 28, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+-->
 <ul>
 <li><p>As it uses neural networks, deep RL <strong>overfits</strong> its training data, i.e.&nbsp;the environment it is trained on.</p></li>
 <li><p>If you change anything to the environment dynamics, you need to retrain from scratch.</p></li>
@@ -508,7 +496,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <p>All major model-free algorithms are implemented (DQN, Rainbow, A3C, DDPG, PPO, SAC), including their distributed variants (Ape-X, IMPALA, TD3) but also model-based algorithms (Dreamer!)</p>
 <p><a href="https://docs.ray.io/en/master/rllib.html" class="uri">https://docs.ray.io/en/master/rllib.html</a></p>
 
-<img data-src="img/rllib.svg" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/rllib.svg" class="r-stretch"></section>
 
 <section id="rl-libraries-3" class="title-slide slide level1 center">
 <h1>RL libraries</h1>
@@ -518,7 +506,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <p>Algos: DQN+/DDPG/PPO/SAC, imitation learning, offline RL…</p>
 <p><a href="https://github.com/thu-ml/tianshou" class="uri">https://github.com/thu-ml/tianshou</a></p>
 
-<img data-src="img/tianshou.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/tianshou.png" class="r-stretch"></section>
 
 <section id="inverse-rl---learning-the-reward-function" class="title-slide slide level1 center">
 <h1>2 - Inverse RL - learning the reward function</h1>
@@ -560,7 +548,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li>In the OpenAI <strong>Lego stacking</strong> paper, it was perhaps harder to define the reward function than to implement DDPG.</li>
 </ul>
 
-<img data-src="img/lego_reward.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/lego_reward.png" class="r-stretch"><div class="footer">
 <p>Popov, I., Heess, N., Lillicrap, T., Hafner, R., Barth-Maron, G., Vecerik, M., et al.&nbsp;(2017). Data-efficient Deep Reinforcement Learning for Dexterous Manipulation. arXiv:1704.03073.</p>
 </div>
 </section>
@@ -629,11 +617,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p>Rewards are internally generated.</p></li>
 </ul>
 </div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/intrinsicmotivation.gif"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="footer">
@@ -711,7 +695,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p>The feature representation <span class="math inline">\phi(s_t)</span> is trained using an <strong>inverse model</strong> predicting the action leading from <span class="math inline">s_t</span> to <span class="math inline">s_{t+1}</span>.</p></li>
 </ul>
 
-<img data-src="img/icm.jpg" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/icm.jpg" class="r-stretch"><div class="footer">
 <p>Pathak D, Agrawal P, Efros AA, Darrell T. (2017). Curiosity-driven Exploration by Self-supervised Prediction. arXiv:170505363.</p>
 </div>
 </section>
@@ -765,7 +749,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p>A <strong>meta-learner</strong> or controller then learns to call each sub-policy when needed, at a much lower frequency.</p></li>
 </ul>
 
-<img data-src="img/MLSH.gif" style="width:70.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/MLSH.gif" style="width:70.0%" class="r-stretch"><div class="footer">
 <p>Frans, K., Ho, J., Chen, X., Abbeel, P., and Schulman, J. (2017). Meta Learning Shared Hierarchies. arXiv:1710.09767</p>
 </div>
 </section>
@@ -808,11 +792,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <ul>
 <li><strong>Meta learning</strong> is the ability to reuse skills acquired on a set of tasks to quickly acquire new (similar) ones (generalization).</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/metalearning.png" style="width:70.0%"></p>
-</figure>
-</div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/ml10.gif"></p>
@@ -825,11 +805,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <h1>Meta RL: Learning to learn</h1>
 <div class="columns">
 <div class="column" style="width:25%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/metarl-lstm.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:75%;">
 <ul>
 <li><p>Meta RL is based on the idea of <strong>fast and slow</strong> learning:</p>
@@ -840,11 +816,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p>A simple strategy developed concurrently by (Wang et al.&nbsp;2016) and (Duan et al.&nbsp;2016) is to have a model-free algorithm (e.g.&nbsp;A3C) integrate with a LSTM layer not only the current state <span class="math inline">s_t</span>, but also the previous action <span class="math inline">a_{t-1}</span> and reward <span class="math inline">r_t</span>.</p></li>
 <li><p>The policy of the agent becomes <strong>memory-guided</strong>: it selects an action depending on what it did before, not only the state.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/RL_2.png" style="width:80.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="footer">
@@ -855,7 +827,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <section id="meta-rl-learning-to-learn-2" class="title-slide slide level1 center">
 <h1>Meta RL: Learning to learn</h1>
 
-<img data-src="img/RL_2.png" style="width:80.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/RL_2.png" style="width:80.0%" class="r-stretch"><ul>
 <li><p>The algorithm is trained on a set of similar MDPs:</p>
 <ol type="1">
 <li><p>Select a MDP <span class="math inline">\mathcal{M}</span>.</p></li>
@@ -945,7 +917,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p>The simplest approach to offline RL is <strong>behavioral cloning</strong>: simply supervised learning of <span class="math inline">(s, a)</span> pairs…</p></li>
 </ul>
 
-<img data-src="img/dave2-training.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/dave2-training.png" class="r-stretch"><div class="footer">
 <p>M Bojarski, D Del Testa, D Dworakowski, B Firner (2016). End to end learning for self-driving cars. arXiv:1604.07316</p>
 </div>
 </section>
@@ -983,27 +955,15 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 </figure>
 </div>
 </div><div class="column">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/decisiontransformer-results.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
 
 <section id="transformers-as-world-models" class="title-slide slide level1 center">
 <h1>Transformers as World models</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/transformer-rl1.png" style="width:70.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/transformer-rl2.png" style="width:60.0%"></p>
-</figure>
-</div>
 <div class="footer">
 <p>Micheli, V., Alonso, E., &amp; Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588</p>
 </div>
@@ -1018,28 +978,30 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 <li><p>Chen, L., Lu, K., Rajeswaran, A., Lee, K., Grover, A., Laskin, M., Abbeel, P., Srinivas, A., &amp; Mordatch, I. (2021). Decision Transformer: Reinforcement Learning via Sequence Modeling. ArXiv:2106.01345 [Cs]. http://arxiv.org/abs/2106.01345</p></li>
 <li><p>Micheli, V., Alonso, E., &amp; Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). arXiv. https://doi.org/10.48550/arXiv.2209.00588</p></li>
 </ul>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="5.1-Outlook_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="5.1-Outlook_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1049,13 +1011,12 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1209,7 +1170,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1293,10 +1254,9 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1306,8 +1266,17 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

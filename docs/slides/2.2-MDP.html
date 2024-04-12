@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2.2-MDP_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.2-MDP_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2.2-MDP_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.2-MDP_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2.2-MDP_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.2-MDP_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="2.2-MDP_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2.2-MDP_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2.2-MDP_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2.2-MDP_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -95,7 +95,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="2.2-MDP_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -112,12 +112,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="2.2-MDP_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2.2-MDP_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2.2-MDP_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2.2-MDP_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="2.2-MDP_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="2.2-MDP_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -239,7 +239,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -480,11 +481,11 @@ Julien Vitay
 </ul></li>
 <li><p>Usually implemented by a series of if/then/else statements:</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> state <span class="op">==</span> <span class="st">"hover"</span> <span class="kw">and</span> press <span class="op">==</span> true:</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> <span class="st">"pressed"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> state <span class="op">==</span> <span class="st">"hover"</span> <span class="kw">and</span> press <span class="op">==</span> true:</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> <span class="st">"pressed"</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -578,11 +579,7 @@ Julien Vitay
 <ul>
 <li>Supposing that the states have the Markov property, the transitions in the system can be summarized by the <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}</span>:</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/student-transitionmatrix.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -642,7 +639,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">r(s, s') =  \mathbb{E} (r_{t+1} | s_t = s, s_{t+1} = s')</span></p>
 
-<img data-src="img/bandit-example.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-example.png" class="r-stretch"></section>
 
 <section id="return" class="title-slide slide level1 center">
 <h1>Return</h1>
@@ -839,28 +836,20 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
     R_t = r_{t+1} + \gamma \, r_{t+2} +  \gamma^2 \, r_{t+3} + ... = \sum_{k=0}^{\infty} \gamma^k \, r_{t+k+1}
 </span></p>
 </div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rewardtogo.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
 <li>More generally, for a trajectory (episode) <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span>, one can define its return as:</li>
 </ul>
 <p><span class="math display"> R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} </span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-sequence.jpg" style="width:60.0%"></p>
-</figure>
-</div>
 </section>
 
 <section id="return-2" class="title-slide slide level1 center">
 <h1>Return</h1>
 
-<img data-src="img/unifiedreturn.png" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/unifiedreturn.png" style="width:50.0%" class="r-stretch"><ul>
 <li><p>For <strong>episodic tasks</strong> (which break naturally into finite episodes of length <span class="math inline">T</span>, e.g.&nbsp;plays of a game, trips through a maze), the return is always finite and easy to compute at the end of the episode.</p>
 <ul>
 <li>The discount factor can be set to 1.</li>
@@ -886,11 +875,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <section id="why-the-reward-on-the-long-term" class="title-slide slide level1 center">
 <h1>Why the reward on the long term?</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/return-example.svg" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li><p>Selecting the action <span class="math inline">a_1</span> in <span class="math inline">s_1</span> does not bring reward immediately (<span class="math inline">r_1 = 0</span>) but allows to reach <span class="math inline">s_5</span> in the future and get a reward of 10.</p></li>
@@ -902,11 +887,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <section id="why-the-reward-on-the-long-term-1" class="title-slide slide level1 center">
 <h1>Why the reward on the long term?</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/return-example.svg" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li>When selecting <span class="math inline">a_1</span> in <span class="math inline">s_1</span>, the discounted return is:</li>
@@ -925,11 +906,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <h1>Example: the cartpole balancing task</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/cartpole-after.gif" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p><strong>State:</strong> Position and velocity of the cart, angle and speed of the pole.</p></li>
@@ -966,11 +943,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <h1>Example: the recycling robot MDP</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/walle.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>At each step, the robot has to decide whether it should:</p>
@@ -1005,11 +978,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </div>
 </div>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/recyclingrobot.png" style="width:70.0%"></p>
-</figure>
-</div>
 </div>
 </section>
 
@@ -1025,11 +994,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p><span class="math inline">R^{\text{wait}}</span> = expected number of cans while waiting.</p></li>
 <li><p><span class="math inline">R^{\text{search}} &gt; R^{\text{wait}}</span></p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/recyclingrobot.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>The MDP is fully described by the following table:</li>
@@ -1132,7 +1097,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <section id="the-policy" class="title-slide slide level1 center">
 <h1>The policy</h1>
 
-<img data-src="img/rl-agent.jpg" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/rl-agent.jpg" style="width:50.0%" class="r-stretch"><ul>
 <li>The probability that an agent selects a particular action <span class="math inline">a</span> in a given state <span class="math inline">s</span> is called the <strong>policy</strong> <span class="math inline">\pi</span>.</li>
 </ul>
 <p><span class="math display">
@@ -1159,11 +1124,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>At each time step <span class="math inline">t</span>, the agent observes its Markov state <span class="math inline">s_t \in \mathcal{S}</span>, produces an action <span class="math inline">a_t \in \mathcal{A}(s_t)</span>, receives a reward according to this action <span class="math inline">r_{t+1} \in \Re</span> and updates its state: <span class="math inline">s_{t+1} \in \mathcal{S}</span>.</p></li>
 </ul>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-sequence.jpg" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li><p>The agent generates trajectories <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span> depending on its policy <span class="math inline">\pi(s ,a)</span>.</p></li>
@@ -1192,11 +1153,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </ul>
 <p><span class="math display">  V^{\pi} (s) = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s) = \mathbb{E}_{\rho_\pi} ( \sum_{k=0}^{\infty} \gamma^k r_{t+k+1} |s_t=s ) </span></p>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rewardtogo.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1217,11 +1174,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>Only rewards that are obtained using the policy <span class="math inline">\pi</span> should be taken into account, not the complete distribution of states and rewards.</p></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rewardtogo.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1254,11 +1207,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li>State- and action-value functions are linked to each other.</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rewardtogo.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1266,11 +1215,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <section id="the-v-and-q-value-functions-are-inter-dependent" class="title-slide slide level1 center">
 <h1>The V and Q value functions are inter-dependent</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup.png" style="width:30.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li>The value of a state <span class="math inline">V^{\pi}(s)</span> depends on the value <span class="math inline">Q^{\pi} (s, a)</span> of the action that will be chosen by the policy <span class="math inline">\pi</span> in <span class="math inline">s</span>:</li>
@@ -1317,11 +1262,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <section id="the-v-and-q-value-functions-are-inter-dependent-1" class="title-slide slide level1 center">
 <h1>The V and Q value functions are inter-dependent</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup.png" style="width:30.0%"></p>
-</figure>
-</div>
 </div>
 <ul>
 <li>Taking transition probabilities into account, one can obtain the Q-values when the V-values are known:</li>
@@ -1342,7 +1283,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <section id="bellman-equation-for-vpi" class="title-slide slide level1 center">
 <h1>Bellman equation for <span class="math inline">V^{\pi}</span></h1>
 
-<img data-src="img/backup.png" style="width:30.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/backup.png" style="width:30.0%" class="r-stretch"><ul>
 <li>A fundamental property of value functions used throughout reinforcement learning is that they satisfy a particular recursive relationship:</li>
 </ul>
 <p><span class="math display">
@@ -1374,11 +1315,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li>The following <strong>backup diagrams</strong> denote these recursive relationships.</li>
 </ul>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup-V.png" style="width:70.0%"></p>
-</figure>
-</div>
 </div>
 </section>
 
@@ -1427,11 +1364,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>The V and Q values are maximal for the optimal policy: there is no better alternative.</p></li>
 </ul>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/fullvi.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1468,11 +1401,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
     V^* (s)  = \max_{a \in \mathcal{A}(s)} Q^{\pi^*} (s, a)
 </span></p>
 </div><div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/fullvi.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1530,11 +1459,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <p><span class="math display">V^* (s)  = \max_{a \in \mathcal{A}(s)} \, Q^{*} (s, a)</span></p>
 <p><span class="math display">Q^* (s, a)  = \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \, [r(s, a, s') + \gamma V^*(s') ] </span></p>
 </div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/fullvi.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1563,11 +1488,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
                 \end{cases}
 </span></p>
 </div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/fullvi.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -1602,11 +1523,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <h1>Key idea of Reinforcement learning: Generalized Policy Iteration</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/gpi-scheme.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>RL algorithms iterate over two steps:</p>
@@ -1702,28 +1619,30 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </tr>
 </tbody>
 </table>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2.2-MDP_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2.2-MDP_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2.2-MDP_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2.2-MDP_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1733,13 +1652,12 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1893,7 +1811,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1977,10 +1895,9 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1990,8 +1907,17 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

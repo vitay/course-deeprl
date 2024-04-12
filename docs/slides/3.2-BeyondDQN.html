@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="3.2-BeyondDQN_files/libs/clipboard/clipboard.min.js"></script>
-<script src="3.2-BeyondDQN_files/libs/quarto-html/tabby.min.js"></script>
-<script src="3.2-BeyondDQN_files/libs/quarto-html/popper.min.js"></script>
-<script src="3.2-BeyondDQN_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="3.2-BeyondDQN_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="3.2-BeyondDQN_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="3.2-BeyondDQN_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="3.2-BeyondDQN_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="3.2-BeyondDQN_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="3.2-BeyondDQN_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="3.2-BeyondDQN_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="3.2-BeyondDQN_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="3.2-BeyondDQN_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -361,7 +362,7 @@ Julien Vitay
 <section id="distributional-learning-categorical-dqn" class="title-slide slide level1 center">
 <h1>1 - Distributional learning : Categorical DQN</h1>
 
-<img data-src="img/paper-c51.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-c51.png" class="r-stretch"><div class="footer">
 <p>Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887</p>
 </div>
 </section>
@@ -396,7 +397,7 @@ Julien Vitay
 <li><p>If driving by car always takes 1h15, it might be worth it if you have an urgent appointment that day.</p></li>
 </ul>
 
-<img data-src="img/distributional-example.svg" style="width:70.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/distributional-example.svg" style="width:70.0%" class="r-stretch"></section>
 
 <section id="distributional-learning-2" class="title-slide slide level1 center">
 <h1>Distributional learning</h1>
@@ -405,7 +406,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">R_t \sim \mathcal{Z}^\pi(s_t, a_t)</span></p>
 
-<img data-src="img/distributionallearning.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/distributionallearning.png" class="r-stretch"><ul>
 <li>Note that we can always obtain the Q-values back:</li>
 </ul>
 <p><span class="math display">Q^\pi(s, a) = \mathbb{E}_\pi [\mathcal{Z}^\pi(s, a)]</span></p>
@@ -415,11 +416,7 @@ Julien Vitay
 <h1>Categorical DQN</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/distributionallearning.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>In categorical DQN (Bellemare et al., 2017), we model the distribution of returns as a <strong>discrete probability distribution</strong>.</p>
@@ -446,7 +443,7 @@ Julien Vitay
 <section id="categorical-dqn-1" class="title-slide slide level1 center">
 <h1>Categorical DQN</h1>
 
-<img data-src="img/distributionallearning.png" style="width:40.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/distributionallearning.png" style="width:40.0%" class="r-stretch"><ul>
 <li>The <span class="math inline">n</span> probabilities <span class="math inline">\{p_i(s, a; \theta)\}_{i=1}^n</span> completely define the parameterized distribution <span class="math inline">\mathcal{Z}_\theta(s, a)</span>.</li>
 </ul>
 <p><span class="math display">\mathcal{Z}_\theta(s, a) = \sum_a p_i(s, a; \theta) \,\delta_{z_i}</span></p>
@@ -553,17 +550,9 @@ Julien Vitay
 </span></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/distributionallearning2.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/distributionallearning3.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -571,7 +560,7 @@ Julien Vitay
 <section id="categorical-dqn-8" class="title-slide slide level1 center">
 <h1>Categorical DQN</h1>
 
-<img data-src="img/distributionallearning3.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/distributionallearning3.png" class="r-stretch"><ul>
 <li><p>We now have two distributions <span class="math inline">\mathcal{Z}_\theta(s, a)</span> and <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span> sharing the same support.</p></li>
 <li><p>We now want to have the prediction <span class="math inline">\mathcal{Z}_\theta(s, a)</span> close from the target <span class="math inline">\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)</span>.</p></li>
 <li><p>These are probability distributions, not numbers, so we cannot use the mse.</p></li>
@@ -610,7 +599,7 @@ Julien Vitay
 <li>But it could be any target distribution, as long as <span class="math inline">\mathbf{t}</span> and <span class="math inline">\mathbf{y}</span> share the same support.</li>
 </ul>
 
-<img data-src="img/crossentropy-animation.gif" style="width:60.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/crossentropy-animation.gif" style="width:60.0%" class="r-stretch"></section>
 
 <section id="reminder-dqn" class="title-slide slide level1 center">
 <h1>Reminder: DQN</h1>
@@ -668,7 +657,7 @@ Julien Vitay
 <section id="categorical-dqn-10" class="title-slide slide level1 center">
 <h1>Categorical DQN</h1>
 
-<img data-src="img/categorical-dqn-algo.png" style="width:70.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/categorical-dqn-algo.png" style="width:70.0%" class="r-stretch"><div class="footer">
 <p>Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887</p>
 </div>
 </section>
@@ -676,7 +665,7 @@ Julien Vitay
 <section id="categorical-dqn-11" class="title-slide slide level1 center">
 <h1>Categorical DQN</h1>
 
-<img data-src="img/categorical-dqn-example.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/categorical-dqn-example.png" class="r-stretch"><div class="footer">
 <p>Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887</p>
 </div>
 </section>
@@ -694,7 +683,7 @@ Julien Vitay
 <section id="categorical-dqn-13" class="title-slide slide level1 center">
 <h1>Categorical DQN</h1>
 
-<img data-src="img/categorical-dqn-results1.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/categorical-dqn-results1.png" class="r-stretch"><div class="footer">
 <p>Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887</p>
 </div>
 </section>
@@ -702,7 +691,7 @@ Julien Vitay
 <section id="categorical-dqn-14" class="title-slide slide level1 center">
 <h1>Categorical DQN</h1>
 
-<img data-src="img/categorical-dqn-results2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/categorical-dqn-results2.png" class="r-stretch"><div class="footer">
 <p>Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887</p>
 </div>
 </section>
@@ -729,7 +718,7 @@ Julien Vitay
 <section id="noisy-dqn" class="title-slide slide level1 center">
 <h1>2 - Noisy DQN</h1>
 
-<img data-src="img/paper-noisynet.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-noisynet.png" class="r-stretch"><div class="footer">
 <p>Fortunato et al.&nbsp;(2017). Noisy Networks for Exploration. arXiv:170610295</p>
 </div>
 </section>
@@ -817,7 +806,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">\theta \sim \mathcal{N}(\mu_\theta, \sigma_\theta^2)</span></p>
 <ul>
-<li><p>As the random variables <span class="math inline">\epsilon_i \sim \mathcal{N}(0, 1)</span> are not correlated with anything, the variances <span class="math inline">\sigma_\theta^2</span> should decay to 0.</p></li>
+<li><p>As the random variables <span class="math inline">\epsilon_i  \sim \mathcal{N}(0, 1)</span> are not correlated with anything, the variances <span class="math inline">\sigma_\theta^2</span> should decay to 0.</p></li>
 <li><p>The variances <span class="math inline">\sigma_\theta^2</span> represent the <strong>uncertainty</strong> about the prediction <span class="math inline">y</span>.</p></li>
 <li><p>Applied to DQN, this means that a state which has not been visited very often will have a high uncertainty:</p>
 <ul>
@@ -848,7 +837,7 @@ Julien Vitay
 <li><p><strong>Parameter noise</strong> improves the performance of <span class="math inline">\epsilon</span>-greedy-based methods, including DQN, dueling DQN, A3C, DDPG (see later), etc.</p></li>
 </ul>
 
-<img data-src="img/noisydqn2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/noisydqn2.png" class="r-stretch"><div class="footer">
 <p>Fortunato et al.&nbsp;(2017). Noisy Networks for Exploration. arXiv:170610295</p>
 </div>
 </section>
@@ -856,7 +845,7 @@ Julien Vitay
 <section id="rainbow-network" class="title-slide slide level1 center">
 <h1>3 - Rainbow network</h1>
 
-<img data-src="img/paper-rainbow.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-rainbow.png" class="r-stretch"><div class="footer">
 <p>Hessel et al.&nbsp;(2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298</p>
 </div>
 </section>
@@ -900,11 +889,7 @@ Julien Vitay
 <h1>Rainbow network</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rainbow-results1.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>Answer: all of them.</p></li>
@@ -929,11 +914,7 @@ Julien Vitay
 <h1>Rainbow network</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rainbow-results2.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>Most of these mechanisms are necessary to achieve optimal performance (<strong>ablation studies</strong>).</p></li>
@@ -955,7 +936,7 @@ Julien Vitay
 <section id="gorila---general-reinforcement-learning-architecture" class="title-slide slide level1 center">
 <h1>4 - Gorila - General Reinforcement Learning Architecture</h1>
 
-<img data-src="img/paper-gorila.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-gorila.png" class="r-stretch"><div class="footer">
 <p>Nair et al.&nbsp;(2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296</p>
 </div>
 </section>
@@ -972,11 +953,7 @@ Julien Vitay
 </ul></li>
 </ul>
 </div><div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/gorila1.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -997,7 +974,7 @@ Julien Vitay
 <li><p>The parameter server (<strong>master network</strong>) applies the gradients on the parameters and frequently <strong>synchronizes</strong> the actors and learners.</p></li>
 </ul>
 
-<img data-src="img/gorila2.png" style="width:75.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/gorila2.png" style="width:75.0%" class="r-stretch"><div class="footer">
 <p>Nair et al.&nbsp;(2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296</p>
 </div>
 </section>
@@ -1009,11 +986,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/gorila-results1.png"></p>
-</figure>
-</div>
 <div class="footer">
 <p>Nair et al.&nbsp;(2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296</p>
 </div>
@@ -1021,11 +994,7 @@ Julien Vitay
 <ul>
 <li>The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/gorila-results2.png" style="width:80.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1037,7 +1006,7 @@ Julien Vitay
 <li><p>What matters is collecting transitions very quickly (multiple workers) but using <strong>prioritized experience replay</strong> to learn from the most interesting ones.</p></li>
 </ul>
 
-<img data-src="img/apex.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/apex.png" class="r-stretch"><div class="footer">
 <p>Horgan et al.&nbsp;(2018). Distributed Prioritized Experience Replay. arXiv:180300933</p>
 </div>
 </section>
@@ -1048,7 +1017,7 @@ Julien Vitay
 <li>Using 360 workers (1 per CPU core), Ape-X reaches super-human performance for a fraction of the wall-clock training time.</li>
 </ul>
 
-<img data-src="img/apex-results.png" style="width:80.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/apex-results.png" style="width:80.0%" class="r-stretch"><div class="footer">
 <p>Horgan et al.&nbsp;(2018). Distributed Prioritized Experience Replay. arXiv:180300933</p>
 </div>
 </section>
@@ -1060,7 +1029,7 @@ Julien Vitay
 <li><p>The learner uses n-step returns and the double dueling DQN network architecture, so it is not much different from Rainbow DQN internally.</p></li>
 </ul>
 
-<img data-src="img/apex-results2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/apex-results2.png" class="r-stretch"><div class="footer">
 <p>Horgan et al.&nbsp;(2018). Distributed Prioritized Experience Replay. arXiv:180300933</p>
 </div>
 </section>
@@ -1068,7 +1037,7 @@ Julien Vitay
 <section id="drqn-deep-recurrent-q-network" class="title-slide slide level1 center">
 <h1>5 - DRQN: Deep Recurrent Q-network</h1>
 
-<img data-src="img/paper-drqn.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-drqn.png" class="r-stretch"><div class="footer">
 <p>Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527</p>
 </div>
 </section>
@@ -1080,7 +1049,7 @@ Julien Vitay
 <li><p>One cannot infer the velocity of the ball from a single frame.</p></li>
 </ul>
 
-<img data-src="img/drqn3.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/drqn3.png" style="width:60.0%" class="r-stretch"><div class="footer">
 <p>Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527</p>
 </div>
 </section>
@@ -1095,11 +1064,7 @@ Julien Vitay
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/drqn1.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>The trick used by DQN and its variants is to <strong>stack</strong> the last four frames and provide them as inputs to the CNN.</p></li>
@@ -1111,11 +1076,7 @@ Julien Vitay
 
 <section id="drqn-deep-recurrent-q-network-3" class="title-slide slide level1 center">
 <h1>DRQN: Deep Recurrent Q-network</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/RNN-unrolled.png" style="width:80.0%"></p>
-</figure>
-</div>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
@@ -1158,7 +1119,7 @@ Julien Vitay
 <section id="drqn-deep-recurrent-q-network-5" class="title-slide slide level1 center">
 <h1>DRQN: Deep Recurrent Q-network</h1>
 
-<img data-src="img/drqn-architecture2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/drqn-architecture2.png" class="r-stretch"><div class="footer">
 <p>Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527</p>
 </div>
 </section>
@@ -1166,7 +1127,7 @@ Julien Vitay
 <section id="drqn-deep-recurrent-q-network-6" class="title-slide slide level1 center">
 <h1>DRQN: Deep Recurrent Q-network</h1>
 
-<img data-src="img/RNN-unrolled.png" style="width:80.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/RNN-unrolled.png" style="width:80.0%" class="r-stretch"><ul>
 <li><p>The only problem is that RNNs are trained using truncated <strong>backpropagation through time</strong> (BPTT).</p></li>
 <li><p>One needs to provide a partial history of <span class="math inline">T = 10</span> inputs to the network in order to learn one output:</p></li>
 </ul>
@@ -1183,7 +1144,7 @@ Julien Vitay
 <li>Using a LSTM layer helps on certain games, where temporal dependencies are longer that 4 frames, but impairs on others.</li>
 </ul>
 
-<img data-src="img/drqn4.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/drqn4.png" style="width:60.0%" class="r-stretch"><div class="footer">
 <p>Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527</p>
 </div>
 </section>
@@ -1195,7 +1156,7 @@ Julien Vitay
 <li><p>Stacking frames is still a reasonable option.</p></li>
 </ul>
 
-<img data-src="img/drqn5.png" style="width:60.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/drqn5.png" style="width:60.0%" class="r-stretch"><div class="footer">
 <p>Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527</p>
 </div>
 </section>
@@ -1203,7 +1164,7 @@ Julien Vitay
 <section id="r2d2-recurrent-replay-distributed-dqn" class="title-slide slide level1 center">
 <h1>6 - R2D2: Recurrent Replay Distributed DQN</h1>
 
-<img data-src="img/paper-r2d2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-r2d2.png" class="r-stretch"><div class="footer">
 <p>Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. ICLR.</p>
 </div>
 </section>
@@ -1220,31 +1181,33 @@ Julien Vitay
 <li><p>Additionally solving practical problems with LSTMs (initial state), it became the state of the art on Atari-57 until November 2019…</p></li>
 </ul>
 
-<img data-src="img/r2d2-results.png" style="width:80.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/r2d2-results.png" style="width:80.0%" class="r-stretch"><div class="footer">
 <p>Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. ICLR.</p>
 </div>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="3.2-BeyondDQN_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1254,13 +1217,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1414,7 +1376,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1498,10 +1460,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1511,8 +1472,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

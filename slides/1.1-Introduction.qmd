@@ -6,12 +6,11 @@ author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
 
 resources: pdf/1.1-Introduction.pdf
-
 ---
 
 # 1 - What is reinforcement learning?
 
-![](img/ml-areas.png)
+![](img/ml-areas.png){width=80%}
 
 # Different types of machine learning depending on the feedback
 
@@ -28,7 +27,6 @@ resources: pdf/1.1-Introduction.pdf
 # Many faces of RL
 
 ![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/rl-interdisciplinary.png){width=70%}
-
 
 
 # A brief history of reinforcement learning
@@ -96,12 +94,11 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 ::::
 
 
-Sutton and Barto (1998). Reinforcement Learning: An Introduction. MIT Press. 
+@Sutton1998 . Reinforcement Learning: An Introduction. MIT Press. 
 
-Sutton and Barto (2017). Reinforcement Learning: An Introduction. MIT Press. 2nd edition.
+@Sutton2017 . Reinforcement Learning: An Introduction. MIT Press. 2nd edition.
 
 <http://incompleteideas.net/sutton/book/the-book.html>
-
 
 
 
@@ -542,6 +539,7 @@ Source: <https://towardsdatascience.com/cartpole-introduction-to-reinforcement-l
 {{< youtube XiigTGKZfks >}}
 
 
+
 # Board games (Backgammon, Chess, Go, etc)
 
 
@@ -607,7 +605,7 @@ score increases.
 :::
 
 ::: footer
-Mnih et al. (2013). Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
 :::
 
 # Atari games
@@ -615,7 +613,7 @@ Mnih et al. (2013). Playing Atari with Deep Reinforcement Learning. NIPS. <http:
 ![](img/discrete.png)
 
 ::: footer
-Mnih et al. (2013). Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
 :::
 
 
@@ -689,7 +687,7 @@ linear velocity (+), crashes (-)
 * Training took several weeks on 1202 CPUs and 176 GPUs.
 
 ::: footer
-Silver et al. (2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815
+@Silver2016 Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815
 :::
 
 # AlphaGo
@@ -728,7 +726,7 @@ Silver et al. (2016). Mastering the game of Go with deep neural networks and tre
 
 
 ::: footer
-Degrave et al. (2022). Magnetic control of tokamak plasmas through deep reinforcement learning. Nature, 602(7897). doi/10.1038/s41586-021-04301-9
+@Degrave2022 Magnetic control of tokamak plasmas through deep reinforcement learning. Nature, 602(7897). doi/10.1038/s41586-021-04301-9
 :::
 
 
@@ -737,7 +735,7 @@ Degrave et al. (2022). Magnetic control of tokamak plasmas through deep reinforc
 ![](img/chipdesign.png)
 
 ::: footer
-Roy et al. (2022). PrefixRL: Optimization of Parallel Prefix Circuits using Deep Reinforcement Learning. doi:10.1109/DAC18074.2021.9586094
+@Roy2022 PrefixRL: Optimization of Parallel Prefix Circuits using Deep Reinforcement Learning. doi:10.1109/DAC18074.2021.9586094
 :::
 
 # Real robotics
@@ -921,7 +919,7 @@ time before humans take control.
 :::
 
 
-# References 
+# Suggested reading 
 
 * Sutton and Barto (1998, 2017). Reinforcement Learning: An Introduction. MIT Press. 
 
@@ -939,4 +937,6 @@ time before humans take control.
 
 <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>
 
+
+# References
 

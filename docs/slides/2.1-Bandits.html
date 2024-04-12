@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2.1-Bandits_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.1-Bandits_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2.1-Bandits_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.1-Bandits_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2.1-Bandits_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.1-Bandits_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="2.1-Bandits_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2.1-Bandits_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2.1-Bandits_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2.1-Bandits_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="2.1-Bandits_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="2.1-Bandits_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2.1-Bandits_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2.1-Bandits_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2.1-Bandits_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="2.1-Bandits_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="2.1-Bandits_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -385,7 +386,7 @@ Julien Vitay
 <section id="evaluative-feedback" class="title-slide slide level1 center">
 <h1>Evaluative Feedback</h1>
 
-<img data-src="img/trialerror.jpg" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/trialerror.jpg" class="r-stretch"><ul>
 <li><p>RL evaluates actions through <strong>trial-and-error</strong> rather than comparing its predictions to the correct actions.</p>
 <ul>
 <li><p>RL: <strong>evaluative feedback</strong> depends completely on the action taken.</p></li>
@@ -403,11 +404,7 @@ Julien Vitay
 <h1>n-armed bandits</h1>
 <div class="columns">
 <div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/narmedbandit.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:70%;">
 <ul>
 <li><p>The <strong>n-armed bandit</strong> (or multi-armed bandit) is a non-associative evaluative feedback procedure.</p></li>
@@ -423,11 +420,7 @@ Julien Vitay
 <h1>n-armed bandits</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-example.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>We have the choice between <span class="math inline">N</span> different actions <span class="math inline">(a_1, ..., a_N)</span>.</p></li>
@@ -455,11 +448,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-samples.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>We only have access to <strong>samples</strong> of <span class="math inline">r(a)</span> by taking the action <span class="math inline">a</span> at time <span class="math inline">t</span> (a <strong>trial</strong>, <strong>play</strong> or <strong>step</strong>).</li>
@@ -483,11 +472,7 @@ Julien Vitay
 <h1>Sampling-based evaluation</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-samples2.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>The expectation of the reward distribution can be approximated by the <strong>mean</strong> of its samples:</li>
@@ -550,7 +535,7 @@ Julien Vitay
 <li><p>If the reward distribution is <strong>non-stationary</strong>, the <span class="math inline">\frac{1}{t+1}</span> term will become very small and prevent rapid updates of the mean.</p></li>
 </ul>
 
-<img data-src="img/bandit-nonstationary1.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-nonstationary1.png" class="r-stretch"></section>
 
 <section id="online-evaluation-2" class="title-slide slide level1 center">
 <h1>Online evaluation</h1>
@@ -568,17 +553,13 @@ Julien Vitay
 <li>The computed value is called a <strong>moving average</strong> (or sliding average), as if one used only a small window of the past history.</li>
 </ul>
 
-<img data-src="img/bandit-nonstationary2.png" style="width:50.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-nonstationary2.png" style="width:50.0%" class="r-stretch"></section>
 
 <section id="online-evaluation-3" class="title-slide slide level1 center">
 <h1>Online evaluation</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-nonstationary2.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>Moving average:</li>
@@ -618,11 +599,7 @@ Julien Vitay
 <h1>Action selection</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-estimates.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>Let’s suppose we have formed reasonable estimates of the Q-values <span class="math inline">Q_t(a)</span> at time <span class="math inline">t</span>.</p></li>
@@ -650,7 +627,7 @@ Julien Vitay
 <section id="greedy-action-selection" class="title-slide slide level1 center">
 <h1>Greedy action selection</h1>
 
-<img data-src="img/bandit-estimates-greedy.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/bandit-estimates-greedy.png" class="r-stretch"><ul>
 <li>The <strong>greedy action</strong> is the action whose estimated value is <strong>maximal</strong> at time <span class="math inline">t</span> based on our current estimates:</li>
 </ul>
 <p><span class="math display">
@@ -665,7 +642,7 @@ Julien Vitay
 <section id="greedy-action-selection-1" class="title-slide slide level1 center">
 <h1>Greedy action selection</h1>
 
-<img data-src="img/bandit-estimates-greedy.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/bandit-estimates-greedy.png" class="r-stretch"><ul>
 <li>This defines the <strong>greedy policy</strong>, where the probability of taking the greedy action is 1 and the probability of selecting another action is 0:</li>
 </ul>
 <p><span class="math display">
@@ -685,7 +662,7 @@ Julien Vitay
 <li>Greedy action selection only works when the estimates are good enough.</li>
 </ul>
 
-<img data-src="img/bandit-estimates-greedy-problem1.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-estimates-greedy-problem1.png" class="r-stretch"></section>
 
 <section id="problem-with-greedy-action-selection-1" class="title-slide slide level1 center">
 <h1>Problem with greedy action selection</h1>
@@ -693,7 +670,7 @@ Julien Vitay
 <li>Estimates are initially bad (e.g.&nbsp;0 here), so an action is sampled randomly and a reward is received.</li>
 </ul>
 
-<img data-src="img/bandit-estimates-greedy-problem2.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-estimates-greedy-problem2.png" class="r-stretch"></section>
 
 <section id="problem-with-greedy-action-selection-2" class="title-slide slide level1 center">
 <h1>Problem with greedy action selection</h1>
@@ -701,7 +678,7 @@ Julien Vitay
 <li>The Q-value of that action becomes positive, so it becomes the greedy action.</li>
 </ul>
 
-<img data-src="img/bandit-estimates-greedy-problem3.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-estimates-greedy-problem3.png" class="r-stretch"></section>
 
 <section id="problem-with-greedy-action-selection-3" class="title-slide slide level1 center">
 <h1>Problem with greedy action selection</h1>
@@ -709,12 +686,12 @@ Julien Vitay
 <li>Greedy action selection will always select that action, although the second one would have been better.</li>
 </ul>
 
-<img data-src="img/bandit-estimates-greedy-problem4.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-estimates-greedy-problem4.png" class="r-stretch"></section>
 
 <section id="exploration-exploitation-dilemma" class="title-slide slide level1 center">
 <h1>Exploration-exploitation dilemma</h1>
 
-<img data-src="img/exploration_vs_exploitation.png" style="width:45.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/exploration_vs_exploitation.png" style="width:45.0%" class="r-stretch"><ul>
 <li><p>This <strong>exploration-exploitation</strong> dilemma is the hardest problem in RL:</p>
 <ul>
 <li><p><strong>Exploitation</strong> is using the current estimates to select an action: they might be wrong!</p></li>
@@ -731,7 +708,7 @@ Julien Vitay
 <section id="epsilon-greedy-action-selection" class="title-slide slide level1 center">
 <h1><span class="math inline">\epsilon</span>-greedy action selection</h1>
 
-<img data-src="img/bandit-estimates-epsilongreedy.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/bandit-estimates-epsilongreedy.png" class="r-stretch"><ul>
 <li><p><strong><span class="math inline">\epsilon</span>-greedy action selection</strong> ensures a trade-off between exploitation and exploration.</p></li>
 <li><p>The greedy action is selected with probability <span class="math inline">1 - \epsilon</span> (with <span class="math inline">0 &lt; \epsilon &lt;1</span>), the others with probability <span class="math inline">\epsilon</span>:</p></li>
 </ul>
@@ -743,7 +720,7 @@ Julien Vitay
 <section id="epsilon-greedy-action-selection-1" class="title-slide slide level1 center">
 <h1><span class="math inline">\epsilon</span>-greedy action selection</h1>
 
-<img data-src="img/bandit-estimates-epsilongreedy.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/bandit-estimates-epsilongreedy.png" class="r-stretch"><ul>
 <li><p>The parameter <span class="math inline">\epsilon</span> controls the level of exploration: the higher <span class="math inline">\epsilon</span>, the more exploration.</p></li>
 <li><p>One can set <span class="math inline">\epsilon</span> high at the beginning of learning and progressively reduce it to exploit more.</p></li>
 <li><p>However, it chooses equally among all actions: the worst action is as likely to be selected as the next-to-best action.</p></li>
@@ -753,7 +730,7 @@ Julien Vitay
 <section id="softmax-action-selection" class="title-slide slide level1 center">
 <h1>Softmax action selection</h1>
 
-<img data-src="img/bandit-estimates-softmax.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/bandit-estimates-softmax.png" class="r-stretch"><ul>
 <li><p><strong>Softmax action selection</strong> defines the probability of choosing an action using all estimated value.</p></li>
 <li><p>It represents the policy using a Gibbs (or Boltzmann) distribution:</p></li>
 </ul>
@@ -766,7 +743,7 @@ Julien Vitay
 <section id="softmax-action-selection-1" class="title-slide slide level1 center">
 <h1>Softmax action selection</h1>
 
-<img data-src="img/bandit-estimates-softmax2.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/bandit-estimates-softmax2.png" class="r-stretch"><ul>
 <li><p>Just as <span class="math inline">\epsilon</span>, the temperature <span class="math inline">\tau</span> controls the level of exploration:</p>
 <ul>
 <li><p>High temperature causes the actions to be nearly equiprobable (<strong>random agent</strong>).</p></li>
@@ -778,11 +755,7 @@ Julien Vitay
 <section id="example-of-action-selection-for-the-10-armed-bandit" class="title-slide slide level1 center">
 <h1>Example of action selection for the 10-armed bandit</h1>
 <div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/narmedbandit2.jpg" style="width:60.0%"></p>
-</figure>
-</div>
 </div>
 <p><strong>Procedure as in (Sutton and Barto, 2017):</strong></p>
 <ul>
@@ -801,7 +774,7 @@ Julien Vitay
 <li><p>The more actions you have, the more likely you will get stuck in a <strong>suboptimal policy</strong>.</p></li>
 </ul>
 
-<img data-src="img/bandit-greedy.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-greedy.gif" class="r-stretch"></section>
 
 <section id="epsilon-greedy-action-selection-2" class="title-slide slide level1 center">
 <h1><span class="math inline">\epsilon</span>-greedy action selection</h1>
@@ -810,7 +783,7 @@ Julien Vitay
 <li><p>It is not always able to recognize the optimal action (it depends on the variance of the rewards).</p></li>
 </ul>
 
-<img data-src="img/bandit-egreedy.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-egreedy.gif" class="r-stretch"></section>
 
 <section id="softmax-action-selection-2" class="title-slide slide level1 center">
 <h1>Softmax action selection</h1>
@@ -819,23 +792,15 @@ Julien Vitay
 <li><p>The estimated Q-values are much closer to the true values than with (<span class="math inline">\epsilon</span>-)greedy methods.</p></li>
 </ul>
 
-<img data-src="img/bandit-softmax.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-softmax.gif" class="r-stretch"></section>
 
 <section id="greedy-vs.-epsilon-greedy" class="title-slide slide level1 center">
 <h1>Greedy vs.&nbsp;<span class="math inline">\epsilon</span>-greedy</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison1.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison2.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -849,17 +814,9 @@ Julien Vitay
 <h1>Softmax vs.&nbsp;<span class="math inline">\epsilon</span>-greedy</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison3.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison4.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -877,23 +834,15 @@ Julien Vitay
 <li><p>It is however hard to find the right <strong>decay rate</strong> for the exploration parameters.</p></li>
 </ul>
 
-<img data-src="img/bandit-scheduling.png" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-scheduling.png" class="r-stretch"></section>
 
 <section id="exploration-schedule-1" class="title-slide slide level1 center">
 <h1>Exploration schedule</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison5.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison6.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -932,12 +881,12 @@ Julien Vitay
 <li><p>This leads however to an <strong>overestimation</strong> of the value of other actions.</p></li>
 </ul>
 
-<img data-src="img/bandit-optimistic.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-optimistic.gif" class="r-stretch"></section>
 
 <section id="reinforcement-comparison" class="title-slide slide level1 center">
 <h1>Reinforcement comparison</h1>
 <ul>
-<li><p>Actions followed by large rewards should be made more likely to recur, whereas actions followed by small rewards should be made less likely to recur.</p></li>
+<li><p>Actions followed by large rewards should be made more likely to reoccur, whereas actions followed by small rewards should be made less likely to reoccur.</p></li>
 <li><p>But what is a large/small reward? Is a reward of 5 large or small?</p></li>
 <li><p><strong>Reinforcement comparison</strong> methods only maintain a <strong>preference</strong> <span class="math inline">p_t(a)</span> for each action, which is not exactly its Q-value.</p></li>
 <li><p>The preference for an action is updated after each play, according to the update rule:</p></li>
@@ -971,7 +920,7 @@ Julien Vitay
     \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
 </span></p>
 
-<img data-src="img/bandit-reinforcementcomparison.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-reinforcementcomparison.gif" class="r-stretch"></section>
 
 <section id="reinforcement-comparison-2" class="title-slide slide level1 center">
 <h1>Reinforcement comparison</h1>
@@ -982,17 +931,9 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison7.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison8.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1033,7 +974,7 @@ Julien Vitay
 <li><p>No need for a temperature parameter!</p></li>
 </ul>
 
-<img data-src="img/bandit-gradientbandit.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-gradientbandit.gif" class="r-stretch"></section>
 
 <section id="gradient-bandit-algorithm-2" class="title-slide slide level1 center">
 <h1>Gradient bandit algorithm</h1>
@@ -1042,17 +983,9 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison9.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison10.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1102,7 +1035,7 @@ Julien Vitay
     a^*_t = \text{argmax}_{a} \left[ Q_t(a) + c \, \sqrt{\frac{\ln t}{N_t(a)}} \right]
 </span></p>
 
-<img data-src="img/bandit-ucb.gif" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/bandit-ucb.gif" class="r-stretch"></section>
 
 <section id="upper-confidence-bound-action-selection-3" class="title-slide slide level1 center">
 <h1>Upper-Confidence-Bound action selection</h1>
@@ -1111,17 +1044,9 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison11.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/bandit-comparison12.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1190,28 +1115,30 @@ Julien Vitay
 <blockquote>
 <p>Agarwal, A., Hsu, D., Kale, S., Langford, J., Li, L., and Schapire, R. E. (2014). Taming the Monster: A Fast and Simple Algorithm for Contextual Bandits. in Proceedings of the 31 st International Conference on Machine Learning (Beijing, China), 9. <a href="http://proceedings.mlr.press/v32/agarwalb14.pdf" class="uri">http://proceedings.mlr.press/v32/agarwalb14.pdf</a></p>
 </blockquote>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2.1-Bandits_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2.1-Bandits_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1221,13 +1148,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1381,7 +1307,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1465,10 +1391,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1478,8 +1403,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

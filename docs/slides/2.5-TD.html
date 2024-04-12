@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2.5-TD_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.5-TD_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2.5-TD_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.5-TD_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2.5-TD_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.5-TD_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="2.5-TD_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2.5-TD_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2.5-TD_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2.5-TD_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="2.5-TD_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="2.5-TD_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2.5-TD_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2.5-TD_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2.5-TD_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="2.5-TD_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="2.5-TD_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -385,11 +386,7 @@ Julien Vitay
 <p>we could replace <span class="math inline">R_{t+1}</span> by an estimate, which is the value of the next state <span class="math inline">V^\pi(s_{t+1}) = \mathbb{E}_\pi [R_{t+1} | s_{t+1}=s]</span>:</p>
 <p><span class="math display">R_t \approx r_{t+1} + \gamma \,  V^\pi(s_{t+1})</span></p>
 </div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/MCTD.svg" style="width:80.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -432,11 +429,7 @@ Julien Vitay
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Backup diagram of TD(0)</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup-TD.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:70%;">
 <!-- ![](img/td-algo.png) -->
 <ul>
@@ -497,7 +490,7 @@ Julien Vitay
 <section id="exploration-exploitation-problem" class="title-slide slide level1 center">
 <h1>Exploration-exploitation problem</h1>
 
-<img data-src="img/exploration_vs_exploitation.png" style="width:50.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/exploration_vs_exploitation.png" style="width:50.0%" class="r-stretch"><ul>
 <li>Q-values can be estimated in the same way:</li>
 </ul>
 <p><span class="math display">
@@ -520,11 +513,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:100%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sarsa-sequence.png" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:0%;">
 
 </div>
@@ -550,11 +539,7 @@ Julien Vitay
 <h1>SARSA: On-policy TD control</h1>
 <div class="columns">
 <div class="column" style="width:100%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sarsa-sequence.png" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:0%;">
 
 </div>
@@ -590,11 +575,7 @@ Julien Vitay
 <h1>Q-learning: Off-policy TD control</h1>
 <div class="columns">
 <div class="column" style="width:100%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/sarsa-sequence.png" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:0%;">
 
 </div>
@@ -727,11 +708,7 @@ Julien Vitay
 <h1>Actor-critic methods</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/actorcritic.png" style="width:60.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>Actor-critic methods are TD methods that have a separate memory structure to explicitly represent the policy independent of the value function.</p></li>
@@ -768,11 +745,7 @@ Julien Vitay
 <h1>Actor-critic methods</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/actorcritic.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>TD error after each transition:</li>
@@ -831,11 +804,7 @@ Julien Vitay
 <h1>Actor-critic methods</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/actorcritic-perceptron.jpg"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>The advantage of the separation between the actor and the critic is that now the actor can take any form (preferences, linear approximation, deep networks).</p></li>
@@ -914,11 +883,7 @@ Julien Vitay
 <h1>Bias-variance trade-off</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/biasvariance.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>MC has <strong>high variance, zero bias</strong>:</p>
@@ -941,7 +906,7 @@ Julien Vitay
 <section id="drawback-of-learning-from-single-transitions" class="title-slide slide level1 center">
 <h1>Drawback of learning from single transitions</h1>
 
-<img data-src="img/gridworld-lambda.png" style="width:60.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/gridworld-lambda.png" style="width:60.0%" class="r-stretch"><ul>
 <li>When the reward function is sparse (e.g.&nbsp;only at the end of a game), only the last action, leading to that reward, will be updated the first time in TD.</li>
 </ul>
 <p><span class="math display">
@@ -957,11 +922,7 @@ Julien Vitay
 <h1>n-step advantage</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/nstep.png" style="width:80.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li><p>Optimally, we would like a trade-off between:</p>
@@ -1036,16 +997,8 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <li><p>Large n-step returns (MC) should not have as much importance as small ones (TD), as they have a high variance.</p></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/eligibility-forward.png" style="width:80.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/eligibility-forward-decay.png"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1065,23 +1018,15 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <li><p>This <strong>forward view</strong> of eligibility traces implies to look at all future rewards until the end of the episode to perform a value update. This prevents online learning using single transitions.</p></li>
 </ul>
 
-<img data-src="img/eligibility-forward-view.png" style="width:60.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/eligibility-forward-view.png" style="width:60.0%" class="r-stretch"></section>
 
 <section id="eligibility-traces-backward-view" class="title-slide slide level1 center">
 <h1>Eligibility traces : backward view</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/eligibility-backwards.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/traces.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <div class="columns">
@@ -1154,7 +1099,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <section id="eligibility-traces" class="title-slide slide level1 center">
 <h1>Eligibility traces</h1>
 
-<img data-src="img/gridworld-lambda.png" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/gridworld-lambda.png" style="width:70.0%" class="r-stretch"><ul>
 <li><p>The backward view of eligibility traces can be applied on single transitions, given we know the history of visited states and maintain a trace for each of them.</p></li>
 <li><p>Eligibility traces are a very useful way to speed learning up in TD methods and control the bias/variance trade-off.</p></li>
 <li><p>This modification can be applied to all TD methods: TD(<span class="math inline">\lambda</span>) for states, SARSA(<span class="math inline">\lambda</span>) and Q(<span class="math inline">\lambda</span>) for actions.</p></li>
@@ -1204,11 +1149,7 @@ A^2_t &amp;= r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, V(s_{t+2}) - V(s_{t}) \\
 <h1>Generalized advantage estimation (GAE)</h1>
 <div class="columns">
 <div class="column" style="width:45%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/nstep.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:55%;">
 <ul>
 <li>The <strong>n-step advantage</strong> realizes a bias/variance trade-off, but which value of <span class="math inline">n</span> should we choose?</li>
@@ -1340,28 +1281,30 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 
 ![](img/rl-overview.png)
  -->
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2.5-TD_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2.5-TD_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2.5-TD_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2.5-TD_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1371,13 +1314,12 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1531,7 +1473,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1615,10 +1557,9 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1628,8 +1569,17 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

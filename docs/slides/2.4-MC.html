@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="2.4-MC_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.4-MC_files/libs/quarto-html/tabby.min.js"></script>
-<script src="2.4-MC_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.4-MC_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="2.4-MC_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.4-MC_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="2.4-MC_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="2.4-MC_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="2.4-MC_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="2.4-MC_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="2.4-MC_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -47,12 +47,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="2.4-MC_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="2.4-MC_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="2.4-MC_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="2.4-MC_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="2.4-MC_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="2.4-MC_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -174,7 +174,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -362,11 +363,7 @@ Julien Vitay
 <h1>Principle of Monte-Carlo (MC) methods</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rewardtogo.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li>The value of each state is defined as the mathematical expectation of the return obtained after that state and thereafter following the policy <span class="math inline">\pi</span>:</li>
@@ -393,11 +390,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:15%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup-MC.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:85%;">
 <ul>
 <li><p><strong>while</strong> True:</p>
@@ -424,11 +417,7 @@ Julien Vitay
 <h1>Monte-Carlo policy evaluation of action values</h1>
 <div class="columns">
 <div class="column" style="width:15%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/backup-MC.png" style="width:100.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:85%;">
 <ul>
 <li><p>The same method can be used to estimate Q-values.</p></li>
@@ -461,7 +450,7 @@ Julien Vitay
 <li>After each episode, the state or action values of the visited <span class="math inline">(s, a)</span> pairs have changed, so the current policy might not be optimal anymore.</li>
 </ul>
 
-<img data-src="img/mc-control.png" style="width:20.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/mc-control.png" style="width:20.0%" class="r-stretch"><ul>
 <li>As in DP, the policy can then be improved in a greedy manner:</li>
 </ul>
 <p><span class="math display">\begin{aligned}
@@ -547,11 +536,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/epsilonggreedy-example.png"></p>
-</figure>
-</div>
 <ul>
 <li><strong><span class="math inline">\epsilon</span>-Greedy action selection</strong> randomly selects non-greedy actions with a small probability <span class="math inline">\epsilon</span>:</li>
 </ul>
@@ -559,11 +544,7 @@ Julien Vitay
     \pi(s, a) = \begin{cases} 1 - \epsilon \; \text{if} \; a = \text{argmax}\, Q(s, a) \\ \frac{\epsilon}{|\mathcal{A}| - 1} \; \text{otherwise.} \end{cases}
 </span></p>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/softmax-example.png"></p>
-</figure>
-</div>
 <ul>
 <li><strong>Softmax action selection</strong> uses a Gibbs (or Boltzmann) distribution to represent the probability of choosing the action <span class="math inline">a</span> in state <span class="math inline">s</span>:</li>
 </ul>
@@ -629,11 +610,7 @@ Julien Vitay
 </figure>
 </div>
 </div><div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/googledatacenter_1.png"></p>
-</figure>
-</div>
 </div>
 </div>
 <ul>
@@ -662,7 +639,7 @@ Julien Vitay
 <section id="importance-sampling-1" class="title-slide slide level1 center">
 <h1>Importance sampling</h1>
 
-<img data-src="img/importancesampling.svg" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/importancesampling.svg" class="r-stretch"><ul>
 <li><p>If you try to estimate a parameter of a random distribution <span class="math inline">\pi</span> using samples of another distribution <span class="math inline">b</span>, the sample average will have a strong <strong>bias</strong>.</p></li>
 <li><p>We need to <strong>correct</strong> the samples from <span class="math inline">b</span> in order to be able to estimate the parameters of <span class="math inline">\pi</span> correctly:</p>
 <ul>
@@ -685,7 +662,7 @@ Julien Vitay
 <li>The expectation is the integral over all possible trajectories of their return <span class="math inline">R(\tau</span>), weighted by the likelihood <span class="math inline">\rho_\pi(\tau)</span> that a trajectory <span class="math inline">\tau</span> is generated by the policy <span class="math inline">\pi</span>.</li>
 </ul>
 
-<img data-src="img/importancesampling2.svg" style="width:40.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/importancesampling2.svg" style="width:40.0%" class="r-stretch"></section>
 
 <section id="importance-sampling-3" class="title-slide slide level1 center">
 <h1>Importance sampling</h1>
@@ -711,7 +688,7 @@ Julien Vitay
 <li>The importance sampling weight corrects the mismatch between <span class="math inline">\pi</span> and <span class="math inline">b</span>.</li>
 </ul>
 
-<img data-src="img/importancesampling3.svg" style="width:70.0%" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/importancesampling3.svg" style="width:70.0%" class="r-stretch"><ul>
 <li><p>If the two distributions are the same (on-policy), the IS weight is 1, no need to correct the return.</p></li>
 <li><p>If a sample is likely under <span class="math inline">b</span> but not under <span class="math inline">\pi</span>, we should not care about its return: <span class="math inline">\dfrac{\rho_\pi(\tau)}{\rho_b(\tau)} &lt;&lt; 1</span></p></li>
 <li><p>If a sample is likely under <span class="math inline">\pi</span> but not much under <span class="math inline">b</span>, we increase its importance in estimating the return: <span class="math inline">\dfrac{\rho_\pi(\tau)}{\rho_b(\tau)} &gt;&gt; 1</span></p></li>
@@ -724,11 +701,7 @@ Julien Vitay
 <ul>
 <li>Great, but how do we compute these probability distributions <span class="math inline">\rho_\pi(\tau)</span> and <span class="math inline">\rho_b(\tau)</span> for a trajectory <span class="math inline">\tau</span>?</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/importancesampling2.svg" style="width:30.0%"></p>
-</figure>
-</div>
 <ul>
 <li><p>A trajectory <span class="math inline">\tau</span> is a sequence of state-action transitions <span class="math inline">(s_0, a_0, s_1, a_1, \ldots, s_T)</span> whose probability depends on:</p>
 <ul>
@@ -736,11 +709,7 @@ Julien Vitay
 <li><p>the probability of arriving in the state <span class="math inline">s_{t+1}</span> from the state <span class="math inline">s_t</span> with the action <span class="math inline">a_t</span>: the <strong>transition probability</strong> <span class="math inline">p(s_{t+1} | s_t, a_t)</span>.</p></li>
 </ul></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/rl-sequence.jpg" style="width:60.0%"></p>
-</figure>
-</div>
 </section>
 
 <section id="importance-sampling-6" class="title-slide slide level1 center">
@@ -829,7 +798,7 @@ Julien Vitay
 <section id="off-policy-monte-carlo-control-4" class="title-slide slide level1 center">
 <h1>Off-policy Monte-Carlo control</h1>
 
-<img data-src="img/offpolicy-MC.png" style="width:70.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/offpolicy-MC.png" style="width:70.0%" class="r-stretch"></section>
 
 <section id="advantages-of-off-policy-methods" class="title-slide slide level1 center">
 <h1>Advantages of off-policy methods</h1>
@@ -869,11 +838,7 @@ Julien Vitay
 <h1>Estimators: bias and variance</h1>
 <div class="columns">
 <div class="column" style="width:60%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/biasvariance3.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:40%;">
 <ul>
 <li>The <strong>bias</strong> of an estimator is the mean error made by the estimator:</li>
@@ -896,28 +861,30 @@ Julien Vitay
 </ul>
 </div>
 </div>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="2.4-MC_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="2.4-MC_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="2.4-MC_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="2.4-MC_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -927,13 +894,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1087,7 +1053,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1171,10 +1137,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1184,8 +1149,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

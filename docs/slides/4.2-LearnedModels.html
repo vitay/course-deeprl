@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="4.2-LearnedModels_files/libs/clipboard/clipboard.min.js"></script>
-<script src="4.2-LearnedModels_files/libs/quarto-html/tabby.min.js"></script>
-<script src="4.2-LearnedModels_files/libs/quarto-html/popper.min.js"></script>
-<script src="4.2-LearnedModels_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="4.2-LearnedModels_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="4.2-LearnedModels_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="4.2-LearnedModels_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="4.2-LearnedModels_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="4.2-LearnedModels_files/libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="4.2-LearnedModels_files/libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="4.2-LearnedModels_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="4.2-LearnedModels_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -32,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="4.2-LearnedModels_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -49,12 +49,12 @@
 }}});
   </script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-  <link href="4.2-LearnedModels_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="4.2-LearnedModels_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -176,7 +176,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -403,7 +404,7 @@ Julien Vitay
 <section id="i2a---imagination-augmented-agents" class="title-slide slide level1 center">
 <h1>1 - I2A - Imagination-augmented agents</h1>
 
-<img data-src="img/paper-i2a.png" class="r-stretch quarto-figure-center"><p><a href="https://deepmind.com/blog/article/agents-imagine-and-plan" class="uri">https://deepmind.com/blog/article/agents-imagine-and-plan</a></p>
+<img data-src="img/paper-i2a.png" class="r-stretch"><p><a href="https://deepmind.com/blog/article/agents-imagine-and-plan" class="uri">https://deepmind.com/blog/article/agents-imagine-and-plan</a></p>
 <div class="footer">
 <p>Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al.&nbsp;(2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
 </div>
@@ -415,7 +416,7 @@ Julien Vitay
 <li>I2A is a <strong>model-based augmented model-free method</strong>: it trains a MF algorithm (A3C) with the help of <strong>rollouts</strong> generated by a MB model.</li>
 </ul>
 
-<img data-src="img/i2a-sokoban.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/i2a-sokoban.png" class="r-stretch"><ul>
 <li><p>They showcase their algorithm on the puzzle environment <strong>Sokoban</strong>, where you need to move boxes to specified locations.</p></li>
 <li><p>Sokoban is a quite hard game, as actions are irreversible (you can get stuck) and the solution requires many actions (sparse rewards).</p></li>
 <li><p>MF methods are bad at this game as they learn through trials-and-(many)-errors.</p></li>
@@ -436,7 +437,7 @@ Julien Vitay
 <li>The <strong>model</strong> learns to predict the next frame and the next reward based on the four last frames and the chosen action.</li>
 </ul>
 
-<img data-src="img/i2a-model.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/i2a-model.png" class="r-stretch"><ul>
 <li><p>It is a <strong>convolutional autoencoder</strong>, taking additionally an action <span class="math inline">a</span> as input and predicting the next reward.</p></li>
 <li><p>It can be pretrained using a random policy, and later fine-tuned during training.</p></li>
 </ul>
@@ -448,7 +449,7 @@ Julien Vitay
 <section id="i2a---imagination-augmented-agents-3" class="title-slide slide level1 center">
 <h1>I2A - Imagination-augmented agents</h1>
 
-<img data-src="img/i2a-architecture.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/i2a-architecture.png" style="width:100.0%" class="r-stretch"><div class="footer">
 <p>Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al.&nbsp;(2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
 </div>
 </section>
@@ -457,11 +458,7 @@ Julien Vitay
 <h1>I2A - Imagination-augmented agents</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/i2a-architecture1.png" style="width:100.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>The <strong>imagination core</strong> is composed of the environment model <span class="math inline">M(s, a)</span> and a <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span>.</p></li>
@@ -482,11 +479,7 @@ Julien Vitay
 <h1>I2A - Imagination-augmented agents</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/i2a-architecture2.png" style="width:100.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>The <strong>imagination rollout module</strong> uses the imagination core to predict iteratively the next <span class="math inline">\tau</span> frames and rewards using the current frame <span class="math inline">o_t</span> and the rollout policy:</li>
@@ -508,11 +501,7 @@ Julien Vitay
 <h1>I2A - Imagination-augmented agents</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/i2a-architecture3.png" style="width:90.0%"></p>
-</figure>
-</div>
 </div><div class="column" style="width:60%;">
 <ul>
 <li><p>For the current observation <span class="math inline">o_t</span>, we then generate one <strong>rollout</strong> per possible action (5 in Sokoban):</p>
@@ -540,7 +529,7 @@ Julien Vitay
 <li><p>It is the A3C algorithm (MF), but <strong>augmented</strong> by MB rollouts, i.e.&nbsp;with explicit information about the future.</p></li>
 </ul>
 
-<img data-src="img/i2a-architecture.png" style="width:100.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/i2a-architecture.png" style="width:100.0%" class="r-stretch"><div class="footer">
 <p>Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al.&nbsp;(2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
 </div>
 </section>
@@ -557,7 +546,7 @@ Julien Vitay
 <li>As the network is smaller, it won’t be as good as <span class="math inline">\pi</span>, but its learning objective is easier.</li>
 </ul>
 
-<img data-src="img/policydistillation.png" style="width:40.0%" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/policydistillation.png" style="width:40.0%" class="r-stretch"><div class="footer">
 <p>Rusu, A. A., Colmenarejo, S. G., Gulcehre, C., Desjardins, G., Kirkpatrick, J., Pascanu, R., et al.&nbsp;(2016). Policy Distillation. arXiv:1511.06295.</p>
 </div>
 </section>
@@ -569,7 +558,7 @@ Julien Vitay
 <li><p>Each learning algorithms learns its own task, but tries not to diverge too much from a <strong>shared policy</strong>, which turns out to be good at all tasks.</p></li>
 </ul>
 
-<img data-src="img/distral.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/distral.png" class="r-stretch"><div class="footer">
 <p>Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al.&nbsp;(2017). Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175</p>
 </div>
 </section>
@@ -581,7 +570,7 @@ Julien Vitay
 <li><p>The deeper the rollout, the better.</p></li>
 </ul>
 
-<img data-src="img/i2a-results.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/i2a-results.png" class="r-stretch"><div class="footer">
 <p>Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al.&nbsp;(2017). Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175</p>
 </div>
 </section>
@@ -592,7 +581,7 @@ Julien Vitay
 <li>The model does not even have to be perfect: the MF path can compensate for imperfections.</li>
 </ul>
 
-<img data-src="img/i2a-results2.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/i2a-results2.png" class="r-stretch"><div class="footer">
 <p>Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al.&nbsp;(2017). Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175</p>
 </div>
 </section>
@@ -605,7 +594,7 @@ Julien Vitay
 <section id="temporal-difference-models---tdm-skipped" class="title-slide slide level1 center">
 <h1>2 - Temporal difference models - TDM (skipped)</h1>
 
-<img data-src="img/paper-tdm.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-tdm.png" class="r-stretch"><div class="footer">
 <p>Pong V, Gu S, Dalal M, Levine S. (2018). Temporal Difference Models: Model-Free Deep RL for Model-Based Control. arXiv:1802.09081</p>
 </div>
 </section>
@@ -710,11 +699,7 @@ Julien Vitay
 </ul>
 <div class="columns">
 <div class="column" style="width:35%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tdm-bike.png"></p>
-</figure>
-</div>
 </div><div class="column" style="width:65%;">
 <ul>
 <li><p>TDM introduces goal-conditioned Q-value with a horizon <span class="math inline">T</span>: <span class="math inline">Q(s, a, s_g, T)</span>.</p></li>
@@ -727,11 +712,7 @@ Julien Vitay
 <ul>
 <li>This corresponds to planning <span class="math inline">T</span> steps ahead; which action should I do now in order to be close to the goal in <span class="math inline">T</span> steps?</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tdm-steps1.jpeg" style="width:40.0%"></p>
-</figure>
-</div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/tdm-steps2.jpeg" style="width:40.0%"></p>
@@ -828,11 +809,7 @@ Julien Vitay
 <li><p>Model-free methods have a much higher sample complexity.</p></li>
 <li><p>TDM learns much more from single transitions.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tdm-results2.jpg"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -855,11 +832,7 @@ Julien Vitay
 <li><p>Model-based methods suffer from model imprecision on long horizons.</p></li>
 <li><p>TDM plans over shorter horizons <span class="math inline">T</span>.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/tdm-results4.jpg"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -867,7 +840,7 @@ Julien Vitay
 <section id="world-models" class="title-slide slide level1 center">
 <h1>3 - World models</h1>
 
-<img data-src="img/paper-worldmodels.png" class="r-stretch quarto-figure-center"><p><a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a></p>
+<img data-src="img/paper-worldmodels.png" class="r-stretch"><p><a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a></p>
 <div class="footer">
 <p>Ha, D., and Schmidhuber, J. (2018). World Models. NIPS. doi:10.5281/zenodo.1207631.</p>
 </div>
@@ -893,7 +866,7 @@ Julien Vitay
 
 <section id="the-vizdoom-take-cover-environment" class="title-slide slide level1 center">
 <h1>The Vizdoom Take Cover environment</h1>
-<video id="video_shortcode_videojs_video3" width="800px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/doom_lazy_small.mp4"></video>
+<video id="video_shortcode_videojs_video1" width="800px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/doom_lazy_small.mp4"></video>
 <div class="footer">
 <p><a href="http://vizdoom.cs.put.edu.pl/" class="uri">http://vizdoom.cs.put.edu.pl/</a>, <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a></p>
 </div>
@@ -911,7 +884,7 @@ Julien Vitay
 <section id="world-models-4" class="title-slide slide level1 center">
 <h1>World models</h1>
 
-<img data-src="img/wm-vae.png" class="r-stretch quarto-figure-center"><ul>
+<img data-src="img/wm-vae.png" class="r-stretch"><ul>
 <li>Go to <a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a> for an interactive demo.</li>
 </ul>
 </section>
@@ -931,7 +904,7 @@ Julien Vitay
 
 <section id="sketch-rnn" class="title-slide slide level1 center">
 <h1>Sketch-RNN</h1>
-<video id="video_shortcode_videojs_video4" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/sketch_rnn_insect.mp4"></video>
+<video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/sketch_rnn_insect.mp4"></video>
 <p><a href="https://magenta.tensorflow.org/sketch-rnn-demo" class="uri">https://magenta.tensorflow.org/sketch-rnn-demo</a></p>
 <div class="footer">
 <p>Ha, D., and Eck, D. (2017). A Neural Representation of Sketch Drawings. arXiv:1704.03477</p>
@@ -956,7 +929,7 @@ Julien Vitay
 
 <section id="world-models-car-racing" class="title-slide slide level1 center">
 <h1>World models : car racing</h1>
-<video id="video_shortcode_videojs_video5" width="800px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_mistake_short.mp4"></video>
+<video id="video_shortcode_videojs_video3" width="800px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_mistake_short.mp4"></video>
 <div class="footer">
 <p><a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a></p>
 </div>
@@ -968,7 +941,7 @@ Julien Vitay
 <li><p>Below is the input of the VAE and the reconstruction.</p></li>
 <li><p>The reconstruction does not have to be perfect as long as the latent space is informative.</p></li>
 </ul>
-<video id="video_shortcode_videojs_video6" width="800px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_vae_compare.mp4"></video>
+<video id="video_shortcode_videojs_video4" width="800px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_vae_compare.mp4"></video>
 <div class="footer">
 <p><a href="https://worldmodels.github.io/" class="uri">https://worldmodels.github.io/</a></p>
 </div>
@@ -981,12 +954,12 @@ Julien Vitay
 <ul>
 <li>Controller seeing only <span class="math inline">\mathbf{z}_t</span>.</li>
 </ul>
-<video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_z_only.mp4"></video>
+<video id="video_shortcode_videojs_video5" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_z_only.mp4"></video>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>Controller seeing both <span class="math inline">\mathbf{z}_t</span> and <span class="math inline">\mathbf{h}_t</span>.</li>
 </ul>
-<video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_z_and_h.mp4"></video>
+<video id="video_shortcode_videojs_video6" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_z_and_h.mp4"></video>
 </div>
 </div>
 <ul>
@@ -1061,7 +1034,7 @@ Julien Vitay
 <section id="deep-planning-network---planet" class="title-slide slide level1 center">
 <h1>4 - Deep Planning Network - PlaNet</h1>
 
-<img data-src="img/paper-planet.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-planet.png" class="r-stretch"><div class="footer">
 <p>Hafner D, Lillicrap T, Fischer I, Villegas R, Ha D, Lee H, Davidson J. (2019). Learning Latent Dynamics for Planning from Pixels. arXiv:181104551</p>
 </div>
 </section>
@@ -1084,11 +1057,7 @@ Julien Vitay
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/planet-planning.png" style="width:80.0%"></p>
-</figure>
-</div>
 </div>
 </div>
 </section>
@@ -1190,7 +1159,7 @@ Julien Vitay
 <section id="dreamer" class="title-slide slide level1 center">
 <h1>5 - Dreamer</h1>
 
-<img data-src="img/paper-dreamer.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/paper-dreamer.png" class="r-stretch"><div class="footer">
 <p>Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behaviors by Latent Imagination. arXiv:191201603</p>
 </div>
 </section>
@@ -1246,7 +1215,7 @@ Julien Vitay
 <li><p>When acting, we just need to encode the history of the episode in the latent space, and the actor becomes model-free!</p></li>
 </ul>
 
-<img data-src="img/dreamer-architecture.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/dreamer-architecture.png" class="r-stretch"><div class="footer">
 <p>Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behaviors by Latent Imagination. arXiv:191201603</p>
 </div>
 </section>
@@ -1256,11 +1225,7 @@ Julien Vitay
 <ul>
 <li>Dreamer beats model-free and model-based methods on 20 continuous control tasks.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dreamer-results.gif"></p>
-</figure>
-</div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/dreamer-results.png"></p>
@@ -1274,11 +1239,7 @@ Julien Vitay
 <ul>
 <li>It also learns Atari and Deepmind lab video games, sometimes on par with Rainbow or IMPALA!</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
 <p><img data-src="img/dreamer-resultsatari.gif"></p>
-</figure>
-</div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/dreamer-resultsatari.png" style="width:70.0%"></p>
@@ -1294,7 +1255,7 @@ Julien Vitay
 </ul>
 <p><a href="https://danijar.com/daydreamer" class="uri">https://danijar.com/daydreamer</a></p>
 
-<img data-src="img/daydreamer.png" class="r-stretch quarto-figure-center"><div class="footer">
+<img data-src="img/daydreamer.png" class="r-stretch"><div class="footer">
 <p>Wu, P., Escontrela, A., Hafner, D., Goldberg, K., &amp; Abbeel, P. (2022). DayDreamer: World Models for Physical Robot Learning (arXiv:2206.14176).</p>
 </div>
 </section>
@@ -1302,28 +1263,30 @@ Julien Vitay
 <section id="daydreamer-1" class="title-slide slide level1 center">
 <h1>DayDreamer</h1>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/xAXvfVTgqr0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/reveal-pointer/pointer.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="4.2-LearnedModels_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1333,13 +1296,12 @@ Julien Vitay
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":false},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1493,7 +1455,7 @@ Julien Vitay
         margin: 0.1,
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealPointer, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealNotes,
           RevealSearch,
@@ -1577,10 +1539,9 @@ Julien Vitay
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1590,8 +1551,17 @@ Julien Vitay
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1647,12 +1617,12 @@ Julien Vitay
       }
     });
     </script>
-    
-    
-    
-    
-    
-    
+    <script>videojs(video_shortcode_videojs_video1);</script>
+    <script>videojs(video_shortcode_videojs_video2);</script>
+    <script>videojs(video_shortcode_videojs_video3);</script>
+    <script>videojs(video_shortcode_videojs_video4);</script>
+    <script>videojs(video_shortcode_videojs_video5);</script>
+    <script>videojs(video_shortcode_videojs_video6);</script>
     
 
 </body></html>

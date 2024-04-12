@@ -42,12 +42,14 @@ $$\mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{bmatrix}$$
 
 * They are represented by a capital letter to distinguish them from scalars (classically also in bold $\mathbf{A}$ but not here). The element $a_{ij}$ of a matrix $A$ is the element on the $i$-th row and $j$-th column.
 
-$$A = \begin{bmatrix}
+$$
+A = \begin{bmatrix}
  a_{11} & a_{12} & \cdots & a_{1n} \\
  a_{21} & a_{22} & \cdots & a_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
  a_{m1} & a_{m2} & \cdots & a_{mn} \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 * **Tensors** $\mathcal{A}$ are arrays with more than two dimensions.  We will not really do math on these objects, but they are useful internally (hence the name of the `tensorflow` library).
 
@@ -383,7 +385,7 @@ f\colon \quad \Re &\to \Re\\
 x &\mapsto f(x),\end{align}
 $$
 
-![](img/function.png)
+![](img/function.png){fig-align="center"}
 
 
 # Multivariate functions
@@ -542,7 +544,8 @@ $$\begin{cases}
 \displaystyle\frac{\partial f(x, y)}{\partial x} = 2 \, x + 3\, y + 4 \, y^2 \\
 \\
 \displaystyle\frac{\partial f(x, y)}{\partial y} = 3 \, x + 8\, x \, y
-\end{cases}$$
+\end{cases}
+$$
 
 # Jacobian
 
@@ -1094,7 +1097,7 @@ $$
     \mathbb{E}[X] = \mathbb{E}_{x \sim X} [x] \approx \frac{1}{N} \, \sum_{i=1}^N x_i
 $$
 
-![](img/normaldistribution.svg){width=50%}
+![](img/normaldistribution.svg){width=50% fig-align="center"}
 
 * More samples will be obtained where $f(x)$ is high ($x$ is probable), so the average of the sampled data will be close to the expected value of the distribution.
 
@@ -1105,36 +1108,40 @@ $$
 > As the number of identically distributed, randomly generated variables increases, their sample mean (average) approaches their theoretical mean.
 
 
-MC estimates are only correct when: 
+* MC estimates are only correct when: 
 
-* the samples are **i.i.d** (independent and identically distributed):
+    * the samples are **i.i.d** (independent and identically distributed):
 
-    * independent: the samples must be unrelated with each other.
+        * independent: the samples must be unrelated with each other.
 
-    * identically distributed: the samples must come from the same distribution $X$.
+        * identically distributed: the samples must come from the same distribution $X$.
 
-* the number of samples is large enough. Usually $N > 30$ for simple distributions.
+    * the number of samples is large enough. Usually $N > 30$ for simple distributions.
 
+# Monte-carlo sampling
 
-# Random sampling / Monte Carlo sampling
-
-* One can estimate any function of the random variable with random sampling:
+One can estimate any function of the random variable with random sampling:
 
 $$
     \mathbb{E}[f(X)] = \mathbb{E}_{x \sim X} [f(x)] \approx \frac{1}{N} \, \sum_{i=1}^N f(x_i)
 $$
 
-* Example of Monte Carlo sampling to estimate $\pi/4$:
+Example of Monte Carlo sampling to estimate $\pi/4$: $f(x_i) = 1$ if $||x_i|| \leq 1$, $0$ otherwise.
 
-::: {layout-ncol=4}
+::: {.columns}
+::: {.column width=33%}
 
-![](img/montecarlo-1.jpeg){width=50%}
+![](img/montecarlo-1.jpeg)
 
-![](img/montecarlo-2.jpeg){width=50%}
+:::
+::: {.column width=33%}
 
-![](img/montecarlo-3.jpeg){width=50%}
+![](img/montecarlo-2.jpeg)
+:::
+::: {.column width=33%}
 
-![](img/montecarlo-4.jpeg){width=50%}
+![](img/montecarlo-3.jpeg)
+:::
 :::
 
 
@@ -1191,7 +1198,8 @@ $$
 
 * We could repeatedly take 100 random samples of the thermometer and see how the distribution of sample averages look like:
 
-![](img/estimators-temperature2.png){width=40%}
+![](img/estimators-temperature2.png){width=40% fig-align="center"}
+
 
 * But, as the expectation is linear, we actually have:
 
@@ -1403,11 +1411,11 @@ $$
 
 * More exactly, it measures how many bits of information one would need to distinguish the two distributions $X$ and $Y$.
 
-![](img/crossentropy.svg){width=80%}
+![](img/crossentropy.svg){width=80% fig-align="center"}
 
 # Cross-entropy
 
-![](img/crossentropy.svg){width=80%}
+![](img/crossentropy.svg){width=80% fig-align="center"}
 
 $$
     H(X, Y) = \mathbb{E}_{x \sim X}[- \log P(Y=x)]
