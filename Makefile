@@ -1,4 +1,4 @@
-all: website slides
+all: website
 
 slides_targets := $(wildcard slides/*.qmd)
 slides: $(slides_targets)

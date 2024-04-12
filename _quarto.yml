@@ -11,7 +11,6 @@ website:
   navbar:
     background: black
     foreground: white
-    logo: slides/img/tuc-new-large.png
     pinned: true
     right:
       - text: "Materials"
