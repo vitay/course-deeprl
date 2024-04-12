@@ -13,6 +13,7 @@ abstract: This website contains the materials for the module **Deep Reinforcemen
 echo: false
 ---
 
+
 ## Information
 
 Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457) to receive updates per email.
