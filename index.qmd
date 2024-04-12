@@ -13,6 +13,7 @@ abstract: This website contains the materials for the module **Deep Reinforcemen
 echo: false
 ---
 
+
 ## Lectures
 
 You will find below the links to the slides for each lecture (html and pdf). Outdated videos can be found in this [playlist](https://www.youtube.com/playlist?list=PLIEjdhhAF7UJwegwyWUcDrUNJTQfxMcUw).
