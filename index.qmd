@@ -1,0 +1,183 @@
+---
+title: Deep Reinforcement Learning
+author: 
+  - name: Julien Vitay 
+    email: julien.vitay@informatik.tu-chemnitz.de
+    url: https://julien-vitay.net
+    affiliation: Chemnitz University of Technology
+    affiliation-url: https://tu-chemnitz.de
+    orcid: 0000-0001-5229-2349
+
+abstract: This website contains the materials for the module **Deep Reinforcement Learning** taught by Dr. Julien Vitay at the Technische Universität Chemnitz, Faculty of Computer Science, Professorship for Artificial Intelligence. 
+
+echo: false
+---
+
+## Lectures
+
+You will find below the links to the slides for each lecture (html and pdf). Outdated videos can be found in this [playlist](https://www.youtube.com/playlist?list=PLIEjdhhAF7UJwegwyWUcDrUNJTQfxMcUw).
+
+#### 1 - Introduction
+
+
+```{python}
+from IPython.display import Markdown
+
+def table_lecture(lectures):
+    # header
+    text = """
+|          | Slides |
+|----------|--------|"""
+
+    # fields
+    for key, desc in lectures.items():
+        text += f"""
+| {desc}  | [html](slides/{key}.qmd){{target="_blank"}}, [pdf](slides/pdf/{key}.pdf){{target="_blank"}} |"""
+
+    # finish
+    text += """
+: {tbl-colwidths="[90, 10]"}
+"""
+
+    return Markdown(text)
+```
+
+```{python} 
+lecs = {
+    '1.1-Introduction': """**1.1 - Introduction**\\
+This lecture introduces the main concepts of reinforcement learning and showcases the current applications.""",
+    '1.2-Basics': """**1.2 - Basics in mathematics** (optional)\\
+This lecture quickly reminds the main mathematical concepts needed to understand this course: linear algebra, calculus, probabilities, statistics and information theory. It is only intended for students who are not sure of the prerequisites.""",
+}
+table_lecture(lecs)
+```
+
+
+#### 2 - Tabular RL
+
+```{python} 
+lecs = {
+    '2.1-Bandits': """**2.1 - Bandits**\\
+This lecture introduces bandits, the simplest RL setting that can be solved by sampling.""",
+    '2.2-MDP': """**2.2 - Markov Decision Processes**\\
+TODO""",
+    '2.3-DP': """**2.3 - Dynamic Programming**\\
+TODO""",
+    '2.4-MC': """**2.4 - Monte Carlo control**\\
+TODO""",
+    '2.5-TD': """**2.5 - Temporal Difference**\\
+TODO""",
+    '2.6-FunctionApproximation': """**2.6 - Function Approximation**\\
+TODO""",
+    '2.7-DeepNetworks': """**2.7 - Deep Neural Networks**\\
+TODO""",
+}
+table_lecture(lecs)
+```
+
+
+#### 3 - Model-free RL
+
+
+```{python} 
+lecs = {
+    '3.1-DQN': """**3.1 - DQN: Deep Q-Network**\\
+TODO""",
+    '3.2-BeyondDQN': """**3.2 - Beyond DQN**\\
+TODO""",
+    '3.3-PG': """**3.3 - PG: Policy Gradient**\\
+TODO""",
+    '3.4-A3C': """**3.4 - A3C: Asynchronous Advantage Actor-Critic**\\
+TODO""",
+    '3.5-DDPG': """**3.5 - DDPG: Deep Deterministic Policy Gradient**\\
+TODO""",
+    '3.6-PPO': """**3.6 - PPO: Proximal Policy Optimization**\\
+TODO""",
+    '3.7-SAC': """**3.7 - SAC: Soft Actor-Critic**\\
+TODO""",
+}
+table_lecture(lecs)
+```
+
+:::callout-note
+
+In WS2023-24, the lectures 3.4 to 3.6 were compressed into these slides: [html](slides/3.8-A3C-DDPG-PPO.qmd){target="_blank"}, [pdf](slides/pdf/3.8-A3C-DDPG-PPO.pdf){target="_blank"}. The lecture 3.7 was skipped.
+:::
+
+## Exercises
+
+You will find below links to download the notebooks for the exercises (which you have to fill) and their solution (which you can look at after you have finished the exercise). It is recommended not to look at the solution while doing the exercise unless you are lost.  Alternatively, you can run the notebooks directly on Colab (<https://colab.research.google.com/>) if you have a Google account. 
+
+For instructions on how to install a Python distribution on your computer, check this [page](Installation.qmd).
+
+
+```{python}
+from IPython.display import Markdown
+
+repo = "https://raw.githubusercontent.com/vitay/notebooks-deeprl/main"
+colab = "https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main"
+
+def table_exercise(exs):
+    text = """
+|           | Notebook  | Solution |
+|-----------|-----------|----------|"""
+
+    for key, val in exs.items():
+        text += f"""
+| {val}  | [.ipynb]({repo}/{key}.ipynb){{target="_blank"}}, [colab]({colab}/{key}.ipynb){{target="_blank"}}   | [.ipynb]({repo}/{key}-solution.ipynb){{target="_blank"}}, [colab]({colab}/{key}-solution.ipynb){{target="_blank"}} |"""
+
+
+    text += """
+: {tbl-colwidths="[80, 10, 10]", .striped, .hover}
+"""
+
+    return Markdown(text)
+```
+
+```{python} 
+exs = {
+  '1-Python' : """**1 - Introduction to Python**\\
+Introduction to the Python programming language. Optional for students already knowing Python.""",
+  '2-Numpy' : """**2 - Numpy and Matplotlib**\\
+TODO.""",
+  '3-Sampling': """**3 - Sampling**\\
+TODO.""",
+  '4-Bandits': """**4 - Bandits**\\
+TODO.""",
+  '5-Bandits2': """**5 - Bandits (part 2)**\\
+TODO.""",
+  '6-DP': """**6 - Dynamic programming**\\
+TODO.""",
+  '7-Gym': """**7 - Gym environments**\\
+TODO.""",
+  '8-MonteCarlo': """**8 - Monte Carlo control**\\
+TODO.""",
+  '9-TD': """**9 - Temporal Difference**\\
+TODO.""",
+  '10-Eligibilitytraces': """**10 - Eligibility traces**\\
+TODO.""",
+  '11-Keras': """**11 - Keras**\\
+TODO.""",
+  '12-DQN': """**12 - DQN**\\
+TODO.""",
+  '13-PPO': """**13 - PPO**\\
+TODO.""",
+
+}
+
+table_exercise(exs)
+```
+
+## Recommended readings
+
+* Richard Sutton and Andrew Barto (2017). Reinforcement Learning: An Introduction. MIT press. 
+
+<http://incompleteideas.net/book/the-book-2nd.html>
+
+* CS294 course of Sergey Levine at Berkeley. 
+
+<http://rll.berkeley.edu/deeprlcourse/>
+
+* Reinforcement Learning course by David Silver at UCL.
+
+<http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>

@@ -1,0 +1,38 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+  output-dir: docs
+
+website:
+  title: "Deep Reinforcement Learning"
+  search: true
+
+  navbar:
+    background: black
+    foreground: white
+    logo: slides/img/tuc-new-large.png
+    pinned: true
+    right:
+      - text: "Syllabus"
+        file: index.qmd
+      - text: "Notebooks"
+        href: https://github.com/vitay/notebooks-deeprl
+      - icon: github
+        href: https://github.com/vitay/course-deeprl
+        aria-label: GitHub
+
+  page-footer: "Copyright Julien Vitay - <julien.vitay@informatik.tu-chemnitz.de>" 
+
+format:
+  html:
+    theme: [sandstone, assets/custom.scss]
+    page-layout: full
+    number-depth: 2
+    number-sections: false
+    toc: false
+    smooth-scroll: true
+    html-math-method: katex
+    callout-appearance: minimal
+
+
