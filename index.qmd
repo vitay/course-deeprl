@@ -17,7 +17,6 @@ echo: false
 
 Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457) to receive updates per email.
 
-
 :::callout-note
 ### Summer semester 2024
 
