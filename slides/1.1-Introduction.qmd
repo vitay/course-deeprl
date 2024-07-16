@@ -141,6 +141,7 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 {{< youtube y-g2OmRXb0g >}}
 
 
+
 # Trial and error learning
 
 * The key concept of RL is **trial and error** learning.
