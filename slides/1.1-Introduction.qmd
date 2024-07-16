@@ -143,10 +143,6 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 
 # Trial and error learning
 
-::: {}
-![Source: <https://sites.google.com/site/acrader4th2014/home/part-3-unity-and-diversity-of-life/trialanderrorlearning>](img/trialerror.jpg){width=60%}
-:::
-
 * The key concept of RL is **trial and error** learning.
 
 * The agent (rat, robot, algorithm) tries out an **action** and observes the **outcome**.
@@ -161,7 +157,7 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 
 # Trial and error learning
 
-![](img/boeing.jpg){width=50%}
+![](img/boeing.jpg){width=50% fig-align="center"}
 
 * RL is merely a formalization of the trial-and-error learning paradigm.
 

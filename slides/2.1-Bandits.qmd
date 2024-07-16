@@ -35,8 +35,6 @@ resources: pdf/2.1-Bandits.pdf
 # 1 - n-armed bandits
 
 # Evaluative Feedback
-
-![](img/trialerror.jpg)
     
 * RL evaluates actions through **trial-and-error** rather than comparing its predictions to the correct actions.
 
@@ -52,14 +50,6 @@ resources: pdf/2.1-Bandits.pdf
         
 # n-armed bandits
 
-::: {.columns}
-::: {.column width=30%}
-    
-![](img/narmedbandit.jpg)
-
-:::
-::: {.column width=70%}
-    
 * The **n-armed bandit**  (or multi-armed bandit) is a non-associative evaluative feedback procedure. 
 
 * Learning and action selection take place in the same single state.
@@ -68,9 +58,11 @@ resources: pdf/2.1-Bandits.pdf
 
 * The goal is to find out through trial and error which action provides the most reward on average.
 
-:::
-:::
+::: {}
 
+![](img/narmedbandit2.jpg){width=50% fig-align="center"}
+
+:::
 
 # n-armed bandits
 
@@ -374,7 +366,7 @@ $$
 
 # Exploration-exploitation dilemma
 
-![](img/exploration_vs_exploitation.png){width=45%}
+![Source: UC Berkeley AI course [slides](http://ai.berkeley.edu/lecture_slides.html), [lecture 11](http://ai.berkeley.edu/slides/Lecture%2011%20--%20Reinforcement%20Learning%20II/SP14%20CS188%20Lecture%2011%20--%20Reinforcement%20Learning%20II.pptx)](img/exploration_vs_exploitation.png){width=45%}
 
 * This **exploration-exploitation** dilemma is the hardest problem in RL:
 
@@ -439,9 +431,6 @@ where $\tau$ is a positive parameter called the **temperature**.
     
 # Example of action selection for the 10-armed bandit
 
-::: {}
-![](img/narmedbandit2.jpg){width=60%}
-:::
 
 **Procedure as in (Sutton and Barto, 2017):**
     
@@ -453,6 +442,12 @@ where $\tau$ is a positive parameter called the **temperature**.
 
 * The algorithms run for 1000 plays, and the results are averaged 200 times.
     
+::: {}
+
+![](img/narmedbandit2.jpg){width=50% fig-align="center"}
+
+:::
+
 # Greedy action selection
 
 * Greedy action selection allows to get rid quite early of the actions with negative rewards.

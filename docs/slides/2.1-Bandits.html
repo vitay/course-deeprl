@@ -385,8 +385,7 @@ Julien Vitay
 
 <section id="evaluative-feedback" class="title-slide slide level1 center">
 <h1>Evaluative Feedback</h1>
-
-<img data-src="img/trialerror.jpg" class="r-stretch"><ul>
+<ul>
 <li><p>RL evaluates actions through <strong>trial-and-error</strong> rather than comparing its predictions to the correct actions.</p>
 <ul>
 <li><p>RL: <strong>evaluative feedback</strong> depends completely on the action taken.</p></li>
@@ -402,16 +401,17 @@ Julien Vitay
 
 <section id="n-armed-bandits-1" class="title-slide slide level1 center">
 <h1>n-armed bandits</h1>
-<div class="columns">
-<div class="column" style="width:30%;">
-<p><img data-src="img/narmedbandit.jpg"></p>
-</div><div class="column" style="width:70%;">
 <ul>
 <li><p>The <strong>n-armed bandit</strong> (or multi-armed bandit) is a non-associative evaluative feedback procedure.</p></li>
 <li><p>Learning and action selection take place in the same single state.</p></li>
 <li><p>The <span class="math inline">n</span> actions have different reward distributions.</p></li>
 <li><p>The goal is to find out through trial and error which action provides the most reward on average.</p></li>
 </ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/narmedbandit2.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
 </div>
 </div>
 </section>
@@ -691,7 +691,7 @@ Julien Vitay
 <section id="exploration-exploitation-dilemma" class="title-slide slide level1 center">
 <h1>Exploration-exploitation dilemma</h1>
 
-<img data-src="img/exploration_vs_exploitation.png" style="width:45.0%" class="r-stretch"><ul>
+<img data-src="img/exploration_vs_exploitation.png" style="width:45.0%" class="r-stretch quarto-figure-center"><p class="caption">Source: UC Berkeley AI course <a href="http://ai.berkeley.edu/lecture_slides.html">slides</a>, <a href="http://ai.berkeley.edu/slides/Lecture%2011%20--%20Reinforcement%20Learning%20II/SP14%20CS188%20Lecture%2011%20--%20Reinforcement%20Learning%20II.pptx">lecture 11</a></p><ul>
 <li><p>This <strong>exploration-exploitation</strong> dilemma is the hardest problem in RL:</p>
 <ul>
 <li><p><strong>Exploitation</strong> is using the current estimates to select an action: they might be wrong!</p></li>
@@ -754,9 +754,6 @@ Julien Vitay
 
 <section id="example-of-action-selection-for-the-10-armed-bandit" class="title-slide slide level1 center">
 <h1>Example of action selection for the 10-armed bandit</h1>
-<div>
-<p><img data-src="img/narmedbandit2.jpg" style="width:60.0%"></p>
-</div>
 <p><strong>Procedure as in (Sutton and Barto, 2017):</strong></p>
 <ul>
 <li><p>N = 10 possible actions with Q-values <span class="math inline">Q^*(a_1), ... , Q^*(a_{10})</span> randomly chosen in <span class="math inline">\mathcal{N}(0, 1)</span>.</p></li>
@@ -764,6 +761,13 @@ Julien Vitay
 <li><p>Estimates <span class="math inline">Q_t(a)</span> are initialized to 0.</p></li>
 <li><p>The algorithms run for 1000 plays, and the results are averaged 200 times.</p></li>
 </ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/narmedbandit2.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
 </section>
 
 <section id="greedy-action-selection-2" class="title-slide slide level1 center">
