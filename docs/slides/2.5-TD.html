@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -387,8 +387,7 @@ Julien Vitay
 <p><span class="math display">R_t \approx r_{t+1} + \gamma \,  V^\pi(s_{t+1})</span></p>
 </div><div class="column" style="width:30%;">
 <p><img data-src="img/MCTD.svg" style="width:80.0%"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><strong>Temporal-Difference (TD)</strong> methods simply replace the actual return by an estimation in the update rule:</li>
 </ul>
@@ -454,8 +453,7 @@ Julien Vitay
 </ul></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>TD learns from experience in a fully incremental manner. It does not need to wait until the end of an episode. It is therefore possible to learn continuing tasks. TD converges to <span class="math inline">V^{\pi}</span> if the step-size parameter <span class="math inline">\alpha</span> is small enough.</li>
 </ul>
@@ -516,8 +514,7 @@ Julien Vitay
 <p><img data-src="img/sarsa-sequence.png" style="width:60.0%"></p>
 </div><div class="column" style="width:0%;">
 
-</div>
-</div>
+</div></div>
 <ul>
 <li>When arriving in <span class="math inline">s_{t+1}</span> from <span class="math inline">(s_t, a_t)</span>, we already sample the next action:</li>
 </ul>
@@ -542,8 +539,7 @@ Julien Vitay
 <p><img data-src="img/sarsa-sequence.png" style="width:60.0%"></p>
 </div><div class="column" style="width:0%;">
 
-</div>
-</div>
+</div></div>
 <ul>
 <li><p><strong>while</strong> True:</p>
 <ul>
@@ -578,8 +574,7 @@ Julien Vitay
 <p><img data-src="img/sarsa-sequence.png" style="width:60.0%"></p>
 </div><div class="column" style="width:0%;">
 
-</div>
-</div>
+</div></div>
 <ul>
 <li><strong>Q-learning</strong> directly approximates the optimal action-value function <span class="math inline">Q^*</span> independently of the current policy, using the greedy action in the next state.</li>
 </ul>
@@ -716,8 +711,7 @@ Julien Vitay
 <li><p>The estimated values <span class="math inline">V(s)</span> are implemented by the <strong>critic</strong>, because it criticizes the actions made by the actor.</p></li>
 <li><p>Learning is always <strong>on-policy</strong>: the critic must learn about and critique whatever policy is currently being followed by the actor.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The critic computes the <strong>TD error</strong> or <strong>1-step advantage</strong>:</li>
 </ul>
@@ -760,8 +754,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">p(s_t, a_t) \leftarrow p(s_t, a_t) + \beta \, \delta_t</span></p>
 <p><span class="math display">\pi(s, a) = \frac{\exp{p(s, a)}}{\sum_b \exp{p(s, b)}}</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>When <span class="math inline">\delta_t &gt;0</span>, the preference is increased, so the probability of selecting it again increases.</p></li>
 <li><p>When <span class="math inline">\delta_t &lt;0</span>, the preference is decreased, so the probability of selecting it again decreases.</p></li>
@@ -811,8 +804,7 @@ Julien Vitay
 <li><p>It requires minimal computation in order to select the actions, in particular when the action space is huge or even continuous.</p></li>
 <li><p>It can learn stochastic policies, which is particularly useful in non-Markov problems.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p><strong>It is obligatory to learn on-policy:</strong></p>
 <ul>
@@ -836,7 +828,7 @@ Julien Vitay
 <li><p>Actor-critic architectures are strictly <strong>on-policy</strong>.</p></li>
 </ul></li>
 </ul>
-<table>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
@@ -899,8 +891,7 @@ Julien Vitay
 <li><p>More sensitive to initial values (bootstrapping).</p></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="drawback-of-learning-from-single-transitions" class="title-slide slide level1 center">
@@ -932,8 +923,7 @@ Julien Vitay
 </ul></li>
 <li><p>In <strong>n-step TD prediction</strong>, the next <span class="math inline">n</span> rewards are used to estimate the return, the rest is approximated.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The <strong>n-step return</strong> is the discounted sum of the <span class="math inline">n</span> next rewards is computed as in MC plus the predicted value at step <span class="math inline">t+n</span> which replaces the rest as in TD.</li>
 </ul>
@@ -971,8 +961,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <p><span class="math display">
     \delta_t = A^1_t = r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>As you use more “real” rewards, you <strong>reduce the bias</strong> of Q-learning.</p></li>
 <li><p>As you use estimates for the rest of the episode, you <strong>reduce the variance</strong> of MC methods.</p></li>
@@ -999,8 +988,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/eligibility-forward.png" style="width:80.0%"></p>
 <p><img data-src="img/eligibility-forward-decay.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="eligibility-traces-forward-view-1" class="title-slide slide level1 center">
@@ -1027,8 +1015,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <p><img data-src="img/eligibility-backwards.png"></p>
 </div><div class="column" style="width:60%;">
 <p><img data-src="img/traces.png"></p>
-</div>
-</div>
+</div></div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1056,8 +1043,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <ul>
 <li><span class="math inline">\lambda</span> defines how important is a future TD error for the current state.</li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="tdlambda-algorithm-policy-evaluation" class="title-slide slide level1 center">
@@ -1161,8 +1147,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <li>Schulman et al.&nbsp;(2015) proposed a <strong>generalized advantage estimate</strong> (GAE) <span class="math inline">A_t^{\text{GAE}(\gamma, \lambda)}</span> summing all possible n-step advantages with a discount parameter <span class="math inline">\lambda</span>:</li>
 </ul>
 <p><span class="math display">A_t^{\text{GAE}(\gamma, \lambda)} = (1 - \lambda) \sum_{n=1}^\infty \lambda^n \, A^n_t</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>This is just a forward eligibility trace over distant n-step advantages: the 1-step advantage is more important the the 1000-step advantage (too much variance).</p></li>
 <li><p>We can show that the GAE can be expressed as a function of the future 1-step TD errors: <span class="math display">A_t^{\text{GAE}(\gamma, \lambda)} = \sum_{k=0}^\infty (\gamma \, \lambda)^k \, \delta_{t+k}</span></p></li>
@@ -1513,18 +1498,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1556,7 +1530,29 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1564,7 +1560,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

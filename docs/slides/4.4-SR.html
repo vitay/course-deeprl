@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -406,7 +406,7 @@ Julien Vitay
 <li>Relative advantages of MF and MB methods:</li>
 </ul>
 <p><br></p>
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 19%">
 <col style="width: 15%">
@@ -618,8 +618,7 @@ Julien Vitay
 <li><p>It is therefore different from the transition matrix, as it depends on behavior and rewards.</p></li>
 <li><p>The exact dynamics are lost compared to MB: it only represents whether a state is reachable, not how.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Russek et al.&nbsp;(2017). Predictive representations can link model-based reinforcement learning to model-free mechanisms. PLOS Computational Biology.</p>
 </div>
@@ -635,8 +634,7 @@ Julien Vitay
 <p><img data-src="img/schapiro1.png"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/schapiro2.png"></p>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Stachenfeld, K. L., Botvinick, M. M., and Gershman, S. J. (2017). The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650</p>
 </div>
@@ -809,8 +807,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/schapiro2.png"></p>
-</div>
-</div>
+</div></div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/SRfeatures.png" style="width:60.0%"></p>
@@ -1012,8 +1009,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/DSR-results2.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>This is the principle of <strong>latent learning</strong> in animal psychology: fooling around in an environment without a goal allows to learn the structure of the world, what can speed up learning when a task is introduced.</p></li>
 <li><p>The SR is a <strong>cognitive map</strong> of the environment: learning task-unspecific relationships.</p></li>
@@ -1274,18 +1270,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1317,7 +1302,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1325,7 +1332,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

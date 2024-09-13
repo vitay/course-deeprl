@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -402,8 +402,7 @@ Julien Vitay
 <li><p>If you always play the same moves (e.g.&nbsp;opening moves), your opponent will adapt and you will end up losing systematically.</p></li>
 <li><p><strong>Variety</strong> in playing is beneficial in POMDPs: it can counteract the uncertainty about the environment.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="need-for-soft-rl-1" class="title-slide slide level1 center">
@@ -424,8 +423,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/sac_ex2.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="need-for-soft-rl-2" class="title-slide slide level1 center">
@@ -450,8 +448,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/sac-multimodal.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="continuous-stochastic-policies" class="title-slide slide level1 center">
@@ -473,8 +470,7 @@ Julien Vitay
 <p><span class="math display">\mathbf{a} = \begin{bmatrix} \Delta \theta_1 &amp; \Delta \theta_2 &amp; \ldots \, \Delta \theta_n\end{bmatrix}^T</span></p>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/actionspace-robot.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>A Gaussian policy considers the vector <span class="math inline">\mathbf{a}</span> to be sampled from the <strong>normal distribution</strong> <span class="math inline">\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))</span>.</li>
 </ul>
@@ -493,8 +489,7 @@ Julien Vitay
 <figcaption><a href="https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024" class="uri">https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="gaussian-policies-1" class="title-slide slide level1 center">
@@ -546,8 +541,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024" class="uri">https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>This is the same <strong>reparametrization trick</strong> used in variational autoencoders to allow backpropagation to work through a sampling operation.</p></li>
 <li><p><strong>Beta</strong> distributions are an even better choice to parameterize stochastic policies (Chou et al, 2017).</p></li>
@@ -579,8 +573,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/sac-multimodal.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="maximum-entropy-rl-1" class="title-slide slide level1 center">
@@ -632,8 +625,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/entropy-binomial.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="entropy-of-a-policy-1" class="title-slide slide level1 center">
@@ -647,8 +639,7 @@ Julien Vitay
 <ul>
 <li>A <strong>random</strong> policy has a high entropy, you cannot predict which action will be taken: <strong>exploration</strong>.</li>
 </ul>
-</div>
-</div>
+</div></div>
 
 <img data-src="img/bandit-estimates-softmax2.png" class="r-stretch"><ul>
 <li>Maximum entropy RL embeds the exploration-exploitation trade-off inside the objective function instead of relying on external mechanisms such as the softmax temperature.</li>
@@ -677,8 +668,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/policysearch.svg"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="soft-q-learning-1" class="title-slide slide level1 center">
@@ -701,8 +691,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>Soft Q-learning belongs to <strong>energy-based models</strong>, as <span class="math inline">-\dfrac{Q^\text{soft}_\theta (s, a)}{\alpha}</span> represents the energy of the Boltzmann distribution (see restricted Boltzmann machines).</p></li>
 <li><p>The <strong>partition function</strong> <span class="math inline">\sum_b \exp \dfrac{Q^\text{soft}_\theta (s, b)}{\alpha}</span> is untractable for continuous action spaces, as one would need to integrate over the whole action space, but it will disappear from the equations anyway.</p></li>
@@ -1140,18 +1129,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1183,7 +1161,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1191,7 +1191,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

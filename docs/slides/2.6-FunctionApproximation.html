@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -443,8 +443,7 @@ Julien Vitay
 <li><p><span class="math inline">x</span> is the position, <span class="math inline">\theta</span> the angle, <span class="math inline">\dot{x}</span> and <span class="math inline">\dot{\theta}</span> their derivatives.</p></li>
 <li><p>We are able to represent <strong>any state</strong> <span class="math inline">s</span> using these four variables.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="feature-vectors-1" class="title-slide slide level1 center">
@@ -468,8 +467,7 @@ Julien Vitay
         \vdots \\
     \end{bmatrix}
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>In deep RL, we will <strong>learn</strong> these feature vectors, but let’s suppose for now that we have them.</li>
 </ul>
@@ -564,8 +562,7 @@ Julien Vitay
         \frac{\partial \mathcal{L}(\varphi)}{\partial \varphi_K} \\
     \end{bmatrix}
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>When applied repeatedly, GD converges to a local minimum of the loss function.</li>
 </ul>
@@ -737,8 +734,7 @@ Julien Vitay
 <li>The FA takes a feature vector for the state <span class="math inline">s</span> as input, and outputs one Q-value <span class="math inline">Q_\theta(s ,a)</span> per possible action (the action space must be discrete).</li>
 </ul>
 <p><img data-src="img/functionapproximation-action2.svg"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>In both cases, we minimize the mse between the true value <span class="math inline">Q^\pi(s, a)</span> and the approximated value <span class="math inline">Q_\theta(s, a)</span>.</li>
 </ul>
@@ -802,8 +798,7 @@ Julien Vitay
 <li><p>Can we predict the value of a state <strong>linearly</strong>?</p></li>
 </ul>
 <p><span class="math display">V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>No, a high angular velocity <span class="math inline">\dot{\theta}</span> is good when the pole is horizontal (going up) but bad if the pole is vertical (will not stop).</p></li>
 <li><p>The value would depends linearly on something like <span class="math inline">\dot{\theta} \, \sin \theta</span>, which is a non-linear combination of features.</p></li>
@@ -832,8 +827,7 @@ Julien Vitay
 <p><img data-src="img/featurecoding-data.png"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/featurecoding-linear.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="polynomials" class="title-slide slide level1 center">
@@ -870,8 +864,7 @@ Julien Vitay
 <p><img data-src="img/featurecoding-data.png"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/featurecoding-polynomial2.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="polynomials-2" class="title-slide slide level1 center">
@@ -884,8 +877,7 @@ Julien Vitay
 <p><img data-src="img/featurecoding-data.png"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/featurecoding-polynomial6.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="polynomials-3" class="title-slide slide level1 center">
@@ -967,8 +959,7 @@ Julien Vitay
 <li><p>curse of dimensionality.</p></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="coarse-coding" class="title-slide slide level1 center">
@@ -983,8 +974,7 @@ Julien Vitay
 <li><p>A state <span class="math inline">s</span> is encoded by a <strong>binary vector</strong>, but with several 1, for each tile it belongs. <span class="math display">\phi(s) = \begin{bmatrix}0 &amp; 1 &amp; 0 &amp; \ldots &amp; 1 &amp; 1 &amp; 0 &amp; \ldots &amp; 0 \\ \end{bmatrix}^T</span></p></li>
 <li><p>This allows generalization inside a tile, but also <strong>across tiles</strong>.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The size and shape of the <strong>“receptive field”</strong> influences the generalization properties.</li>
 </ul>
@@ -1278,18 +1268,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1321,7 +1300,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1329,7 +1330,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

@@ -10,7 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
 <link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -33,7 +33,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -48,7 +48,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -397,8 +397,7 @@ Julien Vitay
 <li><p>PlaNet <span style="font-size:60%;">(Hafner et al., 2019)</span></p></li>
 <li><p>Dreamer <span style="font-size:60%;">(Hafner et al, 2020)</span></p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="i2a---imagination-augmented-agents" class="title-slide slide level1 center">
@@ -468,8 +467,7 @@ Julien Vitay
 <li><p>In I2A, it is a <strong>distilled policy</strong> from the trained policy <span class="math inline">\pi</span> (see later).</p></li>
 <li><p>Take home message: given the current observation <span class="math inline">o_t</span> and a policy <span class="math inline">\hat{\pi}</span>, we can predict the next observation <span class="math inline">\hat{o}_{t+1}</span> and the next reward <span class="math inline">\hat{r}_{t+1}</span>.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al.&nbsp;(2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
 </div>
@@ -490,8 +488,7 @@ Julien Vitay
 <li><p>The output of the imagination rollout module is a vector <span class="math inline">e_i</span> (the final state of the LSTM) representing the whole rollout, including the (virtually) obtained rewards.</p></li>
 <li><p>Note that because of the stochasticity of the rollout policy <span class="math inline">\hat{\pi}</span>, different rollouts can lead to different encoding vectors.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al.&nbsp;(2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
 </div>
@@ -513,8 +510,7 @@ Julien Vitay
 <li><p>The resulting vectors are concatenated to the output of <strong>model-free</strong> path (a convolutional neural network taking the current observation as input).</p></li>
 <li><p>Altogether, we have a huge NN with weights <span class="math inline">\theta</span> (model, encoder, MF path) producing an input <span class="math inline">s_t</span> to the <strong>A3C</strong> module.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>We can then learn the policy <span class="math inline">\pi</span> and value function <span class="math inline">V</span> based on this input to maximize the returns:</li>
 </ul>
@@ -622,8 +618,7 @@ Julien Vitay
 <p><span class="math display">s_{t+1} = f_\theta(s_t, a_t)</span></p>
 <p>one learns to predict the state achieved in <span class="math inline">T</span> steps using the current policy:</p>
 <p><span class="math display">s_{t+ T} = f_\theta(s_t, a_t, \pi)</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Planning and acting occur at different time scales.</li>
 </ul>
@@ -653,8 +648,7 @@ Julien Vitay
 <li><p><strong>Goal-conditioned RL</strong> defines the reward function using the distance between the achieved state <span class="math inline">s_{t+1}</span> and a <strong>goal state</strong> <span class="math inline">s_g</span>:</p></li>
 </ul>
 <p><span class="math display">r(s_t, a_t, s_{t+1}) = - || s_{t+1} - s_g ||</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>An action is good if it brings the agent closer to its goal.</p></li>
 <li><p>The Euclidean distance works well for the biking example (e.g.&nbsp;using a GPS), but the metric can be adapted to the task.</p></li>
@@ -681,8 +675,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://openai.com/blog/ingredients-for-robotics-research/" class="uri">https://openai.com/blog/ingredients-for-robotics-research/</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>Exploration never fails: you always learn to do something, even if this was not your original goal.</p></li>
 <li><p>The principle of HER can be used in all model-free methods: DQN, DDPG, etc.</p></li>
@@ -707,8 +700,7 @@ Julien Vitay
 <li><p>If we can estimate these Q-values, we can use a planning algorithm such as MPC to find the action that will bring us closer to the goal easily:</p></li>
 </ul>
 <p><span class="math display">a^* = \text{arg}\max_{a_t} \, r(s_{t+T}, a_{t+T}, s_{t+T + 1})</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>This corresponds to planning <span class="math inline">T</span> steps ahead; which action should I do now in order to be close to the goal in <span class="math inline">T</span> steps?</li>
 </ul>
@@ -810,8 +802,7 @@ Julien Vitay
 <li><p>TDM learns much more from single transitions.</p></li>
 </ul>
 <p><img data-src="img/tdm-results2.jpg"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="tdm-results-1" class="title-slide slide level1 center">
@@ -833,8 +824,7 @@ Julien Vitay
 <li><p>TDM plans over shorter horizons <span class="math inline">T</span>.</p></li>
 </ul>
 <p><img data-src="img/tdm-results4.jpg"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="world-models" class="title-slide slide level1 center">
@@ -960,8 +950,7 @@ Julien Vitay
 <li>Controller seeing both <span class="math inline">\mathbf{z}_t</span> and <span class="math inline">\mathbf{h}_t</span>.</li>
 </ul>
 <video id="video_shortcode_videojs_video6" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://worldmodels.github.io/assets/mp4/carracing_z_and_h.mp4"></video>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Having access to a full rollout of the future leads to more stable driving.</li>
 </ul>
@@ -980,7 +969,7 @@ Julien Vitay
 <li><p>Evolve Controller (C) to maximize the expected cumulative reward of a rollout.</p></li>
 </ol>
 <p><strong>Parameters for car racing:</strong></p>
-<table>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Model</th>
@@ -1027,8 +1016,7 @@ Julien Vitay
 <li><p>It just need to additionally predict the reward.</p></li>
 <li><p>The learned policy can then be transferred to the real environment.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="deep-planning-network---planet" class="title-slide slide level1 center">
@@ -1058,8 +1046,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/planet-planning.png" style="width:80.0%"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="planet-latent-dynamics-model" class="title-slide slide level1 center">
@@ -1097,8 +1084,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html" class="uri">https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The loss function to train this <strong>recurrent state-space model</strong> (RSSM), with a deterministic component in the transition model (RNN) and stochastic components is not shown here.</li>
 </ul>
@@ -1135,8 +1121,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html" class="uri">https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="planet-results" class="title-slide slide level1 center">
@@ -1495,18 +1480,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1538,7 +1512,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1546,7 +1542,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

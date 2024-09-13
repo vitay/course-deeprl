@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -428,8 +428,7 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <figcaption>Source: <a href="https://mathinsight.org/image/vector_2d_add" class="uri">https://mathinsight.org/image/vector_2d_add</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="properties-of-vector-spaces" class="title-slide slide level1 center">
@@ -481,8 +480,7 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <li>The <strong>infinity norm</strong> (or maximum norm) <span class="math inline">L^\infty</span> returns the maximum element of the vector:</li>
 </ul>
 <p><span class="math display">||\mathbf{x}||_\infty = \max(|x_1|, |x_2|, \ldots, |x_d|)</span></p>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p><a href="https://en.wikipedia.org/wiki/Norm_(mathematics)" class="uri">https://en.wikipedia.org/wiki/Norm_(mathematics)</a></p>
 </div>
@@ -523,8 +521,7 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <figcaption>Source: <a href="https://mathinsight.org/image/dot_product_projection_unit_vector" class="uri">https://mathinsight.org/image/dot_product_projection_unit_vector</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="matrices" class="title-slide slide level1 center">
@@ -678,8 +675,7 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\
 <figcaption>Source: <a href="https://en.wikipedia.org/wiki/Homogeneous_coordinate" class="uri">https://en.wikipedia.org/wiki/Homogeneous_coordinate</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="dot-product-2" class="title-slide slide level1 center">
@@ -762,8 +758,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 <figcaption>Source: <a href="https://en.wikipedia.org/wiki/Function_of_several_real_variables" class="uri">https://en.wikipedia.org/wiki/Function_of_several_real_variables</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="vector-fields" class="title-slide slide level1 center">
@@ -794,8 +789,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/derivative-approx.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="differentiation-1" class="title-slide slide level1 center">
@@ -812,8 +806,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/derivative-approx.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="extrema" class="title-slide slide level1 center">
@@ -831,8 +824,7 @@ x, y, z &amp;\mapsto f(x, y, z),\end{align}
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/optimization-example.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="gradients" class="title-slide slide level1 center">
@@ -1019,8 +1011,7 @@ J = \begin{bmatrix}
 <p><span class="math display">
     P(X = x_i) = \frac{\text{Number of favorable cases}}{\text{Total number of samples}}
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The set of probabilities <span class="math inline">\{P(X = x_i)\}_{i=1}^n</span> define the <strong>probability distribution</strong> for the random variable (or probability mass function, pmf).</p></li>
 <li><p>By definition, we have <span class="math inline">0 \leq P(X = x_i) \leq 1</span> and the probabilities <strong>have</strong> to respect:</p></li>
@@ -1097,8 +1088,7 @@ J = \begin{bmatrix}
 <p><span class="math display">
     \int_{x \in \mathcal{D}_X} f(x) \, dx = 1
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The pdf does not give the probability of taking a particular value <span class="math inline">x</span> (it is 0), but allows to get the probability that a value lies in a specific interval:</li>
 </ul>
@@ -1173,8 +1163,7 @@ J = \begin{bmatrix}
 </ul></li>
 <li><p>Its support is <span class="math inline">[a, b]</span>.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The pdf of the uniform distribution <span class="math inline">\mathcal{U}(a, b)</span> is defined on <span class="math inline">[a, b]</span> as:</li>
 </ul>
@@ -1206,8 +1195,7 @@ J = \begin{bmatrix}
 </ul></li>
 <li><p>Its support is <span class="math inline">\Re</span>.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The pdf of the normal distribution <span class="math inline">\mathcal{N}(\mu, \sigma)</span> is defined on <span class="math inline">\Re</span> as:</li>
 </ul>
@@ -1238,8 +1226,7 @@ J = \begin{bmatrix}
 </ul></li>
 <li><p>Its support is <span class="math inline">\Re^+</span> (<span class="math inline">x &gt; 0</span>).</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The pdf of the exponential distribution is defined on <span class="math inline">\Re^+</span> as:</li>
 </ul>
@@ -1318,8 +1305,7 @@ J = \begin{bmatrix}
 <li><p>We have <span class="math inline">P(\text{dog}) = \frac{18+21}{50}</span> and <span class="math inline">P(\text{cat}) = \frac{18+5}{50}</span>.</p></li>
 <li><p>Among the 23 who love cats, which proportion also loves dogs?</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The joint probability of loving both cats and dogs is <span class="math inline">P(\text{cat}, \text{dog}) = \frac{18}{50}</span>.</p></li>
 <li><p>The conditional probability of loving dogs given one loves cats is:</p></li>
@@ -1436,8 +1422,7 @@ J = \begin{bmatrix}
 <p><img data-src="img/montecarlo-2.jpeg"></p>
 </div><div class="column" style="width:33%;">
 <p><img data-src="img/montecarlo-3.jpeg"></p>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Credit <a href="https://towardsdatascience.com/an-overview-of-monte-carlo-methods-675384eb1694" class="uri">https://towardsdatascience.com/an-overview-of-monte-carlo-methods-675384eb1694</a></p>
 </div>
@@ -1546,8 +1531,7 @@ J = \begin{bmatrix}
 <li><p>One usually talks of a <strong>bias/variance</strong> trade-off: if you have a small bias, you will have a high variance, or vice versa.</p></li>
 <li><p>In machine learning, bias corresponds to underfitting, variance to overfitting.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="information-theory" class="title-slide slide level1 center">
@@ -1583,8 +1567,7 @@ J = \begin{bmatrix}
 </ul></li>
 <li><p>But it is just a rescaling, the base never matters.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="entropy" class="title-slide slide level1 center">
@@ -1618,8 +1601,7 @@ J = \begin{bmatrix}
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/entropy-binomial.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="joint-and-conditional-entropies" class="title-slide slide level1 center">
@@ -1974,18 +1956,7 @@ J = \begin{bmatrix}
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2017,7 +1988,29 @@ J = \begin{bmatrix}
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2025,7 +2018,7 @@ J = \begin{bmatrix}
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

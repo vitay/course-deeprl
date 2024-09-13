@@ -10,7 +10,6 @@ resources: pdf/1.1-Introduction.pdf
 
 # 1 - What is reinforcement learning?
 
-![](img/ml-areas.png){width=80%}
 
 # Different types of machine learning depending on the feedback
 
@@ -21,12 +20,6 @@ resources: pdf/1.1-Introduction.pdf
 * **Reinforcement learning:** an estimation of the correctness of the answer is provided.
 
 ![Source: <https://www.analyticsvidhya.com/blog/2016/12/artificial-intelligence-demystified/>](img/slulrl.jpg){width=90%}
-
-
-
-# Many faces of RL
-
-![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/rl-interdisciplinary.png){width=70%}
 
 
 # A brief history of reinforcement learning
@@ -41,23 +34,23 @@ resources: pdf/1.1-Introduction.pdf
 :::
 ::: {.column width=60%}
 
-* **Early 20th century**: animal behavior, psychology, operant conditioning 
+* **Early 20th century**: Animal behavior, psychology, operant conditioning 
 
     * Ivan Pavlov, Edward Thorndike, B.F. Skinner
 
-* **1950s**: optimal control, Markov Decision Process, dynamic programming
+* **1950s**: Optimal control, Markov Decision Process, dynamic programming
 
     * Richard Bellman, Ronald Howard
 
-* **1970s**: trial-and-error learning
+* **1970s**: Trial-and-error learning
 
     * Marvin Minsky, Harry Klopf, Robert Rescorla, Allan Wagner
 
-* **1980s**: temporal difference learning, Q-learning
+* **1980s**: Temporal difference learning, Q-learning
 
     * Richard Sutton, Andrew Barto, Christopher Watkins, Peter Dayan
 
-* **2013-now**: deep reinforcement learning
+* **2013-now**: Deep reinforcement learning
 
     * Deepmind (Mnih, Silver, Graves, Hassabis...)
     * OpenAI (Sutskever, Schulman...)
@@ -104,12 +97,12 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 
 # Operant conditioning
 
-::: {.columns}
-::: {.column width=60%}
-
 * Reinforcement learning comes from animal behavior studies, especially **operant conditioning / instrumental learning**.
 
 * **Thorndike’s Law of Effect** (1874–1949) suggested that behaviors followed by satisfying consequences tend to be repeated and those that produce unpleasant consequences are less likely to be repeated.
+
+::: {.columns}
+::: {.column width=60%}
 
 * Positive reinforcements (**rewards**) or negative reinforcements (**punishments**) can be used to modify behavior (**Skinner's box, 1936**).
 
@@ -126,7 +119,6 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 
 ![](img/operantconditioning.jpg)
 
-![](img/rat.jpg)
 
 :::
 :::
@@ -153,14 +145,6 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
     * If the outcome is negative (punishment), the action will be avoided.
 
 * After enough interactions, the agent has **learned** which action to perform in a given situation.
-
-
-
-# Trial and error learning
-
-![](img/boeing.jpg){width=50% fig-align="center"}
-
-* RL is merely a formalization of the trial-and-error learning paradigm.
 
 * The agent has to **explore** its environment via trial-and-error in order to gain knowledge.
 
@@ -390,8 +374,8 @@ $$
 
 # Simple maze
 
-![](img/maze.png){width=50%}
-
+:::columns
+:::column
 
 Goal: finding the exit as soon as possible.
 
@@ -401,25 +385,42 @@ Goal: finding the exit as soon as possible.
 
 * **Rewards**: -1 for each step until the exit.
 
+:::
+:::column
+
+![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/maze.png)
+
+:::
+:::
 
 
 # Simple maze
 
-![](img/maze-value.png){width=50%}
-
+:::columns
+:::column
 
 * The value of each state indicates how good it is to be in that state.
 
 * It can be learned by trial-and-error given a policy.
 
-# Simple maze
 
-![](img/maze-policy.png){width=50%}
+![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/maze-value.png)
+
+
+:::
+:::column
 
 
 * When the value of all states is known, we can infer the optimal policy by choosing actions leading to the states with the highest value.
 
+
+![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/maze-policy.png)
+
+:::
+:::
+
 *Note: the story is actually much more complicated...*
+
 
 ---
 
@@ -437,7 +438,7 @@ Goal: finding the exit as soon as possible.
 
 * **Time** does not matter: training samples are randomly sampled from the training set.
 
-![](img/supervisedlearning.png){width=55%}
+![Source: Andrew Ng, Stanford CS229, <https://see.stanford.edu/materials/aimlcs229/cs229-notes1.pdf>](img/supervisedlearning.png){width=55% fig-align="center"}
 
 :::
 ::: {.column width=50%}
@@ -453,7 +454,7 @@ Goal: finding the exit as soon as possible.
 
 * **Time** matters: as behavior gets better, the observed data changes.
 
-![](img/rl-interaction.png){width=60%}
+![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/rl-loop.png){width=80% fig-align="center"}
 
 :::
 :::
@@ -565,15 +566,20 @@ TD-Gammon (Tesauro, 1992) was one of the first AI to beat human experts at a com
 
 # Deep Reinforcement Learning (DRL)
 
-::: {}
-![](img/deeprl.jpg){width=70%}
-:::
+
+![](img/discrete.png){fig-align="center"}
+
 
 * Classical tabular RL was limited to toy problems, with few states and actions.
 
 * It is only when coupled with **deep neural networks** that interesting applications of RL became possible.
 
 * Deepmind (now Google) started the deep RL hype in 2013 by learning to solve 50+ Atari games with a CNN.
+
+::: footer
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
+:::
+
 
 # Atari games
 
@@ -600,14 +606,6 @@ score increases.
 
 :::
 :::
-
-::: footer
-@Mnih2013 Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>
-:::
-
-# Atari games
-
-![](img/discrete.png)
 
 ::: footer
 @Mnih2013 Playing Atari with Deep Reinforcement Learning. NIPS. <http://arxiv.org/abs/1312.5602>

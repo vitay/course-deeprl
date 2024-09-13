@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -426,8 +426,7 @@ Julien Vitay
 <li><p>We first need to identify the minimum and maximum returns <span class="math inline">R_\text{min}</span> and <span class="math inline">R_\text{max}</span> possible in the problem.</p></li>
 <li><p>We then split the range <span class="math inline">[R_\text{min}, R_\text{max}]</span> in <span class="math inline">n</span> <strong>discrete bins</strong> centered on the atoms <span class="math inline">\{z_i\}_{i=1}^n</span>.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The probability that the return obtained the action <span class="math inline">(s, a)</span> lies in the bin of the atom <span class="math inline">z_i</span> is noted <span class="math inline">p_i(s, a)</span>.</p></li>
 <li><p>It can be approximated by a neural network <span class="math inline">F</span> with parameters <span class="math inline">\theta</span>, using a <strong>softmax output layer</strong>:</p></li>
@@ -482,8 +481,7 @@ Julien Vitay
 <li>Categorical DQN is often noted <strong>C51</strong>.</li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="categorical-dqn-3" class="title-slide slide level1 center">
@@ -553,8 +551,7 @@ Julien Vitay
 <p><img data-src="img/distributionallearning2.png"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/distributionallearning3.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="categorical-dqn-8" class="title-slide slide level1 center">
@@ -753,8 +750,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://openai.com/blog/better-exploration-with-parameter-noise/" class="uri">https://openai.com/blog/better-exploration-with-parameter-noise/</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Note: a very similar idea was proposed by OpenAI at the same ICLR conference:</li>
 </ul>
@@ -786,8 +782,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The prediction <span class="math inline">y</span> will vary for the same input depending on the variances:</li>
 </ul>
@@ -825,8 +820,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://ericmjl.github.io/bayesian-deep-learning-demystified" class="uri">https://ericmjl.github.io/bayesian-deep-learning-demystified</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="noisy-dqn-5" class="title-slide slide level1 center">
@@ -880,8 +874,7 @@ Julien Vitay
 <li>NoisyNet (Fortunato et al., 2017)</li>
 </ul>
 <p><span class="math display">\theta = \mu_\theta + \sigma_\theta \, \epsilon</span></p>
-</div>
-</div>
+</div></div>
 <p>Which of these improvements should we use?</p>
 </section>
 
@@ -903,8 +896,7 @@ Julien Vitay
 <p><span class="math display">R_t = \sum_{k=0}^{n-1} \gamma^k r_{t+k+1} + \gamma^n \,  \max_a Q(s_{t+n}, a)</span></p></li>
 <li><p>It outperforms any of the single improvements.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Hessel et al.&nbsp;(2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298</p>
 </div>
@@ -926,8 +918,7 @@ Julien Vitay
 <li><p>You can find good implementations of Rainbow DQN on all major frameworks, for example on <code>rllib</code>:</p></li>
 </ul>
 <p><a href="https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn" class="uri">https://docs.ray.io/en/latest/rllib-algorithms.html#deep-q-networks-dqn-rainbow-parametric-dqn</a></p>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Hessel et al.&nbsp;(2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298</p>
 </div>
@@ -954,8 +945,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:60%;">
 <p><img data-src="img/gorila1.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: <strong>computational bottleneck</strong>.</p></li>
 <li><p>DQN cannot benefit from <strong>parallel computing</strong>: multi-core CPU, clusters of CPU/GPU, etc.</p></li>
@@ -995,8 +985,7 @@ Julien Vitay
 <li>The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).</li>
 </ul>
 <p><img data-src="img/gorila-results2.png" style="width:80.0%"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="ape-x" class="title-slide slide level1 center">
@@ -1070,8 +1059,7 @@ Julien Vitay
 <li><p>The trick used by DQN and its variants is to <strong>stack</strong> the last four frames and provide them as inputs to the CNN.</p></li>
 <li><p>The last 4 frames have (almost) the Markov property.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="drqn-deep-recurrent-q-network-3" class="title-slide slide level1 center">
@@ -1095,8 +1083,7 @@ Julien Vitay
 <ul>
 <li>The output at time <span class="math inline">t</span> depends on the whole history of inputs <span class="math inline">(\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t)</span>.</li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Using the output of a LSTM as a state, we make sure that we have the Markov property, RL will work:</li>
 </ul>
@@ -1416,18 +1403,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1459,7 +1435,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1467,7 +1465,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -391,8 +391,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/rewardtogo.png" style="width:50.0%"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="deterministic-policy-gradient-theorem-1" class="title-slide slide level1 center">
@@ -415,8 +414,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/policysearch.svg" style="width:80.0%"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The objective function can be rewritten as:</li>
 </ul>
@@ -605,8 +603,7 @@ Julien Vitay
 <li><p>The <strong>actor</strong> <span class="math inline">\mu_\theta</span> learns using sampled transitions with DPG.</p></li>
 <li><p>The <strong>critic</strong> <span class="math inline">Q_\varphi</span> uses Q-learning on sampled transitions: <strong>target networks</strong> can be used to cope with the non-stationarity of the Bellman targets.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Contrary to DQN, the target networks are not updated every once in a while, but slowly <strong>integrate</strong> the trained networks after each update (moving average of the weights):</li>
 </ul>
@@ -664,8 +661,7 @@ Julien Vitay
 <li><p>For the same input <span class="math inline">s_t</span>, the output <span class="math inline">\mu_\theta(s_t)</span> will be different every time.</p></li>
 <li><p>The <strong>NoisyNet</strong> approach can be applied to any deep RL algorithm to enable a smart state-dependent exploration (e.g.&nbsp;Noisy DQN).</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Plappert, M., Houthooft, R., Dhariwal, P., Sidor, S., Chen, R. Y., Chen, X., et al.&nbsp;(2018). Parameter Space Noise for Exploration. arXiv:1706.01905.</p>
 </div>
@@ -788,8 +784,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/td3-overestimation.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Double Q-learning solves the problem by using the target network <span class="math inline">\theta'</span> to estimate Q-values, but the value network <span class="math inline">\theta</span> to select the greedy action in the next state:</li>
 </ul>
@@ -827,8 +822,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://funnytimes.com/wp-content/uploads/2011/10/131986994517768.png" class="uri">https://funnytimes.com/wp-content/uploads/2011/10/131986994517768.png</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Both critics learn in parallel using the same target:</li>
 </ul>
@@ -853,8 +847,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:30%;">
 <p><img data-src="img/nonstationarity3.svg"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>Increasing the learning rate in the critic creates instability, reducing the learning rate in the actor slows down learning.</p></li>
 <li><p>The solution proposed by TD3 is to <strong>delay</strong> the update of the actor, i.e.&nbsp;update it only every <span class="math inline">d</span> minibatches:</p>
@@ -925,8 +918,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/td3-results2.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>TD3 outperforms DDPG (but also PPO and SAC) on continuous control tasks.</li>
 </ul>
@@ -1212,18 +1204,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1255,7 +1236,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1263,7 +1266,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -42,7 +42,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@
     code span.wa { color: #ff5555; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -111,7 +111,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -449,8 +449,7 @@ Julien Vitay
 <li><p>State transitions <span class="math inline">(s_t, a_t, s_{t+1})</span> are governed by <strong>transition probabilities</strong>.</p></li>
 <li><p>A <strong>reward</strong> <span class="math inline">r_{t+1}</span> is (probabilistically) associated to each transition.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Note: n-armed bandits are MDPs with only one state.</li>
 </ul>
@@ -486,8 +485,7 @@ Julien Vitay
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> <span class="st">"pressed"</span></span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="markov-chain-mc" class="title-slide slide level1 center">
@@ -516,8 +514,7 @@ Julien Vitay
   </span></p></li>
 <li><p>When the states have the <strong>Markov property</strong>, the state transition probabilities fully describe the MC.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="markov-property" class="title-slide slide level1 center">
@@ -561,8 +558,7 @@ Julien Vitay
 <li><p>“Class 2 coming from the pub”</p></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="state-transition-matrix" class="title-slide slide level1 center">
@@ -580,8 +576,7 @@ Julien Vitay
 <li>Supposing that the states have the Markov property, the transitions in the system can be summarized by the <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}</span>:</li>
 </ul>
 <p><img data-src="img/student-transitionmatrix.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Each element of the state transition matrix corresponds to <span class="math inline">p(s' | s)</span>. Each row of the state transition matrix sums to 1:</li>
 </ul>
@@ -628,8 +623,7 @@ Julien Vitay
 <ol start="4" type="1">
 <li>The <strong>discount factor</strong> <span class="math inline">\gamma \in [0, 1]</span>.</li>
 </ol>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="expected-reward" class="title-slide slide level1 center">
@@ -784,8 +778,7 @@ Julien Vitay
 <li>By measuring the displacement of the ball between two consecutive frames, we can predict where it is going.</li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>One can also <strong>learn</strong> state representations containing the history using recurrent neural networks (see later).</li>
 </ul>
@@ -808,8 +801,7 @@ Julien Vitay
 <li><p>The dynamics of the environment (transition probabilities, reward expectations) only depend on the state, not the observations.</p></li>
 <li><p>The agent can only make decisions (actions) based on the sequence of observations, as it does not have access to the state directly (Plato’s cavern).</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>In a POMDP, the state <span class="math inline">s_t</span> of the agent is implicitly the concatenation of the past observations and actions:</li>
 </ul>
@@ -837,8 +829,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </span></p>
 </div><div class="column" style="width:30%;">
 <p><img data-src="img/rewardtogo.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>More generally, for a trajectory (episode) <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span>, one can define its return as:</li>
 </ul>
@@ -913,8 +904,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p><strong>Actions:</strong> Commands to the motors for going left or right.</p></li>
 <li><p><strong>Reward function:</strong> Depends on whether we consider the task as episodic or continuing.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -932,8 +922,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p><strong>return</strong> = <span class="math inline">- \gamma^k</span> for <span class="math inline">k</span> steps before failure.</p></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>In both cases, the goal is to maximize the return by maintaining the pole vertical as long as possible.</li>
 </ul>
@@ -956,8 +945,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>Decisions must be made on basis of the current energy level: high, low. This will be the state of the robot.</p></li>
 <li><p>Return = number of cans collected.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="example-the-recycling-robot-mdp-1" class="title-slide slide level1 center">
@@ -975,8 +963,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p><span class="math inline">R^{\text{wait}}</span> = expected number of cans while waiting.</p></li>
 <li><p><span class="math inline">R^{\text{search}} &gt; R^{\text{wait}}</span></p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div>
 <p><img data-src="img/recyclingrobot.png" style="width:70.0%"></p>
 </div>
@@ -1000,7 +987,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li>The MDP is fully described by the following table:</li>
 </ul>
 <p><br></p>
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 15%">
 <col style="width: 15%">
@@ -1090,8 +1077,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </tr>
 </tbody>
 </table>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="the-policy" class="title-slide slide level1 center">
@@ -1154,8 +1140,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <p><span class="math display">  V^{\pi} (s) = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s) = \mathbb{E}_{\rho_\pi} ( \sum_{k=0}^{\infty} \gamma^k r_{t+k+1} |s_t=s ) </span></p>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/rewardtogo.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="value-functions-1" class="title-slide slide level1 center">
@@ -1175,8 +1160,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/rewardtogo.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="value-functions-2" class="title-slide slide level1 center">
@@ -1208,8 +1192,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/rewardtogo.png"></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="the-v-and-q-value-functions-are-inter-dependent" class="title-slide slide level1 center">
@@ -1365,8 +1348,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/fullvi.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><strong>The optimal action <span class="math inline">a^*</span> to perform in the state <span class="math inline">s</span> is the one with the highest optimal Q-value <span class="math inline">Q^*(s, a)</span></strong>.</li>
 </ul>
@@ -1402,8 +1384,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </span></p>
 </div><div class="column" style="width:40%;">
 <p><img data-src="img/fullvi.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The expected return after being in <span class="math inline">s</span> is the same as the expected return after being in <span class="math inline">s</span> and choosing the optimal action <span class="math inline">a^*</span>, as this is the only action that can be taken.</p></li>
 <li><p>This allows to find the <strong>Bellman optimality equation</strong> for <span class="math inline">V^*</span>:</p></li>
@@ -1460,8 +1441,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <p><span class="math display">Q^* (s, a)  = \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \, [r(s, a, s') + \gamma V^*(s') ] </span></p>
 </div><div class="column" style="width:30%;">
 <p><img data-src="img/fullvi.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>If you only have <span class="math inline">V^*(s)</span>, you need to perform a <strong>one-step-ahead</strong> search using the dynamics of the MDP:</li>
 </ul>
@@ -1489,8 +1469,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </span></p>
 </div><div class="column" style="width:30%;">
 <p><img data-src="img/fullvi.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>Finding <span class="math inline">Q^*</span> makes the selection of optimal actions easy:</p>
 <ul>
@@ -1543,8 +1522,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 </ol></li>
 <li><p>After enough iterations, the policy converges to the <strong>optimal policy</strong> (if the states are Markov).</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="different-notations-in-rl" class="title-slide slide level1 center">
@@ -1553,7 +1531,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>Notations can vary depending on the source.</p></li>
 <li><p>The ones used in this course use what you can read in most modern deep RL papers (Deepmind, OpenAI), but beware that you can encounter <span class="math inline">G_t</span> for the return…</p></li>
 </ul>
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 23%">
 <col style="width: 23%">
@@ -1851,18 +1829,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1894,7 +1861,29 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1902,7 +1891,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

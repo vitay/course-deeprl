@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -376,8 +376,7 @@ Julien Vitay
 <li><p>A game lasts 150 moves on average (80 in chess).</p></li>
 <li><p>Up until 2015 and <strong>AlphaGo</strong>, Go AIs could not compete with world-class experts, and people usually considered AI would need at least another 20 years to solve it.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="minimax-and-alpha-beta" class="title-slide slide level1 center">
@@ -422,8 +421,7 @@ Julien Vitay
 <li><p>Carefully engineered heuristics (with the help of chess masters) allowed DeepBlue to search 6 moves away what is the best situation it can arrive in.</p></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>But it does not work in Go because its branching factor (250 actions possible from each state) is to huge: the tree explodes very soon.</p>
 <ul>
@@ -485,8 +483,7 @@ Julien Vitay
 <li><p>Inference time is only 2 <span class="math inline">\mu</span>s, instead of 3 ms for the policy network <span class="math inline">\rho_\sigma</span>.</p></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
@@ -514,8 +511,7 @@ Julien Vitay
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="alphago-2" class="title-slide slide level1 center">
@@ -531,8 +527,7 @@ Julien Vitay
 <ul>
 <li>The value network learns to predict the value of any possible state under the learned policy.</li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
@@ -569,8 +564,7 @@ Julien Vitay
 </ul></li>
 </ul>
 <p><span class="math display">a_t = \text{argmax}_a \, Q(s, a) + K \cdot \frac{P(s, a)}{1 + N(s, a)}</span></p>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
@@ -591,8 +585,7 @@ Julien Vitay
 <ul>
 <li>The tree therefore grows every time a <strong>Monte-Carlo sampling</strong> (“episode”) is done.</li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
@@ -617,8 +610,7 @@ Julien Vitay
 <ul>
 <li>This solves the bias/variance trade-off.</li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
@@ -639,8 +631,7 @@ Julien Vitay
 <li><p>However, it never uses real rewards, only value estimates.</p></li>
 <li><p>The Q-values are <strong>learned</strong> by using both the learned value of future states (value network) and internal simulations (rollout).</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>David Silver et al.&nbsp;(2016). Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.</p>
 </div>
@@ -740,8 +731,7 @@ Julien Vitay
 <li>The state value <span class="math inline">V_\varphi(s)</span> for the value of the leaves (no fast rollout).</li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Silver et al.&nbsp;(2017). Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm. arXiv:1712.01815.</p>
 </div>
@@ -783,8 +773,7 @@ Julien Vitay
 <li><p>Train the neural network, using both A) the move evaluations produced by the MCTS lookahead search and B) whether the current player won or lost.</p></li>
 <li><p>Finally, every 1,000 iterations of steps 3-4, evaluate the current neural network against the previous best version; if it wins at least 55% of the games, begin using it to generate self-play games instead of the prior version.</p></li>
 </ol>
-</div>
-</div>
+</div></div>
 <p>Repeat steps 3-4 700,000 times, while the self-play games are continuously being played .</p>
 </section>
 
@@ -859,8 +848,7 @@ Julien Vitay
 <li><p>This is a similar idea to <strong>World Models</strong> and <strong>PlaNet/Dreamer</strong>, which plan in the latent space of a VAE.</p></li>
 <li><p>Selection in MCTS still follows an upper confidence bound using the learned policy <span class="math inline">\pi</span>:</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <p><img data-src="img/muzero-ucb.png"></p>
 <div class="footer">
 <p>Schrittwieser et al.&nbsp;(2019). Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model. arXiv:1911.08265</p>
@@ -1153,18 +1141,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1196,7 +1173,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1204,7 +1203,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

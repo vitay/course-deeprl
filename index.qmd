@@ -8,8 +8,7 @@ author:
     affiliation-url: https://tu-chemnitz.de
     orcid: 0000-0001-5229-2349
 
-abstract: This website contains the materials for the module **Deep Reinforcement Learning** (573140) taught by Dr. Julien Vitay at the Technische Universität Chemnitz. 
-
+abstract: This website contains the materials for the module **Deep Reinforcement Learning** (573140). 
 echo: false
 ---
 
@@ -19,20 +18,25 @@ Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEnt
 
 
 :::callout-note
-### Summer semester 2024
+### Winter semester 2024-25
 
-No lectures in the summer semester. 
+* Lecture: Wednesday 09:15-10:45 1/368a
+* Exercise: Tuesday 13:45-15:15 B202
 
-Research paper for the retake exam (26.07.24, 12:00-13:30, 1/204): 
+ 
+The first lecture is on 16.10.24, the first exercise one week later on 22.10.24. If not done already (e.g. in Neurocomputing), register here: 
 
-> Burda, Y., Edwards, H., Storkey, A., & Klimov, O. (2018). Exploration by Random Network Distillation (arXiv:1810.12894). <https://arxiv.org/pdf/1810.12894>
+<https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18086756352/CourseNode/1693276028553462004>
 
-Blog and videos: <https://openai.com/index/reinforcement-learning-with-prediction-based-rewards/>
+before the first exercise to get login credentials that work in the FRIZ pool B202. 
+:::
 
-At the exam, you can bring the paper printed one-sided (17 pages), with as many annotations as you want on the back of each page (including lecture notes). You should also prepare a 200 words abstract on a separate piece of paper (handwritten or printed) that you will give with the rest of your answers.
+:::callout-note
+### Exam
 
 Mock exam: [pdf](https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/HER2017.pdf)
 
+At the exam, you can bring the paper printed one-sided, with as many annotations as you want on the back of each page (including lecture notes). You should also prepare a 200 words abstract on a separate piece of paper (handwritten or printed) that you will give with the rest of your answers.
 
 :::
 

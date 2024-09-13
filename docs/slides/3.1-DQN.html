@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -42,7 +42,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@
     code span.wa { color: #ff5555; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -111,7 +111,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -460,8 +460,7 @@ Julien Vitay
 <ul>
 <li>The action space must be discrete (one neuron per action).</li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Source: <a href="https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677" class="uri">https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677</a></p>
 </div>
@@ -488,8 +487,7 @@ Julien Vitay
 <li><strong>if</strong> <span class="math inline">s_t</span> is terminal: sample another initial state <span class="math inline">s_0</span>.</li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 <p><em>Remark:</em> We will now omit the break for terminal states, it is always implicitly here.</p>
 </section>
 
@@ -534,8 +532,7 @@ Julien Vitay
 </ul></li>
 </ul></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="correlated-inputs" class="title-slide slide level1 center">
@@ -763,8 +760,7 @@ Julien Vitay
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/targetnetwork.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>DQN loss function:</li>
 </ul>
@@ -839,8 +835,7 @@ Julien Vitay
 <p><img data-src="img/maxpooling.jpg" style="width:70.0%"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/vgg16.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The goal of max-pooling is to get rid of the spatial information in the image.</p></li>
 <li><p>For object recognition, you do not care whether the object is in the center or on the side of the image.</p></li>
@@ -992,8 +987,7 @@ Julien Vitay
 <li><p>It was the first RL algorithm able to learn different tasks (no free lunch theorem).</p></li>
 <li><p>The 2015 paper in Nature started the hype for deep RL.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Mnih et al.&nbsp;(2015). Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.</p>
 </div>
@@ -1194,8 +1188,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/dueling-principle.svg"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The exact Q-values of all actions are not equally important.</p>
 <ul>
@@ -1227,8 +1220,7 @@ Julien Vitay
 </span> <span class="math display">
     A^\pi(s, a \neq a^*) &lt; 0
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>This is particularly true for the optimal policy.</p></li>
 <li><p>But if we have separate estimates <span class="math inline">V_\varphi(s)</span> and <span class="math inline">Q_\theta(s, a)</span>, some actions may have a positive advantage.</p></li>
@@ -1317,8 +1309,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
 <li><p>The value <span class="math inline">Q_\theta(s, a)</span> of each possible action in a given state is approximated by a convolutional neural network.</p></li>
 <li><p>The NN has to minimize the mse between the predicted Q-values and the target value corresponding to the Bellman equation:</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]</span></p>
 <ul>
 <li><p>The use of an <strong>experience replay memory</strong> and of <strong>target networks</strong> allows to stabilize learning and avoid suboptimal policies.</p></li>
@@ -1557,18 +1548,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1600,7 +1580,29 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1608,7 +1610,7 @@ Q_\theta(s, a) = 10 &amp; = 1 + 9 \\
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -384,8 +384,7 @@ Julien Vitay
 <li><p>The main advantage is that the agent does not need to “think” when acting: just select the action with highest Q-value (<strong>reflexive behavior</strong>).</p></li>
 <li><p>The other advantage is that you can use MF methods on <strong>any</strong> MDP: you do not need to know anything about them.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li>But MF methods are very slow (sample complexity): as they make no assumption, they have to learn everything by trial-and-error from scratch.</li>
 </ul>
@@ -417,8 +416,7 @@ Julien Vitay
 <figcaption>Source: <a href="https://towardsdatascience.com/model-based-reinforcement-learning-cb9e41ff1f0d" class="uri">https://towardsdatascience.com/model-based-reinforcement-learning-cb9e41ff1f0d</a></figcaption>
 </figure>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="two-families-of-deep-rl-algorithms" class="title-slide slide level1 center">
@@ -468,8 +466,7 @@ Julien Vitay
 <li><p>The only sample complexity is the one needed to train the model: the rest is <strong>emulated</strong>.</p></li>
 <li><p>Drawback: This can only work when the model is close to perfect, especially for long trajectories or probabilistic MDPs.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018). Model-Ensemble Trust-Region Policy Optimization. arXiv:1802.10592.</p>
 </div>
@@ -541,8 +538,7 @@ Julien Vitay
 <li><p>select the action whose rollout has the highest return.</p></li>
 </ol></li>
 </ul>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Nagabandi et al.&nbsp;(2017). Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.</p>
 </div>
@@ -565,8 +561,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/mpc-application2.gif"></p>
-</div>
-</div>
+</div></div>
 <div class="footer">
 <p>Nagabandi et al.&nbsp;(2017). Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.</p>
 </div>
@@ -597,8 +592,7 @@ Julien Vitay
 </ul></li>
 <li><p>If the simulated transitions are good enough, the MF algorithm can converge using much less <strong>real transitions</strong>, thereby reducing its <strong>sample complexity</strong>.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The <strong>Dyna-Q</strong> algorithm is an extension of Q-learning to integrate a model <span class="math inline">M(s, a) = (s', r')</span>.</p></li>
 <li><p>The model can be tabular or approximated with a NN.</p></li>
@@ -641,8 +635,7 @@ Julien Vitay
 <p><img data-src="img/dynaq2.png"></p>
 </div><div class="column" style="width:50%;">
 <p><img data-src="img/ERM.svg"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>It is interesting to notice that Dyna-Q is very similar to DQN and its <strong>experience replay memory</strong>.</p></li>
 <li><p>In DQN, the ERM stores <strong>real transitions</strong> generated in the past.</p></li>
@@ -883,18 +876,7 @@ Julien Vitay
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -926,7 +908,29 @@ Julien Vitay
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -934,7 +938,7 @@ Julien Vitay
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

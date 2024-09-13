@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -31,7 +31,7 @@
     }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -46,7 +46,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -382,8 +382,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <p><span class="math display">\pi' \leftarrow \text{Greedy}(V^\pi)</span></p></li>
 </ol></li>
 </ul>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>After enough iterations, the policy converges to the <strong>optimal policy</strong> (if the states are Markov).</p></li>
 <li><p>Two main algorithms: <strong>policy iteration</strong> and <strong>value iteration</strong>.</p></li>
@@ -407,8 +406,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 </span></p>
 </div><div class="column" style="width:30%;">
 <p><img data-src="img/backup.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>Let’s note <span class="math inline">\mathcal{P}_{ss'}^\pi</span> the transition probability between <span class="math inline">s</span> and <span class="math inline">s'</span> (dependent on the policy <span class="math inline">\pi</span>) and <span class="math inline">\mathcal{R}_{s}^\pi</span> the expected reward in <span class="math inline">s</span> (also dependent):</li>
 </ul>
@@ -451,8 +449,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
       \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
   \end{bmatrix}
 </span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>The <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}^\pi</span> is defined as:</li>
 </ul>
@@ -551,8 +548,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 <p><span class="math display">
   \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 </span></p>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="iterative-policy-evaluation-1" class="title-slide slide level1 center">
@@ -674,8 +670,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 </ul></li>
 </ol></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="policy-improvement" class="title-slide slide level1 center">
@@ -693,8 +688,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 </span></p>
 </div><div class="column" style="width:20%;">
 <p><img data-src="img/fullpe.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li>If the Q-value of an action <span class="math inline">a</span> is higher than the one currently selected by the <strong>deterministic</strong> policy:</li>
 </ul>
@@ -749,8 +743,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
   \pi_0 \xrightarrow[]{E} V^{\pi_0} \xrightarrow[]{I} \pi_1 \xrightarrow[]{E} V^{\pi^1} \xrightarrow[]{I}  ... \xrightarrow[]{I} \pi^* \xrightarrow[]{E} V^{*}
 </span></p>
 <p><img data-src="img/gpi.png"></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li><p>The <strong>optimal policy</strong> being deterministic, policy improvement can be greedy over the state values.</p></li>
 <li><p>If the policy does not change after policy improvement, the optimal policy has been found.</p></li>
@@ -987,8 +980,7 @@ $$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamm
 <li><p>However, the number of states is often astronomical, e.g., often growing exponentially with the number of state variables (what Bellman called <strong>“the curse of dimensionality”</strong>).</p></li>
 <li><p>In practice, classical DP can only be applied to problems with a few millions of states.</p></li>
 </ul>
-</div>
-</div>
+</div></div>
 </section>
 
 <section id="curse-of-dimensionality" class="title-slide slide level1 center">
@@ -1234,18 +1226,7 @@ $$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamm
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1277,7 +1258,29 @@ $$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamm
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1285,7 +1288,7 @@ $$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamm
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {
