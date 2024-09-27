@@ -14,8 +14,5 @@ clean:
 	quarto render . 
 
 export: 
-	git add *
-	git commit -a -m "`date`"
-	git push origin main
 	cp .htaccess docs/
 	rsync -avze ssh --progress --delete ./docs/ vitay@login.tu-chemnitz.de:/afs/tu-chemnitz.de/www/root/informatik/KI/edu/deeprl/notes/	
