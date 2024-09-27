@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Julien Vitay">
+  <title>Deep Reinforcement Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="img/tuc-new-large.png" data-background-opacity="1" data-background-position="top" data-background-size="30%" class="quarto-title-block center">
+  <h1 class="title">Deep Reinforcement Learning</h1>
+  <p class="subtitle">Maximum Entropy RL</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Julien Vitay 
+</div>
+        <p class="quarto-title-affiliation">
+            Professur für Künstliche Intelligenz - Fakultät für Informatik
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="maximum-entropy-rl" class="title-slide slide level1 center">
+<h1>1 - Maximum Entropy RL</h1>
+
+</section>
+
+<section id="hard-rl" class="title-slide slide level1 center">
+<h1>Hard RL</h1>
+<ul>
+<li>All methods seen so far search the optimal policy that maximizes the return:</li>
+</ul>
+<p><span class="math display">\pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]</span></p>
+<ul>
+<li>The optimal policy is deterministic and greedy by definition.</li>
+</ul>
+<p><span class="math display">\pi^*(s) = \text{arg} \max_a Q^*(s, a)</span></p>
+<ul>
+<li><p>Exploration is ensured externally by :</p>
+<ul>
+<li><p>applying <span class="math inline">\epsilon</span>-greedy or softmax on the Q-values (DQN),</p></li>
+<li><p>adding exploratory noise (DDPG),</p></li>
+<li><p>learning stochastic policies that become deterministic over time (A3C, PPO).</p></li>
+</ul></li>
+<li><p>Is “hard” RL, caring only about <strong>exploitation</strong>, always the best option?</p></li>
+</ul>
+</section>
+
+<section id="need-for-soft-rl" class="title-slide slide level1 center">
+<h1>Need for soft RL</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/chess.gif" style="width:70.0%"></p>
+<figcaption>Source: <a href="https://www.chess.com/article/view/announcing-the-chess-com-gif-maker" class="uri">https://www.chess.com/article/view/announcing-the-chess-com-gif-maker</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>The optimal policy is only greedy for a MDP, not obligatorily for a POMDP.</p></li>
+<li><p>Games like chess are POMDPs: you do not know what your opponent is going to play (missing information).</p></li>
+<li><p>If you always play the same moves (e.g.&nbsp;opening moves), your opponent will adapt and you will end up losing systematically.</p></li>
+<li><p><strong>Variety</strong> in playing is beneficial in POMDPs: it can counteract the uncertainty about the environment.</p></li>
+</ul>
+</div></div>
+</section>
+
+<section id="need-for-soft-rl-1" class="title-slide slide level1 center">
+<h1>Need for soft RL</h1>
+<ul>
+<li><p>There are sometimes more than one way to collect rewards, especially with sparse rewards.</p></li>
+<li><p>If exploration decreases too soon, the RL agent will “overfit” one of the paths.</p></li>
+<li><p>If one of the paths is suddenly blocked, the agent would have to completely re-learn its policy.</p></li>
+<li><p>It would be more efficient if the agent had learned all possibles paths, even if some of them are less optimal.</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_ex1.png"></p>
+<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_ex2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="soft-policies" class="title-slide slide level1 center">
+<h1>Soft policies</h1>
+<ul>
+<li>Softmax policies allow to learn <strong>multimodal</strong> policies, but only for discrete action spaces.</li>
+</ul>
+<p><span class="math display">
+    \pi(s, a) = \frac{\exp Q(s, a) / \tau}{ \sum_b \exp Q(s, b) / \tau}
+</span></p>
+<ul>
+<li><p>Continuous Gaussian policies are still <strong>unimodal policies</strong>: they mostly sample actions around the mean <span class="math inline">\mu_\theta(s)</span> and the variance <span class="math inline">\sigma_\theta(s)</span> decreases to 0 with learning.</p></li>
+<li><p>If we want a multimodal policy that learns different solutions, we need to learn a <strong>Softmax</strong> distribution (Gibbs / Boltzmann) over the continuous action space.</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac-unimodal.png"></p>
+<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac-multimodal.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="maximum-entropy-rl-1" class="title-slide slide level1 center">
+<h1>Maximum Entropy RL</h1>
+<ul>
+<li><p>A solution to force the policy to be <strong>multimodal</strong> is to force it to be as stochastic as possible by <strong>maximizing its entropy</strong>.</p></li>
+<li><p>Instead of searching for the policy that “only” maximizes the returns:</p></li>
+</ul>
+<p><span class="math display">
+    \pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) ]
+</span></p>
+<p>we search for the policy that maximizes the returns while being as stochastic as possible:</p>
+<p><span class="math display">
+    \pi^* = \text{arg} \max_\pi \, \mathbb{E}_{\pi} [ \sum_t \gamma^t \, r(s_t, a_t, s_{t+1}) + \alpha \, H(\pi(s_t))]
+</span></p>
+<ul>
+<li><p>This new objective function defines the <strong>maximum entropy RL</strong> framework.</p></li>
+<li><p>The entropy of the policy <strong>regularizes</strong> the objective function: the policy should still maximize the returns, but stay as stochastic as possible depending on the parameter <span class="math inline">\alpha</span>.</p></li>
+<li><p>Entropy regularization can always be added to PG methods such as A3C.</p></li>
+<li><p>It is always possible to fall back to hard RL by setting <span class="math inline">\alpha</span> to 0.</p></li>
+</ul>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2017">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165</p>
+</div>
+</section>
+
+<section id="entropy-of-a-policy" class="title-slide slide level1 center">
+<h1>Entropy of a policy</h1>
+<ul>
+<li>The entropy of a policy in a state <span class="math inline">s_t</span> is defined by the expected negative log-likelihood of the policy:</li>
+</ul>
+<p><span class="math display">H(\pi_\theta(s_t)) = \mathbb{E}_{a \sim \pi_\theta(s_t)} [- \log \pi_\theta(s_t, a)]</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>For a discrete action space:</li>
+</ul>
+<p><span class="math display">
+    H(\pi_\theta(s_t)) = - \sum_a \pi_\theta(s_t, a) \, \log \pi_\theta(s_t, a)
+</span></p>
+<ul>
+<li>For a continuous action space:</li>
+</ul>
+<p><span class="math display">
+    H(\pi_\theta(s_t)) = - \int_a \pi_\theta(s_t, a) \, \log \pi_\theta(s_t, a) \, da
+</span></p>
+<ul>
+<li>The entropy necessitates to sum or integrate the <strong>self-information</strong> of each possible action in a given state.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/entropy-binomial.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="entropy-of-a-policy-1" class="title-slide slide level1 center">
+<h1>Entropy of a policy</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>A <strong>deterministic</strong> (greedy) policy has zero entropy, the same action is always taken: <strong>exploitation</strong>.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>A <strong>random</strong> policy has a high entropy, you cannot predict which action will be taken: <strong>exploration</strong>.</li>
+</ul>
+</div></div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-softmax2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<ul>
+<li>Maximum entropy RL embeds the exploration-exploitation trade-off inside the objective function instead of relying on external mechanisms such as the softmax temperature.</li>
+</ul>
+</section>
+
+<section id="soft-q-learning" class="title-slide slide level1 center">
+<h1>Soft Q-learning</h1>
+<ul>
+<li>In <strong>soft Q-learning</strong>, the objective function is defined over complete trajectories:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{J}(\theta) = \sum_t \gamma^t \, \mathbb{E}_{\pi} [ r(s_t, a_t, s_{t+1}) + \alpha \, H(\pi(s_t))]
+</span></p>
+<ul>
+<li>The goal of the agent is to generate trajectories associated with a lot of rewards (high return) but only visiting states with a high entropy, i.e.&nbsp;where the policy is random (exploration).</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p>The agent can decide how the trade-off is solved via regularization:</p>
+<ul>
+<li><p>If a single action leads to high rewards, the policy may become deterministic.</p></li>
+<li><p>If several actions lead to equivalent rewards, the policy must stay stochastic.</p></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/policysearch.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="soft-q-learning-1" class="title-slide slide level1 center">
+<h1>Soft Q-learning</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>In soft Q-learning, the policy is implemented as a softmax over <strong>soft Q-values</strong>:</li>
+</ul>
+<p><span class="math display">
+    \pi_\theta(s, a) = \dfrac{\exp  \dfrac{Q^\text{soft}_\theta (s, a)}{\alpha}}{\sum_b \exp \dfrac{Q^\text{soft}_\theta (s, b)}{\alpha}} \propto \exp \dfrac{Q^\text{soft}_\theta (s, a)}{\alpha}
+</span></p>
+<ul>
+<li><span class="math inline">\alpha</span> plays the role of the softmax temperature parameter <span class="math inline">\tau</span>.</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac-multimodal.png"></p>
+<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><p>Soft Q-learning belongs to <strong>energy-based models</strong>, as <span class="math inline">-\dfrac{Q^\text{soft}_\theta (s, a)}{\alpha}</span> represents the energy of the Boltzmann distribution (see restricted Boltzmann machines).</p></li>
+<li><p>The <strong>partition function</strong> <span class="math inline">\sum_b \exp \dfrac{Q^\text{soft}_\theta (s, b)}{\alpha}</span> is untractable for continuous action spaces, as one would need to integrate over the whole action space, but it will disappear from the equations anyway.</p></li>
+</ul>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2017">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165</p>
+</div>
+</section>
+
+<section id="what-are-soft-values" class="title-slide slide level1 center">
+<h1>What are soft values?</h1>
+<ul>
+<li>Soft V and Q values are the equivalent of the hard value functions, but for the new objective:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{J}(\theta) = \sum_t \gamma^t \, \mathbb{E}_{\pi} [ r(s_t, a_t, s_{t+1}) + \alpha \, H(\pi(s_t))]
+</span></p>
+<ul>
+<li>The soft value of an action depends on the immediate reward and the soft value of the next state (soft Bellman equation):</li>
+</ul>
+<p><span class="math display">
+    Q^\text{soft}_\theta(s_t, a_t) = \mathbb{E}_{s_{t+1} \in \rho_\theta} [r(s_t, a_t, s_{t+1}) + \gamma \, V^\text{soft}_\theta(s_{t+1})]
+</span></p>
+<ul>
+<li>The soft value of a state is the expected value over the available actions plus the entropy of the policy.</li>
+</ul>
+<p><span class="math display">
+    V^\text{soft}_\theta(s_t) = \mathbb{E}_{a_{t} \in \pi} [Q^\text{soft}_\theta(s_{t}, a_{t})] + H(\pi_\theta(s_t)) = \mathbb{E}_{a_{t} \in \pi} [Q^\text{soft}_\theta(s_{t}, a_{t}) -  \log \, \pi_\theta(s_t, a_t)]
+</span></p>
+<ul>
+<li><p>Haarnoja et al (2017) showed that these soft value functions are the solution of the entropy-regularized objective function.</p></li>
+<li><p>All we need is to be able to estimate them… Soft Q-learning uses complex optimization methods (variational inference) to do it, but SAC is more practical.</p></li>
+</ul>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2017">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165</p>
+</div>
+</section>
+
+<section id="soft-actor-critic-sac" class="title-slide slide level1 center">
+<h1>2 - Soft Actor-Critic (SAC)</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/paper-sac.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2018a">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>
+</div>
+</section>
+
+<section id="soft-actor-critic-sac-1" class="title-slide slide level1 center">
+<h1>Soft Actor-Critic (SAC)</h1>
+<ul>
+<li>Putting these equations together:</li>
+</ul>
+<p><span class="math display">
+    Q^\text{soft}_\theta(s_t, a_t) = \mathbb{E}_{s_{t+1} \in \rho_\theta} [r(s_t, a_t, s_{t+1}) + \gamma \, V^\text{soft}_\theta(s_{t+1})]
+</span></p>
+<p><span class="math display">
+    V^\text{soft}_\theta(s_t) = \mathbb{E}_{a_{t} \in \pi} [Q^\text{soft}_\theta(s_{t}, a_{t}) -  \log \, \pi_\theta(s_t, a_t)]
+</span></p>
+<p>we obtain:</p>
+<p><span class="math display">
+    Q^\text{soft}_\theta(s_t, a_t) = \mathbb{E}_{s_{t+1} \in \rho_\theta} [r(s_t, a_t, s_{t+1}) + \gamma \, \mathbb{E}_{a_{t+1} \in \pi} [Q^\text{soft}_\theta(s_{t+1}, a_{t+1}) -  \log \, \pi_\theta(s_{t+1}, a_{t+1})]]
+</span></p>
+<ul>
+<li>If we want to train a <strong>critic</strong> <span class="math inline">Q_\varphi(s, a)</span> to estimate the true soft Q-value of an action <span class="math inline">Q^\text{soft}_\theta(s, a)</span>, we just need to sample <span class="math inline">(s_t, a_t, r_{t+1}, a_{t+1})</span> transitions and minimize:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{L}(\varphi) = \mathbb{E}_{s_t, a_t, s_{t+1} \sim \rho_\theta} [(r_{t+1} + \gamma \, Q_\varphi(s_{t+1}, a_{t+1}) - \log \pi_\theta(s_{t+1}, a_{t+1}) - Q_\varphi(s_{t}, a_{t}) )^2]
+</span></p>
+<ul>
+<li><p>The only difference with a SARSA critic is that the negative log-likelihood of the next action is added to the target.</p></li>
+<li><p>In practice, <span class="math inline">s_t</span>, <span class="math inline">a_t</span> and <span class="math inline">r_{t+1}</span> can come from a replay buffer, but <span class="math inline">a_{t+1}</span> has to be sampled from the current policy <span class="math inline">\pi_\theta</span> (but not taken!).</p></li>
+<li><p>SAC is therefore an <strong>off-policy actor-critic algorithm</strong>, but with stochastic policies!</p></li>
+</ul>
+</section>
+
+<section id="soft-actor-critic-sac-2" class="title-slide slide level1 center">
+<h1>Soft Actor-Critic (SAC)</h1>
+<ul>
+<li>But how do we train the actor? The policy is defined by a softmax over the soft Q-values, but the log-partition <span class="math inline">Z</span> is untractable for continuous spaces:</li>
+</ul>
+<p><span class="math display">
+    \pi_\theta(s, a) = \dfrac{\exp  \dfrac{Q_\varphi (s, a)}{\alpha}}{\sum_b \exp \dfrac{Q_\varphi (s, b)}{\alpha}} = \dfrac{1}{Z} \, \exp \dfrac{Q_\varphi (s, a)}{\alpha}
+</span></p>
+<ul>
+<li>The trick is to make the <strong>parameterized actor</strong> <span class="math inline">\pi_\theta</span> learn to be close from this softmax, by minimizing the KL divergence:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{L}(\theta) = D_\text{KL} (\pi_\theta(s, a) || \dfrac{1}{Z} \, \exp \dfrac{Q_\varphi (s, a)}{\alpha}) = \mathbb{E}_{s, a \sim \pi_\theta(s, a)} [- \log \dfrac{\dfrac{1}{Z} \, \exp \dfrac{Q_\varphi (s, a)}{\alpha}}{\pi_\theta(s, a)}]
+</span></p>
+<ul>
+<li>As <span class="math inline">Z</span> does not depend on <span class="math inline">\theta</span>, it will automagically disappear when taking the gradient!</li>
+</ul>
+<p><span class="math display">
+   \nabla_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s, a} [\alpha \, \nabla_\theta \log \pi_\theta(s, a) - Q_\varphi (s, a)]
+</span></p>
+<ul>
+<li>So the actor just has to implement a Gaussian policy and we can train it using soft-Q-value.</li>
+</ul>
+</section>
+
+<section id="soft-actor-critic-sac-3" class="title-slide slide level1 center">
+<h1>Soft Actor-Critic (SAC)</h1>
+<ul>
+<li><strong>Soft Actor-Critic</strong> (SAC) is an <strong>off-policy actor-critic</strong> architecture for <strong>maximum entropy RL</strong>:</li>
+</ul>
+<p><span class="math display">
+    \mathcal{J}(\theta) = \sum_t \gamma^t \, \mathbb{E}_{\pi} [ r(s_t, a_t, s_{t+1}) + \alpha \, H(\pi(s_t))]
+</span></p>
+<ul>
+<li><p>Maximizing the entropy of the policy ensures an efficient exploration. It is even possible to learn the value of the parameter <span class="math inline">\alpha</span>.</p></li>
+<li><p>The critic learns to estimate soft Q-values that take the entropy of the policy into account:</p></li>
+</ul>
+<p><span class="math display">
+    \mathcal{L}(\varphi) = \mathbb{E}_{s_t, a_t, s_{t+1} \sim \rho_\theta} [(r_{t+1} + \gamma \, Q_\varphi(s_{t+1}, a_{t+1}) - \log \pi_\theta(s_{t+1}, a_{t+1}) - Q_\varphi(s_{t}, a_{t}) )^2]
+</span></p>
+<ul>
+<li>The actor learns a Gaussian policy that becomes close to a softmax over the soft Q-values:</li>
+</ul>
+<p><span class="math display">
+    \pi_\theta(s, a) \propto \exp \dfrac{Q_\varphi (s, a)}{\alpha}
+</span></p>
+<p><span class="math display">
+   \nabla_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s, a} [\alpha \, \nabla_\theta \log \pi_\theta(s, a) - Q_\varphi (s, a)]
+</span></p>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2018a">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>
+</div>
+</section>
+
+<section>
+<section id="sac-vs.-td3" class="title-slide slide level1 center">
+<h1>SAC vs.&nbsp;TD3</h1>
+<ul>
+<li><p>In practice, SAC uses <strong>clipped double learning</strong> like TD3: it takes the lesser of two evils between two critics <span class="math inline">Q_{\varphi_1}</span> and <span class="math inline">Q_{\varphi_2}</span>.</p></li>
+<li><p>The next action <span class="math inline">a_{t+1}</span> comes from the current policy, no need for target networks.</p></li>
+<li><p>Unlike TD3, the learned policy is <strong>stochastic</strong>: no need for target noise as the targets are already stochastic.</p></li>
+<li><p>See <a href="https://spinningup.openai.com/en/latest/algorithms/sac.html" class="uri">https://spinningup.openai.com/en/latest/algorithms/sac.html</a> for a detailed comparison of SAC and TD3.</p></li>
+<li><p>The initial version of SAV additionally learned a soft V-value critic, but this turns out not to be needed.</p></li>
+</ul>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2018a">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_results.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Haarnoja2018a">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>
+</div>
+</section></section>
+<section id="sac-results" class="title-slide slide level1 center">
+<h1>SAC results</h1>
+<ul>
+<li>The enhanced exploration strategy through maximum entropy RL allows to learn robust and varied strategies that can cope with changes in the environment.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac-walker.gif" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_ant.gif" style="width:50.0%"></p>
+<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="real-world-robotics" class="title-slide slide level1 center">
+<h1>Real-world robotics</h1>
+<ul>
+<li>The low sample complexity of SAC allows to train a real-world robot in less than 2 hours!</li>
+</ul>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/FmMPHL3TcrE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="real-world-robotics-1" class="title-slide slide level1 center">
+<h1>Real-world robotics</h1>
+<ul>
+<li>Although trained on a flat surface, the rich learned stochastic policy can generalize to complex terrains.</li>
+</ul>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/KOObeIjzXTY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="real-world-robotics-2" class="title-slide slide level1 center">
+<h1>Real-world robotics</h1>
+<ul>
+<li>When trained to stack lego bricks, the robotic arm learns to explore the whole state-action space.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_lego1.gif" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<ul>
+<li>This makes it more robust to external perturbations after training:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sac_lego2.gif"></p>
+<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="additional-reading" class="title-slide slide level1 center">
+<h1>Additional reading</h1>
+<ul>
+<li><p><a href="https://ai.googleblog.com/2019/01/soft-actor-critic-deep-reinforcement.html" class="uri">https://ai.googleblog.com/2019/01/soft-actor-critic-deep-reinforcement.html</a></p></li>
+<li><p><a href="https://towardsdatascience.com/in-depth-review-of-soft-actor-critic-91448aba63d4" class="uri">https://towardsdatascience.com/in-depth-review-of-soft-actor-critic-91448aba63d4</a></p></li>
+<li><p><a href="https://towardsdatascience.com/soft-actor-critic-demystified-b8427df61665" class="uri">https://towardsdatascience.com/soft-actor-critic-demystified-b8427df61665</a></p></li>
+<li><p><a href="https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning" class="uri">https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning</a></p></li>
+<li><p><a href="https://arxiv.org/abs/1805.00909" class="uri">https://arxiv.org/abs/1805.00909</a></p></li>
+</ul>
+</section>
+
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Haarnoja2017" class="csl-entry" role="listitem">
+Haarnoja, T., Tang, H., Abbeel, P., and Levine, S. (2017). Reinforcement <span>Learning</span> with <span>Deep Energy-Based Policies</span>. <a href="http://arxiv.org/abs/1702.08165">http://arxiv.org/abs/1702.08165</a>.
+</div>
+<div id="ref-Haarnoja2018a" class="csl-entry" role="listitem">
+Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (2018). Soft <span>Actor-Critic Algorithms</span> and <span>Applications</span>. <a href="http://arxiv.org/abs/1812.05905">http://arxiv.org/abs/1812.05905</a>.
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/vitay\.github\.io\/course-deeprl\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

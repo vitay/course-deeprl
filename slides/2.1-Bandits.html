@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Julien Vitay">
+  <title>Deep Reinforcement Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="img/tuc-new-large.png" data-background-opacity="1" data-background-position="top" data-background-size="30%" class="quarto-title-block center">
+  <h1 class="title">Deep Reinforcement Learning</h1>
+  <p class="subtitle">Sampling and Bandits</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Julien Vitay 
+</div>
+        <p class="quarto-title-affiliation">
+            Professur für Künstliche Intelligenz - Fakultät für Informatik
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="n-armed-bandits" class="title-slide slide level1 center">
+<h1>1 - n-armed bandits</h1>
+
+</section>
+
+<section id="n-armed-bandits-1" class="title-slide slide level1 center">
+<h1>n-armed bandits</h1>
+<ul>
+<li><p>The <strong>n-armed bandit</strong> (or multi-armed bandit) is the simplest for of learning by trial and error.</p></li>
+<li><p>Learning and action selection take place in the same single state.</p></li>
+<li><p>The <span class="math inline">n</span> actions have different reward distributions.</p></li>
+<li><p>The goal is to find out through trial and error which action provides the most reward on average.</p></li>
+</ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/narmedbandit2.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="n-armed-bandits-2" class="title-slide slide level1 center">
+<h1>n-armed bandits</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-example.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>We have the choice between <span class="math inline">N</span> different actions <span class="math inline">(a_1, ..., a_N)</span>.</p></li>
+<li><p>Each action <span class="math inline">a</span> taken at time <span class="math inline">t</span> provides a <strong>reward</strong> <span class="math inline">r_t</span> drawn from the action-specific probability distribution <span class="math inline">r(a)</span>.</p></li>
+<li><p>The mathematical expectation of that distribution is the <strong>expected reward</strong>, called the <strong>true value</strong> of the action <span class="math inline">Q^*(a)</span>.</p></li>
+</ul>
+<p><span class="math display">
+    Q^*(a) = \mathbb{E} [r(a)]
+</span></p>
+</div></div>
+<ul>
+<li>The reward distribution also has a <strong>variance</strong>: we usually ignore it in RL, as all we care about is the <strong>optimal action</strong> <span class="math inline">a^*</span> (but see distributional RL later).</li>
+</ul>
+<p><span class="math display">a^* = \text{argmax}_a \, Q^*(a)</span></p>
+<ul>
+<li>If we take the optimal action an infinity of times, we maximize the reward intake <strong>on average</strong>.</li>
+</ul>
+</section>
+
+<section id="n-armed-bandits-3" class="title-slide slide level1 center">
+<h1>n-armed bandits</h1>
+<ul>
+<li>The question is how to find out the optimal action through <strong>trial and error</strong>, i.e.&nbsp;without knowing the exact reward distribution <span class="math inline">r(a)</span>.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-samples.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>We only have access to <strong>samples</strong> of <span class="math inline">r(a)</span> by taking the action <span class="math inline">a</span> at time <span class="math inline">t</span> (a <strong>trial</strong>, <strong>play</strong> or <strong>step</strong>).</li>
+</ul>
+<p><span class="math display">r_t \sim r(a)</span></p>
+<ul>
+<li><p>The received rewards <span class="math inline">r_t</span> vary around the true value over time.</p></li>
+<li><p>We need to build <strong>estimates</strong> <span class="math inline">Q_t(a)</span> of the value of each action based on the samples.</p></li>
+<li><p>These estimates will be very wrong at the beginning, but should get better over time.</p></li>
+</ul>
+</div></div>
+</section>
+
+<section id="random-sampling" class="title-slide slide level1 center">
+<h1>2 - Random sampling</h1>
+
+</section>
+
+<section id="mathematical-expectation" class="title-slide slide level1 center">
+<h1>Mathematical expectation</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li><p>An important metric for a random variable is its <strong>mathematical expectation</strong> or expected value.</p></li>
+<li><p>For discrete distributions, it is the “mean” realization / outcome weighted by the corresponding probabilities:</p></li>
+</ul>
+<p><span class="math display">
+    \mathbb{E}[X] = \sum_{i=1}^n P(X = x_i) \, x_i
+</span></p>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/normaldistribution.png"></p>
+<figcaption>Source: <a href="https://en.wikipedia.org/wiki/Normal_distribution" class="uri">https://en.wikipedia.org/wiki/Normal_distribution</a></figcaption>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>For continuous distributions, one needs to integrate the <strong>probability density function</strong> (pdf) instead of the probabilities:</li>
+</ul>
+<p><span class="math display">
+    \mathbb{E}[X] = \int_{x \in \mathcal{D}_X} f(x) \, x \, dx
+</span></p>
+<ul>
+<li>One can also compute the expectation of a function of a random variable:</li>
+</ul>
+<p><span class="math display">
+    \mathbb{E}[g(X)] = \int_{x \in \mathcal{D}_X} f(x) \, g(x) \, dx
+</span></p>
+</section>
+
+<section id="random-sampling-monte-carlo-sampling" class="title-slide slide level1 center">
+<h1>Random sampling / Monte Carlo sampling</h1>
+<ul>
+<li>In ML and RL, we deal with random variables whose exact probability distribution is unknown, but we are interested in their expectation or variance anyway.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/normaldistribution.svg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
+<ul>
+<li><p><strong>Random sampling</strong> or <strong>Monte Carlo sampling</strong> (MC) consists of taking <span class="math inline">N</span> samples <span class="math inline">x_i</span> out of the distribution <span class="math inline">X</span> (discrete or continuous) and computing the <strong>sample average</strong>: <span class="math display">
+  \mathbb{E}[X] = \mathbb{E}_{x \sim X} [x] \approx \frac{1}{N} \, \sum_{i=1}^N x_i
+</span></p></li>
+<li><p>More samples will be obtained where <span class="math inline">f(x)</span> is high (<span class="math inline">x</span> is probable), so the average of the sampled data will be close to the expected value of the distribution.</p></li>
+</ul>
+</section>
+
+<section id="random-sampling-monte-carlo-sampling-1" class="title-slide slide level1 center">
+<h1>Random sampling / Monte Carlo sampling</h1>
+<p><strong>Law of big numbers</strong></p>
+<blockquote>
+<p>As the number of identically distributed, randomly generated variables increases, their sample mean (average) approaches their theoretical mean.</p>
+</blockquote>
+<ul>
+<li><p>MC estimates are only correct when:</p>
+<ul>
+<li><p>the samples are <strong>i.i.d</strong> (independent and identically distributed):</p>
+<ul>
+<li><p>independent: the samples must be unrelated with each other.</p></li>
+<li><p>identically distributed: the samples must come from the same distribution <span class="math inline">X</span>.</p></li>
+</ul></li>
+<li><p>the number of samples is large enough.</p></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="monte-carlo-sampling" class="title-slide slide level1 center">
+<h1>Monte-carlo sampling</h1>
+<ul>
+<li>One can estimate any function of the random variable with random sampling:</li>
+</ul>
+<p><span class="math display">
+    \mathbb{E}[f(X)] = \mathbb{E}_{x \sim X} [f(x)] \approx \frac{1}{N} \, \sum_{i=1}^N f(x_i)
+</span></p>
+<ul>
+<li>Example of Monte Carlo sampling to estimate <span class="math inline">\pi/4</span>: <span class="math inline">f(x_i) = 1</span> if <span class="math inline">||x_i|| \leq 1</span>, <span class="math inline">0</span> otherwise.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/montecarlo-1.jpeg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/montecarlo-2.jpeg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/montecarlo-3.jpeg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<div class="footer">
+<p>Source: <a href="https://towardsdatascience.com/an-overview-of-monte-carlo-methods-675384eb1694" class="uri">https://towardsdatascience.com/an-overview-of-monte-carlo-methods-675384eb1694</a></p>
+</div>
+</section>
+
+<section id="central-limit-theorem" class="title-slide slide level1 center">
+<h1>Central limit theorem</h1>
+<ul>
+<li><p>Suppose we have an unknown distribution <span class="math inline">X</span> with expected value <span class="math inline">\mu = \mathbb{E}[X]</span> and variance <span class="math inline">\sigma^2</span>.</p></li>
+<li><p>We can take randomly <span class="math inline">N</span> samples from <span class="math inline">X</span> to compute the sample average:</p></li>
+</ul>
+<p><span class="math display">
+    S_N = \frac{1}{N} \, \sum_{i=1}^N x_i
+</span></p>
+<ul>
+<li>The <strong>Central Limit Theorem</strong> (CLT) states that:</li>
+</ul>
+<blockquote>
+<p>The distribution of sample averages is normally distributed with mean <span class="math inline">\mu</span> and variance <span class="math inline">\frac{\sigma^2}{N}</span>.</p>
+</blockquote>
+<p><span class="math display">S_N \sim \mathcal{N}(\mu, \frac{\sigma}{\sqrt{N}})</span></p>
+</section>
+
+<section id="central-limit-theorem-1" class="title-slide slide level1 center">
+<h1>Central limit theorem</h1>
+<ul>
+<li><p>If we perform the sampling multiple times, even with few samples, the average of the sampling averages will be very close to the expected value.</p></li>
+<li><p>The more samples we get, the smaller the variance of the estimates.</p></li>
+<li><p>Although the distribution <span class="math inline">X</span> can be anything, the sampling averages are normally distributed.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/IllustrationCentralTheorem.png" style="width:70.0%"></p>
+<figcaption>Source:: <a href="https://en.wikipedia.org/wiki/Central_limit_theorem" class="uri">https://en.wikipedia.org/wiki/Central_limit_theorem</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="estimators" class="title-slide slide level1 center">
+<h1>Estimators</h1>
+<ul>
+<li>CLT shows that the sampling average is an <strong>unbiased estimator</strong> of the expected value of a distribution:</li>
+</ul>
+<p><span class="math display">\mathbb{E}(S_N) = \mathbb{E}(X)</span></p>
+<ul>
+<li><p>An estimator is a random variable used to measure parameters of a distribution (e.g.&nbsp;its expectation). The problem is that estimators can generally be <strong>biased</strong>.</p></li>
+<li><p>Take the example of a thermometer <span class="math inline">M</span> measuring the temperature <span class="math inline">T</span>. <span class="math inline">T</span> is a random variable (normally distributed with <span class="math inline">\mu=20</span> and <span class="math inline">\sigma=10</span>) and the measurements <span class="math inline">M</span> relate to the temperature with the relation:</p></li>
+</ul>
+<p><span class="math display">
+    M = 0.95 \, T + 0.65
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/estimators-temperature.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</section>
+
+<section id="estimators-1" class="title-slide slide level1 center">
+<h1>Estimators</h1>
+<ul>
+<li><p>The thermometer is not perfect, but do random measurements allow us to estimate the expected value of the temperature?</p></li>
+<li><p>We could repeatedly take 100 random samples of the thermometer and see how the distribution of sample averages look like:</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/estimators-temperature2.png" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
+</figure>
+</div>
+<ul>
+<li>But, as the expectation is linear, we actually have:</li>
+</ul>
+<p><span class="math display">
+    \mathbb{E}[M] = \mathbb{E}[0.95 \, T + 0.65] = 0.95 \, \mathbb{E}[T] + 0.65 = 19.65 \neq \mathbb{E}[T]
+</span></p>
+<ul>
+<li>The thermometer is a <strong>biased estimator</strong> of the temperature.</li>
+</ul>
+</section>
+
+<section id="estimators-2" class="title-slide slide level1 center">
+<h1>Estimators</h1>
+<ul>
+<li><p>Let’s note <span class="math inline">\theta</span> a parameter of a probability distribution <span class="math inline">X</span> that we want to estimate (it does not have to be its mean).</p></li>
+<li><p>An <strong>estimator</strong> <span class="math inline">\hat{\theta}</span> is a random variable mapping the sample space of <span class="math inline">X</span> to a set of sample estimates.</p></li>
+<li><p>The <strong>bias</strong> of an estimator is the mean error made by the estimator:</p></li>
+</ul>
+<p><span class="math display">
+    \mathcal{B}(\hat{\theta}) = \mathbb{E}[\hat{\theta} - \theta] = \mathbb{E}[\hat{\theta}] - \theta
+</span></p>
+<ul>
+<li>The <strong>variance</strong> of an estimator is the deviation of the samples around the expected value:</li>
+</ul>
+<p><span class="math display">
+    \text{Var}(\hat{\theta}) = \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}] )^2]
+</span></p>
+<ul>
+<li><p>Ideally, we would like estimators with:</p>
+<ul>
+<li><p><strong>low bias</strong>: the estimations are correct on average (= equal to the true parameter).</p></li>
+<li><p><strong>low variance</strong>: we do not need many estimates to get a correct estimate (CLT: <span class="math inline">\frac{\sigma}{\sqrt{N}}</span>)</p></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="estimators-bias-and-variance" class="title-slide slide level1 center">
+<h1>Estimators: bias and variance</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/biasvariance3.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><p>Unfortunately, the perfect estimator does not exist.</p></li>
+<li><p>Estimators will have a bias and a variance:</p>
+<ul>
+<li><p><strong>Bias</strong>: the estimated values will be wrong, and the policy not optimal.</p></li>
+<li><p><strong>Variance</strong>: we will need a lot of samples (trial and error) to have correct estimates.</p></li>
+</ul></li>
+<li><p>One usually talks of a <strong>bias/variance</strong> trade-off: if you have a small bias, you will have a high variance, or vice versa.</p></li>
+<li><p>In machine learning, bias corresponds to underfitting, variance to overfitting.</p></li>
+</ul>
+</div></div>
+</section>
+
+<section id="sampling-based-evaluation" class="title-slide slide level1 center">
+<h1>3 - Sampling-based evaluation</h1>
+
+</section>
+
+<section id="sampling-based-evaluation-1" class="title-slide slide level1 center">
+<h1>Sampling-based evaluation</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-samples2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>The expectation of the reward distribution can be approximated by the <strong>mean</strong> of its samples:</li>
+</ul>
+<p><span class="math display">
+    \mathbb{E} [r(a)] \approx  \frac{1}{N} \sum_{t=1}^N r_t |_{a_t = a}
+</span></p>
+<ul>
+<li>Suppose that the action <span class="math inline">a</span> had been selected <span class="math inline">t</span> times, producing rewards</li>
+</ul>
+<p><span class="math display">
+    (r_1, r_2, ..., r_t)
+</span></p>
+<ul>
+<li>The estimated value of action <span class="math inline">a</span> at play <span class="math inline">t</span> is then:</li>
+</ul>
+<p><span class="math display">
+    Q_t (a) = \frac{r_1 + r_2 + ... + r_t }{t}
+</span></p>
+</div></div>
+<ul>
+<li>Over time, the estimated action-value converges to the true action-value:</li>
+</ul>
+<p><span class="math display">
+   \lim_{t \to \infty} Q_t (a) = Q^* (a)
+</span></p>
+</section>
+
+<section id="online-evaluation" class="title-slide slide level1 center">
+<h1>Online evaluation</h1>
+<ul>
+<li>The drawback of maintaining the mean of the received rewards is that it consumes a lot of memory:</li>
+</ul>
+<p><span class="math display">
+    Q_t (a) = \frac{r_1 + r_2 + ... + r_t }{t} = \frac{1}{t} \, \sum_{i=1}^{t} r_i
+</span></p>
+<ul>
+<li>It is possible to update an estimate of the mean in an <strong>online</strong> or incremental manner:</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+    Q_{t+1}(a) &amp;= \frac{1}{t+1} \, \sum_{i=1}^{t+1} r_i = \frac{1}{t+1} \, (r_{t+1} + \sum_{i=1}^{t} r_i )\\
+            &amp;= \frac{1}{t+1} \, (r_{t+1} + t \,  Q_{t}(a) ) \\
+            &amp;= \frac{1}{t+1} \, (r_{t+1} + (t + 1) \,  Q_{t}(a) - Q_t(a))
+\end{aligned}
+</span></p>
+<ul>
+<li>The estimate at time <span class="math inline">t+1</span> depends on the previous estimate at time <span class="math inline">t</span> and the last reward <span class="math inline">r_{t+1}</span>:</li>
+</ul>
+<p><span class="math display">
+    Q_{t+1}(a) = Q_t(a) + \frac{1}{t+1} \, (r_{t+1} - Q_t(a))
+</span></p>
+</section>
+
+<section id="online-evaluation-1" class="title-slide slide level1 center">
+<h1>Online evaluation</h1>
+<ul>
+<li><p>The problem with the exact mean is that it is only exact when the reward distribution is <strong>stationary</strong>, i.e.&nbsp;when the probability distribution does not change over time.</p></li>
+<li><p>If the reward distribution is <strong>non-stationary</strong>, the <span class="math inline">\frac{1}{t+1}</span> term will become very small and prevent rapid updates of the mean.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-nonstationary1.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="online-evaluation-2" class="title-slide slide level1 center">
+<h1>Online evaluation</h1>
+<div class="columns">
+<div class="column">
+<ul>
+<li>The solution is to replace <span class="math inline">\frac{1}{t+1}</span> with a fixed parameter called the <strong>learning rate</strong> (or <strong>step size</strong>) <span class="math inline">\alpha</span>:</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+    Q_{t+1}(a) &amp; = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a)) \\
+                &amp; \\
+                &amp; = (1 - \alpha) \, Q_t(a) + \alpha \, r_{t+1}
+\end{aligned}
+</span></p>
+</div><div class="column">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-nonstationary2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>The computed value is called an <strong>exponentially moving average</strong> (or sliding average), as if one used only a small window of the past history.</li>
+</ul>
+</section>
+
+<section id="online-evaluation-3" class="title-slide slide level1 center">
+<h1>Online evaluation</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-nonstationary2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Moving average:</li>
+</ul>
+<p><span class="math display">
+    Q_{t+1}(a) = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a))
+</span></p>
+<p>or:</p>
+<p><span class="math display">
+    \Delta Q(a) = \alpha \, (r_{t+1} - Q_t(a))
+</span></p>
+<ul>
+<li><p>The moving average adapts very fast to changes in the reward distribution and should be used in <strong>non-stationary problems</strong>.</p></li>
+<li><p>It is however not exact and sensible to noise.</p></li>
+<li><p>Choosing the right value for <span class="math inline">\alpha</span> can be difficult.</p></li>
+</ul>
+</div></div>
+<ul>
+<li>The form of this <strong>update rule</strong> is very important to remember:</li>
+</ul>
+<p><span class="math display">
+    \text{new estimate} = \text{current estimate} + \alpha \, (\text{target} - \text{current estimate})
+</span></p>
+<ul>
+<li><p>Estimates following this update rule track the mean of their sampled target values.</p></li>
+<li><p><span class="math inline">\text{target} - \text{current estimate}</span> is the <strong>prediction error</strong> between the target and the estimate.</p></li>
+</ul>
+</section>
+
+<section id="action-selection" class="title-slide slide level1 center">
+<h1>3 - Action selection</h1>
+
+</section>
+
+<section id="action-selection-1" class="title-slide slide level1 center">
+<h1>Action selection</h1>
+<ul>
+<li><p>Let’s suppose we have formed reasonable estimates of the Q-values <span class="math inline">Q_t(a)</span> at time <span class="math inline">t</span>.</p></li>
+<li><p>Which action should we do next?</p></li>
+<li><p>If we select the next action <span class="math inline">a_{t+1}</span> randomly (<strong>random agent</strong>), we do not maximize the rewards we receive, but we can continue learning the Q-values.</p></li>
+<li><p>Choosing the action to perform next is called <strong>action selection</strong> and several schemes are possible.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="greedy-action-selection" class="title-slide slide level1 center">
+<h1>Greedy action selection</h1>
+<ul>
+<li>The <strong>greedy action</strong> is the action whose estimated value is <strong>maximal</strong> at time <span class="math inline">t</span> based on our current estimates:</li>
+</ul>
+<p><span class="math display">
+    a^*_t = \text{argmax}_{a} Q_t(a)
+</span></p>
+<ul>
+<li><p>If our estimates <span class="math inline">Q_t</span> are correct (i.e.&nbsp;close from <span class="math inline">Q^*</span>), the greedy action is the <strong>optimal action</strong> and we maximize the rewards on average.</p></li>
+<li><p>If our estimates are wrong, the agent will perform <strong>sub-optimally</strong>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-greedy.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="greedy-action-selection-1" class="title-slide slide level1 center">
+<h1>Greedy action selection</h1>
+<ul>
+<li>This defines the <strong>greedy policy</strong>, where the probability of taking the greedy action is 1 and the probability of selecting another action is 0:</li>
+</ul>
+<p><span class="math display">
+    \pi(a) = \begin{cases}
+                    1 \; \text{if} \; a = a_t^* \\
+                    0 \; \text{otherwise.} \\
+            \end{cases}
+</span></p>
+<ul>
+<li>The greedy policy is <strong>deterministic</strong>: the action taken is always the same for a fixed <span class="math inline">Q_t</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-greedy.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="problem-with-greedy-action-selection" class="title-slide slide level1 center">
+<h1>Problem with greedy action selection</h1>
+<ul>
+<li>Greedy action selection only works when the estimates are good enough.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-greedy-problem1.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="problem-with-greedy-action-selection-1" class="title-slide slide level1 center">
+<h1>Problem with greedy action selection</h1>
+<ul>
+<li>Estimates are initially bad (e.g.&nbsp;0 here), so an action is sampled randomly and a reward is received.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-greedy-problem2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="problem-with-greedy-action-selection-2" class="title-slide slide level1 center">
+<h1>Problem with greedy action selection</h1>
+<ul>
+<li>The Q-value of that action becomes positive, so it becomes the greedy action.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-greedy-problem3.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="problem-with-greedy-action-selection-3" class="title-slide slide level1 center">
+<h1>Problem with greedy action selection</h1>
+<ul>
+<li>Greedy action selection will always select that action, although the second one would have been better.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-greedy-problem4.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="exploration-exploitation-dilemma" class="title-slide slide level1 center">
+<h1>Exploration-exploitation dilemma</h1>
+<ul>
+<li><p>This <strong>exploration-exploitation</strong> dilemma is the hardest problem in RL:</p>
+<ul>
+<li><p><strong>Exploitation</strong> is using the current estimates to select an action: they might be wrong!</p></li>
+<li><p><strong>Exploration</strong> is selecting non-greedy actions in order to improve their estimates: they might not be optimal!</p></li>
+</ul></li>
+<li><p>One has to balance exploration and exploitation over the course of learning:</p>
+<ul>
+<li><p>More exploration at the beginning of learning, as the estimates are initially wrong.</p></li>
+<li><p>More exploitation at the end of learning, as the estimates get better.</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/exploration_vs_exploitation.png" style="width:45.0%"></p>
+<figcaption>Source: UC Berkeley AI course <a href="http://ai.berkeley.edu/lecture_slides.html">slides</a>, <a href="http://ai.berkeley.edu/slides/Lecture%2011%20--%20Reinforcement%20Learning%20II/SP14%20CS188%20Lecture%2011%20--%20Reinforcement%20Learning%20II.pptx">lecture 11</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="epsilon-greedy-action-selection" class="title-slide slide level1 center">
+<h1><span class="math inline">\epsilon</span>-greedy action selection</h1>
+<ul>
+<li><p><strong><span class="math inline">\epsilon</span>-greedy action selection</strong> ensures a trade-off between exploitation and exploration.</p></li>
+<li><p>The greedy action is selected with probability <span class="math inline">1 - \epsilon</span> (with <span class="math inline">0 &lt; \epsilon &lt;1</span>), the others with probability <span class="math inline">\epsilon</span>:</p></li>
+</ul>
+<p><span class="math display">
+    \pi(a) = \begin{cases} 1 - \epsilon \; \text{if} \; a = a_t^* \\ \frac{\epsilon}{|\mathcal{A}| - 1} \; \text{otherwise.} \end{cases}
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-epsilongreedy.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="epsilon-greedy-action-selection-1" class="title-slide slide level1 center">
+<h1><span class="math inline">\epsilon</span>-greedy action selection</h1>
+<ul>
+<li><p>The parameter <span class="math inline">\epsilon</span> controls the level of exploration: the higher <span class="math inline">\epsilon</span>, the more exploration.</p></li>
+<li><p>One can set <span class="math inline">\epsilon</span> high at the beginning of learning and progressively reduce it to exploit more.</p></li>
+<li><p>However, it chooses equally among all actions: the worst action is as likely to be selected as the next-to-best action.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-epsilongreedy.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="softmax-action-selection" class="title-slide slide level1 center">
+<h1>Softmax action selection</h1>
+<ul>
+<li><p><strong>Softmax action selection</strong> defines the probability of choosing an action using all estimated value.</p></li>
+<li><p>It represents the policy using a Gibbs (or Boltzmann) distribution:</p></li>
+</ul>
+<p><span class="math display">
+    \pi(a) = \dfrac{\exp \dfrac{Q_t(a)}{\tau}}{ \displaystyle\sum_{a'} \exp \dfrac{Q_t(a')}{\tau}}
+</span></p>
+<p>where <span class="math inline">\tau</span> is a positive parameter called the <strong>temperature</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-softmax.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="softmax-action-selection-1" class="title-slide slide level1 center">
+<h1>Softmax action selection</h1>
+<ul>
+<li><p>Just as <span class="math inline">\epsilon</span>, the temperature <span class="math inline">\tau</span> controls the level of exploration:</p>
+<ul>
+<li><p>High temperature causes the actions to be nearly equiprobable (<strong>random agent</strong>).</p></li>
+<li><p>Low temperature causes the greediest actions only to be selected (<strong>greedy agent</strong>).</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-estimates-softmax2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="example-of-action-selection-for-the-10-armed-bandit" class="title-slide slide level1 center">
+<h1>Example of action selection for the 10-armed bandit</h1>
+<p><strong>Procedure as in (Sutton and Barto, 2017):</strong></p>
+<ul>
+<li><p>N = 10 possible actions with Q-values <span class="math inline">Q^*(a_1), ... , Q^*(a_{10})</span> randomly chosen in <span class="math inline">\mathcal{N}(0, 1)</span>.</p></li>
+<li><p>Each reward <span class="math inline">r_t</span> is drawn from a normal distribution <span class="math inline">\mathcal{N}(Q^*(a), 1)</span> depending on the selected action.</p></li>
+<li><p>Estimates <span class="math inline">Q_t(a)</span> are initialized to 0.</p></li>
+<li><p>The algorithms run for 1000 plays, and the results are averaged 200 times.</p></li>
+</ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/narmedbandit2.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="greedy-action-selection-2" class="title-slide slide level1 center">
+<h1>Greedy action selection</h1>
+<ul>
+<li><p>Greedy action selection allows to get rid quite early of the actions with negative rewards.</p></li>
+<li><p>However, it may stick with the first positive action it founds, probably not the optimal one.</p></li>
+<li><p>The more actions you have, the more likely you will get stuck in a <strong>suboptimal policy</strong>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-greedy.gif" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="epsilon-greedy-action-selection-2" class="title-slide slide level1 center">
+<h1><span class="math inline">\epsilon</span>-greedy action selection</h1>
+<ul>
+<li><p><span class="math inline">\epsilon</span>-greedy action selection continues to explore after finding a good (but often suboptimal) action.</p></li>
+<li><p>It is not always able to recognize the optimal action (it depends on the variance of the rewards).</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-egreedy.gif" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="softmax-action-selection-2" class="title-slide slide level1 center">
+<h1>Softmax action selection</h1>
+<ul>
+<li><p>Softmax action selection explores more consistently the available actions.</p></li>
+<li><p>The estimated Q-values are much closer to the true values than with (<span class="math inline">\epsilon</span>-)greedy methods.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-softmax.gif" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="greedy-vs.-epsilon-greedy" class="title-slide slide level1 center">
+<h1>Greedy vs.&nbsp;<span class="math inline">\epsilon</span>-greedy</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-comparison1.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-comparison2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><p>The <strong>greedy</strong> method learns faster at the beginning, but get stuck in the long-term by choosing <strong>suboptimal</strong> actions (50% of trials).</p></li>
+<li><p><span class="math inline">\epsilon</span>-greedy methods perform better on the long term, because they continue to explore.</p></li>
+<li><p>High values for <span class="math inline">\epsilon</span> provide more exploration, hence find the optimal action earlier, but also tend to deselect it more often: with a limited number of plays, it may collect less reward than smaller values of <span class="math inline">\epsilon</span>.</p></li>
+</ul>
+</section>
+
+<section id="softmax-vs.-epsilon-greedy" class="title-slide slide level1 center">
+<h1>Softmax vs.&nbsp;<span class="math inline">\epsilon</span>-greedy</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-comparison3.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-comparison4.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><p>The softmax does not necessarily find a better solution than <span class="math inline">\epsilon</span>-greedy, but it tends to find it <strong>faster</strong> (depending on <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span>), as it does not lose time exploring obviously bad solutions.</p></li>
+<li><p><span class="math inline">\epsilon</span>-greedy or softmax methods work best when the variance of rewards is high.</p></li>
+<li><p>If the variance is zero (always the same reward value), the greedy method would find the optimal action more rapidly: the agent only needs to try each action once.</p></li>
+</ul>
+</section>
+
+<section id="exploration-schedule" class="title-slide slide level1 center">
+<h1>Exploration schedule</h1>
+<ul>
+<li><p>A useful technique to cope with the <strong>exploration-exploitation dilemma</strong> is to slowly decrease the value of <span class="math inline">\epsilon</span> or <span class="math inline">\tau</span> with the number of plays.</p></li>
+<li><p>This allows for more exploration at the beginning of learning and more exploitation towards the end.</p></li>
+<li><p>It is however hard to find the right <strong>decay rate</strong> for the exploration parameters.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-scheduling.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="exploration-schedule-1" class="title-slide slide level1 center">
+<h1>Exploration schedule</h1>
+<ul>
+<li><p>The performance is worse at the beginning, as the agent explores with a high temperature.</p></li>
+<li><p>But as the agent becomes greedier and greedier, the performance become more <strong>optimal</strong> than with a fixed temperature.</p></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-comparison5.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-comparison6.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<!--
+# Optimistic initial values
+
+* The problem with online evaluation is that it depends a lot on the initial estimates $Q_0$.
+
+    * If the initial estimates are already quite good (expert knowledge), the Q-values will converge very fast.
+
+    * If the initial estimates are very wrong, we will need a lot of updates to correctly estimate the true values.
+
+$$
+\begin{aligned}
+    &Q_{t+1}(a) = (1 - \alpha) \, Q_t(a) + \alpha \, r_{t+1}  \\
+    &\\
+    & \rightarrow Q_1(a) = (1 - \alpha) \, Q_0(a) + \alpha \, r_1 \\
+    & \rightarrow Q_2(a) = (1 - \alpha) \, Q_1(a) + \alpha \, r_2 = (1- \alpha)^2 \, Q_0(a) + (1-\alpha)\alpha \, r_1 + \alpha r_2 \\
+\end{aligned}
+$$
+
+* The influence of $Q_0$ on $Q_t$ **fades** quickly with $(1-\alpha)^t$, but that can be lost time or lead to a suboptimal policy.
+
+* However, we can use this at our advantage with **optimistic initialization**.
+
+
+# Optimistic initial values
+    
+
+* By choosing very high initial values for the estimates (they can only decrease), one can ensure that all possible actions will be selected during learning by the greedy method, solving the **exploration problem**.
+
+* This leads however to an **overestimation** of the value of other actions.
+
+    
+![](img/bandit-optimistic.gif)
+
+# Reinforcement comparison
+    
+* Actions followed by large rewards should be made more likely to reoccur, whereas actions followed by small rewards should be made less likely to reoccur. 
+
+* But what is a large/small reward? Is a reward of 5 large or small?
+
+* **Reinforcement comparison** methods only maintain a **preference** $p_t(a)$ for each action, which is not exactly its Q-value. 
+
+* The preference for an action is updated after each play, according to the update rule:
+
+$$
+    p_{t+1}(a_t) =    p_{t}(a_t) + \beta \, (r_t - \tilde{r}_t)
+$$
+
+where $\tilde{r}_t$ is the moving average of the recently received rewards (regardless the action):
+
+$$
+    \tilde{r}_{t+1} =  \tilde{r}_t + \alpha \, (r_t - \tilde{r}_t)
+$$
+
+* If an action brings more reward than usual (**good surprise**), we increase the preference for that action.
+
+* If an action brings less reward than usual (**bad surprise**), we decrease the preference for that action.
+
+* $\beta > 0$ and $0 < \alpha < 1$ are two constant parameters.
+
+
+# Reinforcement comparison
+
+* Preferences are updated by replacing the action-dependent Q-values by a baseline $\tilde{r}_t$:
+
+$$
+    p_{t+1}(a_t) =    p_{t}(a_t) + \beta \, (r_t - \tilde{r}_t)
+$$
+
+* The preferences can be used to select the action using the softmax method just as the Q-values (without temperature):
+
+$$
+    \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
+$$   
+
+![](img/bandit-reinforcementcomparison.gif)
+
+# Reinforcement comparison
+
+* Reinforcement comparison can be very effective, as it does not rely only on the rewards received, but also on their comparison with a **baseline**, the average reward. 
+
+* This idea is at the core of **actor-critic** architectures which we will see later.
+
+* The initial average reward $\tilde{r}_{0}$ can be set optimistically to encourage exploration.
+    
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/bandit-comparison7.png)
+
+:::
+::: {.column width=50%}
+
+
+![](img/bandit-comparison8.png)
+
+:::
+:::
+
+
+# Gradient bandit algorithm
+
+* Instead of only increasing the preference for the executed action if it brings more reward than usual, we could also decrease the preference for the other actions.
+
+* The preferences are used to select an action $a_t$ *via* softmax:
+
+$$
+    \pi_t (a) = \dfrac{\exp p_t(a)}{ \displaystyle\sum_{a'} \exp p_t(a')}
+$$  
+
+* Update rule for the **action taken** $a_t$:
+
+$$
+    p_{t+1}(a_t) =    p_{t}(a_t) + \beta \, (r_t - \tilde{r}_t) \, (1 - \pi_t(a_t))
+$$
+
+* Update rule for the **other actions** $a \neq a_t$:
+
+$$
+    p_{t+1}(a) =    p_{t}(a) - \beta \, (r_t - \tilde{r}_t) \, \pi_t(a)
+$$
+
+* Update of the reward **baseline**:
+
+$$
+    \tilde{r}_{t+1} =  \tilde{r}_t + \alpha \, (r_t - \tilde{r}_t)
+$$
+
+
+# Gradient bandit algorithm
+
+* The preference can increase become quite high, making the policy greedy towards the end.
+
+* No need for a temperature parameter!
+
+![](img/bandit-gradientbandit.gif)
+
+
+# Gradient bandit algorithm
+
+* Gradient bandit is not always better than reinforcement comparison, but learns initially faster (depending on the parameters $\alpha$ and $\beta$).
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/bandit-comparison9.png)
+
+:::
+::: {.column width=50%}
+
+
+![](img/bandit-comparison10.png)
+
+:::
+:::
+
+
+# Upper-Confidence-Bound action selection
+    
+* In the previous methods, **exploration** is controlled by an external parameter ($\epsilon$ or $\tau$) which is **global** to each action an must be scheduled.
+
+* A much better approach would be to decide whether to explore an action based on the **uncertainty** about its Q-value:
+
+    * If we are certain about the value of an action, there is no need to explore it further, we only have to exploit it if it is good.
+
+* The **central limit theorem** tells us that the variance of a sampling estimator decreases with the number of samples:
+
+    * The distribution of sample averages is normally distributed with mean $\mu$ and variance $\frac{\sigma^2}{N}$.
+
+$$S_N \sim \mathcal{N}(\mu, \frac{\sigma}{\sqrt{N}})$$
+
+* The more you explore an action $a$, the smaller the variance of $Q_t(a)$, the more certain you are about the estimation, the less you need to explore it.
+
+
+# Upper-Confidence-Bound action selection
+
+* **Upper-Confidence-Bound** (UCB) action selection is a **greedy** action selection method that uses an **exploration** bonus:
+
+$$
+    a^*_t = \text{argmax}_{a} \left[ Q_t(a) + c \, \sqrt{\frac{\ln t}{N_t(a)}} \right]
+$$
+
+* $Q_t(a)$ is the current estimated value of $a$ and $N_t(a)$ is the number of times the action $a$ has already been selected.
+
+* It realizes a balance between trusting the estimates $Q_t(a)$ and exploring uncertain actions which have not been explored much yet.
+
+* The term $\sqrt{\frac{\ln t}{N_t(a)}}$ is an estimate of the variance of $Q_t(a)$. The sum of both terms is an **upper-bound** of the true value $\mu + \sigma$.
+
+* When an action has not been explored much yet, the uncertainty term will dominate and the action be explored, although its estimated value might be low.
+
+* When an action has been sufficiently explored, the uncertainty term goes to 0 and we greedily follow $Q_t(a)$.
+
+
+
+# Upper-Confidence-Bound action selection
+
+* The **exploration-exploitation** trade-off is automatically adjusted by counting visits to an action.
+
+$$
+    a^*_t = \text{argmax}_{a} \left[ Q_t(a) + c \, \sqrt{\frac{\ln t}{N_t(a)}} \right]
+$$
+
+![](img/bandit-ucb.gif)
+
+
+
+# Upper-Confidence-Bound action selection
+
+* The "smart" exploration of UCB allows to find the optimal action faster.
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/bandit-comparison11.png)
+
+:::
+::: {.column width=50%}
+
+
+![](img/bandit-comparison12.png)
+
+:::
+:::
+
+-->
+</section>
+
+<section id="summary-of-evaluative-feedback-methods" class="title-slide slide level1 center">
+<h1>Summary of evaluative feedback methods</h1>
+<ul>
+<li><p>Other methods such as reinforcement comparison, gradient bandit and UCB exist, see <span class="citation" data-cites="Sutton2017">(<a href="#/references" role="doc-biblioref" onclick="">Sutton and Barto, 2017</a>)</span> and the second exercise on bandits.</p></li>
+<li><p>The methods all have their own advantages and disadvantages depending on the type of problem: stationary or not, high or low reward variance, etc…</p></li>
+<li><p>These simple techniques are the most useful ones for bandit-like problems: more sophisticated ones exist, but they either make too restrictive assumptions, or are computationally intractable.</p></li>
+<li><p>Take home messages:</p>
+<ol type="1">
+<li><p>RL tries to <strong>estimate values</strong> based on sampled rewards.</p></li>
+<li><p>One has to balance <strong>exploitation and exploration</strong> throughout learning with the right <strong>action selection scheme</strong>.</p></li>
+<li><p>Methods exploring more find <strong>better policies</strong>, but are initially slower.</p></li>
+</ol></li>
+</ul>
+</section>
+
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Sutton2017" class="csl-entry" role="listitem">
+Sutton, R. S., and Barto, A. G. (2017). <em>Reinforcement <span>Learning</span>: <span>An Introduction</span></em>. 2nd ed. Cambridge, MA: MIT Press <a href="http://incompleteideas.net/book/the-book-2nd.html">http://incompleteideas.net/book/the-book-2nd.html</a>.
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/vitay\.github\.io\/course-deeprl\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

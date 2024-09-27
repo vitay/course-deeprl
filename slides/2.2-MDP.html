@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Julien Vitay">
+  <title>Deep Reinforcement Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="img/tuc-new-large.png" data-background-opacity="1" data-background-position="top" data-background-size="30%" class="quarto-title-block center">
+  <h1 class="title">Deep Reinforcement Learning</h1>
+  <p class="subtitle">Markov Decision Process</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Julien Vitay 
+</div>
+        <p class="quarto-title-affiliation">
+            Professur für Künstliche Intelligenz - Fakultät für Informatik
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="markov-decision-process" class="title-slide slide level1 center">
+<h1>1 - Markov Decision Process</h1>
+
+</section>
+
+<section id="markov-decision-process-mdp" class="title-slide slide level1 center">
+<h1>Markov Decision Process (MDP)</h1>
+<ul>
+<li>The kind of problem that is addressed by RL is called a <strong>Markov Decision Process</strong> (MDP).</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rl-loop.png"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>The environment is <strong>fully observable</strong>, i.e.&nbsp;the current state <span class="math inline">s_t</span> completely characterizes the process at time <span class="math inline">t</span> (Markov property).</p></li>
+<li><p><strong>Actions</strong> <span class="math inline">a_t</span> provoke transitions between the two states <span class="math inline">s_t</span> and <span class="math inline">s_{t+1}</span>.</p></li>
+<li><p>State transitions <span class="math inline">(s_t, a_t, s_{t+1})</span> are governed by <strong>transition probabilities</strong> <span class="math inline">p(s_{t+1} | s_t, a_t)</span>.</p></li>
+<li><p>A <strong>reward</strong> <span class="math inline">r_{t+1}</span> is (probabilistically) associated to each transition .</p></li>
+</ul>
+</div></div>
+<ul>
+<li><p>n-armed bandits are MDPs with only one state.</p></li>
+<li><p>MDPs are extensions of the <strong>Markov Chain</strong> (MC).</p></li>
+</ul>
+</section>
+
+<section id="markov-chain-mc" class="title-slide slide level1 center">
+<h1>Markov Chain (MC)</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/student-markovchain.png"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>A first-order <strong>Markov chain</strong> (or Markov process) is a stochastic process generated by a sequence of transitions between states governed by <strong>state transition probabilities</strong>.</p></li>
+<li><p>A Markov chain is defined by:</p>
+<ul>
+<li><p>The <strong>state set</strong> <span class="math inline">\mathcal{S} = \{ s_i\}_{i=1}^N</span>.</p></li>
+<li><p>The <strong>state transition probability function</strong>:</p></li>
+</ul>
+<p><span class="math display">
+  \begin{aligned}
+      \mathcal{P}: \mathcal{S} \rightarrow &amp; P(\mathcal{S}) \\
+      p(s' | s) &amp; =  P (s_{t+1} = s' | s_t = s) \\
+  \end{aligned}
+  </span></p></li>
+<li><p>Markov chains can be used to sample complex distributions (Markov Chain Monte Carlo) and have applications in many fields such as biology, chemistry, financem etc.</p></li>
+</ul>
+</div></div>
+</section>
+
+<section id="markov-decision-process-mdp-1" class="title-slide slide level1 center">
+<h1>Markov Decision Process (MDP)</h1>
+<ul>
+<li><p>A <strong>Markov Decision Process</strong> is a MC where transitions are conditioned by <strong>actions</strong> <span class="math inline">a \in \mathcal{A}</span> and associated with a scalar <strong>reward</strong> <span class="math inline">r</span>.</p></li>
+<li><p>A finite MDP is defined by the tuple <span class="math inline">&lt;\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma&gt;</span>:</p>
+<ol type="1">
+<li><p>The finite <strong>state set</strong> <span class="math inline">\mathcal{S} = \{ s_i\}_{i=1}^N</span> with the Markov property.</p></li>
+<li><p>The finite <strong>action set</strong> <span class="math inline">\mathcal{A} = \{ a_i\}_{i=1}^M</span>.</p></li>
+<li><p>The <strong>state transition probability function</strong>:</p></li>
+</ol>
+<p><span class="math display">
+  \begin{aligned}
+      \mathcal{P}: \mathcal{S} \times \mathcal{A} \rightarrow &amp; P(\mathcal{S}) \\
+      p(s' | s, a) &amp; =  P (s_{t+1} = s' | s_t = s, a_t = a) \\
+  \end{aligned}
+  </span></p>
+<ol start="4" type="1">
+<li>The <strong>expected reward function</strong>:</li>
+</ol>
+<p><span class="math display">
+  \begin{aligned}
+      \mathcal{R}: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \rightarrow &amp; \Re \\
+      r(s, a, s') &amp;=  \mathbb{E} (r_{t+1} | s_t = s, a_t = a, s_{t+1} = s') \\
+  \end{aligned}
+  </span></p>
+<ol start="5" type="1">
+<li>The <strong>discount factor</strong> <span class="math inline">\gamma \in [0, 1]</span>.</li>
+</ol></li>
+</ul>
+</section>
+
+<section id="markov-decision-process-mdp-2" class="title-slide slide level1 center">
+<h1>Markov Decision Process (MDP)</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/student-mdp.png" style="width:75.0%"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="markov-property" class="title-slide slide level1 center">
+<h1>Markov property</h1>
+<ul>
+<li>The Markov property states that:</li>
+</ul>
+<blockquote>
+<p>The future is independent of the past given the present.</p>
+</blockquote>
+<ul>
+<li>Formally, the state <span class="math inline">s_t</span> (state at time <span class="math inline">t</span>) is <strong>Markov</strong> (or Markovian) if and only if:</li>
+</ul>
+<p><span class="math display">\begin{aligned}
+     P( s_{t+1} = s', r_{t+1} = r &amp; | s_t, a_t, r_t, s_{t-1}, a_{t-1}, ..., s_0, a_0) = P( s_{t+1} = s', r_{t+1} = r | s_t, a_t ) \\
+     &amp;\text{for all s', r, and past histories} \quad (s_{t}, a_{t}, ..., s_0, a_0)
+\end{aligned}
+</span></p>
+<ul>
+<li><p>The knowledge of the current state <span class="math inline">s_t</span> (and the executed action <span class="math inline">a_t</span>) is <strong>enough</strong> to predict in which state <span class="math inline">s_{t+1}</span> the system will be at the next time step.</p></li>
+<li><p>We do not need the whole <strong>history</strong> <span class="math inline">\{s_0, a_0, s_1, a_1, \ldots, s_t\}</span> of the system to predict what will happen.</p></li>
+<li><p>Note: if we need <span class="math inline">s_{t-1}</span> and <span class="math inline">s_t</span> to predict <span class="math inline">s_{t+1}</span>, we have a second-order MDP.</p></li>
+</ul>
+</section>
+
+<section id="markov-property-1" class="title-slide slide level1 center">
+<h1>Markov property</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/student-markovchain.png"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>For example, the probability 0.8 of transitioning from “Class 2” to “Class 3” is the same regardless we were in “Class 1” or “Pub” before.</p></li>
+<li><p>If this is not the case, the states are not Markov, and this is not a Markov chain / decision process.</p></li>
+<li><p>We would need to create two distinct states:</p>
+<ul>
+<li><p>“Class 2 coming from Class 1”</p></li>
+<li><p>“Class 2 coming from the pub”</p></li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+
+<section id="markov-property-2" class="title-slide slide level1 center">
+<h1>Markov property</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/markov-example.jpeg"></p>
+<figcaption>Source: <a href="https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc" class="uri">https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>Where is the ball going? To the little girl or to the player?</p></li>
+<li><p>Single <strong>video frames</strong> are not Markov states: you cannot generally predict what will happen based on a single image.</p></li>
+<li><p>A simple solution is to <strong>stack</strong> or <strong>concatenate</strong> multiple frames:</p>
+<ul>
+<li>By measuring the displacement of the ball between two consecutive frames, we can predict where it is going.</li>
+</ul></li>
+</ul>
+</div></div>
+<ul>
+<li>One can also <strong>learn</strong> state representations containing the history using recurrent neural networks (see later).</li>
+</ul>
+</section>
+
+<section id="pomdp-partially-observable-markov-decision-process" class="title-slide slide level1 center">
+<h1>POMDP : Partially-Observable Markov Decision Process</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/pomdp.png"></p>
+<figcaption>Source: <a href="https://artint.info/html/ArtInt_230.html" class="uri">https://artint.info/html/ArtInt_230.html</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>In a POMDP, the agent does not have access to the true state <span class="math inline">s_t</span> of the environment, but only <strong>observations</strong> <span class="math inline">o_t</span>.</p></li>
+<li><p>Observations are partial views of the state, without the Markov property.</p></li>
+<li><p>The dynamics of the environment (transition probabilities, reward expectations) only depend on the state, not the observations.</p></li>
+<li><p>The agent can only make decisions (actions) based on the sequence of observations, as it does not have access to the state directly (Plato’s cavern).</p></li>
+</ul>
+</div></div>
+<ul>
+<li>In a POMDP, the state <span class="math inline">s_t</span> of the agent can be considered the concatenation of the past observations and actions:</li>
+</ul>
+<p><span class="math display">
+s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
+</span></p>
+<ul>
+<li>Under conditions, this inferred state can have the Markov property and the POMDP is solvable.</li>
+</ul>
+</section>
+
+<section id="state-transition-matrix" class="title-slide slide level1 center">
+<h1>State transition matrix</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/student-markovchain.png"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<ul>
+<li>Supposing that the states have the Markov property, the transitions in the system can be summarized by the <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}</span>:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/student-transitionmatrix.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>Each element of the state transition matrix corresponds to <span class="math inline">p(s' | s)</span>. Each row of the state transition matrix sums to 1:</li>
+</ul>
+<p><span class="math display">\sum_{s'} p(s' | s)  = 1</span></p>
+</section>
+
+<section id="expected-reward" class="title-slide slide level1 center">
+<h1>Expected reward</h1>
+<ul>
+<li>As with n-armed bandits, we only care about the <strong>expected reward</strong> received during a transition <span class="math inline">s \rightarrow s'</span> (<em>on average</em>), but the actual reward received <span class="math inline">r_{t+1}</span> may vary around the expected value.</li>
+</ul>
+<p><span class="math display">r(s, a, s') =  \mathbb{E} (r_{t+1} | s_t = s, a_t = a, s_{t+1} = s')</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/bandit-example.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="sparse-vs.-dense-rewards" class="title-slide slide level1 center">
+<h1>Sparse vs.&nbsp;dense rewards</h1>
+<ul>
+<li><p>An important distinction in practice is <strong>sparse vs.&nbsp;dense rewards</strong>.</p></li>
+<li><p>Sparse rewards take non-zero values only during certain transitions: game won/lost, goal achieved, timeout, etc.</p></li>
+<li><p>Dense rewards provide non-zero values during each transition: distance to goal, energy consumption, speed of the robot, etc.</p></li>
+<li><p>MDPs with sparse rewards are much harder to learn.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/sparse-dense.png"></p>
+<figcaption>Source: <a href="https://forns.lmu.build/classes/spring-2020/cmsi-432/lecture-13-2.html" class="uri">https://forns.lmu.build/classes/spring-2020/cmsi-432/lecture-13-2.html</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="transition-and-reward-probabilities" class="title-slide slide level1 center">
+<h1>Transition and reward probabilities</h1>
+<ul>
+<li>Why do we need transition probabilities in RL?</li>
+</ul>
+<p><span class="math display"> p(s' | s, a) =  P (s_{t+1} = s' | s_t = s, a_t = a)</span></p>
+<ul>
+<li><p>Some RL tasks are <strong>deterministic</strong>: an action <span class="math inline">a</span> in a state <span class="math inline">s</span> always leads to the state <span class="math inline">s'</span>:</p>
+<ul>
+<li>Board games, video games…</li>
+</ul></li>
+<li><p>Others are <strong>stochastic</strong>: the same action <span class="math inline">a</span> can lead to different states <span class="math inline">s'</span>:</p>
+<ul>
+<li><p>Casino games (throwing a dice, etc)</p></li>
+<li><p>Two-opponent games (the next state depends on what the other player chooses).</p></li>
+<li><p>Uncertainty (shoot at basketball, slippery wheels, robotic grasping).</p></li>
+</ul></li>
+<li><p>For a transition <span class="math inline">(s, a, s')</span>, the received reward can be also stochastic:</p>
+<ul>
+<li>Casino games (armed bandit), incomplete information, etc.</li>
+</ul>
+<p><span class="math display"> r(s, a, s') =  \mathbb{E} (r_{t+1} | s_t = s, a_t = a, s_{t+1} = s')</span></p>
+<ul>
+<li>Most of the problems we will see in this course have deterministic rewards, but we only care about expectations anyway.</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="return" class="title-slide slide level1 center">
+<h1>Return</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li>Over time, the MDP will be in a sequence of states (possibly infinite):</li>
+</ul>
+<p><span class="math display">s_0 \rightarrow s_1 \rightarrow s_2  \rightarrow \ldots \rightarrow s_T</span></p>
+<p>and collect a sequence of rewards:</p>
+<p><span class="math display">r_1 \rightarrow r_2 \rightarrow r_3  \rightarrow \ldots \rightarrow r_{T}</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rl-sequence.jpg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rewardtogo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>In a MDP, we are interested in maximizing the <strong>return</strong> <span class="math inline">R_t</span>, i.e.&nbsp;the discounted sum of <strong>future</strong> rewards after the step <span class="math inline">t</span>:</li>
+</ul>
+<p><span class="math display">
+    R_t = r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, r_{t+3} + \ldots = \sum_{k=0}^\infty \gamma^k \, r_{t+k+1}
+</span></p>
+<ul>
+<li>Reward-to-go: how much reward will I <strong>collect</strong> from now on?</li>
+</ul>
+</section>
+
+<section id="return-1" class="title-slide slide level1 center">
+<h1>Return</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li>Of course, you can never know the return at time <span class="math inline">t</span>: transitions and rewards are probabilistic, so the received rewards in the future are not exactly predictable at <span class="math inline">t</span>.</li>
+</ul>
+<p><span class="math display">
+    R_t = r_{t+1} + \gamma \, r_{t+2} +  \gamma^2 \, r_{t+3} + ... = \sum_{k=0}^{\infty} \gamma^k \, r_{t+k+1}
+</span></p>
+<ul>
+<li><span class="math inline">R_t</span> is therefore purely theoretical: RL is all about <strong>estimating</strong> the return.</li>
+</ul>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rewardtogo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>More generally, for a trajectory (episode) <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span>, one can define its return as:</li>
+</ul>
+<p><span class="math display"> R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} </span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rl-sequence.jpg" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</section>
+
+<section id="discount-factor" class="title-slide slide level1 center">
+<h1>Discount factor</h1>
+<ul>
+<li>Future rewards are discounted:</li>
+</ul>
+<p><span class="math display">
+    R_t = r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, r_{t+3} + \ldots = \sum_{k=0}^\infty \gamma^k \, r_{t+k+1}
+</span></p>
+<ul>
+<li><p>The <strong>discount factor</strong> (or discount rate, or discount) <span class="math inline">\gamma \in [0, 1]</span> is a very important parameter in RL:</p>
+<ul>
+<li><p>It defines the <strong>present value of future rewards</strong>.</p></li>
+<li><p>Receiving 10 euros now has a higher <strong>value</strong> than receiving 10 euros in ten years, although the reward is the same: you do not have to wait.</p></li>
+<li><p>The value of receiving a reward <span class="math inline">r</span> after <span class="math inline">k+1</span> time steps is <span class="math inline">\gamma^k \, r</span>.</p></li>
+<li><p><strong>Immediate rewards</strong> are better than <strong>delayed rewards</strong>.</p></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="discount-factor-1" class="title-slide slide level1 center">
+<h1>Discount factor</h1>
+<ul>
+<li>When <span class="math inline">\gamma &lt; 1</span>, <span class="math inline">\gamma^k</span> tends to 0 when <span class="math inline">k</span> goes to infinity: this makes sure that the return is always <strong>finite</strong>.</li>
+</ul>
+<p><span class="math display">
+    R_t = r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, r_{t+3} + \ldots = \sum_{k=0}^\infty \gamma^k \, r_{t+k+1}
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/decayinggamma.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="episodic-vs.-continuing-tasks" class="title-slide slide level1 center">
+<h1>Episodic vs.&nbsp;continuing tasks</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/unifiedreturn.png" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
+<ul>
+<li>For <strong>episodic tasks</strong> (which break naturally into finite episodes of length <span class="math inline">T</span>, e.g.&nbsp;plays of a game, trips through a maze), the return is always finite and easy to compute at the end of the episode. The discount factor can be set to 1.</li>
+</ul>
+<p><span class="math display">
+    R_t = \sum_{k=0}^{T} r_{t+k+1}
+</span></p>
+<ul>
+<li>For <strong>continuing tasks</strong> (which can not be split into episodes), the return could become infinite if <span class="math inline">\gamma = 1</span>. The discount factor has to be smaller than 1.</li>
+</ul>
+<p><span class="math display">
+    R_t = \sum_{k=0}^{\infty} \gamma^k \, r_{t+k+1}
+</span></p>
+</section>
+
+<section id="discount-rate" class="title-slide slide level1 center">
+<h1>Discount rate</h1>
+<ul>
+<li><p>The discount rate <span class="math inline">\gamma</span> determines the relative importance of future rewards for the behavior:</p>
+<ul>
+<li><p>if <span class="math inline">\gamma</span> is close to 0, only the immediately available rewards will count: the agent is greedy or <strong>myopic</strong>.</p></li>
+<li><p>if <span class="math inline">\gamma</span> is close to 1, even far-distance rewards will be taken into account: the agent is <strong>farsighted</strong>.</p></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/eligibility-forward-view.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="why-the-reward-on-the-long-term" class="title-slide slide level1 center">
+<h1>Why the reward on the long term?</h1>
+<ul>
+<li><p>Selecting the action <span class="math inline">a_1</span> in <span class="math inline">s_1</span> does not bring reward immediately (<span class="math inline">r_1 = 0</span>) but allows to reach <span class="math inline">s_5</span> in the future and get a reward of 10.</p></li>
+<li><p>Selecting <span class="math inline">a_2</span> in <span class="math inline">s_1</span> brings immediately a reward of 1, but that will be all.</p></li>
+<li><p><span class="math inline">a_1</span> is <strong>better</strong> than <span class="math inline">a_2</span>, because it will bring more reward <strong>on the long term</strong>.</p></li>
+</ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/return-example.svg" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="why-the-reward-on-the-long-term-1" class="title-slide slide level1 center">
+<h1>Why the reward on the long term?</h1>
+<ul>
+<li>When selecting <span class="math inline">a_1</span> in <span class="math inline">s_1</span>, the discounted return is:</li>
+</ul>
+<p><span class="math display">
+    R = 0 + \gamma \, 0 + \gamma^2 \, 0 + \gamma^3 \, 10 + \ldots = 10 \, \gamma^3
+</span></p>
+<p>while it is <span class="math inline">R= 1</span> for the action <span class="math inline">a_2</span>.</p>
+<ul>
+<li><p>For small values of <span class="math inline">\gamma</span> (e.g.&nbsp;0.1), <span class="math inline">10\, \gamma^3</span> becomes smaller than one, so the action <span class="math inline">a_2</span> leads to a higher discounted return.</p></li>
+<li><p>The discount rate <span class="math inline">\gamma</span> changes the behavior of the agent. It is usually taken somewhere between 0.9 and 0.999.</p></li>
+</ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/return-example.svg" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="example-the-cartpole-balancing-task" class="title-slide slide level1 center">
+<h1>Example: the cartpole balancing task</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/cartpole-after.gif" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p><strong>State:</strong> Position and velocity of the cart, angle and speed of the pole.</p></li>
+<li><p><strong>Actions:</strong> Commands to the motors for going left or right.</p></li>
+<li><p><strong>Reward function:</strong> Depends on whether we consider the task as episodic or continuing.</p></li>
+</ul>
+</div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p><strong>Episodic</strong> task where episode ends upon failure:</p>
+<ul>
+<li><p><strong>reward</strong> = +1 for every step before failure, 0 at failure.</p></li>
+<li><p><strong>return</strong> = number of steps before failure.</p></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p><strong>Continuing</strong> task with discounted return:</p>
+<ul>
+<li><p><strong>reward</strong> = -1 at failure, 0 otherwise.</p></li>
+<li><p><strong>return</strong> = <span class="math inline">- \gamma^k</span> for <span class="math inline">k</span> steps before failure.</p></li>
+</ul></li>
+</ul>
+</div></div>
+<ul>
+<li>In both cases, the goal is to maximize the return by maintaining the pole vertical as long as possible.</li>
+</ul>
+</section>
+
+<section id="the-policy" class="title-slide slide level1 center">
+<h1>The policy</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rl-agent.jpg" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
+</figure>
+</div>
+<ul>
+<li>The probability that an agent selects a particular action <span class="math inline">a</span> in a given state <span class="math inline">s</span> is called the <strong>policy</strong> <span class="math inline">\pi</span>.</li>
+</ul>
+<p><span class="math display">
+\begin{align}
+    \pi &amp;: \mathcal{S} \times \mathcal{A} \rightarrow P(\mathcal{S})\\
+    (s, a) &amp;\rightarrow \pi(s, a)  = P(a_t = a | s_t = s) \\
+\end{align}
+</span></p>
+<ul>
+<li><p>The policy can be <strong>deterministic</strong> (one action has a probability of 1, the others 0) or <strong>stochastic</strong>.</p></li>
+<li><p>The goal of an agent is to find a policy that maximizes the sum of received rewards <strong>on the long term</strong>, i.e.&nbsp;the <strong>return</strong> <span class="math inline">R_t</span> at each each time step.</p></li>
+<li><p>This policy is called the <strong>optimal policy</strong> <span class="math inline">\pi^*</span>.</p></li>
+</ul>
+<p><span class="math display">
+    \mathcal{J}(\pi) = \mathbb{E}_{\rho_\pi} [R_t] \qquad
+    \pi^* = \text{argmax} \, \mathcal{J}(\pi)
+</span></p>
+</section>
+
+<section id="goal-of-reinforcement-learning" class="title-slide slide level1 center">
+<h1>Goal of Reinforcement Learning</h1>
+<ul>
+<li><p>RL is an <strong>adaptive optimal control</strong> method for Markov Decision Processes using (sparse) rewards as a partial feedback.</p></li>
+<li><p>At each time step <span class="math inline">t</span>, the agent observes its Markov state <span class="math inline">s_t \in \mathcal{S}</span>, produces an action <span class="math inline">a_t \in \mathcal{A}(s_t)</span>, receives a reward according to this action <span class="math inline">r_{t+1} \in \Re</span> and updates its state: <span class="math inline">s_{t+1} \in \mathcal{S}</span>.</p></li>
+</ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rl-sequence.jpg" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
+<li><p>The agent generates trajectories <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span> depending on its policy <span class="math inline">\pi(s ,a)</span>.</p></li>
+<li><p>The return of a trajectory is the (discounted) sum of rewards accumulated during the sequence: <span class="math display"> R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} </span></p></li>
+<li><p>The goal is to find the <strong>optimal policy</strong> <span class="math inline">\pi^* (s, a)</span> that maximizes in expectation the return of each possible trajectory under that policy:</p></li>
+</ul>
+<p><span class="math display">
+    \mathcal{J}(\pi) = \mathbb{E}_{\tau \sim \rho_\pi} [R(\tau)] \qquad
+    \pi^* = \text{argmax} \, \mathcal{J}(\pi)
+</span></p>
+</section>
+
+<section id="bellman-equations" class="title-slide slide level1 center">
+<h1>2 - Bellman equations</h1>
+
+</section>
+
+<section id="value-functions" class="title-slide slide level1 center">
+<h1>Value Functions</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p>A central notion in RL is to estimate the <strong>value</strong> (or <strong>utility</strong>) of every state and action of the MDP.</p></li>
+<li><p>The value of a state <span class="math inline">V^{\pi} (s)</span> is the expected return when starting from that state and thereafter following the agent’s current policy <span class="math inline">\pi</span>.</p></li>
+<li><p>The <strong>state-value function</strong> <span class="math inline">V^{\pi} (s)</span> of a state <span class="math inline">s</span> given the policy <span class="math inline">\pi</span> is defined as the mathematical expectation of the return after that state:</p></li>
+</ul>
+<p><span class="math display">  V^{\pi} (s) = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s) = \mathbb{E}_{\rho_\pi} ( \sum_{k=0}^{\infty} \gamma^k r_{t+k+1} |s_t=s ) </span></p>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rewardtogo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="value-functions-1" class="title-slide slide level1 center">
+<h1>Value Functions</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><span class="math display">  V^{\pi} (s) = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s) = \mathbb{E}_{\rho_\pi} ( \sum_{k=0}^{\infty} \gamma^k r_{t+k+1} |s_t=s ) </span></p>
+<ul>
+<li><p>The mathematical expectation operator <span class="math inline">\mathbb{E}(\cdot)</span> is indexed by <span class="math inline">\rho_\pi</span>, the probability distribution of states achievable with <span class="math inline">\pi</span>.</p></li>
+<li><p>Several trajectories are possible after the state <span class="math inline">s</span>:</p>
+<ul>
+<li><p>The <strong>state transition probability function</strong> <span class="math inline">p(s' | s, a)</span> leads to different states <span class="math inline">s'</span>, even if the same actions are taken.</p></li>
+<li><p>The <strong>expected reward function</strong> <span class="math inline">r(s, a, s')</span> provides stochastic rewards, even if the transition <span class="math inline">(s, a, s')</span> is the same.</p></li>
+<li><p>The <strong>policy</strong> <span class="math inline">\pi</span> itself is stochastic.</p></li>
+</ul></li>
+<li><p>Only rewards that are obtained using the policy <span class="math inline">\pi</span> should be taken into account, not the complete distribution of states and rewards.</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rewardtogo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="value-functions-2" class="title-slide slide level1 center">
+<h1>Value Functions</h1>
+<ul>
+<li>The value of a state is not intrinsic to the state itself, it depends on the policy:</li>
+</ul>
+<p><span class="math display">V^{\pi} (s) = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s) = \mathbb{E}_{\rho_\pi} ( \sum_{k=0}^{\infty} \gamma^k r_{t+k+1} |s_t=s )</span></p>
+<ul>
+<li>One could be in a state which is very close to the goal (only one action left to win game), but if the policy is very bad, the “good” action will not be chosen and the state will have a small value.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/goalmiss.gif"></p>
+<figcaption>Source: <a href="https://www.carbonated.tv/sports/worst-open-goal-misses-in-football-gifs" class="uri">https://www.carbonated.tv/sports/worst-open-goal-misses-in-football-gifs</a></figcaption>
+</figure>
+</div>
+</section>
+
+<section id="value-functions-3" class="title-slide slide level1 center">
+<h1>Value Functions</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p>The value of taking an action <span class="math inline">a</span> in a state <span class="math inline">s</span> under policy <span class="math inline">\pi</span> is the expected return starting from that state, taking that action, and thereafter following the following <span class="math inline">\pi</span>.</p></li>
+<li><p>The <strong>action-value function</strong> for a state-action pair <span class="math inline">(s, a)</span> under the policy <span class="math inline">\pi</span> (or <strong>Q-value</strong>) is defined as:</p></li>
+</ul>
+<p><span class="math display">\begin{align}
+    Q^{\pi} (s, a)  &amp; = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s, a_t =a) \\
+                    &amp; = \mathbb{E}_{\rho_\pi} ( \sum_{k=0}^{\infty} \gamma^k r_{t+k+1} |s_t=s, a_t=a) \\
+\end{align}</span></p>
+<ul>
+<li>The Q-value of an action is sometimes called its <strong>utility</strong>: is it worth taking this action?</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/rewardtogo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="side-note-different-notations-in-rl" class="title-slide slide level1 center">
+<h1>Side note: Different notations in RL</h1>
+<ul>
+<li><p>Notations can vary depending on the source.</p></li>
+<li><p>The ones used in this course use what you can read in most modern deep RL papers (Deepmind, OpenAI), but beware that you can encounter <span class="math inline">G_t</span> for the return…</p></li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 22%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>This course</strong></th>
+<th style="text-align: center;"><strong>Sutton and Barto 1998</strong></th>
+<th style="text-align: center;"><strong>Sutton and Barto 2017</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Current state</td>
+<td style="text-align: center;"><span class="math inline">s_t</span></td>
+<td style="text-align: center;"><span class="math inline">s_t</span></td>
+<td style="text-align: center;"><span class="math inline">S_t</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Selected action</td>
+<td style="text-align: center;"><span class="math inline">a_t</span></td>
+<td style="text-align: center;"><span class="math inline">a_t</span></td>
+<td style="text-align: center;"><span class="math inline">A_t</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Sampled reward</td>
+<td style="text-align: center;"><span class="math inline">r_{t+1}</span></td>
+<td style="text-align: center;"><span class="math inline">r_{t+1}</span></td>
+<td style="text-align: center;"><span class="math inline">R_{t+1}</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Transition probability</td>
+<td style="text-align: center;"><span class="math inline">p(s' | s,a)</span></td>
+<td style="text-align: center;"><span class="math inline">\mathcal{P}_{ss'}^a</span></td>
+<td style="text-align: center;"><span class="math inline">p(s'|s, a)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Expected reward</td>
+<td style="text-align: center;"><span class="math inline">r(s,a, s')</span></td>
+<td style="text-align: center;"><span class="math inline">\mathcal{R}_{ss'}^a</span></td>
+<td style="text-align: center;"><span class="math inline">r(s, a, s')</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Return</td>
+<td style="text-align: center;"><span class="math inline">R_t</span></td>
+<td style="text-align: center;"><span class="math inline">R_t</span></td>
+<td style="text-align: center;"><span class="math inline">G_t</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">State value function</td>
+<td style="text-align: center;"><span class="math inline">V^\pi(s)</span></td>
+<td style="text-align: center;"><span class="math inline">V^\pi(s)</span></td>
+<td style="text-align: center;"><span class="math inline">v_\pi(s)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Action value function</td>
+<td style="text-align: center;"><span class="math inline">Q^\pi(s, a)</span></td>
+<td style="text-align: center;"><span class="math inline">Q^\pi(s, a)</span></td>
+<td style="text-align: center;"><span class="math inline">q_\pi(s, a)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="the-v-and-q-value-functions-are-inter-dependent" class="title-slide slide level1 center">
+<h1>The V and Q value functions are inter-dependent</h1>
+<ul>
+<li>The value of a state <span class="math inline">V^{\pi}(s)</span> depends on the value <span class="math inline">Q^{\pi} (s, a)</span> of the action that will be chosen by the policy <span class="math inline">\pi</span> in <span class="math inline">s</span>:</li>
+</ul>
+<p><span class="math display">
+        V^{\pi}(s) = \mathbb{E}_{a \sim \pi(s,a)} [Q^{\pi} (s, a)] = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, Q^{\pi} (s, a)
+</span></p>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup.png" class="quarto-figure quarto-figure-center" style="width:30.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
+<li><p>If the policy <span class="math inline">\pi</span> is deterministic (the same action is chosen every time), the value of the state is the same as the value of that action (same expected return).</p></li>
+<li><p>If the policy <span class="math inline">\pi</span> is stochastic (actions are chosen with different probabilities), the value of the state is the weighted average of the value of the actions.</p></li>
+<li><p>If the Q-values are known, the V-values can be found easily.</p></li>
+</ul>
+</section>
+
+<section id="values-and-immediate-rewards" class="title-slide slide level1 center">
+<h1>Values and immediate rewards</h1>
+<ul>
+<li>We can note that the return at time <span class="math inline">t</span> depends on the <strong>immediate reward</strong> <span class="math inline">r_{t+1}</span> and the return at the next time step <span class="math inline">t+1</span>:</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+    R_t &amp;= r_{t+1} + \gamma \, r_{t+2} +  \gamma^2  \, r_{t+3} + \dots + \gamma^k \, r_{t+k+1} + \dots \\
+        &amp;= r_{t+1} + \gamma \, ( r_{t+2} +  \gamma \, r_{t+3} + \dots + \gamma^{k-1} \, r_{t+k+1} + \dots) \\
+        &amp;= r_{t+1} + \gamma \,  R_{t+1} \\
+\end{aligned}
+</span></p>
+<ul>
+<li>When taking the mathematical expectation of that identity, we obtain:</li>
+</ul>
+<p><span class="math display">
+    \mathbb{E}_{\rho_\pi}[R_t] = r(s_t, a_t, s_{t+1}) + \gamma \, \mathbb{E}_{\rho_\pi}[R_{t+1}]
+</span></p>
+<ul>
+<li>It becomes clear that the value of an action depends on the immediate reward received just after the action, as well as the value of the next state:</li>
+</ul>
+<p><span class="math display">
+        Q^{\pi}(s_t, a_t) = r(s_t, a_t, s_{t+1}) + \gamma \,  V^{\pi} (s_{t+1})
+</span></p>
+<ul>
+<li>But that is only for a fixed <span class="math inline">(s_t, a_t, s_{t+1})</span> transition.</li>
+</ul>
+</section>
+
+<section id="the-v-and-q-value-functions-are-inter-dependent-1" class="title-slide slide level1 center">
+<h1>The V and Q value functions are inter-dependent</h1>
+<ul>
+<li>Taking transition probabilities into account, one can obtain the Q-values when the V-values are known:</li>
+</ul>
+<p><span class="math display">
+        Q^{\pi}(s, a) = \mathbb{E}_{s' \sim p(s'|s, a)} [ r(s, a, s') + \gamma \, V^{\pi} (s') ] = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
+</span></p>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup.png" class="quarto-figure quarto-figure-center" style="width:30.0%"></p>
+</figure>
+</div>
+</div>
+<ul>
+<li><p>The value of an action depends on:</p>
+<ul>
+<li><p>the states <span class="math inline">s'</span> one can arrive after the action (with a probability <span class="math inline">p(s' | s, a)</span>).</p></li>
+<li><p>the value of that state <span class="math inline">V^{\pi} (s')</span>, weighted by <span class="math inline">\gamma</span> as it is one step in the future.</p></li>
+<li><p>the reward received immediately after taking that action <span class="math inline">r(s, a, s')</span> (as it is not included in the value of <span class="math inline">s'</span>).</p></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="bellman-equation-for-vpi" class="title-slide slide level1 center">
+<h1>Bellman equation for <span class="math inline">V^{\pi}</span></h1>
+<ul>
+<li>A fundamental property of value functions used throughout reinforcement learning is that they satisfy a particular recursive relationship:</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+        V^{\pi}(s)  &amp;= \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, Q^{\pi} (s, a)\\
+                    &amp;= \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
+\end{aligned}
+</span></p>
+<ul>
+<li><p>This equation is called the <strong>Bellman equation</strong> for <span class="math inline">V^{\pi}</span>.</p></li>
+<li><p>It expresses the relationship between the value of a state and the value of its successors, depending on the dynamics of the MDP (<span class="math inline">p(s' | s, a)</span> and <span class="math inline">r(s, a, s')</span>) and the current policy <span class="math inline">\pi</span>.</p></li>
+<li><p>The interesting property of the Bellman equation for RL is that it admits one and only one solution <span class="math inline">V^{\pi}(s)</span>.</p></li>
+</ul>
+</section>
+
+<section id="bellman-equation-for-qpi" class="title-slide slide level1 center">
+<h1>Bellman equation for <span class="math inline">Q^{\pi}</span></h1>
+<ul>
+<li>The same recursive relationship stands for <span class="math inline">Q^{\pi}(s, a)</span>:</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+        Q^{\pi}(s, a)  &amp;= \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ] \\
+                    &amp;=  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, \sum_{a' \in \mathcal{A}(s')} \pi(s', a') \, Q^{\pi} (s', a')]
+\end{aligned}
+</span></p>
+<p>which is called the <strong>Bellman equation</strong> for <span class="math inline">Q^{\pi}</span>.</p>
+<ul>
+<li>The following <strong>backup diagrams</strong> denote these recursive relationships.</li>
+</ul>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup-V.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="bellman-optimality-equations" class="title-slide slide level1 center">
+<h1>3 - Bellman optimality equations</h1>
+
+</section>
+
+<section id="optimal-policy" class="title-slide slide level1 center">
+<h1>Optimal policy</h1>
+<ul>
+<li><p>The optimal policy is the policy that gathers the maximum of reward on the long term.</p></li>
+<li><p>Value functions define a partial ordering over policies:</p></li>
+</ul>
+<div class="callout callout-tip no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Partial ordering</strong></p>
+</div>
+<div class="callout-content">
+<p>A policy <span class="math inline">\pi</span> is better than another policy <span class="math inline">\pi'</span> if its expected return is greater or equal than that of <span class="math inline">\pi'</span> for all states <span class="math inline">s</span>.</p>
+<p><span class="math display">
+        \pi \geq \pi' \Leftrightarrow V^{\pi}(s) \geq V^{\pi'}(s) \quad \forall s \in \mathcal{S}
+</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li><p>For a MDP, there exists at least one policy that is better than all the others: this is the <strong>optimal policy</strong> <span class="math inline">\pi^*</span>.</p></li>
+<li><p>We note <span class="math inline">V^*(s)</span> and <span class="math inline">Q^*(s, a)</span> the optimal value of the different states and actions under <span class="math inline">\pi^*</span>.</p></li>
+</ul>
+<p><span class="math display">
+   V^* (s) = \max_{\pi} V^{\pi}(s) \quad \forall s \in \mathcal{S}
+</span></p>
+<p><span class="math display">
+    Q^* (s, a) = \max_{\pi} Q^{\pi}(s, a) \quad \forall s \in \mathcal{S}, \quad \forall a \in \mathcal{A}
+</span></p>
+</section>
+
+<section id="the-optimal-policy-is-greedy" class="title-slide slide level1 center">
+<h1>The optimal policy is greedy</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li><p>When the policy is optimal <span class="math inline">\pi^*</span>, the link between the V and Q values is even easier.</p></li>
+<li><p>The V and Q values are maximal for the optimal policy: there is no better alternative.</p></li>
+</ul>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/fullvi.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><strong>The optimal action <span class="math inline">a^*</span> to perform in the state <span class="math inline">s</span> is the one with the highest optimal Q-value <span class="math inline">Q^*(s, a)</span></strong>.</li>
+</ul>
+<p><span class="math display">
+    a^* = \text{argmax}_a \, Q^*(s, a)
+</span></p>
+<ul>
+<li>By definition, this action will bring the maximal return when starting in <span class="math inline">s</span>.</li>
+</ul>
+<p><span class="math display">
+    Q^*(s, a) = \mathbb{E}_{\rho_{\pi^*}} [R_t]
+</span></p>
+<ul>
+<li>The optimal policy is <strong>greedy</strong> with respect to <span class="math inline">Q^*(s, a)</span>, i.e.&nbsp;<strong>deterministic</strong>.</li>
+</ul>
+<p><span class="math display">
+    \pi^*(s, a) = \begin{cases}
+                1 \; \text{if} \; a = a^* \\
+                0 \; \text{otherwise.}
+                \end{cases}
+</span></p>
+</section>
+
+<section id="bellman-optimality-equations-1" class="title-slide slide level1 center">
+<h1>Bellman optimality equations</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li>As the optimal policy is deterministic, the optimal value of a state is equal to the value of the optimal action:</li>
+</ul>
+<p><span class="math display">
+    V^* (s)  = \max_{a \in \mathcal{A}(s)} Q^{\pi^*} (s, a)
+</span></p>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/fullvi.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><p>The expected return after being in <span class="math inline">s</span> is the same as the expected return after being in <span class="math inline">s</span> and choosing the optimal action <span class="math inline">a^*</span>, as this is the only action that can be taken.</p></li>
+<li><p>This allows to find the <strong>Bellman optimality equation</strong> for <span class="math inline">V^*</span>:</p></li>
+</ul>
+<p><span class="math display">
+    V^* (s)  = \max_{a \in \mathcal{A}(s)} \sum_{s' \in \mathcal{S}}  p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{*} (s') ]
+</span></p>
+<ul>
+<li>The same Bellman optimality equation stands for <span class="math inline">Q^*</span>:</li>
+</ul>
+<p><span class="math display">
+    Q^* (s, a)  = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s')  + \gamma \max_{a' \in \mathcal{A}(s')} Q^* (s', a') ]
+</span></p>
+<ul>
+<li>The optimal value of <span class="math inline">(s, a)</span> depends on the optimal action in the next state <span class="math inline">s'</span>.</li>
+</ul>
+<!--
+# Bellman optimality equations
+
+
+* The Bellman optimality equations for $V^*$ form a system of equations:
+
+    * If there are $N$ states $s$, there are $N$ Bellman equations with $N$ unknowns $V^*(s)$.
+
+$$
+    V^* (s)  = \max_{a \in \mathcal{A}(s)} \sum_{s' \in \mathcal{S}}  p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{*} (s') ]
+$$
+
+* If the dynamics of the environment are known ($p(s' | s, a)$ and $r(s, a, s')$), then in principle one can solve this system of equations using linear algebra.
+
+* For finite MDPs, the Bellman optimality equation for $V^*$ has a unique solution (one and only one).
+
+    * This is the principle of **dynamic programming**.
+
+* The same is true for the Bellman optimality equation for $Q^*$:
+
+    * If there are $N$ states and $M$ actions available, there are $N\times M$ equations with $N\times M$ unknowns $Q^*(s, a)$.
+
+$$
+    Q^* (s, a)  = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s')  + \gamma \max_{a' \in \mathcal{A}(s')} Q^* (s', a') ]
+$$
+
+# Obtaining the optimal policy from the optimal values
+
+::: {.columns}
+::: {.column width=70%}
+
+* $V^*$ and $Q^*$ are interdependent: one needs only to compute one of them.
+
+$$V^* (s)  = \max_{a \in \mathcal{A}(s)} \, Q^{*} (s, a)$$
+
+$$Q^* (s, a)  = \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \, [r(s, a, s') + \gamma V^*(s') ] $$
+
+:::
+::: {.column width=30%}
+
+![](img/fullvi.png)
+
+:::
+:::
+
+
+* If you only have $V^*(s)$, you need to perform a **one-step-ahead** search using the dynamics of the MDP:
+
+$$
+    Q^* (s, a)  = \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \, [r(s, a, s') + \gamma V^*(s') ]
+$$
+
+and then select the optimal action with the highest $Q^*$-value.
+
+* Using the $V^*(s)$ values is called **model-based**: you need to know the model of the environment to act, at least locally.
+
+
+# Bellman optimality equations for $V^*$ or $Q^*$?
+
+::: {.columns}
+::: {.column width=70%}
+
+* If you have all $Q^*(s, a)$, the optimal policy is straightforward:
+
+$$
+    \pi^*(s, a) = \begin{cases}
+                1 \; \text{if} \; a = \text{argmax}_a \, Q^*(s, a) \\
+                0 \; \text{otherwise.}
+                \end{cases}
+$$
+
+:::
+::: {.column width=30%}
+
+![](img/fullvi.png)
+
+:::
+:::
+
+
+* Finding $Q^*$ makes the selection of optimal actions easy:
+
+    * no need to iterate over all actions and to know the dynamics $p(s' | s, a)$ and $r(s, a, s')$.
+
+    * for any state $s$, it can simply find the action that maximizes $Q^*(s,a)$.
+
+* The action-value function effectively **caches** the results of all one-step-ahead searches into a single value: **model-free**.
+
+* At the cost of representing a function of all state-action pairs, the optimal action-value function allows optimal actions to be selected without having to know anything about the environment's dynamics.
+
+* But there are $N \times M$ equations to solve instead of just $N$... 
+
+# How to solve the Bellman equations?
+
+* Finding an optimal policy by solving the **Bellman optimality equations** requires the following:
+
+    - accurate knowledge of environment dynamics $p(s' | s, a)$ and $r(s, a, s')$ for all transitions;
+
+    - enough memory and time to do the computations;
+
+    - the Markov property.
+
+* How much space and time do we need? A solution requires an exhaustive search, looking ahead at all possibilities, computing their probabilities of occurrence and their desirability in terms of expected rewards.
+
+* The number of states is often huge or astronomical (e.g., Go has about $10^{170}$ states).
+
+* **Dynamic programming** solves exactly the Bellman equations.
+
+* **Monte-Carlo** and **temporal-difference** methods approximate them.
+
+
+# Key idea of Reinforcement learning: Generalized Policy Iteration
+
+
+::: {.columns}
+::: {.column width=40%}
+
+![](img/gpi-scheme.png)
+
+:::
+::: {.column width=60%}
+
+* In general, RL algorithms iterate over two steps:
+
+    1. **Policy evaluation**
+
+        * For a given policy $\pi$, the value of all states $V^\pi(s)$ or all state-action pairs $Q^\pi(s, a)$ is calculated, either based on:
+
+            * the Bellman equations (Dynamic Programming)
+
+            * sampled experience (Monte-Carlo and Temporal Difference)
+
+    2. **Policy improvement**
+
+        * From the current estimated values $V^\pi(s)$ or $Q^\pi(s, a)$, a new **better** policy $\pi$ is derived.
+
+
+* After enough iterations, the policy converges to the **optimal policy** (if the states are Markov).
+
+:::
+:::
+
+-->
+</section>
+
+<section id="dynamic-programming-dp" class="title-slide slide level1 center">
+<h1>4 - Dynamic Programming (DP)</h1>
+
+</section>
+
+<section id="dynamic-programming-dp-1" class="title-slide slide level1 center">
+<h1>Dynamic Programming (DP)</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/gpi-scheme.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<ul>
+<li><p>Dynamic Programming (DP) iterates over two steps:</p>
+<ol type="1">
+<li><p><strong>Policy evaluation</strong></p>
+<ul>
+<li>For a given policy <span class="math inline">\pi</span>, the value of all states <span class="math inline">V^\pi(s)</span> or all state-action pairs <span class="math inline">Q^\pi(s, a)</span> is calculated based on the Bellman equations:</li>
+</ul>
+<p><span class="math display">
+V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
+</span></p></li>
+<li><p><strong>Policy improvement</strong></p>
+<ul>
+<li>From the current estimated values <span class="math inline">V^\pi(s)</span> or <span class="math inline">Q^\pi(s, a)</span>, a new <strong>better</strong> policy <span class="math inline">\pi</span> is derived.</li>
+</ul>
+<p><span class="math display">\pi' \leftarrow \text{Greedy}(V^\pi)</span></p></li>
+</ol></li>
+</ul>
+</div></div>
+<ul>
+<li>After enough iterations, the policy converges to the <strong>optimal policy</strong> (if the states are Markov).</li>
+</ul>
+</section>
+
+<section id="policy-evaluation" class="title-slide slide level1 center">
+<h1>Policy evaluation</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li>Bellman equation for the state <span class="math inline">s</span> and a fixed policy <span class="math inline">\pi</span>:</li>
+</ul>
+<p><span class="math display">
+      V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V^{\pi} (s') ]
+</span></p>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/backup.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>Let’s note <span class="math inline">\mathcal{P}_{ss'}^\pi</span> the transition probability between <span class="math inline">s</span> and <span class="math inline">s'</span> (dependent on the policy <span class="math inline">\pi</span>) and <span class="math inline">\mathcal{R}_{s}^\pi</span> the expected reward in <span class="math inline">s</span> (also dependent):</li>
+</ul>
+<p><span class="math display">
+  \mathcal{P}_{ss'}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, p(s' | s, a)
+</span></p>
+<p><span class="math display">
+  \mathcal{R}_{s}^\pi = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} \, p(s' | s, a) \ r(s, a, s')
+</span></p>
+<ul>
+<li><p>The Bellman equation becomes <span class="math inline">V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \displaystyle\sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')</span></p></li>
+<li><p>As we have a fixed policy during the evaluation, the Bellman equation is simplified.</p></li>
+</ul>
+</section>
+
+<section id="policy-evaluation-1" class="title-slide slide level1 center">
+<h1>Policy evaluation</h1>
+<ul>
+<li>Let’s now put the Bellman equations in a matrix-vector form.</li>
+</ul>
+<p><span class="math display">
+      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>We first define the <strong>vector of state values</strong> <span class="math inline">\mathbf{V}^\pi</span>:</li>
+</ul>
+<p><span class="math display">
+  \mathbf{V}^\pi = \begin{bmatrix}
+      V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
+  \end{bmatrix}
+</span></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>and the <strong>vector of expected reward</strong> <span class="math inline">\mathbf{R}^\pi</span>:</li>
+</ul>
+<p><span class="math display">
+  \mathbf{R}^\pi = \begin{bmatrix}
+      \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
+  \end{bmatrix}
+</span></p>
+</div></div>
+<ul>
+<li>The <strong>state transition matrix</strong> <span class="math inline">\mathcal{P}^\pi</span> is defined as:</li>
+</ul>
+<p><span class="math display">
+  \mathcal{P}^\pi = \begin{bmatrix}
+      \mathcal{P}_{s_1 s_1}^\pi &amp; \mathcal{P}_{s_1 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_1 s_n}^\pi \\
+      \mathcal{P}_{s_2 s_1}^\pi &amp; \mathcal{P}_{s_2 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_2 s_n}^\pi \\
+      \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+      \mathcal{P}_{s_n s_1}^\pi &amp; \mathcal{P}_{s_n s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_n s_n}^\pi \\
+  \end{bmatrix}
+</span></p>
+</section>
+
+<section id="policy-evaluation-2" class="title-slide slide level1 center">
+<h1>Policy evaluation</h1>
+<ul>
+<li>You can simply check that:</li>
+</ul>
+<p><span class="math display">
+  \begin{bmatrix}
+      V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
+  \end{bmatrix} =
+  \begin{bmatrix}
+      \mathcal{R}^\pi(s_1) \\ \mathcal{R}^\pi(s_2) \\ \vdots \\ \mathcal{R}^\pi(s_n) \\
+  \end{bmatrix}
+  + \gamma \, \begin{bmatrix}
+      \mathcal{P}_{s_1 s_1}^\pi &amp; \mathcal{P}_{s_1 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_1 s_n}^\pi \\
+      \mathcal{P}_{s_2 s_1}^\pi &amp; \mathcal{P}_{s_2 s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_2 s_n}^\pi \\
+      \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+      \mathcal{P}_{s_n s_1}^\pi &amp; \mathcal{P}_{s_n s_2}^\pi &amp; \ldots &amp; \mathcal{P}_{s_n s_n}^\pi \\
+  \end{bmatrix} \times \begin{bmatrix}
+      V^\pi(s_1) \\ V^\pi(s_2) \\ \vdots \\ V^\pi(s_n) \\
+  \end{bmatrix}
+</span></p>
+<p>leads to the same equations as:</p>
+<p><span class="math display">
+      V^{\pi} (s)  = \mathbf{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+</span></p>
+<p>for all states <span class="math inline">s</span>.</p>
+<ul>
+<li>The Bellman equations for all states <span class="math inline">s</span> can therefore be written with a matrix-vector notation as:</li>
+</ul>
+<p><span class="math display">
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
+</span></p>
+</section>
+
+<section id="policy-evaluation-3" class="title-slide slide level1 center">
+<h1>Policy evaluation</h1>
+<ul>
+<li>The Bellman equations for all states <span class="math inline">s</span> is:</li>
+</ul>
+<p><span class="math display">
+  \mathbf{V}^\pi = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}^\pi
+</span></p>
+<ul>
+<li>If we know <span class="math inline">\mathcal{P}^\pi</span> and <span class="math inline">\mathbf{R}^\pi</span> (dynamics of the MDP for the policy <span class="math inline">\pi</span>), we can simply obtain the state values:</li>
+</ul>
+<p><span class="math display">
+  (\mathbb{I} - \gamma \, \mathcal{P}^\pi ) \times \mathbf{V}^\pi = \mathbf{R}^\pi
+</span></p>
+<p>where <span class="math inline">\mathbb{I}</span> is the identity matrix, what gives:</p>
+<p><span class="math display">
+  \mathbf{V}^\pi = (\mathbb{I} - \gamma \, \mathcal{P}^\pi )^{-1} \times \mathbf{R}^\pi
+</span></p>
+<ul>
+<li><p>Done!</p></li>
+<li><p><strong>But</strong>, if we have <span class="math inline">n</span> states, the matrix <span class="math inline">\mathcal{P}^\pi</span> has <span class="math inline">n^2</span> elements.</p></li>
+<li><p>Inverting <span class="math inline">\mathbb{I} - \gamma \, \mathcal{P}^\pi</span> requires at least <span class="math inline">\mathcal{O}(n^{2.37})</span> operations.</p></li>
+<li><p>Forget it if you have more than a thousand states (<span class="math inline">1000^{2.37} \approx 13</span> million operations).</p></li>
+<li><p>In <strong>dynamic programming</strong>, we will use <strong>iterative methods</strong> to estimate <span class="math inline">\mathbf{V}^\pi</span>.</p></li>
+</ul>
+</section>
+
+<section id="iterative-policy-evaluation" class="title-slide slide level1 center">
+<h1>Iterative policy evaluation</h1>
+<ul>
+<li>The idea of <strong>iterative policy evaluation</strong> (IPE) is to consider a sequence of consecutive state-value functions which should converge from initially wrong estimates <span class="math inline">V_0(s)</span> towards the real state-value function <span class="math inline">V^{\pi}(s)</span>.</li>
+</ul>
+<p><span class="math display">
+      V_0 \rightarrow V_1 \rightarrow V_2 \rightarrow \ldots \rightarrow V_k \rightarrow V_{k+1} \rightarrow \ldots \rightarrow V^\pi
+</span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/iterativepolicyevaluation2.png"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>The value function at step <span class="math inline">k+1</span> <span class="math inline">V_{k+1}(s)</span> is computed using the previous estimates <span class="math inline">V_{k}(s)</span> and the Bellman equation transformed into an <strong>update rule</strong>.</p></li>
+<li><p>In vector notation:</p></li>
+</ul>
+<p><span class="math display">
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+</span></p>
+</div></div>
+</section>
+
+<section id="iterative-policy-evaluation-1" class="title-slide slide level1 center">
+<h1>Iterative policy evaluation</h1>
+<ul>
+<li><p>Let’s start with dummy (e.g.&nbsp;random) initial estimates <span class="math inline">V_0(s)</span> for the value of every state <span class="math inline">s</span>.</p></li>
+<li><p>We can obtain new estimates <span class="math inline">V_1(s)</span> which are slightly less wrong by applying once the <strong>Bellman operator</strong>:</p></li>
+</ul>
+<p><span class="math display">
+     V_{1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_0 (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<ul>
+<li>Based on these estimates <span class="math inline">V_1(s)</span>, we can obtain even better estimates <span class="math inline">V_2(s)</span> by applying again the Bellman operator:</li>
+</ul>
+<p><span class="math display">
+     V_{2} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_1 (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<ul>
+<li>Generally, state-value function estimates are improved iteratively through:</li>
+</ul>
+<p><span class="math display">
+     V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ] \quad \forall s \in \mathcal{S}
+</span></p>
+<ul>
+<li><span class="math inline">V_\infty = V^{\pi}</span> is a fixed point of this update rule because of the uniqueness of the solution to the Bellman equation.</li>
+</ul>
+<!--
+# Bellman operator
+
+* The **Bellman operator** $\mathcal{T}^\pi$ is a mapping between two vector spaces:
+
+$$
+  \mathcal{T}^\pi (\mathbf{V}) = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}
+$$
+
+* If you apply repeatedly the Bellman operator on any initial vector $\mathbf{V}_0$, it converges towards the solution of the Bellman equations $\mathbf{V}^\pi$.
+
+* Mathematically speaking, $\mathcal{T}^\pi$ is a $\gamma$-contraction, i.e. it makes value functions
+closer by at least $\gamma$:
+
+$$
+  || \mathcal{T}^\pi (\mathbf{V}) - \mathcal{T}^\pi (\mathbf{U})||_\infty \leq \gamma \, ||\mathbf{V} - \mathbf{U} ||_\infty
+$$
+
+* The **contraction mapping theorem** ensures that $\mathcal{T}^\pi$ converges to an unique fixed point:
+
+  * Existence and uniqueness of the solution of the Bellman equations. 
+
+-->
+<!--
+# Backup diagram of IPE
+
+* Iterative Policy Evaluation relies on **full backups**: it backs up the value of ALL possible successive states into the new value of a state.
+
+$$
+     V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ] \quad \forall s \in \mathcal{S}
+$$
+
+
+* **Backup diagram:** which other values do you need to know in order to update one value?
+
+![](img/fullpe.png){width=20%}
+
+
+* The backups are **synchronous**: all states are backed up in parallel.
+
+$$
+  \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
+$$
+
+* The termination of iterative policy evaluation has to be controlled by hand, as the convergence of the algorithm is only at the limit.
+
+* It is good practice to look at the variations on the values of the different states, and stop the iteration when this variation falls below a predefined threshold.
+
+-->
+</section>
+
+<section id="iterative-policy-evaluation-2" class="title-slide slide level1 center">
+<h1>Iterative policy evaluation</h1>
+<ul>
+<li><p>For a fixed policy <span class="math inline">\pi</span>, initialize <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><span class="math inline">\delta =0</span></p></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><p><span class="math inline">\delta = \max(\delta, |V(s) - V_\text{target}(s)|)</span></p></li>
+<li><p><span class="math inline">V(s) = V_\text{target}(s)</span></p></li>
+</ul></li>
+<li><p><strong>if</strong> <span class="math inline">\delta &lt; \delta_\text{threshold}</span>:</p>
+<ul>
+<li>converged = True</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="policy-improvement" class="title-slide slide level1 center">
+<h1>Policy improvement</h1>
+<ul>
+<li>For each state <span class="math inline">s</span>, we would like to know if we should deterministically choose an action <span class="math inline">a \neq \pi(s)</span> or not in order to improve the policy.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:80%;">
+<ul>
+<li>The value of an action <span class="math inline">a</span> in the state <span class="math inline">s</span> for the policy <span class="math inline">\pi</span> is given by:</li>
+</ul>
+<p><span class="math display">
+     Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]
+</span></p>
+</div><div class="column" style="width:20%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/fullpe.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li>If the Q-value of an action <span class="math inline">a</span> is higher than the one currently selected by the <strong>deterministic</strong> policy:</li>
+</ul>
+<p><span class="math display">Q^{\pi} (s, a) &gt; Q^{\pi} (s, \pi(s)) = V^{\pi}(s)</span></p>
+<p>then it is better to select <span class="math inline">a</span> once in <span class="math inline">s</span> and thereafter follow <span class="math inline">\pi</span>.</p>
+<ul>
+<li><p>If there is no better action, we keep the previous policy for this state.</p></li>
+<li><p>This corresponds to a <strong>greedy</strong> action selection over the Q-values, defining a <strong>deterministic</strong> policy <span class="math inline">\pi(s)</span>:</p></li>
+</ul>
+<p><span class="math display">\pi(s) \leftarrow \text{argmax}_a \, Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></p>
+</section>
+
+<section id="policy-improvement-1" class="title-slide slide level1 center">
+<h1>Policy improvement</h1>
+<ul>
+<li>After the policy improvement, the Q-value of each deterministic action <span class="math inline">\pi(s)</span> has increased or stayed the same.</li>
+</ul>
+<p><span class="math display">\text{argmax}_a \; Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ] \geq Q^\pi(s, \pi(s))</span></p>
+<ul>
+<li><p>This defines an <strong>improved</strong> policy <span class="math inline">\pi'</span>, where all states and actions have a higher value than previously.</p></li>
+<li><p><strong>Greedy action selection</strong> over the state value function implements policy improvement:</p></li>
+</ul>
+<p><span class="math display">\pi' \leftarrow \text{Greedy}(V^\pi)</span></p>
+<div class="callout callout-tip no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Greedy policy improvement:</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>:</p>
+<ul>
+<li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section id="policy-iteration" class="title-slide slide level1 center">
+<h1>Policy iteration</h1>
+<ul>
+<li>Once a policy <span class="math inline">\pi</span> has been improved using <span class="math inline">V^{\pi}</span> to yield a better policy <span class="math inline">\pi'</span>, we can then compute <span class="math inline">V^{\pi'}</span> and improve it again to yield an even better policy <span class="math inline">\pi''</span>.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/gpi-scheme.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<ul>
+<li>The algorithm <strong>policy iteration</strong> successively uses <strong>policy evaluation</strong> and <strong>policy improvement</strong> to find the optimal policy.</li>
+</ul>
+<p><span class="math display">
+  \pi_0 \xrightarrow[]{E} V^{\pi_0} \xrightarrow[]{I} \pi_1 \xrightarrow[]{E} V^{\pi^1} \xrightarrow[]{I}  ... \xrightarrow[]{I} \pi^* \xrightarrow[]{E} V^{*}
+</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/gpi.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><p>The <strong>optimal policy</strong> being deterministic, policy improvement can be greedy over the state-action values.</p></li>
+<li><p>If the policy does not change after policy improvement, the optimal policy has been found.</p></li>
+</ul>
+</section>
+
+<section id="policy-iteration-1" class="title-slide slide level1 center">
+<h1>Policy iteration</h1>
+<ul>
+<li><p>Initialize a deterministic policy <span class="math inline">\pi(s)</span> and set <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
+<li><p><strong>while</strong> <span class="math inline">\pi</span> is not optimal:</p>
+<ul>
+<li><p><strong>while</strong> not converged: <em># Policy evaluation</em></p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V(s) = V_\text{target}(s)</span></li>
+</ul></li>
+</ul></li>
+<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>: <em># Policy improvement</em></p>
+<ul>
+<li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
+</ul></li>
+<li><p><strong>if</strong> <span class="math inline">\pi</span> has not changed: <strong>break</strong></p></li>
+</ul></li>
+</ul>
+<!--
+# Small Gridworld example
+
+![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/dp-gridworld1.png){width=80%}
+
+* **Gridworld** is an undiscounted MDP (we can take $\gamma=1$).
+
+* The states are the position in the grid, the actions are up, down, left, right. Transitions to a wall leave in the same state.
+
+* The reward is always -1, except after being in the terminal states in gray ($r=0$).
+
+* The initial policy is random:
+
+$$\pi(s, \text{up}) = \pi(s, \text{down})= \pi(s, \text{left}) = \pi(s, \text{right}) = 0.25$$
+
+
+
+# Small Gridworld example
+
+::: {.columns}
+::: {.column width=60%}
+
+![](img/dp-gridworld2.png)
+
+
+:::
+::: {.column width=40%}
+
+* $k=0$: 
+  
+  * The initial values $V_0$ are set to 0 as the initial policy is random. 
+
+* $k=1$: 
+
+  * The random policy is evaluated: all states get the value of the average immediate reward in that state. -1, except the terminal states (0). 
+
+  * The greedy policy is already an improvement over the random policy: adjacent states to the terminal states would decide to go there systematically, as the value is 0 instead of -1. 
+
+
+:::
+:::
+
+
+
+* $k=2$: The previous estimates propagate: states adjacent to the terminal states get a higher value, as there will be less punishments after these states. 
+
+
+# Small Gridworld example
+
+::: {.columns}
+::: {.column width=60%}
+
+![](img/dp-gridworld3.png)
+
+
+:::
+::: {.column width=40%}
+
+* $k=3$: 
+
+  * The values continue to propagate. 
+
+  * The greedy policy at that step of policy evaluation is already optimal.
+
+* $k>3$:
+
+  * The values continue to converge towards the true values.
+
+  * The greedy policy does not change. In this simple example, it is already the optimal policy.
+
+:::
+:::
+
+
+* Two things to notice:
+
+  * There is no actually no need to wait until the end of policy evaluation to improve the policy, as the greedy policy might already be optimal.
+
+  * There can be more than one optimal policy: some actions may have the same Q-value: choosing one or other is equally optimal.
+-->
+</section>
+
+<section id="value-iteration" class="title-slide slide level1 center">
+<h1>Value iteration</h1>
+<ul>
+<li><p>One drawback of <strong>policy iteration</strong> is that it uses a full policy evaluation, which can be computationally exhaustive as the convergence of <span class="math inline">V_k</span> is only at the limit and the number of states can be huge.</p></li>
+<li><p>The idea of <strong>value iteration</strong> is to interleave policy evaluation and policy improvement, so that the policy is improved after EACH iteration of policy evaluation, not after complete convergence.</p></li>
+<li><p>As policy improvement returns a deterministic greedy policy, updating of the value of a state is then simpler:</p></li>
+</ul>
+<p><span class="math display">
+  V_{k+1}(s) = \max_a \sum_{s'} p(s' | s,a) [r(s, a, s') + \gamma \, V_k(s') ]
+</span></p>
+<ul>
+<li><p>Note that this is equivalent to turning the <strong>Bellman optimality equation</strong> into an update rule.</p></li>
+<li><p>Value iteration converges to <span class="math inline">V^*</span>, faster than policy iteration, and should be stopped when the values do not change much anymore.</p></li>
+</ul>
+</section>
+
+<section id="value-iteration-1" class="title-slide slide level1 center">
+<h1>Value iteration</h1>
+<ul>
+<li><p>Initialize a deterministic policy <span class="math inline">\pi(s)</span> and set <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><span class="math inline">V_\text{target}(s) = \max_a \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]</span></li>
+</ul></li>
+<li><p><span class="math inline">\delta = 0</span></p></li>
+<li><p><strong>for</strong> all states <span class="math inline">s</span>:</p>
+<ul>
+<li><p><span class="math inline">\delta = \max(\delta, |V(s) - V_\text{target}(s)|)</span></p></li>
+<li><p><span class="math inline">V(s) = V_\text{target}(s)</span></p></li>
+</ul></li>
+<li><p><strong>if</strong> <span class="math inline">\delta &lt; \delta_\text{threshold}</span>:</p>
+<ul>
+<li>converged = True</li>
+</ul></li>
+</ul></li>
+</ul>
+<!--
+
+# Comparison of Policy- and Value-iteration
+
+**Full policy-evaluation backup**
+
+$$
+    V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ]
+$$
+
+![](img/fullpe.png){width=20%}
+
+**Full value-iteration backup**
+
+$$
+    V_{k+1} (s) \leftarrow \max_{a \in \mathcal{A}(s)} \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ]
+$$
+
+![](img/fullvi.png){width=20%}
+
+
+# Asynchronous dynamic programming
+
+
+* Synchronous DP requires exhaustive sweeps of the entire state set (**synchronous backups**).
+
+    * **while** not converged: 
+
+        * **for** all states $s$:
+
+            * $V_\text{target}(s) =  \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]$  
+
+        * **for** all states $s$:
+
+            * $V(s) = V_\text{target}(s)$
+
+* Asynchronous DP updates instead each state independently and asynchronously (**in-place**):
+
+    * **while** not converged: 
+
+        * Pick a state $s$ randomly (or following a heuristic).
+    
+        * Update the value of this state.
+
+        $$
+          V(s) =  \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]
+        $$
+
+* We must still ensure that all states are visited, but their frequency and order is irrelevant.
+-->
+<!--
+# Asynchronous dynamic programming
+
+* Is it possible to select the states to backup intelligently? 
+
+* **Prioritized sweeping** selects in priority the states with the largest remaining **Bellman error**:
+
+$$\delta = |\max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ] - V(s) |$$
+
+* A large Bellman error means that the current estimate $V(s)$ is very different from the **target** $y$: 
+
+$$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V (s') ]$$
+
+* States with a high Bellman error should be updated in priority. 
+
+* If the Bellman error is small, this means that the current estimate $V(s)$ is already close to what it should be, there is no hurry in evaluating this state. 
+
+* The main advantage is that the DP algorithm can be applied as the agent is actually experiencing its environment (no need for the dynamics of environment to be fully known). 
+-->
+</section>
+
+<section id="dynamic-programming" class="title-slide slide level1 center">
+<h1>Dynamic Programming</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/gpi-scheme.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<ul>
+<li><p>Policy-iteration and value-iteration consist of alternations between policy evaluation and policy improvement.</p></li>
+<li><p>This principle is called <strong>Generalized Policy Iteration</strong> (GPI).</p></li>
+<li><p>Solving the <strong>Bellman equations</strong> requires the following:</p>
+<ul>
+<li><p>accurate knowledge of environment dynamics <span class="math inline">p(s' | s, a)</span> and <span class="math inline">r(s, a, s')</span> for all transitions;</p></li>
+<li><p>enough memory and time to do the computations;</p></li>
+<li><p>the Markov property.</p></li>
+</ul></li>
+<li><p>Finding an optimal policy is polynomial in the number of states and actions: <span class="math inline">\mathcal{O}(N^2 \, M)</span> (<span class="math inline">N</span> is the number of states, <span class="math inline">M</span> the number of actions).</p></li>
+</ul>
+</div></div>
+<ul>
+<li><p>The number of states is often astronomical (e.g., Go has about <span class="math inline">10^{170}</span> states), often growing exponentially with the number of state variables (what Bellman called <strong>“the curse of dimensionality”</strong>).</p></li>
+<li><p>In practice, classical DP can only be applied to problems with a few millions of states.</p></li>
+</ul>
+</section>
+
+<section id="curse-of-dimensionality" class="title-slide slide level1 center">
+<h1>Curse of dimensionality</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/cursedimensionality.png"></p>
+<figcaption>Source: <a href="https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2" class="uri">https://medium.com/diogo-menezes-borges/give-me-the-antidote-for-the-curse-of-dimensionality-b14bce4bf4d2</a></figcaption>
+</figure>
+</div>
+<ul>
+<li><p>If one variable can be represented by 5 discrete values:</p>
+<ul>
+<li><p>2 variables necessitate 25 states,</p></li>
+<li><p>3 variables need 125 states, and so on…</p></li>
+</ul></li>
+<li><p>The number of states explodes exponentially with the number of dimensions of the problem.</p></li>
+</ul>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/vitay\.github\.io\/course-deeprl\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
