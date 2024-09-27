@@ -3,6 +3,5 @@
 .htaccess
 docs/
 slides/pdf
-assets/*.bib
 *.quarto
 /.quarto/

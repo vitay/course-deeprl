@@ -5,6 +5,8 @@ slides: $(slides_targets)
 	quarto render $? --to revealjs
 
 website: 
+	cp /Users/vitay/Articles/bibtex/DeepLearning.bib assets/
+	cp /Users/vitay/Articles/bibtex/ReinforcementLearning.bib assets/
 	quarto render .
 
 
