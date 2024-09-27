@@ -2,6 +2,5 @@
 *.ipynb_checkpoints
 .htaccess
 docs/
-slides/pdf
 *.quarto
 /.quarto/
