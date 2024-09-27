@@ -145,7 +145,7 @@ $$
 
 * The last $K$ transitions $(s, a, r, s')$ are not **i.i.d** (independent and identically distributed).
 
-![](img/sarsa-sequence.png)
+![](img/sarsa-sequence.png){width=40%}
 
 * The transition $(s_{t+1}, a_{t+1}, r_{t+2}, s_{t+2})$ **depends** on $(s_{t}, a_{t}, r_{t+1}, s_{t+1})$ by definition, i.e. the transitions are **correlated**.
 
@@ -172,7 +172,7 @@ $$
 
 $$\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \sim \mathcal{D}} [||\mathbf{t} - F_\theta(\mathbf{x})||^2]$$
 
-![](img/catdog.jpg)
+![](img/catdog.jpg){width=60%}
 
 * The problem is said **stationary**, as the distribution of the data does not change over time.
 
@@ -236,7 +236,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{s, a \sim \pi_\theta} [(r + \gamma \, \max_{
 ![](img/paper-DQN.png)
 
 ::: footer
-Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
 :::
 
 # Problem with non-linear approximators and RL
@@ -265,7 +265,7 @@ Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D.,
 
 # Experience replay memory
 
-* To avoid correlation between samples, (Mnih et al. 2015) proposed to store the $(s, a, r, s')$ transitions in a huge **experience replay memory** or **replay buffer**  $\mathcal{D}$ (e.g. 1 million transitions).
+* To avoid correlation between samples, @Mnih2015 proposed to store the $(s, a, r, s')$ transitions in a huge **experience replay memory** or **replay buffer**  $\mathcal{D}$ (e.g. 1 million transitions).
 
 ![](img/ERM.svg){width=40%}
 
@@ -332,12 +332,17 @@ $$b = \{\pi_{\theta_0}, \pi_{\theta_1}, \ldots, \pi_{\theta_t}\}$$
 
 * Samples from $b$ are i.i.d, so Q-learning is going to work.
 
+
+# Experience replay memory
+
+
 * Note: **it is not possible to use an experience replay memory with on-policy algorithms.**
 
-    $$Q^\pi(s, a) = \mathbb{E}_{s_t \sim \rho_\pi, a_t \sim \pi}[ r_{t+1} + \gamma \, Q^\pi(s_{t+1}, a_{t+1}) | s_t = s, a_t=a]$$
+$$Q^\pi(s, a) = \mathbb{E}_{s_t \sim \rho_\pi, a_t \sim \pi}[ r_{t+1} + \gamma \, Q^\pi(s_{t+1}, a_{t+1}) | s_t = s, a_t=a]$$
 
-    * $a_{t+1} \sim \pi_\theta$ would not be the same between $\pi_{\theta_0}$ (which generated the sample) and $\pi_{\theta_t}$ (the current policy).
+* $a_{t+1} \sim \pi_\theta$ would not be the same between $\pi_{\theta_0}$ (which generated the sample) and $\pi_{\theta_t}$ (the current policy).
 
+* The estimated return $r_{t+1} + \gamma \, Q^\pi(s_{t+1}, a_{t+1})$ would be biased, impairing convergence.
 
 # Target network
 
@@ -399,7 +404,7 @@ $$\theta' \leftarrow \theta$$
 <br>
 
 ::: footer
-Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
 :::
 
 # DQN: Deep Q-network
@@ -440,7 +445,7 @@ Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D.,
 ![](img/DeepQNetwork.jpg){width=70%}
 
 ::: footer
-Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
 :::
 
 # Why no max-pooling?
@@ -469,6 +474,7 @@ Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D.,
 
 * In video games, you **want** to keep the spatial information: the optimal action depends on where the ball is relative to the paddle.
 
+
 # Are individual frames good representations of states?
 
 * Is the ball moving from the child to the baseball player, or the other way around?
@@ -486,12 +492,14 @@ Source: <https://medium.com/emergent-future/simple-reinforcement-learning-with-t
 
 # Markov property in video games
 
-![](img/DQNBreakoutBlocks.png)
-
-
 * The simple solution retained in the original DQN paper is to **stack** the last four frames to form the state representation.
 
 * Having the previous positions of the ball, the network can **learn** to infer its direction of movement.
+
+
+![](img/DQNBreakoutBlocks.png)
+
+
 
 
 # DQN code in Keras
@@ -594,7 +602,7 @@ def fit_batch(model, states, actions, rewards, next_states, terminals)
 
 
 ::: footer
-Mnih et al. (2015). Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.
+@Mnih2015 Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.
 :::
 
 # DQN to solve multiple Atari games
@@ -634,7 +642,7 @@ Mnih et al. (2015). Human-level control through deep reinforcement learning. Nat
 
 
 ::: footer
-Mnih et al. (2015). Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.
+@Mnih2015 Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.
 :::
 
 # 2 - Double DQN
@@ -642,7 +650,7 @@ Mnih et al. (2015). Human-level control through deep reinforcement learning. Nat
 ![](img/paper-ddqn.png)
 
 ::: footer
-van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
+@vanHasselt2015 Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
 :::
 
 # Double DQN
@@ -656,7 +664,7 @@ $$Q_\theta(s, a) > Q^\pi(s, a)$$
 ![](img/ddqn-results1.png){width=100%}
 
 ::: footer
-van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
+@vanHasselt2015 Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
 :::
 
 # Double DQN
@@ -679,7 +687,7 @@ $$
 
 
 ::: footer
-van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
+@vanHasselt2015 Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
 :::
 
 ---
@@ -687,7 +695,7 @@ van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-l
 ![](img/ddqn-results2.png)
 
 ::: footer
-van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
+@vanHasselt2015 Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
 :::
 
 # 3 - Prioritized Experience Replay
@@ -695,7 +703,7 @@ van Hasselt, Guez and Silver (2015). Deep Reinforcement Learning with Double Q-l
 ![](img/paper-per.png)
 
 ::: footer
-Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
+@Schaul2015 Prioritized Experience Replay. arXiv:1511.05952
 :::
 
 # Prioritized Experience Replay
@@ -729,7 +737,7 @@ Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
 
     * **Prioritized sweeping** is actually a quite old idea:
 
-> Moore and Atkeson (1993). Prioritized sweeping: Reinforcement learning with less data and less time. Machine Learning, 13(1):103–130.
+> @Moore1993 Prioritized sweeping: Reinforcement learning with less data and less time. Machine Learning, 13(1):103–130.
 
 
 # Prioritized Experience Replay
@@ -777,8 +785,9 @@ Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
 
 * Details in a real computer science course...
 
-![Source: <https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/>](img/per_tree.png){width=80%}
-
+:::{}
+![Source: <https://www.freecodecamp.org/news/improvements-in-deep-q-learning-dueling-double-dqn-prioritized-experience-replay-and-fixed-58b130cc5682/>](img/per_tree.png){width=60%}
+:::
 
 
 
@@ -789,7 +798,7 @@ Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
 ![](img/per_results1.png){width=100%}
 
 ::: footer
-Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
+@Schaul2015 Prioritized Experience Replay. arXiv:1511.05952
 :::
 
 # Prioritized Experience Replay
@@ -798,7 +807,7 @@ Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
 ![](img/per_results2.png){width=100%}
 
 ::: footer
-Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
+@Schaul2015 Prioritized Experience Replay. arXiv:1511.05952
 :::
 
 # 4 - Dueling networks
@@ -806,15 +815,16 @@ Schaul et al. (2015). Prioritized Experience Replay. arXiv:1511.05952
 ![](img/paper-dueling.png)
 
 ::: footer
-Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
+@Wang2016 Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
 :::
 
 # Dueling networks
 
 * DQN and its variants learn to predict directly the Q-value of each available action.
 
-![](img/duelling1.png)
-
+:::{}
+![](img/duelling1.png){width=50%}
+:::
 
 * Several problems with predicting Q-values with a DNN:
 
@@ -826,7 +836,7 @@ Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, 
 
 
 ::: footer
-Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
+@Wang2016 Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
 :::
 
 
@@ -902,8 +912,9 @@ $$
 
 # Dueling networks
 
-![](img/duelling2.png)
-
+:::{}
+![](img/duelling2.png){width=60%}
+:::
 
 * In **dueling networks**, the network is forced to decompose the estimated Q-value $Q_\theta(s, a)$ into a state value $V_\alpha(s)$ and an advantage function $A_\beta(s, a)$:
 
@@ -920,7 +931,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, 
 is exactly the same as in (D)DQN: only the internal structure of the NN changes.
 
 ::: footer
-Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
+@Wang2016 Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
 :::
 
 # Unidentifiability
@@ -952,7 +963,7 @@ $$
 $$
 
 ::: footer
-Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
+@Wang2016 Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
 :::
 
 # Visualization of the value and advantage functions
@@ -963,7 +974,7 @@ Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, 
 
 
 ::: footer
-Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
+@Wang2016 Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
 :::
 
 
@@ -973,7 +984,7 @@ Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, 
 
 
 ::: footer
-Wang, Z., Schaul, T., Hessel, M., van Hasselt, H., Lanctot, M., and de Freitas, N. (2016). Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
+@Wang2016 Dueling Network Architectures for Deep Reinforcement Learning. arXiv:1511.06581.
 :::
 
 
@@ -1007,3 +1018,6 @@ $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, 
 * The main drawback of DQN is **sample complexity**: it needs huge amounts of experienced transitions to find a correct policy. The sample complexity come from the deep network itself (gradient descent is iterative and slow), but also from the ERM: it contains 1M transitions, most of which are outdated.
 
 * Only works for **small and discrete action spaces** (one output neuron per action).
+
+
+# References

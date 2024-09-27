@@ -32,5 +32,6 @@ format:
     smooth-scroll: true
     html-math-method: katex
     callout-appearance: minimal
+    autostretch: false
 
 

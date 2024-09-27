@@ -40,7 +40,7 @@ resources: pdf/3.3-PG.pdf
 
 # Policy search
 
-![](img/conv_agent.png)
+![](img/conv_agent.png){width=70%}
 
 
 * Instead of learning the Q-values, one could approximate directly the policy $\pi_\theta(s, a)$ with a neural network.
@@ -55,13 +55,14 @@ resources: pdf/3.3-PG.pdf
 
 * Parameterized policies can represent continuous policies and avoid the curse of dimensionality.
 
-![Source: <https://www.freecodecamp.org/news/an-introduction-to-policy-gradients-with-cartpole-and-doom-495b5ef2207f/>](img/dqn-pg.png)
+![Source: <https://www.freecodecamp.org/news/an-introduction-to-policy-gradients-with-cartpole-and-doom-495b5ef2207f/>](img/dqn-pg.png){width=80%}
 
 
 
 # Policy search
 
-![](img/policysearch.svg){width=40%}
+:::columns
+:::column
 
 * **Policy search** methods aim at maximizing directly the expected return over all possible trajectories (episodes) $\tau = (s_0, a_0, \dots, s_T, a_T)$
 
@@ -70,6 +71,16 @@ $$
 $$
 
 * All trajectories $\tau$ selected by the policy $\pi_\theta$ should be associated with a high expected return $R(\tau)$ in order to maximize this objective function.
+
+
+:::
+:::column
+
+![](img/policysearch.svg)
+
+:::
+:::
+
 
 * $\rho_\theta(\tau)$ is the **likelihood** of the trajectory $\tau$ under the policy $\pi_\theta$.
 
@@ -147,12 +158,12 @@ $$\mathcal{J}'(\theta) = \alpha \, \mathcal{J}(\theta) + \beta \; \Rightarrow \;
 ![](img/paper-reinforce.png)
 
 ::: footer
-Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.
+@Williams1992 Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.
 :::
 
 # REINFORCE
 
-* The **REINFORCE** algorithm (Williams, 1992) proposes an unbiased estimate of the policy gradient:
+* The **REINFORCE** algorithm [@Williams1992] proposes an unbiased estimate of the policy gradient:
 
 $$
     \nabla_\theta \, \mathcal{J}(\theta) = \nabla_\theta \, \int_\tau \rho_\theta (\tau) \, R(\tau) \, d\tau =  \int_\tau (\nabla_\theta \, \rho_\theta (\tau)) \, R(\tau) \, d\tau
@@ -242,7 +253,7 @@ The REINFORCE algorithm is a policy-based variant of Monte-Carlo control:
     $$
 
 ::: footer
-Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.
+@Williams1992 Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine Learning 8, 229–256.
 :::
 
 
@@ -389,7 +400,7 @@ $$
 
 
 ::: footer
-Mao, H., Alizadeh, M., Menache, I., and Kandula, S. (2016). Resource Management with Deep Reinforcement Learning. HotNets ’16 doi:10.1145/3005745.3005750.
+@Mao2016 Resource Management with Deep Reinforcement Learning. HotNets ’16 doi:10.1145/3005745.3005750.
 :::
 
 # 3 - Policy Gradient Theorem
@@ -397,7 +408,7 @@ Mao, H., Alizadeh, M., Menache, I., and Kandula, S. (2016). Resource Management 
 ![](img/paper-pg.png)
 
 ::: footer
-Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.
+@Sutton1999 Policy gradient methods for reinforcement learning with function approximation. NIPS.
 :::
 
 # Policy Gradient 
@@ -428,7 +439,7 @@ $$
 $$
 
 ::: footer
-Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.
+@Sutton1999 Policy gradient methods for reinforcement learning with function approximation. NIPS.
 :::
 
 
@@ -467,7 +478,7 @@ $$
 <br>
 
 ::: footer
-Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.
+@Sutton1999 Policy gradient methods for reinforcement learning with function approximation. NIPS.
 :::
 
 
@@ -494,7 +505,7 @@ $$
 
 
 ::: footer
-Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.
+@Sutton1999 Policy gradient methods for reinforcement learning with function approximation. NIPS.
 :::
 
 
@@ -509,7 +520,7 @@ $$
 <br>
 
 ::: footer
-Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.
+@Sutton1999 Policy gradient methods for reinforcement learning with function approximation. NIPS.
 :::
 
 # Policy Gradient Theorem with function approximation 
@@ -556,7 +567,7 @@ $$
 
 
 ::: footer
-Sutton, R. S., McAllester, D., Singh, S., and Mansour, Y. (1999). Policy gradient methods for reinforcement learning with function approximation. NIPS.
+@Sutton1999 Policy gradient methods for reinforcement learning with function approximation. NIPS.
 :::
 
 
@@ -727,3 +738,103 @@ $$
 
 
 * All the methods we will see in the rest of the course are attempts at finding the best trade-off.
+
+# 4 - Generalized advantage estimation
+
+
+
+# Generalized advantage estimation (GAE)
+
+* The **n-step advantage** at time $t$:
+
+$$
+A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (s_t)
+$$
+
+can be written as function of the TD error of the next $n$ transitions:
+
+$$
+    A^{n}_t = \sum_{l=0}^{n-1} \gamma^l \, \delta_{t+l}
+$$
+
+::: {.callout-note}
+## Proof with $n=2$:
+
+$$\begin{aligned}
+A^2_t &= r_{t+1} + \gamma \, r_{t+2} + \gamma^2 \, V(s_{t+2}) - V(s_{t}) \\
+&\\
+&= (r_{t+1} - V(s_t)) + \gamma \, (r_{t+2} + \gamma \, V(s_{t+2}) ) \\
+&\\
+&= (r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)) + \gamma \, (r_{t+2} + \gamma \, V(s_{t+2}) - V(s_{t+1})) \\
+&\\
+&= \delta_t + \gamma \, \delta_{t+1}
+\end{aligned}
+$$
+:::
+
+::: footer
+@Schulman2015 High-Dimensional Continuous Control Using Generalized Advantage Estimation. arXiv:1506.02438.
+:::
+
+
+# Generalized advantage estimation (GAE)
+
+::: {.columns}
+::: {.column width=40%}
+
+![](img/nstep.png)
+
+:::
+::: {.column width=60%}
+
+* The **n-step advantage** realizes a bias/variance trade-off, but which value of $n$ should we choose?
+
+$$
+A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (s_t)
+$$
+
+* @Schulman2015 proposed a **generalized advantage estimate** (GAE) $A_t^{\text{GAE}(\gamma, \lambda)}$ summing all possible n-step advantages with a discount parameter $\lambda$:
+
+$$A_t^{\text{GAE}(\gamma, \lambda)} = (1 - \lambda) \sum_{n=1}^\infty \lambda^n \, A^n_t$$
+
+:::
+:::
+
+
+* This is just a forward eligibility trace over distant n-step advantages: the 1-step advantage is more important the the 1000-step advantage (too much variance).
+
+* We can show that the GAE can be expressed as a function of the future 1-step TD errors:
+$$A_t^{\text{GAE}(\gamma, \lambda)} = \sum_{k=0}^\infty (\gamma \, \lambda)^k \, \delta_{t+k}$$
+
+
+::: footer
+@Schulman2015 High-Dimensional Continuous Control Using Generalized Advantage Estimation. arXiv:1506.02438.
+:::
+
+
+# Generalized advantage estimation (GAE)
+
+* **Generalized advantage estimate** (GAE) :
+
+$$A_t^{\text{GAE}(\gamma, \lambda)} = (1 - \lambda) \sum_{n=1}^\infty \lambda^n \, A^n_t  = \sum_{k=0}^\infty (\gamma \, \lambda)^k \, \delta_{t+k}$$
+
+* The parameter $\lambda$ controls the **bias-variance** trade-off.
+
+
+* When $\lambda=0$, the generalized advantage is the TD error:
+
+$$A_t^{\text{GAE}(\gamma, 0)} = r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)  = \delta_{t}$$
+
+* When $\lambda=1$, the generalized advantage is the MC advantage:
+
+$$A_t^{\text{GAE}(\gamma, 1)} = \sum_{k=0}^\infty \gamma^k \, r_{t+k+1} - V(s_t) = R_t - V(s_t)$$
+
+* Any value in between controls the bias-variance trade-off: from the high bias / low variance of TD to the small bias / high variance of MC.
+
+* In practice, it leads to a better estimation than n-step advantages, but is more computationally expensive.
+
+::: footer
+@Schulman2015 High-Dimensional Continuous Control Using Generalized Advantage Estimation. arXiv:1506.02438.
+:::
+
+# References

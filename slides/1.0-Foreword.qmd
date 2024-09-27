@@ -74,7 +74,7 @@ format: revealjs
 
 <https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457>.
 
-* One lecture (Wednesday 09:15) and one exercise (Wednesday 15:30).
+* One lecture (Wednesday 09:15) and one exercise (Tuesday 13:45).
 
 * All materials are at:
 

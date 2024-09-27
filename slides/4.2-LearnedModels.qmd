@@ -16,16 +16,16 @@ resources: pdf/4.2-LearnedModels.pdf
 
 **Model-based augmented model-free (MBMF)**
 
-* Dyna-Q: the model **generates** imaginary transitions/rollouts that are used to train a model-free algorithm.
+* Dyna-Q: the model **generates** imaginary transitions/rollouts that are used to train a MF algorithm.
 
-![Source: <https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8>](img/dynaq.png){width=60%}
+![Source: @Sutton1998](img/dynaq2.png){width=60%}
 
 
-* NAF: Normalized advantage functions  <span style="font-size:60%;">(Gu et al., 2016)</span>
+* NAF: Normalized advantage functions  [@Gu2016]
 
-* I2A: Imagination-augmented agents <span style="font-size:60%;">(Weber et al., 2017)</span>
+* I2A: Imagination-augmented agents [@Weber2017]
 
-* MBVE: model-based value estimation <span style="font-size:60%;">(Feinberg et al., 2018)</span>
+* MBVE: model-based value estimation [@Feinberg2018]
 
 
 
@@ -40,13 +40,13 @@ resources: pdf/4.2-LearnedModels.pdf
 ![Source: <https://arxiv.org/abs/1901.03737>](img/planning.png){width=65%}
 
 
-* TDM: Temporal difference models <span style="font-size:60%;">(Pong et al., 2018)</span>
+* TDM: Temporal difference models [@Pong2018]
 
-* World models <span style="font-size:60%;">(Ha and Schmidhuber, 2018)</span>
+* World models [@Ha2018]
 
-* PlaNet <span style="font-size:60%;">(Hafner et al., 2019)</span>
+* PlaNet [@Hafner2019]
 
-* Dreamer <span style="font-size:60%;">(Hafner et al, 2020)</span>
+* Dreamer [@Hafner2020]
 
 
 :::
@@ -60,7 +60,7 @@ resources: pdf/4.2-LearnedModels.pdf
 <https://deepmind.com/blog/article/agents-imagine-and-plan>
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
 
 # I2A - Imagination-augmented agents
@@ -76,7 +76,7 @@ Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J
 * MF methods are bad at this game as they learn through trials-and-(many)-errors.
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
 
 # Sokoban
@@ -97,7 +97,7 @@ Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J
 
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
 
 # I2A - Imagination-augmented agents
@@ -106,7 +106,7 @@ Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J
 
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
 
 
@@ -137,7 +137,7 @@ Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J
 
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
 
 # I2A - Imagination-augmented agents
@@ -167,7 +167,7 @@ $$o_t \rightarrow \hat{o}_{t+1} \rightarrow \hat{o}_{t+2} \rightarrow \ldots \ri
 
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
 
 # I2A - Imagination-augmented agents
@@ -212,8 +212,9 @@ $$\mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}
 ![](img/i2a-architecture.png){width=100%}
 
 ::: footer
-Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
+@Weber2017 Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.
 :::
+
 
 # Policy distillation
 
@@ -230,7 +231,7 @@ $$\mathcal{L}(\hat{\theta}) = \mathbb{E}_{s, a} [D_\text{KL}(\hat{\pi}(s, a) || 
 ![](img/policydistillation.png){width=40%}
 
 ::: footer
-Rusu, A. A., Colmenarejo, S. G., Gulcehre, C., Desjardins, G., Kirkpatrick, J., Pascanu, R., et al. (2016). Policy Distillation. arXiv:1511.06295.
+@Rusu2016 Policy Distillation. arXiv:1511.06295.
 :::
 
 # Distral : distill and transfer learning
@@ -242,7 +243,7 @@ Rusu, A. A., Colmenarejo, S. G., Gulcehre, C., Desjardins, G., Kirkpatrick, J., 
 ![](img/distral.png)
 
 ::: footer
-Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al. (2017). Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
+@Teh2017 Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
 :::
 
 # I2A - Imagination-augmented agents
@@ -254,7 +255,7 @@ Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R.,
 ![](img/i2a-results.png)
 
 ::: footer
-Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al. (2017). Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
+@Teh2017 Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
 :::
 
 # I2A - Imagination-augmented agents
@@ -264,7 +265,7 @@ Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R.,
 ![](img/i2a-results2.png)
 
 ::: footer
-Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al. (2017). Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
+@Teh2017 Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
 :::
 
 
@@ -274,12 +275,12 @@ Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R.,
 
 
 
-# 2 - Temporal difference models - TDM (skipped)
+# 2 - Temporal difference models - TDM
 
 ![](img/paper-tdm.png)
 
 ::: footer
-Pong V, Gu S, Dalal M, Levine S. (2018). Temporal Difference Models: Model-Free Deep RL for Model-Based Control. arXiv:1802.09081
+@Pong2018 Temporal Difference Models: Model-Free Deep RL for Model-Based Control. arXiv:1802.09081
 :::
 
 
@@ -388,7 +389,7 @@ $$r(s_t, a_t, s_{t+1}) = - || s_{t+1} - s_g ||$$
 * The principle of HER can be used in all model-free methods: DQN, DDPG, etc.
 
 ::: footer
-Andrychowicz M, Wolski F, Ray A, Schneider J, Fong R, Welinder P, McGrew B, Tobin J, Abbeel P, Zaremba W. (2017). Hindsight Experience Replay. arXiv:1707.01495
+@Andrychowicz2017 Hindsight Experience Replay. arXiv:1707.01495
 :::
 
 # TDM
@@ -469,7 +470,13 @@ $$
 
 * The critic learns to minimize the prediction error **off-policy**:
 
-$$\mathcal{L}(\theta) = \mathbb{E}_{s_t, a_t, s_{t+1} \in \mathcal{D}} [(r(s_t, a_t, s_{t+1}) \, \mathbb{1}(T=0) + \max_a \, Q(s_{t+1}, a, s_g, T-1) \, \mathbb{1}(T\neq 0) - Q(s_t, a_t, s_g, T))^2]$$
+$$
+\begin{aligned}
+\mathcal{L}(\theta) = & \mathbb{E}_{s_t, a_t, s_{t+1} \in \mathcal{D}} [  & \\
+    & (r(s_t, a_t, s_{t+1}) \, \mathbb{1}(T=0) + \max_a \, Q(s_{t+1}, a, s_g, T-1) \, \mathbb{1}(T\neq 0) - Q(s_t, a_t, s_g, T))^2 & \\
+&& ]
+\end{aligned}
+$$
 
 * This is a model-free Q-learning-like update rule, that can be learned by any off-policy value-based algorithm (DQN, DDPG) and an experience replay memory.
 
@@ -553,7 +560,7 @@ $$a_t = \text{arg}\max_{a} \, Q(s_{t}, a, s_{g}, T)$$
 <https://worldmodels.github.io/>
 
 ::: footer
-Ha, D., and Schmidhuber, J. (2018). World Models. NIPS. doi:10.5281/zenodo.1207631.
+@Ha2018 World Models. NeurIPS. doi:10.5281/zenodo.1207631.
 :::
 
 # World models
@@ -616,7 +623,7 @@ Ha, D., and Schmidhuber, J. (2018). World Models. NIPS. doi:10.5281/zenodo.12076
 
 
 ::: footer
-Ha, D., and Eck, D. (2017). A Neural Representation of Sketch Drawings. arXiv:1704.03477
+@Ha2017 A Neural Representation of Sketch Drawings. arXiv:1704.03477
 :::
 
 # Sketch-RNN
@@ -627,10 +634,13 @@ Ha, D., and Eck, D. (2017). A Neural Representation of Sketch Drawings. arXiv:17
 
 
 ::: footer
-Ha, D., and Eck, D. (2017). A Neural Representation of Sketch Drawings. arXiv:1704.03477
+@Ha2017 A Neural Representation of Sketch Drawings. arXiv:1704.03477
 :::
 
 # World models
+
+:::columns
+:::column
 
 * The last step is the **controller**. It takes a latent representation $\mathbf{z}_t$ and the current hidden state of the LSTM $\mathbf{h}_t$ as inputs and selects an action **linearly**:
 
@@ -638,9 +648,13 @@ $$a_t = \text{tanh}(W \, [\mathbf{z}_t, \mathbf{h}_t ] + b)$$
 
 * A RL actor cannot get simpler as that...
 
+:::
+:::column
 
-![<https://worldmodels.github.io/>](img/wm-schematic.svg){width=40%}
+![<https://worldmodels.github.io/>](img/wm-schematic.svg)
 
+:::
+:::
 
 * The controller is not even trained with RL: it uses a genetic algorithm, the Covariance-Matrix Adaptation Evolution Strategy (CMA-ES), to find the output weights that maximize the returns.
 
@@ -760,7 +774,7 @@ Controller  867
 ![](img/paper-planet.png)
 
 ::: footer
-Hafner D, Lillicrap T, Fischer I, Villegas R, Ha D, Lee H, Davidson J. (2019). Learning Latent Dynamics for Planning from Pixels. arXiv:181104551
+@Hafner2019 Learning Latent Dynamics for Planning from Pixels. arXiv:181104551
 :::
 
 # PlaNet
@@ -896,7 +910,7 @@ $$p(r_t | s_t)$$
 ![](img/paper-dreamer.png)
 
 ::: footer
-Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behaviors by Latent Imagination. arXiv:191201603
+@Hafner2020 Dream to Control: Learning Behaviors by Latent Imagination. arXiv:191201603
 :::
 
 # Dreamer
@@ -959,7 +973,7 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{s_t, a_t \sim \pi_\theta} [\sum_{t'=t}^T V_\
 
 
 ::: footer
-Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behaviors by Latent Imagination. arXiv:191201603
+@Hafner2020 Dream to Control: Learning Behaviors by Latent Imagination. arXiv:191201603
 :::
 
 # Dreamer results
@@ -990,10 +1004,13 @@ Hafner D, Lillicrap T, Ba J, Norouzi M. (2020). Dream to Control: Learning Behav
 ![](img/daydreamer.png)
 
 ::: footer
-Wu, P., Escontrela, A., Hafner, D., Goldberg, K., & Abbeel, P. (2022). DayDreamer: World Models for Physical Robot Learning (arXiv:2206.14176).
+@Wu2022 DayDreamer: World Models for Physical Robot Learning (arXiv:2206.14176).
 :::
 
 # DayDreamer
 
 
 {{< youtube xAXvfVTgqr0 >}}
+
+
+# References

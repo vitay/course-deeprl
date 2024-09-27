@@ -8,16 +8,31 @@ institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
 resources: pdf/3.4-A3C.pdf
 ---
 
-# 1 - Advantage actor-critic
+# 1 - Distributed RL
 
 # Advantage actor-critic
 
-* Let's consider an **n-step actor-critic** architecture where the Q-value of the action $(s_t, a_t)$ is approximated by the **n-step return**:
+:::columns
+:::column
 
-$$Q^{\pi_\theta}(s_t, a_t) \approx R_t^n =  \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n})$$
+* Let's consider an **n-step advantage actor-critic**:
 
+$$
+\begin{aligned}
+A^n_t &= R_t^n - V_\varphi (s_t)\\
+      &= \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V_\varphi(s_{t+n}) - V_\varphi (s_t)\\
+\end{aligned}
+$$
 
-* The **actor** $\pi_\theta(s, a)$ uses PG with baseline to learn the policy:
+:::
+:::column
+
+![](img/a2c.svg)
+
+:::
+:::
+
+* The **actor** $\pi_\theta(s, a)$ uses the PG theorem to learn the policy:
 
 $$
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R_t^n - V_\varphi(s_t)) ]
@@ -32,13 +47,9 @@ $$
 
 
 
-# Advantage actor-critic
-
-![](img/a2c.svg)
 
 # Advantage actor-critic
 
-![](img/a2c.svg){width=50%}
 
 * The advantage actor-critic is strictly **on-policy**:
 
@@ -46,11 +57,13 @@ $$
 
     * The actor must learn from the current value function $V^{\pi_\theta} \approx V_\varphi$.
 
-$$\begin{cases}
+$$
+\begin{cases}
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R^n_t - V_\varphi(s_t)) ] \\
     \\
     \mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[(R^n_t - V_\varphi(s_t))^2] \\
-\end{cases}$$
+\end{cases}
+$$
 
 * We cannot use an **experience replay memory** to deal with the correlated inputs, as it is only for off-policy methods.
 
@@ -89,7 +102,9 @@ $$\begin{cases}
 
         * Copy the global network parameters $\theta$ to each worker:
 
-        $$\theta_k \leftarrow \theta$$
+        $$
+        \theta_k \leftarrow \theta
+        $$
 
         * Initialize an empty transition buffer $\mathcal{D}_k$.
 
@@ -116,7 +131,7 @@ $$\begin{cases}
 ![](img/ape-x.png){width=100%}
 
 ::: footer
-Horgan, D., Quan, J., Budden, D., Barth-Maron, G., Hessel, M., van Hasselt, H., et al. (2018). Distributed Prioritized Experience Replay. arXiv:1803.00933.
+@Horgan2018 Distributed Prioritized Experience Replay. arXiv:1803.00933.
 :::
 
 # Distributed RL
@@ -143,16 +158,18 @@ Horgan, D., Quan, J., Budden, D., Barth-Maron, G., Hessel, M., van Hasselt, H., 
 ![](img/paper-a3c.png)
 
 ::: footer
-Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al. (2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
+@Mnih2016 Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
 :::
 
 # A3C: Asynchronous advantage actor-critic
 
-* Mnih et al. (2016) proposed the **A3C** algorithm (asynchronous advantage actor-critic).
+* @Mnih2016 proposed the **A3C** algorithm (asynchronous advantage actor-critic).
 
 * The stochastic policy $\pi_\theta$ is produced by the **actor** with weights $\theta$ and learned using :
 
-$$\nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R^n_t - V_\varphi(s_t)) ]$$
+$$
+\nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R^n_t - V_\varphi(s_t)) ]
+$$
 
 ::: {.columns}
 ::: {.column width=50%}
@@ -181,7 +198,7 @@ $$R^n_t =  \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t
 * Two things are different from the general distributed approach: workers compute **partial gradients** and updates are **asynchronous**.
 
 ::: footer
-Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al. (2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
+@Mnih2016 Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
 :::
 
 
@@ -289,9 +306,7 @@ Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et 
 ::: {.column width=50%}
 
 
-* A3C does not use an *experience replay memory* as DQN.
-
-* Instead, it uses **multiple parallel workers** to distribute learning.
+* A3C does not use an *experience replay memory*, but relies on **multiple parallel workers** to distribute learning.
 
 * Each worker has a copy of the actor and critic networks, as well as an instance of the environment.
 
@@ -305,8 +320,10 @@ Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et 
 
 * It works best on shared-memory systems (multi-core) as communication costs between GPUs are huge.
 
+* As an actor-critic method, it can deal with **continuous action spaces**.
+
 ::: footer
-Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al. (2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
+@Mnih2016 Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
 :::
 
 # A3C : results
@@ -334,7 +351,7 @@ Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et 
 
 
 ::: footer
-Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al. (2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
+@Mnih2016 Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
 :::
 
 
@@ -351,7 +368,7 @@ but much faster!
 
 
 ::: footer
-Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al. (2016). Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
+@Mnih2016 Asynchronous Methods for Deep Reinforcement Learning. ICML. arXiv:1602.01783
 :::
 
 
@@ -374,4 +391,177 @@ Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et 
 
 * A3C came up in 2016. A lot of things happened since then...
 
-![](img/rainbow-results1.png){width=50%}
+![](img/rainbow-results1.png){width=45%}
+
+::: footer
+@Hessel2017 Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
+:::
+
+# 3 - Actor-critic neural architectures
+
+# Actor-critic neural architectures
+
+* We have considered that actor-critic architectures consist of two separate neural networks, both taking the state $s$ (or observation $o$) as an input.
+
+![](img/a2c.svg)
+
+* Each of these networks have their own loss function. They share nothing except the "data".
+
+* Is it really the best option?
+
+# Early visual features
+
+* When working on images, the first few layers of the CNNs are likely to learn the same visual features (edges, contours).
+
+* It would be more efficient to **share** some of the extracted features.
+
+![](img/DeepQNetwork.jpg){width=70%}
+
+::: footer
+@Mnih2013 Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
+:::
+
+# Shared architectures
+
+* Actor-critic architectures can share layers between the actor and the critic, sometimes up to the output layer.
+
+* A compound loss sums the losses for the actor and the critic. Tensorflow/pytorch know which parameters influence which part of the loss.
+
+$$
+    \mathcal{L}(\theta) = \mathcal{L}_\text{actor}(\theta) + \mathcal{L}_\text{critic}(\theta)
+$$
+
+* For pixel-based environments (Atari), the networks often share the convolutional layers. 
+
+* For continuous environments (Mujoco), separate networks sometimes work better than two-headed networks.
+
+![](img/shared_actorcritic.png){width=80%}
+
+
+# 4 - Continuous stochastic policies
+
+# Continuous action spaces
+
+
+::: {.columns}
+::: {.column width=60%}
+ 
+
+* One of the main advantages of actor-critic / PG methods over value-based methods is that they can deal with **continuous action-spaces**.
+
+* Suppose that we want to control a robotic arm with $n$ degrees of freedom. 
+
+* An action $\mathbf{a}$ could be a vector of joint displacements:
+
+$$\mathbf{a} = \begin{bmatrix} \Delta \theta_1 & \Delta \theta_2 & \ldots \, \Delta \theta_n\end{bmatrix}^T$$
+
+
+* The output layer of the policy network can very well represent this vector, but how would we implement **exploration**?
+
+* $\epsilon$-greedy and softmax action selection would not work, as all neurons are useful.
+
+* The most common solution is to use a stochastic **Gaussian policy**.
+
+:::
+::: {.column width=40%}
+
+![](img/actionspace-robot.png)
+
+![](img/deepnetwork.svg){width=80%}
+
+:::
+:::
+
+
+# Gaussian policies
+
+* A Gaussian policy considers the vector $\mathbf{a}$ to be sampled from the **normal distribution** $\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))$.
+
+::: {.columns}
+::: {.column width=65%}
+
+
+* The mean $\mu_\theta(s)$ and standard deviation $\sigma_\theta(s)$ are vectors that can be the output of the **actor** neural network with parameters $\theta$.
+
+* If you have $n$ degrees of freedom, you just need $2 n$ output neurons.
+
+* **Sampling** an action from the normal distribution is done through the **reparameterization trick**:
+
+$$\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi$$
+
+where $\xi \sim \mathcal{N}(0, I)$ comes from the standard normal distribution.
+
+:::
+::: {.column width=35%}
+
+![<https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024>](img/gaussianpolicy.png)
+
+:::
+:::
+
+
+# Gaussian policies
+
+* The good thing with the normal distribution is that we know its pdf:
+
+$$
+    \pi_\theta(s, a) = \frac{1}{\sqrt{2\pi\sigma^2_\theta(s)}} \, \exp -\frac{(a - \mu_\theta(s))^2}{2\sigma^2_\theta(s)}
+$$
+
+* The log-likelihood $\log \pi_\theta (s, a)$ is a simple differentiable function of $\mu_\theta(s)$ and $\sigma_\theta(s)$:
+
+$$
+\log \pi_\theta (s, a) = -\frac{(a - \mu_\theta(s))^2}{2\sigma^2_\theta(s)} - \frac{1}{2} \, \log 2\pi\sigma^2_\theta(s)
+$$
+
+so we can easily compute its gradient w.r.t $\theta$ and apply backpropagation:
+
+$$
+\begin{cases}
+    \nabla_{\mu_\theta(s)} \log \pi_\theta (s, a) = \dfrac{a - \mu_\theta(s)}{\sigma_\theta(s)^2} \\
+    \\
+    \nabla_{\sigma_\theta(s)} \log \pi_\theta (s, a) = \dfrac{(a - \mu_\theta(s))^2}{\sigma_\theta(s)^3} - \dfrac{1}{\sigma_\theta(s)}\\
+\end{cases}
+$$
+
+# Gaussian policies
+
+* A Gaussian policy samples actions from the **normal distribution** $\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))$, with $\mu_\theta(s)$ and $\sigma_\theta(s)$ being the output of the actor.
+
+::: {.columns}
+::: {.column width=65%}
+
+
+* The score $\nabla_\theta \log \pi_\theta (s, a)$ can be obtained easily using the output of the actor:
+
+$$
+\begin{cases}
+    \nabla_{\mu_\theta(s)} \log \pi_\theta (s, a) = \dfrac{a - \mu_\theta(s)}{\sigma_\theta(s)^2} \\
+    \\
+    \nabla_{\sigma_\theta(s)} \log \pi_\theta (s, a) = \dfrac{(a - \mu_\theta(s))^2}{\sigma_\theta(s)^3} - \dfrac{1}{\sigma_\theta(s)}\\
+\end{cases}
+$$
+
+* The rest of the score ($\nabla_\theta \mu_\theta(s)$ and $\nabla_\theta \sigma_\theta(s)$) is the problem of tensorflow/pytorch.
+
+:::
+::: {.column width=35%}
+
+$$\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi$$
+
+
+![Source: <https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024>](img/gaussianpolicy.png)
+
+:::
+:::
+
+
+* This is the same **reparametrization trick** used in variational autoencoders to allow backpropagation to work through a sampling operation.
+
+* **Beta** distributions are an even better choice to parameterize stochastic policies [@Chou2017].
+
+::: footer
+@Chou2017 Improving Stochastic Policy Gradients in Continuous Control with Deep Reinforcement Learning using the Beta Distribution. ICML.
+:::
+
+# References

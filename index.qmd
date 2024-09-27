@@ -42,7 +42,7 @@ At the exam, you can bring the paper printed one-sided, with as many annotations
 
 ## Lectures
 
-You will find below the links to the slides for each lecture (html and pdf). Outdated videos can be found in this [playlist](https://www.youtube.com/playlist?list=PLIEjdhhAF7UJwegwyWUcDrUNJTQfxMcUw).
+You will find below the links to the slides for each lecture (html and pdf).
 
 #### 1 - Introduction
 
@@ -73,8 +73,6 @@ def table_lecture(lectures):
 lecs = {
     '1.1-Introduction': """**1.1 - Introduction**\\
 Introduction to the main concepts of reinforcement learning and showcasing of the current applications.""",
-    '1.2-Basics': """**1.2 - Basics in mathematics** (optional)\\
-This lecture quickly reminds the main mathematical concepts needed to understand this course: linear algebra, calculus, probabilities, statistics and information theory. It is only intended for students who are not sure of the prerequisites.""",
 }
 table_lecture(lecs)
 ```
@@ -84,19 +82,17 @@ table_lecture(lecs)
 
 ```{python} 
 lecs = {
-    '2.1-Bandits': """**2.1 - Bandits**\\
+    '2.1-Bandits': """**2.1 - Sampling and Bandits**\\
 n-armed bandits, the simplest RL setting that can be solved by sampling.""",
-    '2.2-MDP': """**2.2 - Markov Decision Processes**\\
-MDPs are the basic RL framework. The value functions and the Bellman equations fully characterize a MDP.""",
-    '2.3-DP': """**2.3 - Dynamic Programming**\\
-Dynamic programming is a model-based method allowing to iteratively solve the Bellman equations.""",
-    '2.4-MC': """**2.4 - Monte Carlo control**\\
+    '2.2-MDP': """**2.2 - Markov Decision Processes and Dynamic Programming**\\
+MDPs are the basic RL framework. The value functions and the Bellman equations fully characterize a MDP. Dynamic programming is a model-based method allowing to iteratively solve the Bellman equations.""",
+    '2.3-MC': """**2.3 - Monte Carlo control**\\
 Monte Carlo control estimates value functions through sampling of complete episodes and infers the optimal policy using action selection, either on- or off-policy.""",
-    '2.5-TD': """**2.5 - Temporal Difference**\\
+    '2.4-TD': """**2.4 - Temporal Difference**\\
 TD algorithms allow the learning of value functions using single transitions. Q-learning is the famous off-policy variant.""",
-    '2.6-FunctionApproximation': """**2.6 - Function Approximation**\\
-The value functions can actually be approximated by any function approximator, allowing to apply RL to continuous state of action spaces.""",
-    '2.7-DeepNetworks': """**2.7 - Deep Neural Networks**\\
+    '2.5-FunctionApproximation': """**2.5 - Function Approximation**\\
+Value functions can actually be approximated by any function approximator, allowing to apply RL to continuous state of action spaces.""",
+    '2.6-DeepNetworks': """**2.6 - Deep Neural Networks**\\
 Quick overview of the main neural network architectures needed for the rest of the course.""",
 }
 table_lecture(lecs)
@@ -126,10 +122,6 @@ Maximum Entropy RL modifies the RL objective by learning optimal policies that a
 table_lecture(lecs)
 ```
 
-:::callout-note
-
-In WS2023-24, the lectures 3.4 to 3.6 were compressed into these slides: [html](slides/3.8-A3C-DDPG-PPO.qmd){target="_blank"}. The lecture 3.7 was skipped.
-:::
 
 
 
@@ -183,7 +175,7 @@ def table_exercise(exs):
 
     for key, val in exs.items():
         text += f"""
-| {val}  | [ipynb]({repo}/{key}.ipynb){{target="_blank"}}, [colab]({colab}/{key}.ipynb){{target="_blank"}}   | [ipynb]({repo}/{key}-solution.ipynb){{target="_blank"}}, [colab]({colab}/{key}-solution.ipynb){{target="_blank"}} |"""
+| {val}  | [ipynb]({repo}/notebooks/{key}.ipynb){{target="_blank"}}, [colab]({colab}/notebooks/{key}.ipynb){{target="_blank"}}   | [ipynb]({repo}/solutions/{key}.ipynb){{target="_blank"}}, [colab]({colab}/solutions/{key}.ipynb){{target="_blank"}} |"""
 
 
     text += """

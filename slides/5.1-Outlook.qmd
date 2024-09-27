@@ -43,7 +43,7 @@ resources: pdf/5.1-Outlook.pdf
 
 ---
 
-![Source: <https://www.alexirpan.com/2018/02/14/rl-hard.html>](img/bender.jpg){width=60%}
+![Source: <https://www.alexirpan.com/2018/02/14/rl-hard.html>](img/bender.jpg){width=70%}
 
 
 # Deep RL is still very unstable
@@ -73,8 +73,8 @@ resources: pdf/5.1-Outlook.pdf
 
 # Deep RL lacks generalization to different environments
 
-<!--<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Deep RL is popular because it&#39;s the only area in ML where it&#39;s socially acceptable to train on the test set.</p>&mdash; Jacob Andreas (@jacobandreas) <a href="https://twitter.com/jacobandreas/status/924356906344267776?ref_src=twsrc%5Etfw">October 28, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
--->
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Deep RL is popular because it&#39;s the only area in ML where it&#39;s socially acceptable to train on the test set.</p>&mdash; Jacob Andreas (@jacobandreas) <a href="https://twitter.com/jacobandreas/status/924356906344267776?ref_src=twsrc%5Etfw">October 28, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
 * As it uses neural networks, deep RL **overfits** its training data, i.e. the environment it is trained on.
 
@@ -88,73 +88,31 @@ resources: pdf/5.1-Outlook.pdf
 
 # Classical methods sometimes still work better
 
-::: {.columns}
-::: {.column width=50%}
-
 
 * Model Predictive Control (MPC) is able to control Mujoco robots much better than RL through classical optimization techniques (e.g. iterative LQR) while needing much less computations.
 
-* If you have a good physics model, do not use DRL. Reserve it for unknown systems, or when using noisy sensors (images).
-
-* Genetic algorithms (CMA-ES) sometimes give better results than RL to train policy networks.
-
-:::
-::: {.column width=50%}
+* If you have a good physics model, do not use DRL. Reserve it for unknown systems, or when using noisy sensors (images). Genetic algorithms (CMA-ES) sometimes give better results than RL.
 
 
-{{< youtube uRVAX_sFT24 >}}
-
-
-:::
-:::
+{{< video https://youtu.be/uRVAX_sFT24 width="600" height="400" >}}
 
 
 # You cannot do that with deep RL (yet)
 
 {{< youtube fRj34o4hN4I >}}
 
+
 # RL libraries
 
-* `keras-rl`: many deep RL algorithms implemented directly in keras: DQN, DDQN, DDPG, CEM...
+* After an initial phase with many competing frameworks, deep learning converged to **pytorch** and **tensorflow**.
 
-<https://github.com/matthiasplappert/keras-rl>
+* The situation is not that clear in deep RL. There are still dozens of frameworks, most of them quickly unmaintained.
 
-* `OpenAI Baselines` from OpenAI: A2C, ACER, ACKTR, DDPG, DQN, PPO, TRPO... Not maintained.
-
-<https://github.com/openai/baselines>
-
-* `Stable baselines` from Inria Flowers, a clean rewrite of OpenAI baselines including SAC and TD3. 
-
-<https://github.com/hill-a/stable-baselines>
-
-* `chainer-rl` implemented in Chainer: A3C, ACER, DQN, DDPG, PGT, PCL, PPO, TRPO.
-
-<https://github.com/chainer/chainerrl>
-
-* `RL Mushroom` is a very modular library based on Pytorch allowing to implement DQN and variants, DDPG, SAC, TD3, TRPO, PPO.
-
-<https://github.com/MushroomRL/mushroom-rl>
+![](img/tianshou-alternatives.png)
 
 ::: footer
 See <https://blog.dataiku.com/on-choosing-a-deep-reinforcement-learning-library>
 :::
-
-# RL libraries
-
-* `Tensorforce` implement in tensorflow: DQN and variants, A3C, DDPG, TRPO, PPO.
-
-<https://github.com/tensorforce/tensorforce>
-
-* `Tensorflow Agents` is officially supported by tensorflow: DQN, A3C, DDPG, TD3, PPO, SAC.
-
-<https://github.com/tensorflow/agents>
-
-* `Coach` from Intel Nervana also provides many state-of-the-art algorithms.
- 
- <https://github.com/NervanaSystems/coach>
-
-![Source: <https://github.com/NervanaSystems/coach>](img/coach.png)
-
 
 
 
@@ -239,7 +197,7 @@ Algos: DQN+/DDPG/PPO/SAC, imitation learning, offline RL...
 ![](img/lego_reward.png)
 
 ::: footer
-Popov, I., Heess, N., Lillicrap, T., Hafner, R., Barth-Maron, G., Vecerik, M., et al. (2017). Data-efficient Deep Reinforcement Learning for Dexterous Manipulation. arXiv:1704.03073.
+@Popov2017 Data-efficient Deep Reinforcement Learning for Dexterous Manipulation. arXiv:1704.03073.
 :::
 
 # Inverse Reinforcement Learning
@@ -270,7 +228,7 @@ $$\hat{r}(s) = \sum_{i=1}^K w_i \, \varphi_i(s)$$
 
 
 ::: footer
-Arora, S., and Doshi, P. (2019). A Survey of Inverse Reinforcement Learning: Challenges, Methods and Progress. arXiv:1806.06877
+@Arora2019 A Survey of Inverse Reinforcement Learning: Challenges, Methods and Progress. arXiv:1806.06877
 :::
 
 
@@ -323,7 +281,7 @@ Arora, S., and Doshi, P. (2019). A Survey of Inverse Reinforcement Learning: Cha
 :::
 
 ::: footer
-Barto AG. (2013). Intrinsic Motivation and Reinforcement Learning In Intrinsically Motivated Learning in Natural and Artificial Systems. doi:10.1007/978-3-642-32375-1_2
+@Barto2013 Intrinsic Motivation and Reinforcement Learning In Intrinsically Motivated Learning in Natural and Artificial Systems. doi:10.1007/978-3-642-32375-1_2
 :::
 
 
@@ -397,7 +355,7 @@ where $f(s_t, a_t)$ is a **forward model** predicting the sensory consequences o
 ![](img/icm.jpg)
 
 ::: footer
-Pathak D, Agrawal P, Efros AA, Darrell T. (2017). Curiosity-driven Exploration by Self-supervised Prediction. arXiv:170505363.
+@Pathak2017 Curiosity-driven Exploration by Self-supervised Prediction. arXiv:170505363.
 :::
 
 
@@ -410,7 +368,7 @@ Pathak D, Agrawal P, Efros AA, Darrell T. (2017). Curiosity-driven Exploration b
 
 
 ::: footer
-Pathak D, Agrawal P, Efros AA, Darrell T. (2017). Curiosity-driven Exploration by Self-supervised Prediction. arXiv:170505363.
+@Pathak2017 Curiosity-driven Exploration by Self-supervised Prediction. arXiv:170505363.
 :::
 
 
@@ -423,10 +381,10 @@ Pathak D, Agrawal P, Efros AA, Darrell T. (2017). Curiosity-driven Exploration b
 
 
 ::: footer
-Burda Y, Edwards H, Pathak D, Storkey A, Darrell T, Efros AA. 2018. Large-Scale Study of Curiosity-Driven Learning. arXiv:180804355. <https://pathak22.github.io/large-scale-curiosity/>
+@Burda2018 Large-Scale Study of Curiosity-Driven Learning. arXiv:180804355. <https://pathak22.github.io/large-scale-curiosity/>
 :::
 
-# References
+# Additional readings
 
 * Oudeyer P-Y, Gottlieb J, Lopes M. (2016). Chapter 11 - Intrinsic motivation, curiosity, and learning: Theory and applications in educational technologies In: Studer B, Knecht S, editors. Progress in Brain Research, Motivation. Elsevier. pp. 257–284. doi:10.1016/bs.pbr.2016.05.005
 
@@ -463,7 +421,7 @@ Burda Y, Edwards H, Pathak D, Storkey A, Darrell T, Efros AA. 2018. Large-Scale 
 ![](img/MLSH.gif){width=70%}
 
 ::: footer
-Frans, K., Ho, J., Chen, X., Abbeel, P., and Schulman, J. (2017). Meta Learning Shared Hierarchies. arXiv:1710.09767
+@Frans2017 Meta Learning Shared Hierarchies. arXiv:1710.09767
 :::
 
 
@@ -543,7 +501,7 @@ Frans, K., Ho, J., Chen, X., Abbeel, P., and Schulman, J. (2017). Meta Learning 
 :::
 
 ::: footer
-Wang et al.. (2016). Learning to reinforcement learn. arXiv:161105763.
+@Wang2016 Learning to reinforcement learn. arXiv:161105763.
 :::
 
 
@@ -563,7 +521,7 @@ Wang et al.. (2016). Learning to reinforcement learn. arXiv:161105763.
     4. Repeat 1, 2 and 3.
 
 ::: footer
-Duan Y, Schulman J, Chen X, Bartlett PL, Sutskever I, Abbeel P. (2016). RL$^2$: Fast Reinforcement Learning via Slow Reinforcement Learning. arXiv:161102779.
+@Duan2016a RL^2: Fast Reinforcement Learning via Slow Reinforcement Learning. arXiv:161102779.
 :::
 
 
@@ -588,10 +546,10 @@ Duan Y, Schulman J, Chen X, Bartlett PL, Sutskever I, Abbeel P. (2016). RL$^2$: 
 
 
 ::: footer
-Belkhale et al. (2021). Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads. IEEE Robot Autom Lett. <https://sites.google.com/view/meta-rl-for-flight>
+@Belkhale2021 Model-Based Meta-Reinforcement Learning for Flight with Suspended Payloads. IEEE Robot Autom Lett. <https://sites.google.com/view/meta-rl-for-flight>
 :::
 
-# References
+# Additional readings
 
 * **Meta RL:** Wang JX, Kurth-Nelson Z, Tirumala D, Soyer H, Leibo JZ, Munos R, Blundell C, Kumaran D, Botvinick M. (2016). Learning to reinforcement learn. arXiv:161105763.
 
@@ -607,7 +565,7 @@ Belkhale et al. (2021). Model-Based Meta-Reinforcement Learning for Flight with 
 
 * Botvinick M, Ritter S, Wang JX, Kurth-Nelson Z, Blundell C, Hassabis D. (2019). Reinforcement Learning, Fast and Slow. Trends in Cognitive Sciences 23:408–422. doi:10.1016/j.tics.2019.02.006
 
-# References
+# Additional resources
 
 * <https://lilianweng.github.io/lil-log/2019/06/23/meta-reinforcement-learning.html>
 
@@ -650,7 +608,7 @@ Belkhale et al. (2021). Model-Based Meta-Reinforcement Learning for Flight with 
 ![](img/dave2-training.png)
 
 ::: footer  
-M Bojarski, D Del Testa, D Dworakowski, B Firner (2016). End to end learning for self-driving cars. arXiv:1604.07316
+@Bojarski2016 End to end learning for self-driving cars. arXiv:1604.07316
 :::
 
 
@@ -698,10 +656,10 @@ M Bojarski, D Del Testa, D Dworakowski, B Firner (2016). End to end learning for
 ![](img/transformer-rl2.png){width=60%}
 
 ::: footer
-Micheli, V., Alonso, E., & Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588
+@Micheli2022 Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588
 :::
 
-# References
+# Additional readings
 
 * Levine, S., Kumar, A., Tucker, G., & Fu, J. (2020). Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems. ArXiv:2005.01643 [Cs, Stat]. http://arxiv.org/abs/2005.01643
 
@@ -713,3 +671,5 @@ Micheli, V., Alonso, E., & Fleuret, F. (2022). Transformers are Sample Efficient
 
 * Micheli, V., Alonso, E., & Fleuret, F. (2022). Transformers are Sample Efficient World Models (arXiv:2209.00588). arXiv. https://doi.org/10.48550/arXiv.2209.00588
 
+
+# References

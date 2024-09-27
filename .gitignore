@@ -1,8 +1,8 @@
 *.DS_Store
 *.ipynb_checkpoints
 .htaccess
-docs/.htaccess
+docs/
 slides/pdf
+assets/*.bib
 *.quarto
-
 /.quarto/

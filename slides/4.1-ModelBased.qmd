@@ -16,7 +16,7 @@ resources: pdf/4.1-ModelBased.pdf
 ::: {.column width=50%}
 
 
-![Source: Dayan P, Niv Y. (2008). Reinforcement learning: The Good, The Bad and The Ugly. Current Opinion in Neurobiology, Cognitive neuroscience 18:185–196. doi:10.1016/j.conb.2008.08.003](img/modelbased2.png)
+![Source: @Dayan2008 Reinforcement learning: The Good, The Bad and The Ugly. Current Opinion in Neurobiology, Cognitive neuroscience 18:185–196. doi:10.1016/j.conb.2008.08.003](img/modelbased2.png)
 
 
 :::
@@ -122,7 +122,7 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{\tau}[R(\tau)]$$
 
 
 ::: footer
-Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018). Model-Ensemble Trust-Region Policy Optimization. arXiv:1802.10592.
+@Kurutach2018 Model-Ensemble Trust-Region Policy Optimization. arXiv:1802.10592.
 :::
 
 # Imperfect model
@@ -187,7 +187,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 
 
 ::: footer
-Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.
+@Nagabandi2017 Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.
 :::
 
 # MPC - Model Predictive Control
@@ -215,7 +215,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 
 
 ::: footer
-Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.
+@Nagabandi2017 Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.
 :::
 
 
@@ -256,7 +256,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 
 
 ::: footer
-Sutton, R. S. (1990). Integrated Architectures for Learning, Planning, and Reacting Based on Approximating Dynamic Programming. Machine Learning Proceedings.
+@Sutton1990 Integrated Architectures for Learning, Planning, and Reacting Based on Approximating Dynamic Programming. Machine Learning Proceedings.
 :::
 
 # Dyna-Q
@@ -314,3 +314,5 @@ Sutton, R. S. (1990). Integrated Architectures for Learning, Planning, and React
 <http://incompleteideas.net/sutton/book/the-book.html>
 :::
 
+
+# References

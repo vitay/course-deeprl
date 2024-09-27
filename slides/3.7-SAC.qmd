@@ -8,7 +8,7 @@ institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
 resources: pdf/3.7-SAC.pdf
 ---
 
-# 1 - Soft RL
+# 1 - Maximum Entropy RL
 
 # Hard RL
 
@@ -84,9 +84,8 @@ $$\pi^*(s) = \text{arg} \max_a Q^*(s, a)$$
 :::
 
 
+# Soft policies
 
-
-# Need for soft RL
 
 * Softmax policies allow to learn **multimodal** policies, but only for discrete action spaces.
 
@@ -94,147 +93,9 @@ $$
     \pi(s, a) = \frac{\exp Q(s, a) / \tau}{ \sum_b \exp Q(s, b) / \tau}
 $$
 
-* In continuous action spaces, we would have to integrate over the whole action space, what is not tractable.
+* Continuous Gaussian policies are still **unimodal policies**: they mostly sample actions around the mean $\mu_\theta(s)$ and the variance $\sigma_\theta(s)$ decreases to 0 with learning.
 
-* Exploratory noise as in DDPG only leads to **unimodal** policies: greedy action plus some noise.
-
-::: {.columns}
-::: {.column width=50%}
-
-
-![Source: <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/>](img/sac-unimodal.png)
-
-:::
-::: {.column width=50%}
-
-
-![](img/sac-multimodal.png)
-
-:::
-:::
-
-
-# 2 - Continuous stochastic policies
-
-# Gaussian policies
-
-* The easiest to implement a stochastic policy with a neural network is a **Gaussian policy**.
-
-::: {.columns}
-::: {.column width=60%}
- 
-
-* Suppose that we want to control a robotic arm with $n$ degrees of freedom. 
-
-* An action $\mathbf{a}$ is a vector of joint displacements:
-
-$$\mathbf{a} = \begin{bmatrix} \Delta \theta_1 & \Delta \theta_2 & \ldots \, \Delta \theta_n\end{bmatrix}^T$$
-
-:::
-::: {.column width=40%}
-
-![](img/actionspace-robot.png)
-
-:::
-:::
-
-
-* A Gaussian policy considers the vector $\mathbf{a}$ to be sampled from the **normal distribution** $\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))$.
-
-::: {.columns}
-::: {.column width=65%}
-
-
-* The mean $\mu_\theta(s)$ and standard deviation $\sigma_\theta(s)$ are vectors that can be the output of the **actor** neural network with parameters $\theta$.
-
-* **Sampling** an action from the normal distribution is done through the **reparameterization trick**:
-
-$$\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi$$
-
-where $\xi \sim \mathcal{N}(0, 1)$ comes from the standard normal distribution.
-
-:::
-::: {.column width=35%}
-
-![<https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024>](img/gaussianpolicy.png)
-
-:::
-:::
-
-
-# Gaussian policies
-
-* The good thing with the normal distribution is that we know its pdf:
-
-$$
-    \pi_\theta(s, a) = \frac{1}{\sqrt{2\pi\sigma^2_\theta(s)}} \, \exp -\frac{(a - \mu_\theta(s))^2}{2\sigma^2_\theta(s)}
-$$
-
-* When estimating the **policy gradient** (REINFORCE, A3C, PPO, etc):
-
-$$
-    \nabla_\theta J(\theta) =  \mathbb{E}_{s \sim \rho^\pi, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s, a) \, \psi ]
-$$
-
-the log-likelihood $\log \pi_\theta (s, a)$ is a simple function of $\mu_\theta(s)$ and $\sigma_\theta(s)$:
-
-$$\log \pi_\theta (s, a) = -\frac{(a - \mu_\theta(s))^2}{2\sigma^2_\theta(s)} - \frac{1}{2} \, \log 2\pi\sigma^2_\theta(s)$$
-
-so we can easily compute its gradient w.r.t $\theta$ and apply backpropagation:
-
-$$
-    \nabla_{\mu_\theta(s)} \log \pi_\theta (s, a) = \frac{a - \mu_\theta(s)}{\sigma_\theta(s)^2} \qquad \nabla_{\sigma_\theta(s)} \log \pi_\theta (s, a) = \frac{(a - \mu_\theta(s))^2}{\sigma_\theta(s)^3} - \frac{1}{\sigma_\theta(s)}
-$$
-
-# Gaussian policies
-
-* A Gaussian policy samples actions from the **normal distribution** $\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))$, with $\mu_\theta(s)$ and $\sigma_\theta(s)$ being the output of the actor.
-
-$$\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi$$
-
-::: {.columns}
-::: {.column width=65%}
-
-
-* The score $\nabla_\theta \log \pi_\theta (s, a)$ can be obtained easily using the output of the actor:
-
-$$
-    \nabla_{\mu_\theta(s)} \log \pi_\theta (s, a) = \frac{a - \mu_\theta(s)}{\sigma_\theta(s)^2}
-$$ 
-
-$$
- \nabla_{\sigma_\theta(s)} \log \pi_\theta (s, a) = \frac{(a - \mu_\theta(s))^2}{\sigma_\theta(s)^3} - \frac{1}{\sigma_\theta(s)}
-$$
-
-* The rest of the score ($\nabla_\theta \mu_\theta(s)$ and $\nabla_\theta \sigma_\theta(s)$) is the problem of tensorflow/pytorch.
-
-:::
-::: {.column width=35%}
-
-![Source: <https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024>](img/gaussianpolicy.png)
-
-:::
-:::
-
-
-* This is the same **reparametrization trick** used in variational autoencoders to allow backpropagation to work through a sampling operation.
-
-* **Beta** distributions are an even better choice to parameterize stochastic policies (Chou et al, 2017).
-
-::: footer
-Chou et al. (2017). Improving Stochastic Policy Gradients in Continuous Control with Deep Reinforcement Learning using the Beta Distribution. ICML.
-:::
-
-
-# 3 - Maximum Entropy RL
-
-# Soft policies
-
-* Although stochastic, Gaussian policies are still **unimodal policies**: they mostly sample actions around the mean $\mu_\theta(s)$ and the variance $\sigma_\theta(s)$ decreases to 0 with learning.
-
-* If we want a multimodal policy that learns different solutions, we need to learn a **Softmax** distribution (Gibbs / Boltzmann) over the action space.
-
-* How can we do that when the action space is continuous?
+* If we want a multimodal policy that learns different solutions, we need to learn a **Softmax** distribution (Gibbs / Boltzmann) over the continuous action space.
 
 ::: {.columns}
 ::: {.column width=50%}
@@ -277,7 +138,7 @@ $$
 * It is always possible to fall back to hard RL by setting $\alpha$ to 0.
 
 ::: footer
-Haarnoja, T., Tang, H., Abbeel, P., and Levine, S. (2017). Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165
+@Haarnoja2017 Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165
 :::
 
 
@@ -393,7 +254,7 @@ $$
 * The **partition function** $\sum_b \exp \dfrac{Q^\text{soft}_\theta (s, b)}{\alpha}$ is untractable for continuous action spaces, as one would need to integrate over the whole action space, but it will disappear from the equations anyway.
 
 ::: footer
-Haarnoja, T., Tang, H., Abbeel, P., and Levine, S. (2017). Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165
+@Haarnoja2017 Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165
 :::
 
 # What are soft values?
@@ -421,15 +282,15 @@ $$
 * All we need is to be able to estimate them... Soft Q-learning uses complex optimization methods (variational inference) to do it, but SAC is more practical.
 
 ::: footer
-Haarnoja, T., Tang, H., Abbeel, P., and Levine, S. (2017). Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165
+@Haarnoja2017 Reinforcement Learning with Deep Energy-Based Policies. arXiv:1702.08165
 :::
 
-# 4 - Soft Actor-Critic (SAC)
+# 2 - Soft Actor-Critic (SAC)
 
 ![](img/paper-sac.png)
 
 ::: footer
-Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (2018). Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
+@Haarnoja2018a Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
 :::
 
 # Soft Actor-Critic (SAC)
@@ -511,7 +372,7 @@ $$
 $$
 
 ::: footer
-Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (2018). Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
+@Haarnoja2018a Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
 :::
 
 
@@ -529,7 +390,7 @@ Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (20
 
 
 ::: footer
-Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (2018). Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
+@Haarnoja2018a Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
 :::
 
 ---
@@ -537,7 +398,7 @@ Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (20
 ![](img/sac_results.png)
 
 ::: footer
-Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (2018). Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
+@Haarnoja2018a Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905
 :::
 
 # SAC results
@@ -576,7 +437,7 @@ Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (20
 ![Source: <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning/>](img/sac_lego2.gif)
 
 
-# References
+# Additional reading
 
 * <https://ai.googleblog.com/2019/01/soft-actor-critic-deep-reinforcement.html>
 
@@ -587,3 +448,5 @@ Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., et al. (20
 * <https://bair.berkeley.edu/blog/2017/10/06/soft-q-learning>
 
 * <https://arxiv.org/abs/1805.00909>
+
+# References

@@ -86,7 +86,7 @@ Model-based   slow       low             as good as      yes
 
 * The classical theory assigns MF to habits and MB to goal-directed, mostly because their sensitivity to outcome devaluation.
 
-![](img/mfmb.png)
+![](img/mfmb.png){width=80%}
 
 * The open question is the arbitration mechanism between these two segregated process: who takes control?
 
@@ -143,7 +143,7 @@ $$
 $$
 
 ::: footer
-Dayan, P. (1993). Improving Generalization for Temporal Difference Learning: The Successor Representation. Neural Computation 5, 613–624. doi:10.1162/neco.1993.5.4.613.
+@Dayan1993 Improving Generalization for Temporal Difference Learning: The Successor Representation. Neural Computation 5, 613–624. doi:10.1162/neco.1993.5.4.613.
 :::
 
 # Successor Representations (SR)
@@ -199,22 +199,26 @@ $$
 
 * The transition matrix $\mathcal{P}^\pi$ depicts the possible $(s, s')$ transitions:
 
-$$\mathcal{P}^\pi = \begin{bmatrix}
+$$
+\mathcal{P}^\pi = \begin{bmatrix}
 0 & 1 & 0 & 0 \\
 0 & 0 & 1 & 0 \\
 0 & 0 & 0 & 1 \\
 0 & 0 & 0 & 1 \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 
 * The SR matrix $M$ also represents the future transitions discounted by $\gamma$:
 
-$$M = \begin{bmatrix}
+$$
+M = \begin{bmatrix}
 1 & \gamma & \gamma^2 & \gamma^3 \\
 0 & 1 & \gamma & \gamma^2 \\
 0 & 0 & 1  & \gamma\\
 0 & 0 & 0 & 1 \\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 # SR matrix in a Tolman's maze
 
@@ -245,7 +249,7 @@ $$M = \begin{bmatrix}
 
 
 ::: footer
-Russek et al. (2017). Predictive representations can link model-based reinforcement learning to model-free mechanisms. PLOS Computational Biology.
+@Russek2017 Predictive representations can link model-based reinforcement learning to model-free mechanisms. PLOS Computational Biology.
 :::
 
 # Example of a SR matrix
@@ -269,7 +273,7 @@ Russek et al. (2017). Predictive representations can link model-based reinforcem
 
 
 ::: footer
-Stachenfeld, K. L., Botvinick, M. M., and Gershman, S. J. (2017). The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
+@Stachenfeld2017 The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
 :::
 
 
@@ -322,7 +326,7 @@ $$
 <br>
 
 ::: footer
-Momennejad et al. (2017). The successor representation in human reinforcement learning. Nature Human Behaviour 1, 680–692. doi:10.1038/s41562-017-0180-8.
+@Momennejad2017 The successor representation in human reinforcement learning. Nature Human Behaviour 1, 680–692. doi:10.1038/s41562-017-0180-8.
 :::
 
 # Model-free SR
@@ -347,10 +351,9 @@ $$
 
 * This is **SR-TD**, using a SPE instead of RPE, which learns only from transitions but ignores rewards.
 
-<br>
 
 ::: footer
-Momennejad et al. (2017). The successor representation in human reinforcement learning. Nature Human Behaviour 1, 680–692. doi:10.1038/s41562-017-0180-8.
+@Momennejad2017 The successor representation in human reinforcement learning. Nature Human Behaviour 1, 680–692. doi:10.1038/s41562-017-0180-8.
 :::
 
 # The sensory prediction error - SPE
@@ -368,7 +371,7 @@ $$
 ![](img/schapiro2.png){width=40%}
 
 ::: footer
-Stachenfeld, K. L., Botvinick, M. M., and Gershman, S. J. (2017). The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
+@Stachenfeld2017 The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
 :::
 
 # Successor representations
@@ -401,7 +404,7 @@ $$
 
 
 ::: footer
-Stachenfeld, K. L., Botvinick, M. M., and Gershman, S. J. (2017). The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
+@Stachenfeld2017 The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
 :::
 
 
@@ -427,7 +430,7 @@ $$
 depending on the choice of the next action $a_{t+1}$ (on- or off-policy).
 
 ::: footer
-Russek et al. (2017). Predictive representations can link model-based reinforcement learning to model-free mechanisms. PLoS Computational Biology. doi:10.1371/journal.pcbi.1005768
+@Russek2017 Predictive representations can link model-based reinforcement learning to model-free mechanisms. PLoS Computational Biology. doi:10.1371/journal.pcbi.1005768
 :::
 
 # 3 - Successor features
@@ -462,7 +465,7 @@ Russek et al. (2017). Predictive representations can link model-based reinforcem
 
 
 ::: footer
-Stachenfeld, K. L., Botvinick, M. M., and Gershman, S. J. (2017). The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
+@Stachenfeld2017 The hippocampus as a predictive map. Nature Neuroscience 20, 1643–1653. doi:10.1038/nn.4650
 :::
 
 
@@ -487,7 +490,7 @@ $$
 $$
 
 ::: footer
-Gehring CA. 2015. Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
+@Gehring2015 Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
 :::
 
 # Successor features
@@ -514,7 +517,7 @@ $$
 $$
 
 ::: footer
-Gehring CA. 2015. Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
+@Gehring2015 Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
 :::
 
 # Successor features
@@ -540,7 +543,7 @@ $$
 
 
 ::: footer
-Gehring CA. 2015. Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
+@Gehring2015 Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
 :::
 
 # Successor features
@@ -565,7 +568,7 @@ $$\Delta M^\pi = \delta_t^\text{SFR} \times \phi(s_t)^T$$
 
 
 ::: footer
-Gehring CA. 2015. Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
+@Gehring2015 Approximate Linear Successor Representation. Presented at the The multi-disciplinary conference on Reinforcement Learning and Decision Making (RLDM).
 :::
 
 # 4 - Deep Successor Reinforcement Learning
@@ -573,15 +576,15 @@ Gehring CA. 2015. Approximate Linear Successor Representation. Presented at the 
 ![](img/paper-deepSR.png)
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
 
 # Deep Successor Reinforcement Learning
 
-![](img/DSR.png)
+![](img/DSR.png){width=90%}
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
 
 
@@ -605,7 +608,7 @@ $$\mathcal{L}_\text{reward}(\mathbf{w}, \theta) = \mathbb{E}[(r_{t+1} - \phi(s_t
 * The reward function is learned on a single task, but it can fine-tuned on another task, with all other weights frozen.
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
 
 # Deep Successor Reinforcement Learning
@@ -631,23 +634,23 @@ $$\mathcal{L}^\text{SPE}(\alpha) = \mathbb{E}[\sum_a (\phi(s_t) + \gamma \, \max
 $$\mathcal{L}(\theta, \hat{\theta}, \mathbf{w}, \alpha) = \mathcal{L}_\text{reconstruction}(\theta, \hat{\theta}) + \mathcal{L}_\text{reward}(\mathbf{w}, \theta) + \mathcal{L}^\text{SPE}(\alpha)$$
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
 
 # Deep Successor Reinforcement Learning
 
-![](img/DSR-algorithm.png)
+![](img/DSR-algorithm.png){width=90%}
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
 
 # Deep Successor Reinforcement Learning
 
-![](img/DSR-results.png){width=80%}
+![](img/DSR-results.png){width=75%}
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
 
 
@@ -679,23 +682,8 @@ Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Succes
 * The SR is a **cognitive map** of the environment: learning task-unspecific relationships.
 
 ::: footer
-Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396
+@Kulkarni2016 Deep Successor Reinforcement Learning. arXiv:1606.02396
 :::
-
-
-# Deep Successor Reinforcement Learning
-
-* Note: the same idea was published by three different groups at the same time (preprint in 2016, conference in 2017):
-
-    * Barreto A, Dabney W, Munos R, Hunt JJ, Schaul T, van Hasselt H, Silver D. (2016). Successor Features for Transfer in Reinforcement Learning. arXiv:160605312.
-
-    * Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Successor Reinforcement Learning. arXiv:1606.02396.
-
-    * Zhang J, Springenberg JT, Boedecker J, Burgard W. (2016). Deep Reinforcement Learning with Successor Features for Navigation across Similar Environments. arXiv:161205533.
-
-
-* The (Barreto et al., 2016) is from Deepmind, so it tends to be cited more...
-
 
 # Visual Semantic Planning using Deep Successor Representations
 
@@ -703,7 +691,8 @@ Kulkarni, T. D., Saeedi, A., Gautam, S., and Gershman, S. J. (2016). Deep Succes
 
 
 ::: footer
-Zhu Y, Gordon D, Kolve E, Fox D, Fei-Fei L, Gupta A, Mottaghi R, Farhadi A. (2017). Visual Semantic Planning using Deep Successor Representations. arXiv:170508080
+@Zhu2017 Visual Semantic Planning using Deep Successor Representations. arXiv:170508080
 :::
 
 
+# References

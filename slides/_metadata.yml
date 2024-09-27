@@ -4,9 +4,12 @@ format:
     slide-number: c/t
     html-math-method: katex
 
-    auto-stretch: true
+    auto-stretch: false
     touch: true
-    fig-align: center
+    fig-align: "center"
+
+    filters:
+      - ../assets/center_images.lua
 
     chalkboard: 
       buttons: false
@@ -26,5 +29,7 @@ format:
     citations-hover: true
 
 
-bibliography: ../assets/ReinforcementLearning.bib
+bibliography: 
+  - ../assets/ReinforcementLearning.bib
+  - ../assets/DeepLearning.bib
 csl: ../assets/frontiers.csl

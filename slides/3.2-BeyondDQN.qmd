@@ -14,7 +14,7 @@ resources: pdf/3.2-BeyondDQN.pdf
 ![](img/paper-c51.png)
 
 ::: footer
-Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+@Bellemare2017 A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
 :::
 
 # Distributional learning
@@ -40,10 +40,8 @@ $$Q^\pi(s, a) = \mathbb{E}_\pi [R_t | s_t = s, a_t = a]$$
 * RL does not distinguish safe from risky actions.
 
 
-
+<!--
 # Distributional learning
-
-
 
 * The trip by train from Leipzig to Chemnitz takes 1 hour if everything goes well.
 
@@ -55,8 +53,10 @@ $$Q^\pi(s, a) = \mathbb{E}_\pi [R_t | s_t = s, a_t = a]$$
 
 * If driving by car always takes 1h15, it might be worth it if you have an urgent appointment that day.
 
-
-![](img/distributional-example.svg){width=70%}
+:::{}
+![](img/distributional-example.svg){width=60%}
+:::
+-->
 
 
 # Distributional learning
@@ -78,12 +78,6 @@ $$Q^\pi(s, a) = \mathbb{E}_\pi [\mathcal{Z}^\pi(s, a)]$$
 ::: {.column width=50%}
 
 
-![](img/distributionallearning.png)
-
-:::
-::: {.column width=50%}
-
-
 * In categorical DQN (Bellemare et al., 2017), we model the distribution of returns as a **discrete probability distribution**.
 
     * **categorical** or **multinouilli** distribution.
@@ -93,26 +87,51 @@ $$Q^\pi(s, a) = \mathbb{E}_\pi [\mathcal{Z}^\pi(s, a)]$$
 
 * We then split the range $[R_\text{min}, R_\text{max}]$ in $n$ **discrete bins** centered on the atoms $\{z_i\}_{i=1}^n$.
 
+
+
 :::
+::: {.column width=50%}
+
+![](img/distributionallearning.png)
+
+
 :::
-
-
-* The probability that the return obtained the action $(s, a)$ lies in the bin of the atom $z_i$ is noted $p_i(s, a)$.
-
-* It can be approximated by a neural network $F$ with parameters $\theta$, using a **softmax output layer**: 
-
-$$
-    p_i(s, a; \theta) = \frac{\exp F_i(s, a; \theta)}{\sum_{j=1}^{n} \exp F_j(s, a; \theta)}
-$$
-
-::: footer
-Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
 :::
 
 
 # Categorical DQN
 
-![](img/distributionallearning.png){width=40%}
+
+* The probability that the return obtained the action $(s, a)$ lies in the bin of the atom $z_i$ is noted $p_i(s, a)$.
+
+* A discrete probability dustribution can be approximated by a neural network $F$ with parameters $\theta$, using a **softmax output layer**: 
+
+$$
+    p_i(s, a; \theta) = \frac{\exp F_i(s, a; \theta)}{\sum_{j=1}^{n} \exp F_j(s, a; \theta)}
+$$
+
+::: {.columns}
+::: {.column width=50%}
+
+
+:::
+::: {.column width=50%}
+
+![](img/distributionallearning.png)
+
+
+:::
+:::
+
+
+::: footer
+@Bellemare2017 A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+:::
+
+# Categorical DQN
+
+:::columns
+:::column
 
 * The $n$ probabilities $\{p_i(s, a; \theta)\}_{i=1}^n$ completely define the parameterized distribution $\mathcal{Z}_\theta(s, a)$.
 
@@ -120,6 +139,14 @@ $$\mathcal{Z}_\theta(s, a) = \sum_a p_i(s, a; \theta) \,\delta_{z_i}$$
 
 
 where $\delta_{z_i}$ is a Dirac distribution centered on the atom $z_i$.
+
+:::
+:::column
+
+![](img/distributionallearning.png)
+
+:::
+:::
 
 * The Q-value of an action can be obtained by:
 
@@ -201,7 +228,7 @@ $$z'_i = r + \gamma \, z_i$$
 
 * The corresponding probabilities have not changed.
 
-![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman2.png)
+![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman2.png){width=80%}
 
 
 
@@ -211,7 +238,7 @@ $$z'_i = r + \gamma \, z_i$$
 
 * We need to **interpolate** the target distribution to compare it with the predicted distribution. 
 
-![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman3.png)
+![Source: <https://physai.sciencesconf.org/data/pages/distributional_RL_Remi_Munos.pdf>](img/distributional_bellman3.png){width=80%}
 
 
 
@@ -244,7 +271,6 @@ $$
 
 # Categorical DQN
 
-![](img/distributionallearning3.png)
 
 * We now have two distributions $\mathcal{Z}_\theta(s, a)$ and $\Phi \, \mathcal{T} \, \mathcal{Z}_\theta(s, a)$ sharing the same support.
 
@@ -253,6 +279,9 @@ $$
 * These are probability distributions, not numbers, so we cannot use the mse.
 
 * We instead minimize the **Kullback-Leibler (KL) divergence** between the two distributions. 
+
+![](img/distributionallearning3.png)
+
 
 
 # Kullback-Leibler (KL) divergence 
@@ -286,7 +315,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}} [ - \mathbf{t} \, \log \mathbf{
 
 * But it could be any target distribution, as long as $\mathbf{t}$ and $\mathbf{y}$ share the same support.
 
-![](img/crossentropy-animation.gif){width=60%}
+![](img/crossentropy-animation.gif){width=50%}
 
 
 
@@ -353,7 +382,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}} [ - \mathbf{t} \, \log \mathbf{
 
 
 ::: footer
-Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+@Bellemare2017 A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
 :::
 
 
@@ -363,7 +392,7 @@ Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective
 
 
 ::: footer
-Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+@Bellemare2017 A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
 :::
 
 
@@ -385,7 +414,7 @@ Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective
 
 
 ::: footer
-Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+@Bellemare2017 A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
 :::
 
 # Categorical DQN
@@ -394,7 +423,7 @@ Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective
 
 
 ::: footer
-Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
+@Bellemare2017 A Distributional Perspective on Reinforcement Learning. arXiv:1707.06887
 :::
 
 # Categorical DQN
@@ -407,18 +436,24 @@ Bellemare, M. G., Dabney, W., and Munos, R. (2017). A Distributional Perspective
 
 # Other variants of distributional learning
 
-* **QR-DQN:** Dabney, W., Rowland, M., Bellemare, M. G., and Munos, R. (2017). Distributional Reinforcement Learning with Quantile Regression. arXiv:1710.10044
+* **QR-DQN:** 
 
-* **IQN:** Dabney, W., Ostrovski, G., Silver, D., and Munos, R. (2018). Implicit Quantile Networks for Distributional Reinforcement Learning. arXiv:1806.06923.
+> @Dabney2017 Distributional Reinforcement Learning with Quantile Regression. arXiv:1710.10044
 
-* **The Reactor:** Gruslys, A., Dabney, W., Azar, M. G., Piot, B., Bellemare, M., and Munos, R. (2017). The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning. arXiv:1704.04651.
+* **IQN:** 
+
+> @Dabney2018 Implicit Quantile Networks for Distributional Reinforcement Learning. arXiv:1806.06923.
+
+* **The Reactor:** 
+
+> @Gruslys2017 The Reactor: A fast and sample-efficient Actor-Critic agent for Reinforcement Learning. arXiv:1704.04651.
 
 # 2 - Noisy DQN
 
 ![](img/paper-noisynet.png)
 
 ::: footer
-Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
+@Fortunato2017 Noisy Networks for Exploration. arXiv:170610295
 :::
 
 # Noisy DQN
@@ -434,7 +469,7 @@ Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
 
 
 
-![Source: <https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg>](img/epsilonschedule.jpg)
+![Source: <https://www.researchgate.net/publication/334741451/figure/fig2/AS:786038515589120@1564417594220/Epsilon-greedy-method-At-each-step-a-random-number-is-generated-by-the-model-If-the_W640.jpg>](img/epsilonschedule.jpg){width=40%}
 
 
 
@@ -465,7 +500,7 @@ Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
 
 * Note: a very similar idea was proposed by OpenAI at the same ICLR conference:
 
-> Plappert, M., Houthooft, R., Dhariwal, P., Sidor, S., Chen, R. Y., Chen, X., et al. (2018). Parameter Space Noise for Exploration. arXiv:1706.01905.
+> @Plappert2018 Parameter Space Noise for Exploration. arXiv:1706.01905.
 
 
 
@@ -553,7 +588,7 @@ $$\theta \sim \mathcal{N}(\mu_\theta, \sigma_\theta^2)$$
 
 
 ::: footer
-Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
+@Fortunato2017 Noisy Networks for Exploration. arXiv:170610295
 :::
 
 
@@ -562,18 +597,18 @@ Fortunato et al. (2017). Noisy Networks for Exploration. arXiv:170610295
 ![](img/paper-rainbow.png)
 
 ::: footer
-Hessel  et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
+@Hessel2017 Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
 :::
 
 # Raindow network
 
 We have seen various improvements over a few years (2013-2017):
 
-* Original DQN (Mnih et al., 2013)
+* Original DQN [@Mnih2013]
 
 $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta'}(s', a')) - Q_\theta(s, a))^2]$$
 
-* Double DQN (van Hasselt, Guez and Silver, 2015)
+* Double DQN [@vanHasselt2015]
 
 $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]$$
 
@@ -581,11 +616,11 @@ $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, 
 ::: {.column width=50%}
 
 
-* Prioritized Experience Replay (Schaul et al., 2015)
+* Prioritized Experience Replay [@Schaul2015]
 
 $$P(k) = \frac{(|\delta_k| + \epsilon)^\alpha}{\sum_k (|\delta_k| + \epsilon)^\alpha}$$
 
-* Dueling DQN (Wang et al., 2016)
+* Dueling DQN [@Wang2016]
 
 $$Q_\theta(s, a) = V_\alpha(s) + A_\beta(s, a)$$
 
@@ -593,11 +628,11 @@ $$Q_\theta(s, a) = V_\alpha(s) + A_\beta(s, a)$$
 ::: {.column width=50%}
 
 
-* Categorical DQN (Bellemare, Dabney and Munos, 2017)
+* Categorical DQN [@Bellemare2017]
 
 $$\mathcal{L}(\theta) = \mathbb{E}_{\mathcal{D}_s}[ - \mathbf{t}_k \, \log Z_\theta(s_k, a_k)]$$
 
-* NoisyNet (Fortunato et al.,  2017)
+* NoisyNet [@Fortunato2017]
 
 $$\theta = \mu_\theta + \sigma_\theta \, \epsilon$$
 
@@ -642,7 +677,7 @@ Which of these improvements should we use?
 
 
 ::: footer
-Hessel et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
+@Hessel2017 Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
 :::
 
 # Rainbow network
@@ -675,130 +710,16 @@ Hessel et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Lear
 
 
 ::: footer
-Hessel et al. (2017). Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
-:::
-
-# 4 - Gorila - General Reinforcement Learning Architecture
-
-![](img/paper-gorila.png)
-
-::: footer
-Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
-:::
-
-# Gorila
-
-::: {.columns}
-::: {.column width=40%}
-
-* The DQN value network $Q_\theta(s, a)$ has two jobs:
-
-    * **actor:** it interacts with the environment to sample $(s, a, r, s')$ transitions.
-
-    * **learner:** it learns from minibatches out of the replay memory.
-
-:::
-::: {.column width=60%}
-
-![](img/gorila1.png)
-
-:::
+@Hessel2017 Rainbow: Combining Improvements in Deep Reinforcement Learning. arXiv:1710.02298
 :::
 
 
-* The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: **computational bottleneck**.
-
-* DQN cannot benefit from **parallel computing**: multi-core CPU, clusters of CPU/GPU, etc.
-
-
-::: footer
-Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
-:::
-
-# Gorila
-
-* The Gorila framework splits DQN into **multiple actors** and **multiple learners**.
-
-* Each actor (or worker) **interacts** with its copy of the environment and stores transitions in a distributed replay buffer.
-
-* Each learner samples minibatches from the replay buffer and computes **gradients** w.r.t the DQN loss.
-
-* The parameter server (**master network**) applies the gradients on the parameters and frequently **synchronizes** the actors and learners.
-
-![](img/gorila2.png){width=75%}
-
-::: footer
-Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
-:::
-
-
-# Gorila
-
-* Gorila allows to train DQN on parallel hardware (e.g. clusters of GPU) as long as the environment can be copied (simulation).
-
-::: {.columns}
-::: {.column width=50%}
-
-
-![](img/gorila-results1.png)
-
-
-::: footer
-Nair et al. (2015). Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
-:::
-
-:::
-::: {.column width=50%}
-
-
-* The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).
-
-![](img/gorila-results2.png){width=80%}
-
-:::
-:::
-
-
-# Ape-X
-
-* With more experience, Deepmind realized that a single learner is better. Distributed SGD (computing gradients with different learners) is not very efficient.
-
-* What matters is collecting transitions very quickly (multiple workers) but using **prioritized experience replay** to learn from the most interesting ones.
-
-![](img/apex.png)
-
-::: footer
-Horgan et al. (2018). Distributed Prioritized Experience Replay. arXiv:180300933
-:::
-
-# Ape-X
-
-* Using 360 workers (1 per CPU core), Ape-X reaches super-human performance for a fraction of the wall-clock training time.
-
-![](img/apex-results.png){width=80%}
-
-::: footer
-Horgan et al. (2018). Distributed Prioritized Experience Replay. arXiv:180300933
-:::
-
-# Ape-X
-
-* The multiple parallel workers can collect much more frames, leading to the better performance.
-
-* The learner uses n-step returns and the double dueling DQN network architecture, so it is not much different from Rainbow DQN internally.
-
-![](img/apex-results2.png)
-
-::: footer
-Horgan et al. (2018). Distributed Prioritized Experience Replay. arXiv:180300933
-:::
-
-# 5 - DRQN: Deep Recurrent Q-network
+# 4 - DRQN: Deep Recurrent Q-network
 
 ![](img/paper-drqn.png)
 
 ::: footer
-Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+@Hausknecht2015 Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
 :::
 
 # DRQN: Deep Recurrent Q-network
@@ -811,7 +732,7 @@ Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Ob
 
 
 ::: footer
-Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+@Hausknecht2015 Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
 :::
 
 
@@ -824,7 +745,7 @@ Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Ob
 ::: {.column width=50%}
 
 
-![](img/drqn1.png)
+![Source: <https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc>](img/drqn1.png)
 
 :::
 ::: {.column width=50%}
@@ -842,15 +763,6 @@ Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Ob
 
 ![](img/RNN-unrolled.png){width=80%}
 
-::: {.columns}
-::: {.column width=40%}
-
-
-![Source: <https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-6-partial-observability-and-deep-recurrent-q-68463e9aeefc>](img/drqn2.png){width=70%}
-
-:::
-::: {.column width=60%}
-
 
 * The alternative is to use a **recurrent neural network** (e.g. LSTM) to encode the **history** of single frames.
 
@@ -860,11 +772,9 @@ $$
 
 * The output at time $t$ depends on the whole history of inputs $(\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_t)$.
 
-:::
-:::
 
 
-* Using the output of a LSTM as a state, we make sure that we have the Markov property, RL will work:
+* Using the output of a LSTM as a state representation, we can make sure that we have the Markov property, and RL will work:
 
 $$
     P(\mathbf{h}_{t+1} | \mathbf{h}_t) = P(\mathbf{h}_{t+1} | \mathbf{h}_t, \mathbf{h}_{t-1}, \ldots, \mathbf{h}_0)
@@ -887,10 +797,10 @@ $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, 
 
 # DRQN: Deep Recurrent Q-network
 
-![](img/drqn-architecture2.png)
+![](img/drqn-architecture2.png){width=80%}
 
 ::: footer
-Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+@Hausknecht2015 Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
 :::
 
 # DRQN: Deep Recurrent Q-network
@@ -917,7 +827,7 @@ $$(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})$$
 
 
 ::: footer
-Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+@Hausknecht2015 Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
 :::
 
 # DRQN: Deep Recurrent Q-network
@@ -930,17 +840,131 @@ Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Ob
 
 
 ::: footer
-Hausknecht, M., and Stone, P. (2015). Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
+@Hausknecht2015 Deep Recurrent Q-Learning for Partially Observable MDPs. arXiv:1507.06527
 :::
 
 
-# 6 - R2D2: Recurrent Replay Distributed DQN
+# 5 - Distributed RL: Gorila, Ape-X, R2D2
 
-![](img/paper-r2d2.png)
+![](img/paper-gorila.png){width=80%}
+
+
+![](img/paper-r2d2.png){width=80%}
+
 
 ::: footer
-Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. ICLR.
+@Nair2015 ; @Horgan2018 ; @Kapturowski2019
 :::
+
+# Gorila - General Reinforcement Learning Architecture
+
+::: {.columns}
+::: {.column width=40%}
+
+* The DQN value network $Q_\theta(s, a)$ has two jobs:
+
+    * **actor:** it interacts with the environment to sample $(s, a, r, s')$ transitions.
+
+    * **learner:** it learns from minibatches out of the replay memory.
+
+
+* The weights of the value network lie on the same CPU/GPU, so the two jobs have to be done sequentially: **computational bottleneck**.
+
+:::
+::: {.column width=60%}
+
+![](img/gorila1.png)
+
+:::
+:::
+
+
+* DQN cannot benefit from **parallel computing**: multi-core CPU, clusters of CPU/GPU, etc.
+
+
+::: footer
+@Nair2015 Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+# Gorila
+
+* The Gorila framework splits DQN into **multiple actors** and **multiple learners**.
+
+* Each actor (or worker) **interacts** with its copy of the environment and stores transitions in a distributed replay buffer.
+
+* Each learner samples minibatches from the replay buffer and computes **gradients** w.r.t the DQN loss.
+
+* The parameter server (**master network**) applies the gradients on the parameters and frequently **synchronizes** the actors and learners.
+
+![](img/gorila2.png){width=75%}
+
+::: footer
+@Nair2015 Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+
+# Gorila
+
+* Gorila allows to train DQN on parallel hardware (e.g. clusters of GPU) as long as the environment can be copied (simulation).
+
+::: {.columns}
+::: {.column width=50%}
+
+
+![](img/gorila-results1.png)
+
+
+::: footer
+@Nair2015 Massively Parallel Methods for Deep Reinforcement Learning. arXiv:1507.04296
+:::
+
+:::
+::: {.column width=50%}
+
+
+* The final performance is not incredibly better than single-GPU DQN, but obtained much faster in wall-clock time (2 days instead of 12-14 days on a single GPU).
+
+![](img/gorila-results2.png){width=80%}
+
+:::
+:::
+
+
+# Ape-X
+
+* With more experience, Deepmind realized that a single learner is better. Distributed SGD (computing gradients with different learners) is not very efficient.
+
+* What matters is collecting transitions very quickly (multiple workers) but using **prioritized experience replay** to learn from the most interesting ones.
+
+![](img/apex.png)
+
+::: footer
+@Horgan2018 Distributed Prioritized Experience Replay. arXiv:180300933
+:::
+
+# Ape-X
+
+* Using 360 workers (1 per CPU core), Ape-X reaches super-human performance for a fraction of the wall-clock training time.
+
+![](img/apex-results.png){width=80%}
+
+::: footer
+@Horgan2018 Distributed Prioritized Experience Replay. arXiv:180300933
+:::
+
+# Ape-X
+
+* The multiple parallel workers can collect much more frames, leading to the better performance.
+
+* The learner uses n-step returns and the double dueling DQN network architecture, so it is not much different from Rainbow DQN internally.
+
+![](img/apex-results2.png)
+
+::: footer
+@Horgan2018 Distributed Prioritized Experience Replay. arXiv:180300933
+:::
+
+
 
 # R2D2: Recurrent Replay Distributed DQN
 
@@ -950,11 +974,12 @@ Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recu
     * 256 actors, 1 learner.
     * 1 LSTM layer after the convolutional stack.
 
-* Additionally solving practical problems with LSTMs (initial state), it became the state of the art on Atari-57 until November 2019...
+* Additionally solving practical problems with LSTMs (initial state), it became the state of the art on Atari-57 until 2019.
 
 ![](img/r2d2-results.png){width=80%}
 
 ::: footer
-Kapturowski, S., Ostrovski, G., Quan, J., Munos, R., and Dabney, W. (2019). Recurrent experience replay in distributed reinforcement learning. ICLR.
+@Kapturowski2019 Recurrent experience replay in distributed reinforcement learning. ICLR.
 :::
 
+# References
