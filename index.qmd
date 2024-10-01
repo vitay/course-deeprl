@@ -24,11 +24,13 @@ Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEnt
 * Exercise: Tuesday 13:45-15:15 B202
 
  
-The first lecture is on 16.10.24, the first exercise one week later on 22.10.24. If not done already (e.g. in Neurocomputing), register here: 
+The first lecture is on 16.10.24, the first exercise one day before on 15.10.24. If not done already (e.g. in Neurocomputing), register here: 
 
 <https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18086756352/CourseNode/1693276028553462004>
 
 before the first exercise to get login credentials that work in the FRIZ pool B202. 
+
+The two first exercises will be a basic introduction to python and numpy, students which are familiar with python can skip these sessions.
 :::
 
 :::callout-note

@@ -12,8 +12,6 @@ website:
 
 clean:
 	rm -rf docs
-	mkdir docs
-	quarto render . 
 
 export: 
 	cp .htaccess docs/
