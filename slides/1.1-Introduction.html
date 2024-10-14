@@ -518,7 +518,7 @@ Julien Vitay
 <li><p>The agent’s behavior is roughly divided into two phases:</p>
 <ul>
 <li><p>The <strong>exploration</strong> phase, where it gathers knowledge about its environment.</p></li>
-<li><p>The <strong>exploitation</strong> phase, where this knowledge is used to collect as mans rewards as possible.</p></li>
+<li><p>The <strong>exploitation</strong> phase, where this knowledge is used to collect as many rewards as possible.</p></li>
 </ul></li>
 <li><p>The biggest issue with this approach is that exploring large action spaces might necessitate a <strong>lot</strong> of trials (<strong>sample complexity</strong>).</p></li>
 <li><p>The modern techniques we will see in this course try to reduce the sample complexity.</p></li>
@@ -883,6 +883,14 @@ Goal: finding the exit as soon as possible.
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/XiigTGKZfks" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
 
+<section id="gymnasium-library-for-rl-environments" class="title-slide slide level1 center">
+<h1><code>gymnasium</code> library for RL environments</h1>
+<iframe width="1500" height="500" src="https://gymnasium.farama.org/"></iframe>
+<div class="footer">
+<p>Source: <a href="https://gymnasium.farama.org" class="uri">https://gymnasium.farama.org</a></p>
+</div>
+</section>
+
 <section id="board-games-backgammon-chess-go-etc" class="title-slide slide level1 center">
 <h1>Board games (Backgammon, Chess, Go, etc)</h1>
 <p>TD-Gammon (Tesauro, 1992) was one of the first AI to beat human experts at a complex game, Backgammon.</p>
@@ -1013,6 +1021,24 @@ Goal: finding the exit as soon as possible.
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/8tq1C8spV_g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
 </section>
 
+<section id="dota2-openai" class="title-slide slide level1 center">
+<h1>Dota2 (OpenAI)</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/eHipy_j29Xw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<ul>
+<li>128,000 CPU cores and 256 Nvidia P100 GPUs on Google Cloud for 10 months ($25,000 per day)…</li>
+</ul>
+</section>
+
+<section id="starcraft-ii-alphastar" class="title-slide slide level1 center">
+<h1>Starcraft II (AlphaStar)</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/alphastar.gif"></p>
+<figcaption>Source: <a href="https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii" class="uri">https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii</a></figcaption>
+</figure>
+</div>
+</section>
+
 <section id="process-control" class="title-slide slide level1 center">
 <h1>Process control</h1>
 <div class="columns">
@@ -1128,21 +1154,11 @@ Goal: finding the exit as soon as possible.
 </div>
 </section>
 
-<section id="dota2-openai" class="title-slide slide level1 center">
-<h1>Dota2 (OpenAI)</h1>
-<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/eHipy_j29Xw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
-<ul>
-<li>128,000 CPU cores and 256 Nvidia P100 GPUs on Google Cloud for 10 months ($25,000 per day)…</li>
-</ul>
-</section>
-
-<section id="starcraft-ii-alphastar" class="title-slide slide level1 center">
-<h1>Starcraft II (AlphaStar)</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/alphastar.gif"></p>
-<figcaption>Source: <a href="https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii" class="uri">https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii</a></figcaption>
-</figure>
+<section id="drone-racing" class="title-slide slide level1 center">
+<h1>Drone racing</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/fBiataDpGIo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<div class="footer">
+<p><span class="citation" data-cites="Kaufmann2023">Kaufmann et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span> Champion-level drone racing using deep reinforcement learning. Nature 620, 982–987.</p>
 </div>
 </section>
 
@@ -1262,6 +1278,9 @@ Goal: finding the exit as soon as possible.
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Degrave2022" class="csl-entry" role="listitem">
 Degrave, J., Felici, F., Buchli, J., Neunert, M., Tracey, B., Carpanese, F., et al. (2022). Magnetic control of tokamak plasmas through deep reinforcement learning. <em>Nature</em> 602, 414–419. doi:<a href="https://doi.org/10.1038/s41586-021-04301-9">10.1038/s41586-021-04301-9</a>.
+</div>
+<div id="ref-Kaufmann2023" class="csl-entry" role="listitem">
+Kaufmann, E., Bauersfeld, L., Loquercio, A., Müller, M., Koltun, V., and Scaramuzza, D. (2023). Champion-level drone racing using deep reinforcement learning. <em>Nature</em> 620, 982–987. doi:<a href="https://doi.org/10.1038/s41586-023-06419-4">10.1038/s41586-023-06419-4</a>.
 </div>
 <div id="ref-Mnih2013" class="csl-entry" role="listitem">
 Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., et al. (2013). Playing <span>Atari</span> with <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1312.5602">http://arxiv.org/abs/1312.5602</a>.
