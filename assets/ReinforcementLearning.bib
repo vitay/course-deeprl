@@ -27,6 +27,21 @@
   file = {/Users/vitay/Documents/Zotero/storage/T9ZK2YM2/Abramson_et_al_2022_Creating_Multimodal_Interactive_Agents_with_Imitation_and_Self-Supervised.pdf;/Users/vitay/Documents/Zotero/storage/87GE8QKN/2112.html}
 }
 
+@article{Aburaya2024,
+  title = {Review of Vision-Based Reinforcement Learning for Drone Navigation},
+  author = {Aburaya, Anas and Selamat, Hazlina and Muslim, Mohd Taufiq},
+  date = {2024-06-28},
+  journaltitle = {International Journal of Intelligent Robotics and Applications},
+  shortjournal = {Int J Intell Robot Appl},
+  issn = {2366-598X},
+  doi = {10.1007/s41315-024-00356-9},
+  url = {https://doi.org/10.1007/s41315-024-00356-9},
+  urldate = {2024-10-11},
+  abstract = {In recent years, Unmanned aerial vehicles (UAVs) have witnessed a surge in popularity and implementation for both civilian and military usage. UAVs can be utilized for a wide range of applications, including mapping, surveillance, and inspection. For many of these applications, a high level of autonomy is required. Autonomy refers to the ability to complete missions or tasks without human intervention. Autonomous navigation is an essential element of autonomy, especially in GPS-denied environments where GNSS-based navigation is not reliable. Due to size and weight limitations, many UAVs employ vision-based localization and navigation techniques for GPS-denied environments. Reinforcement Learning (RL) is also increasingly being implemented for robotic applications, including obstacle avoidance, battery management, and navigation. Existing reviews typically focus on either vision-based autonomous navigation of drones or RL navigation for drones in general, but none specifically concentrate on the use of vision-based methods and RL for drone navigation. Moreover, previous reviews have highlighted the use of reinforcement learning based on tasks such as takeoff, landing, and navigation, whereas this review categorizes the use of RL based on the navigation problem and image input types for the RL models as these define the needed hardware and processing capabilities of the system. We define the current challenges and limitations for vision based RL navigation to provide direction for future works. Finally we provide an analysis of the favorable conditions for each category and the possibility of combining multiple categories to overcome the disadvantages of each.},
+  langid = {english},
+  file = {/Users/vitay/Documents/Zotero/storage/YFCRB4V6/Aburaya et al. - 2024 - Review of vision-based reinforcement learning for drone navigation.pdf}
+}
+
 @inproceedings{Agarwal2014,
   title = {Taming the {{Monster}}: {{A Fast}} and {{Simple Algorithm}} for {{Contextual Bandits}}},
   booktitle = {Proceedings of the 31 St {{International Conference}} on {{Machine Learning}}},
@@ -823,6 +838,19 @@
   abstract = {When cast into the Deep Reinforcement Learning framework, many robotics tasks require solving a long horizon and sparse reward problem, where learning algorithms struggle. In such context, Imitation Learning (IL) can be a powerful approach to bootstrap the learning process. However, most IL methods require several expert demonstrations which can be prohibitively difficult to acquire. Only a handful of IL algorithms have shown efficiency in the context of an extreme low expert data regime where a single expert demonstration is available. In this paper, we present a novel algorithm designed to imitate complex robotic tasks from the states of an expert trajectory. Based on a sequential inductive bias, our method divides the complex task into smaller skills. The skills are learned into a goal-conditioned policy that is able to solve each skill individually and chain skills to solve the entire task. We show that our method imitates a non-holonomic navigation task and scales to a complex simulated robotic manipulation task with very high sample efficiency.},
   pubstate = {prepublished},
   file = {/Users/vitay/Documents/Zotero/storage/CAZ6MMIT/Chenu_et_al_2022_Divide_&_Conquer_Imitation_Learning.pdf;/Users/vitay/Documents/Zotero/storage/5EXF7PQU/2204.html}
+}
+
+@online{Chi2023,
+  title = {Diffusion {{Policy}}: {{Visuomotor Policy Learning}} via {{Action Diffusion}}},
+  shorttitle = {Diffusion {{Policy}}},
+  author = {Chi, Cheng and Xu, Zhenjia and Feng, Siyuan and Cousineau, Eric and Du, Yilun and Burchfiel, Benjamin and Tedrake, Russ and Song, Shuran},
+  date = {2023-03-07},
+  url = {https://arxiv.org/abs/2303.04137v5},
+  urldate = {2024-10-09},
+  abstract = {This paper introduces Diffusion Policy, a new way of generating robot behavior by representing a robot's visuomotor policy as a conditional denoising diffusion process. We benchmark Diffusion Policy across 12 different tasks from 4 different robot manipulation benchmarks and find that it consistently outperforms existing state-of-the-art robot learning methods with an average improvement of 46.9\%. Diffusion Policy learns the gradient of the action-distribution score function and iteratively optimizes with respect to this gradient field during inference via a series of stochastic Langevin dynamics steps. We find that the diffusion formulation yields powerful advantages when used for robot policies, including gracefully handling multimodal action distributions, being suitable for high-dimensional action spaces, and exhibiting impressive training stability. To fully unlock the potential of diffusion models for visuomotor policy learning on physical robots, this paper presents a set of key technical contributions including the incorporation of receding horizon control, visual conditioning, and the time-series diffusion transformer. We hope this work will help motivate a new generation of policy learning techniques that are able to leverage the powerful generative modeling capabilities of diffusion models. Code, data, and training details is publicly available diffusion-policy.cs.columbia.edu},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/Users/vitay/Documents/Zotero/storage/KF2ZQTWU/Chi et al. - 2023 - Diffusion Policy Visuomotor Policy Learning via Action Diffusion.pdf}
 }
 
 @unpublished{Chitnis2020,
@@ -2466,6 +2494,24 @@ Subject\_term\_id: cognitive-neuroscience;learning-algorithms;learning-and-memor
   file = {/Users/vitay/Documents/Zotero/storage/4SEFNXCY/Kapturowski_et_al_2022_Human-level_Atari_200x_faster.pdf;/Users/vitay/Documents/Zotero/storage/2YW429VB/2209.html}
 }
 
+@article{Kaufmann2023,
+  title = {Champion-Level Drone Racing Using Deep Reinforcement Learning},
+  author = {Kaufmann, Elia and Bauersfeld, Leonard and Loquercio, Antonio and Müller, Matthias and Koltun, Vladlen and Scaramuzza, Davide},
+  date = {2023-08},
+  journaltitle = {Nature},
+  volume = {620},
+  number = {7976},
+  pages = {982--987},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/s41586-023-06419-4},
+  url = {https://www.nature.com/articles/s41586-023-06419-4},
+  urldate = {2024-10-14},
+  abstract = {First-person view (FPV) drone racing is a televised sport in which professional competitors pilot high-speed aircraft through a 3D circuit. Each pilot sees the environment from the perspective of their drone by means of video streamed from an onboard camera. Reaching the level of professional pilots with an autonomous drone is challenging because the robot needs to fly at its physical limits while estimating its speed and location in the circuit exclusively from onboard sensors1. Here we introduce Swift, an autonomous system that can race physical vehicles at the level of the human world champions. The system combines deep reinforcement learning (RL) in simulation with data collected in the physical world. Swift competed against three human champions, including the world champions of two international leagues, in real-world head-to-head races. Swift won several races against each of the human champions and demonstrated the fastest recorded race time. This work represents a milestone for mobile robotics and machine intelligence2, which may inspire the deployment of hybrid learning-based solutions in other physical systems.},
+  langid = {english},
+  file = {/Users/vitay/Documents/Zotero/storage/LU72WIPE/Kaufmann et al. - 2023 - Champion-level drone racing using deep reinforcement learning.pdf}
+}
+
 @unpublished{Kendall2018,
   title = {Learning to {{Drive}} in a {{Day}}},
   author = {Kendall, Alex and Hawke, Jeffrey and Janz, David and Mazur, Przemyslaw and Reda, Daniele and Allen, John-Mark and Lam, Vinh-Dieu and Bewley, Alex and Shah, Amar},
@@ -3938,6 +3984,18 @@ Subject\_term\_id: cognitive-neuroscience;learning-algorithms;learning-and-memor
   abstract = {We seek to align agent behavior with a user's objectives in a reinforcement learning setting with unknown dynamics, an unknown reward function, and unknown unsafe states. The user knows the rewards and unsafe states, but querying the user is expensive. To address this challenge, we propose an algorithm that safely and interactively learns a model of the user's reward function. We start with a generative model of initial states and a forward dynamics model trained on off-policy data. Our method uses these models to synthesize hypothetical behaviors, asks the user to label the behaviors with rewards, and trains a neural network to predict the rewards. The key idea is to actively synthesize the hypothetical behaviors from scratch by maximizing tractable proxies for the value of information, without interacting with the environment. We call this method reward query synthesis via trajectory optimization (ReQueST). We evaluate ReQueST with simulated users on a state-based 2D navigation task and the image-based Car Racing video game. The results show that ReQueST significantly outperforms prior methods in learning reward models that transfer to new environments with different initial state distributions. Moreover, ReQueST safely trains the reward model to detect unsafe states, and corrects reward hacking before deploying the agent.},
   keywords = {Computer Science - Computers and Society,Computer Science - Machine Learning,Statistics - Machine Learning},
   file = {/Users/vitay/Documents/Zotero/storage/AF2934J7/Reddy_et_al_2019_Learning_Human_Objectives_by_Evaluating_Hypothetical_Behavior.pdf;/Users/vitay/Documents/Zotero/storage/B7QD6ZC6/1912.html}
+}
+
+@online{Ren2024,
+  title = {Diffusion {{Policy Policy Optimization}}},
+  author = {Ren, Allen Z. and Lidard, Justin and Ankile, Lars L. and Simeonov, Anthony and Agrawal, Pulkit and Majumdar, Anirudha and Burchfiel, Benjamin and Dai, Hongkai and Simchowitz, Max},
+  date = {2024-09-01},
+  url = {https://arxiv.org/abs/2409.00588v1},
+  urldate = {2024-10-10},
+  abstract = {We introduce Diffusion Policy Policy Optimization, DPPO, an algorithmic framework including best practices for fine-tuning diffusion-based policies (e.g. Diffusion Policy) in continuous control and robot learning tasks using the policy gradient (PG) method from reinforcement learning (RL). PG methods are ubiquitous in training RL policies with other policy parameterizations; nevertheless, they had been conjectured to be less efficient for diffusion-based policies. Surprisingly, we show that DPPO achieves the strongest overall performance and efficiency for fine-tuning in common benchmarks compared to other RL methods for diffusion-based policies and also compared to PG fine-tuning of other policy parameterizations. Through experimental investigation, we find that DPPO takes advantage of unique synergies between RL fine-tuning and the diffusion parameterization, leading to structured and on-manifold exploration, stable training, and strong policy robustness. We further demonstrate the strengths of DPPO in a range of realistic settings, including simulated robotic tasks with pixel observations, and via zero-shot deployment of simulation-trained policies on robot hardware in a long-horizon, multi-stage manipulation task. Website with code: diffusion-ppo.github.io},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/Users/vitay/Documents/Zotero/storage/8PMBWKPF/Ren et al. - 2024 - Diffusion Policy Policy Optimization.pdf}
 }
 
 @unpublished{Rohde2018,

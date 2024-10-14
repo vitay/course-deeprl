@@ -2494,6 +2494,19 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   file = {/Users/vitay/Documents/Zotero/storage/ESNMHUZG/Nichol and Dhariwal - 2021 - Improved Denoising Diffusion Probabilistic Models.pdf}
 }
 
+@online{Nichol2021a,
+  title = {{{GLIDE}}: {{Towards Photorealistic Image Generation}} and {{Editing}} with {{Text-Guided Diffusion Models}}},
+  shorttitle = {{{GLIDE}}},
+  author = {Nichol, Alex and Dhariwal, Prafulla and Ramesh, Aditya and Shyam, Pranav and Mishkin, Pamela and McGrew, Bob and Sutskever, Ilya and Chen, Mark},
+  date = {2021-12-20},
+  url = {https://arxiv.org/abs/2112.10741v3},
+  urldate = {2024-10-01},
+  abstract = {Diffusion models have recently been shown to generate high-quality synthetic images, especially when paired with a guidance technique to trade off diversity for fidelity. We explore diffusion models for the problem of text-conditional image synthesis and compare two different guidance strategies: CLIP guidance and classifier-free guidance. We find that the latter is preferred by human evaluators for both photorealism and caption similarity, and often produces photorealistic samples. Samples from a 3.5 billion parameter text-conditional diffusion model using classifier-free guidance are favored by human evaluators to those from DALL-E, even when the latter uses expensive CLIP reranking. Additionally, we find that our models can be fine-tuned to perform image inpainting, enabling powerful text-driven image editing. We train a smaller model on a filtered dataset and release the code and weights at https://github.com/openai/glide-text2im.},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/Users/vitay/Documents/Zotero/storage/M9XKW42J/Nichol et al. - 2021 - GLIDE Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models.pdf}
+}
+
 @online{Nichol2022,
   title = {{{GLIDE}}: {{Towards Photorealistic Image Generation}} and {{Editing}} with {{Text-Guided Diffusion Models}}},
   shorttitle = {{{GLIDE}}},
@@ -2755,6 +2768,21 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   abstract = {Recent work has seen the development of general purpose neural architectures that can be trained to perform tasks across diverse data modalities. General purpose models typically make few assumptions about the underlying data-structure and are known to perform well in the large-data regime. At the same time, there has been growing interest in modular neural architectures that represent the data using sparsely interacting modules. These models can be more robust out-of-distribution, computationally efficient, and capable of sample-efficient adaptation to new data. However, they tend to make domain-specific assumptions about the data, and present challenges in how module behavior (i.e., parameterization) and connectivity (i.e., their layout) can be jointly learned. In this work, we introduce a general purpose, yet modular neural architecture called Neural Attentive Circuits (NACs) that jointly learns the parameterization and a sparse connectivity of neural modules without using domain knowledge. NACs are best understood as the combination of two systems that are jointly trained end-to-end: one that determines the module configuration and the other that executes it on an input. We demonstrate qualitatively that NACs learn diverse and meaningful module configurations on the NLVR2 dataset without additional supervision. Quantitatively, we show that by incorporating modularity in this way, NACs improve upon a strong non-modular baseline in terms of low-shot adaptation on CIFAR and CUBs dataset by about 10\%, and OOD robustness on Tiny ImageNet-R by about 2.5\%. Further, we find that NACs can achieve an 8x speedup at inference time while losing less than 3\% performance. Finally, we find NACs to yield competitive results on diverse data modalities spanning point-cloud classification, symbolic processing and text-classification from ASCII bytes, thereby confirming its general purpose nature.},
   pubstate = {prepublished},
   file = {/Users/vitay/Documents/Zotero/storage/62CVDUIJ/Rahaman_et_al_2022_Neural_Attentive_Circuits.pdf;/Users/vitay/Documents/Zotero/storage/U27TS5Z5/2210.html}
+}
+
+@online{Ramesh2022,
+  title = {Hierarchical {{Text-Conditional Image Generation}} with {{CLIP Latents}}},
+  author = {Ramesh, Aditya and Dhariwal, Prafulla and Nichol, Alex and Chu, Casey and Chen, Mark},
+  date = {2022-04-12},
+  eprint = {2204.06125},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2204.06125},
+  url = {http://arxiv.org/abs/2204.06125},
+  urldate = {2024-10-01},
+  abstract = {Contrastive models like CLIP have been shown to learn robust representations of images that capture both semantics and style. To leverage these representations for image generation, we propose a two-stage model: a prior that generates a CLIP image embedding given a text caption, and a decoder that generates an image conditioned on the image embedding. We show that explicitly generating image representations improves image diversity with minimal loss in photorealism and caption similarity. Our decoders conditioned on image representations can also produce variations of an image that preserve both its semantics and style, while varying the non-essential details absent from the image representation. Moreover, the joint embedding space of CLIP enables language-guided image manipulations in a zero-shot fashion. We use diffusion models for the decoder and experiment with both autoregressive and diffusion models for the prior, finding that the latter are computationally more efficient and produce higher-quality samples.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/26WIAI8W/Ramesh et al. - 2022 - Hierarchical Text-Conditional Image Generation with CLIP Latents.pdf}
 }
 
 @unpublished{Ramsauer2020,

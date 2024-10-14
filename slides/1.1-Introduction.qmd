@@ -159,7 +159,7 @@ See <http://www.incompleteideas.net/book/ebook/node12.html>
 
     * The **exploration** phase, where it gathers knowledge about its environment.
 
-    * The **exploitation** phase, where this knowledge is used to collect as mans rewards as possible.
+    * The **exploitation** phase, where this knowledge is used to collect as many rewards as possible.
 
 * The biggest issue with this approach is that exploring large action spaces might necessitate a **lot** of trials (**sample complexity**).
 
@@ -557,7 +557,15 @@ Source: <https://towardsdatascience.com/cartpole-introduction-to-reinforcement-l
 
 {{< youtube XiigTGKZfks >}}
 
+# `gymnasium` library for RL environments
 
+```{=html}
+<iframe width="1500" height="500" src="https://gymnasium.farama.org/"></iframe>
+```
+
+:::footer
+Source: <https://gymnasium.farama.org>
+:::
 
 # Board games (Backgammon, Chess, Go, etc)
 
@@ -710,6 +718,16 @@ linear velocity (+), crashes (-)
 
 {{< youtube 8tq1C8spV_g >}}
 
+# Dota2 (OpenAI)
+
+{{< youtube eHipy_j29Xw >}}
+
+* 128,000 CPU cores and 256 Nvidia P100 GPUs on Google Cloud for 10 months ($25,000 per day)...
+
+
+# Starcraft II (AlphaStar)
+
+![Source: <https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii>](img/alphastar.gif)
 
 
 # Process control
@@ -838,17 +856,15 @@ time before humans take control.
 :::
 
 
-# Dota2 (OpenAI)
+# Drone racing
 
-{{< youtube eHipy_j29Xw >}}
+{{< youtube fBiataDpGIo >}}
 
-* 128,000 CPU cores and 256 Nvidia P100 GPUs on Google Cloud for 10 months ($25,000 per day)...
+::: footer
+@Kaufmann2023  Champion-level drone racing using deep reinforcement learning. Nature 620, 982–987.
+:::
 
 
-
-# Starcraft II (AlphaStar)
-
-![Source: <https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii>](img/alphastar.gif)
 
 # ChatGPT
 
