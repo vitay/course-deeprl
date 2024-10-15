@@ -39,7 +39,7 @@
     "href": "webpage/Installation.html",
     "title": "Python installation",
     "section": "",
-    "text": "Using conda in the B202 (FRIZ)\n\n\n\nconda is already installed. You first need to initialize it by typing this command in a terminal:\nconda init bash\nClose the terminal, open a new one, and type:\nconda create --name deeprl python=3.11\nconda activate deeprl\nconda install -c conda-forge numpy matplotlib jupyterlab\nThis can take a while, be patient.\nBefore every session, or when you open a new terminal, you will need to type:\nconda activate deeprl\nHere are the main Python dependencies necessary for the exercises:\nIf you are using Linux, you can probably install all the dependencies (except gymnasium) from your package manager. For the others, use either Anaconda or Colab."
+    "text": "Using conda in the B202 (FRIZ)\n\n\n\nconda is already installed. You first need to initialize it by typing this command in a terminal:\nconda init tcsh\nClose the terminal, open a new one, and type:\nconda create --name deeprl python=3.11\nconda activate deeprl\nconda install -c conda-forge numpy matplotlib jupyterlab\nThis can take a while, be patient.\nBefore every session, or when you open a new terminal, you will need to type:\nconda activate deeprl\nHere are the main Python dependencies necessary for the exercises:\nIf you are using Linux, you can probably install all the dependencies (except gymnasium) from your package manager. For the others, use either Anaconda or Colab."
   },
   {
     "objectID": "webpage/Installation.html#anaconda",
