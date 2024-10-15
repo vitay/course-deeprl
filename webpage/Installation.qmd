@@ -4,17 +4,18 @@ title: Python installation
 format: html
 ---
 
-::: {.callout-note}
-In the B202 (FRIZ), conda is already installed. You first need to initialize it by typing this command in a terminal:
+::: {.callout-note icon="false" title="Using conda in the B202 (FRIZ)"}
+
+`conda` is already installed. You first need to initialize it by typing this command in a terminal:
 
 ```bash
-conda init tcsh
+conda init bash
 ```
 
 Close the terminal, open a new one, and type:
 
 ```bash
-conda create --name deeprl python=3.9
+conda create --name deeprl python=3.11
 conda activate deeprl
 conda install -c conda-forge numpy matplotlib jupyterlab
 ```
@@ -30,14 +31,14 @@ conda activate deeprl
 
 Here are the main Python dependencies necessary for the exercises:
 
-* python >= 3.9
-* numpy >= 1.21
+* python >= 3.11
+* numpy >= 2.0
 * matplotlib >= 3.5
 * jupyterlab >= 3.0 (jupyter notebook is fine)
-* tensorflow >= 2.7
-* gymnasium >= 0.29
+* tensorflow >= 2.16
+* gymnasium >= 1.0
 
-If you are using Linux, you can probably install all the dependencies (except gym) from your package manager. For the others, use either Anaconda or Colab.
+If you are using Linux, you can probably install all the dependencies (except gymnasium) from your package manager. For the others, use either Anaconda or Colab.
 
 ## Anaconda
 
@@ -81,16 +82,16 @@ It is a good idea to isolate the required packages from the rest of your Python 
 
 As we advise to use Anaconda, we focus here on [conda environments](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html), but the logic is always the same.
 
-To create a conda environment with the name `deeprl` using Python 3.9, type in a terminal:
+To create a conda environment with the name `deeprl` using Python 3.11, type in a terminal:
 
 ```bash
-conda create --name deeprl python=3.9
+conda create --name deeprl python=3.11
 ```
 
 You should see that it installs a bunch of basic packages along python:
 
 ```bash
-(base) ~/ conda create --name deeprl python=3.9
+(base) ~/ conda create --name deeprl python=3.11
 Collecting package metadata (current_repodata.json): done
 Solving environment: done
 
@@ -99,7 +100,7 @@ Solving environment: done
   environment location: /Users/vitay/Applications/miniforge3/envs/deeprl
 
   added / updated specs:
-    - python=3.9
+    - python=3.11
 
 
 The following NEW packages will be INSTALLED:
@@ -158,6 +159,7 @@ conda install numpy matplotlib jupyterlab
 pip install tensorflow
 pip install gym[all]
 ```
+
 ::: {.callout-hint}
 If you installed the regular Anaconda and not miniforge, we strongly advise to force using the conda forge channel:
 

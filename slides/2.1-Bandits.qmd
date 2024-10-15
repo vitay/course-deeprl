@@ -13,7 +13,7 @@ resources: pdf/2.1-Bandits.pdf
         
 # n-armed bandits
 
-* The **n-armed bandit**  (or multi-armed bandit) is the simplest for of learning by trial and error. 
+* The **n-armed bandit**  (or multi-armed bandit) is the simplest form of learning by trial and error. 
 
 * Learning and action selection take place in the same single state.
 
