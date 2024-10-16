@@ -2,90 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vitay.github.io/course-deeprl/index.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/5.1-Outlook.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.4-A3C.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.5-DDPG.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.2-BeyondDQN.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/4.4-SR.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/webpage/Installation.html</loc>
-    <lastmod>2024-10-15T12:13:01.026Z</lastmod>
+    <lastmod>2024-10-16T06:56:08.094Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/4.1-ModelBased.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/2.6-DeepNetworks.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/2.3-MC.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/2.1-Bandits.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/1.0-Foreword.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/2.2-MDP.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/2.5-FunctionApproximation.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.3-PG.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/4.3-AlphaGo.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/2.4-TD.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.1-DQN.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.7-SAC.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/3.6-PPO.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/4.2-LearnedModels.html</loc>
-    <lastmod>2024-10-15T12:12:59.718Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
   <url>
     <loc>https://vitay.github.io/course-deeprl/slides/1.1-Introduction.html</loc>
-    <lastmod>2024-10-15T12:12:59.714Z</lastmod>
+    <lastmod>2024-10-16T06:56:06.790Z</lastmod>
   </url>
 </urlset>

@@ -447,7 +447,7 @@ Julien Vitay
 <h1>Value-based deep RL</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/deeprl.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+<p><img data-src="img/valuebased-agent.png" class="quarto-figure quarto-figure-center" style="width:55.0%"></p>
 </figure>
 </div>
 <ul>
@@ -455,8 +455,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">Q_\theta(s, a) \approx Q^\pi(s, a) = \mathbb{E}_\pi (R_t | s_t=s, a_t=a)</span></p>
 <ul>
-<li><p>The Q-values now depend on the parameters <span class="math inline">\theta</span> of the DNN.</p></li>
-<li><p>The derived policy <span class="math inline">\pi_\theta</span> uses for example an <span class="math inline">\epsilon</span>-greedy or softmax action selection scheme over the estimated Q-values:</p></li>
+<li>The derived policy <span class="math inline">\pi_\theta</span> uses for example an <span class="math inline">\epsilon</span>-greedy or softmax action selection scheme over the estimated Q-values:</li>
 </ul>
 <p><span class="math display">
     \pi_\theta(s, a) \leftarrow \text{Softmax} (Q_\theta(s, a))
@@ -1142,7 +1141,7 @@ Julien Vitay
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/ddqn-results1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="img/ddqn-results1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 <div class="footer">
@@ -1158,11 +1157,15 @@ Julien Vitay
 <ul>
 <li><strong>Action selection</strong>: The next greedy action <span class="math inline">a^*</span> is calculated by the <strong>value network</strong> <span class="math inline">\theta</span> (current policy):</li>
 </ul>
-<p><span class="math display">a^* =\text{argmax}_{a'} Q_{\theta}(s', a')</span></p>
+<p><span class="math display">
+  a^* =\text{argmax}_{a'} Q_{\theta}(s', a')
+  </span></p>
 <ul>
 <li><strong>Action evaluation</strong>: Its Q-value for the target is calculated using the <strong>target network</strong> <span class="math inline">\theta'</span> (older values):</li>
 </ul>
-<p><span class="math display">t = r + \gamma \, Q_{\theta'}(s´, a^*)</span></p></li>
+<p><span class="math display">
+  t = r + \gamma \, Q_{\theta'}(s´, a^*)
+  </span></p></li>
 <li><p>This gives the following loss function for <strong>double DQN</strong> (DDQN):</p></li>
 </ul>
 <p><span class="math display">
@@ -1176,7 +1179,7 @@ Julien Vitay
 
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/ddqn-results2.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/ddqn-results2.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
 </figure>
 </div>
 <div class="footer">
@@ -1199,7 +1202,7 @@ Julien Vitay
 <h1>Prioritized Experience Replay</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/replaybuffer.png" style="width:70.0%"></p>
+<p><img data-src="img/replaybuffer.png" style="width:60.0%"></p>
 <figcaption>Source: <a href="https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/" class="uri">https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/</a></figcaption>
 </figure>
 </div>
@@ -1219,7 +1222,7 @@ Julien Vitay
 <h1>Prioritized Experience Replay</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/replaybuffer.png" style="width:70.0%"></p>
+<p><img data-src="img/replaybuffer.png" style="width:60.0%"></p>
 <figcaption>Source: <a href="https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/" class="uri">https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/</a></figcaption>
 </figure>
 </div>

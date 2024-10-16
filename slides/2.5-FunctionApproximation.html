@@ -414,7 +414,8 @@ Julien Vitay
 <h1>Tabular RL cannot learn to play video games</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/rl-loop.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+<p><img data-src="img/rl-loop.png" style="width:80.0%"></p>
+<figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
 </figure>
 </div>
 </section>
@@ -849,12 +850,10 @@ Julien Vitay
 <ul>
 <li>Before we dive into deep RL (i.e.&nbsp;RL with non-linear FA), let’s see how we can design good <strong>feature vectors</strong> for linear function approximation.</li>
 </ul>
-<div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/deeprl.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+<p><img data-src="img/valuebased-agent.png" class="quarto-figure quarto-figure-center" style="width:55.0%"></p>
 </figure>
-</div>
 </div>
 <ul>
 <li><p>The problem with deep NN is that they need a lot of samples to converge, what worsens the fundamental problem of RL: <strong>sample efficiency</strong>.</p></li>
@@ -885,7 +884,7 @@ Julien Vitay
 </div></div>
 <ul>
 <li><p>No, a high angular velocity <span class="math inline">\dot{\theta}</span> is good when the pole is horizontal (going up) but bad if the pole is vertical (will not stop).</p></li>
-<li><p>The value would depends linearly on something like <span class="math inline">\dot{\theta} \, \sin \theta</span>, which is a non-linear combination of features.</p></li>
+<li><p>The value would depend linearly on something like <span class="math inline">\dot{\theta} \, \sin \theta</span>, which is a non-linear combination of features.</p></li>
 </ul>
 </section>
 
@@ -895,12 +894,10 @@ Julien Vitay
 <li><p>Let’s suppose we have a simple problem where the state <span class="math inline">s</span> is represented by two continuous variables <span class="math inline">x</span> and <span class="math inline">y</span>.</p></li>
 <li><p>The true value function <span class="math inline">V^\pi(s)</span> is a non-linear function of <span class="math inline">x</span> and <span class="math inline">y</span>.</p></li>
 </ul>
-<div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/featurecoding-data.png" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
 </figure>
-</div>
 </div>
 </section>
 
