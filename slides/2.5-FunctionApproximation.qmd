@@ -41,7 +41,7 @@ resources: pdf/2.5-FunctionApproximation.pdf
 
 # Tabular RL cannot learn to play video games
 
-![](img/rl-loop.png){width=80%}
+![Source: David Silver. <http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html>](img/rl-loop.png){width=80%}
 
 # Continuous action spaces
 
@@ -445,9 +445,7 @@ $$\mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (r_{t+1} + \gamma \, V
 
 * Before we dive into deep RL (i.e. RL with non-linear FA), let's see how we can design good **feature vectors** for linear function approximation.
 
-:::{}
-![](img/deeprl.jpg){width=50%}
-:::
+![](img/valuebased-agent.png){width=55%}
 
 * The problem with deep NN is that they need a lot of samples to converge, what worsens the fundamental problem of RL: **sample efficiency**.
 
@@ -481,7 +479,7 @@ $$V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)$$
 
 * No, a high angular velocity $\dot{\theta}$ is good when the pole is horizontal (going up) but bad if the pole is vertical (will not stop).
 
-* The value would depends linearly on something like $\dot{\theta} \, \sin \theta$, which is a non-linear combination of features.
+* The value would depend linearly on something like $\dot{\theta} \, \sin \theta$, which is a non-linear combination of features.
 
 # Feature coding
 
@@ -489,9 +487,8 @@ $$V_\varphi(s) = \sum_{i=1}^d w_i \, \phi_i(s) = \mathbf{w}^T \times \phi(s)$$
 
 * The true value function $V^\pi(s)$ is a non-linear function of $x$ and $y$.
 
-:::{}
 ![](img/featurecoding-data.png){width=50%}
-:::
+
 
 # Linear approximation
 

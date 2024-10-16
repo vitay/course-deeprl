@@ -72,7 +72,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - 
 
 * But it could be any target distribution.
 
-![](img/crossentropy-animation.gif){width=60%}
+![](img/crossentropy-animation.gif){width=50%}
 
 # Backpropagation
 
@@ -99,7 +99,7 @@ Rumelhart, Hinton, Williams (1986). "Learning representations by back-propagatin
 
 # Components of neural networks
 
-![](img/deeprl.jpg){width=50%}
+![](img/deepnetwork.svg){width=30%}
 
 * There are three aspects to consider when building a neural network:
 

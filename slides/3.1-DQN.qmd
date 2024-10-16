@@ -10,13 +10,12 @@ resources: pdf/3.1-DQN.pdf
 
 # Value-based deep RL
 
-![](img/deeprl.jpg){width=50%}
+![](img/valuebased-agent.png){width=55%}
 
 * The basic idea in **value-based deep RL** is to approximate the Q-values in each possible state, using a **deep neural network** with free parameters $\theta$:
 
 $$Q_\theta(s, a) \approx Q^\pi(s, a) = \mathbb{E}_\pi (R_t | s_t=s, a_t=a)$$
 
-* The Q-values now depend on the parameters $\theta$ of the DNN. 
 
 * The derived policy $\pi_\theta$ uses for example an $\epsilon$-greedy or softmax action selection scheme over the estimated Q-values:
 
@@ -661,7 +660,7 @@ $$Q_\theta(s, a) > Q^\pi(s, a)$$
 
 * This does not matter much in action selection, as we apply $\epsilon$-greedy or softmax on the Q-values anyway, but it may make learning slower (sample complexity) and less optimal.
 
-![](img/ddqn-results1.png){width=100%}
+![](img/ddqn-results1.png){width=80%}
 
 ::: footer
 @vanHasselt2015 Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
@@ -673,11 +672,15 @@ $$Q_\theta(s, a) > Q^\pi(s, a)$$
 
     * **Action selection**: The next greedy action $a^*$ is calculated by the **value network** $\theta$ (current policy):
 
-    $$a^* =\text{argmax}_{a'} Q_{\theta}(s', a')$$
+    $$
+    a^* =\text{argmax}_{a'} Q_{\theta}(s', a')
+    $$
 
     * **Action evaluation**: Its Q-value for the target is calculated using the **target network** $\theta'$ (older values):
 
-    $$t = r + \gamma \, Q_{\theta'}(s´, a^*)$$
+    $$
+    t = r + \gamma \, Q_{\theta'}(s´, a^*)
+    $$
    
 * This gives the following loss function for **double DQN** (DDQN):
 
@@ -692,7 +695,7 @@ $$
 
 ---
 
-![](img/ddqn-results2.png)
+![](img/ddqn-results2.png){width=90%}
 
 ::: footer
 @vanHasselt2015 Deep Reinforcement Learning with Double Q-learning, arXiv:1509.06461.
@@ -709,7 +712,7 @@ $$
 # Prioritized Experience Replay
 
 
-![Source: <https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/>](img/replaybuffer.png){width=70%}
+![Source: <https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/>](img/replaybuffer.png){width=60%}
 
 * The **experience replay memory** or **replay buffer** is used to store the last 1M transitions $(s, a, r, s')$.
 
@@ -727,7 +730,7 @@ $$
 # Prioritized Experience Replay
 
 
-![Source: <https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/>](img/replaybuffer.png){width=70%}
+![Source: <https://parksurk.github.io/deep/reinfocement/learning/drlnd_2-4_value_based_methods-post/>](img/replaybuffer.png){width=60%}
 
 * The experience replay memory makes learning very **slow**: we need a lot of samples to learn something useful:
 

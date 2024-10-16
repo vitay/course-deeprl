@@ -9,8 +9,10 @@ format: html
 `conda` is already installed. You first need to initialize it by typing this command in a terminal:
 
 ```bash
-conda init tcsh
+conda init bash
 ```
+
+(if you already had an account but never used conda, it may be `conda init tcsh`...)
 
 Close the terminal, open a new one, and type:
 

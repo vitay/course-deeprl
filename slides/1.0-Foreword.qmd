@@ -22,7 +22,7 @@ format: revealjs
 
 * 2002: Master in Electrical Engineering (Supélec).
 
-* 2006: Ph.D in Computer Science (Inria).
+* 2006: Ph.D. in Computer Science (Inria).
 
     * Emergence of sensorimotor function on a distributed numerical substrate.
 
@@ -76,18 +76,20 @@ format: revealjs
 
 * One lecture (Wednesday 09:15) and one exercise (Tuesday 13:45).
 
+* Move lecture to Thursday 17:15?
+
 * All materials are at:
 
 <https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/notes>
 
-* The videos might be slightly outdated.
+* The videos are slightly outdated.
 
 * Written exam, 90 minutes, 5 credit points, based on a research paper.
 
 
 # Course description
 
-* **Neurocomputing** (573180) is an informal prequisite of deep reinforcement learning, but it is possible to study it parallel.
+* **Neurocomputing** (573180) is an **in**formal prerequisite of deep reinforcement learning, but it is possible to study it parallel.
 
 * The content is available for everybody, but the exam is only for:
 
@@ -98,6 +100,8 @@ format: revealjs
     * Master Informatik ($\rightarrow$ Multi-Agent systems).
 
     * Master angewandte Informatik ($\rightarrow$ Themenschwerpunkte Informatik I/II).
+
+    * Master SEKO.
 
 
 * The course is quite math-heavy: calculus, statistics, information theory.
