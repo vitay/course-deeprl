@@ -656,7 +656,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <p><span class="math display">r_1 \rightarrow r_2 \rightarrow r_3  \rightarrow \ldots \rightarrow r_{T}</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/rl-sequence.jpg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/rl-sequence.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div><div class="column" style="width:30%;">
@@ -703,7 +703,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <p><span class="math display"> R(\tau) = \sum_{t=0}^{T} \gamma^t \, r_{t+1} </span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/rl-sequence.jpg" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+<p><img data-src="img/rl-sequence.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
 </figure>
 </div>
 </section>
@@ -860,7 +860,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <h1>The policy</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/rl-agent.jpg" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
+<p><img data-src="img/rl-agent.png" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
 </figure>
 </div>
 <ul>
@@ -873,13 +873,11 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 \end{align}
 </span></p>
 <ul>
-<li><p>The policy can be <strong>deterministic</strong> (one action has a probability of 1, the others 0) or <strong>stochastic</strong>.</p></li>
 <li><p>The goal of an agent is to find a policy that maximizes the sum of received rewards <strong>on the long term</strong>, i.e.&nbsp;the <strong>return</strong> <span class="math inline">R_t</span> at each each time step.</p></li>
 <li><p>This policy is called the <strong>optimal policy</strong> <span class="math inline">\pi^*</span>.</p></li>
 </ul>
 <p><span class="math display">
-    \mathcal{J}(\pi) = \mathbb{E}_{\rho_\pi} [R_t] \qquad
-    \pi^* = \text{argmax} \, \mathcal{J}(\pi)
+    \pi^* = \text{argmax} \, \mathcal{J}(\pi) = \text{argmax} \,  \mathbb{E}_{\tau \sim \rho_\pi} [R(\tau)]
 </span></p>
 </section>
 
@@ -889,12 +887,10 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>RL is an <strong>adaptive optimal control</strong> method for Markov Decision Processes using (sparse) rewards as a partial feedback.</p></li>
 <li><p>At each time step <span class="math inline">t</span>, the agent observes its Markov state <span class="math inline">s_t \in \mathcal{S}</span>, produces an action <span class="math inline">a_t \in \mathcal{A}(s_t)</span>, receives a reward according to this action <span class="math inline">r_{t+1} \in \Re</span> and updates its state: <span class="math inline">s_{t+1} \in \mathcal{S}</span>.</p></li>
 </ul>
-<div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/rl-sequence.jpg" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+<p><img data-src="img/rl-sequence.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
 </figure>
-</div>
 </div>
 <ul>
 <li><p>The agent generates trajectories <span class="math inline">\tau = (s_0, a_0, r_1, s_1, a_1, \ldots, s_T)</span> depending on its policy <span class="math inline">\pi(s ,a)</span>.</p></li>
@@ -902,8 +898,7 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>The goal is to find the <strong>optimal policy</strong> <span class="math inline">\pi^* (s, a)</span> that maximizes in expectation the return of each possible trajectory under that policy:</p></li>
 </ul>
 <p><span class="math display">
-    \mathcal{J}(\pi) = \mathbb{E}_{\tau \sim \rho_\pi} [R(\tau)] \qquad
-    \pi^* = \text{argmax} \, \mathcal{J}(\pi)
+    \pi^* = \text{argmax} \, \mathcal{J}(\pi) = \text{argmax} \,  \mathbb{E}_{\tau \sim \rho_\pi} [R(\tau)]
 </span></p>
 </section>
 
@@ -1574,7 +1569,7 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 </span></p>
 <p>leads to the same equations as:</p>
 <p><span class="math display">
-      V^{\pi} (s)  = \mathbf{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
+      V^{\pi} (s)  = \mathcal{R}_{s}^\pi + \gamma \, \sum_{s' \in \mathcal{S}} \, \mathcal{P}_{ss'}^\pi \, V^{\pi} (s')
 </span></p>
 <p>for all states <span class="math inline">s</span>.</p>
 <ul>
