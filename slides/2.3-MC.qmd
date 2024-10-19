@@ -445,7 +445,7 @@ $$\mathcal{J}(\pi) = \mathbb{E}_{\tau \sim \rho_b} [\frac{\rho_\pi(\tau)}{\rho_b
 
     * the probability of arriving in the state $s_{t+1}$ from the state $s_t$ with the action $a_t$: the **transition probability** $p(s_{t+1} | s_t, a_t)$. 
 
-![](img/rl-sequence.jpg){width=60%}
+![](img/rl-sequence.png){width=60%}
 
 # Importance sampling
 
