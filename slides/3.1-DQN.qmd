@@ -266,13 +266,13 @@ Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D.,
 
 * To avoid correlation between samples, @Mnih2015 proposed to store the $(s, a, r, s')$ transitions in a huge **experience replay memory** or **replay buffer**  $\mathcal{D}$ (e.g. 1 million transitions).
 
-![](img/ERM.svg){width=40%}
+![](img/ERM.png){width=60%}
 
 * When the buffer is full, we simply overwrite old transitions.
 
 * The Q-learning update is only applied on a **random minibatch** of those past experiences, not the last transitions.
 
-* This ensure the independence of the samples (non-correlated samples).
+* This ensures the independence of the samples (non-correlated samples).
 
 # Experience replay memory
 
@@ -301,7 +301,7 @@ Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D.,
 
 # Experience replay memory
 
-![](img/ERM.svg){width=40%}
+![](img/ERM.png){width=60%}
 
 
 * But wait! The samples of the minibatch are still not i.i.d, as they are not **identically distributed**:

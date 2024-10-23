@@ -17,13 +17,13 @@ resources: pdf/2.1-Bandits.pdf
 
 * Learning and action selection take place in the same single state.
 
-* The $n$ actions have different reward distributions.
+* The $n$ actions have different reward distributions: the reward varies around a mean value but is not always the same.
 
 * The goal is to find out through trial and error which action provides the most reward on average.
 
 ::: {}
 
-![](img/narmedbandit2.jpg){width=50%}
+![](img/narmedbandit.png){width=50%}
 
 :::
 
@@ -381,11 +381,13 @@ $$
 * The solution is to replace $\frac{1}{t+1}$ with a fixed parameter called the **learning rate** (or **step size**) $\alpha$:
 
 $$
-\begin{aligned}
-    Q_{t+1}(a) & = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a)) \\
-                & \\
-                & = (1 - \alpha) \, Q_t(a) + \alpha \, r_{t+1}
-\end{aligned}
+    Q_{t+1}(a) = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a))
+$$
+
+* Equivalent formulation:
+
+$$
+    Q_{t+1}(a) = (1 - \alpha) \, Q_t(a) + \alpha \, r_{t+1}
 $$
 
 
@@ -579,7 +581,7 @@ $$
 where $\tau$ is a positive parameter called the **temperature**.
 
 
-![](img/bandit-estimates-softmax.png)
+![](img/bandit-estimates-softmax.png){width=80%}
 
 # Softmax action selection
 
@@ -694,10 +696,11 @@ where $\tau$ is a positive parameter called the **temperature**.
 * It is however hard to find the right **decay rate** for the exploration parameters. 
     
 
-![](img/bandit-scheduling.png)
+![](img/bandit-scheduling.png){width=80%}
+
+
 
 # Exploration schedule
-
 
 
 * The performance is worse at the beginning, as the agent explores with a high temperature.

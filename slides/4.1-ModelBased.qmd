@@ -298,7 +298,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 ::: {.column width=50%}
 
 
-![](img/ERM.svg)
+![](img/ERM.png)
 
 :::
 :::
