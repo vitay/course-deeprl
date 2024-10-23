@@ -388,13 +388,13 @@ Julien Vitay
 <ul>
 <li><p>The <strong>n-armed bandit</strong> (or multi-armed bandit) is the simplest form of learning by trial and error.</p></li>
 <li><p>Learning and action selection take place in the same single state.</p></li>
-<li><p>The <span class="math inline">n</span> actions have different reward distributions.</p></li>
+<li><p>The <span class="math inline">n</span> actions have different reward distributions: the reward varies around a mean value but is not always the same.</p></li>
 <li><p>The goal is to find out through trial and error which action provides the most reward on average.</p></li>
 </ul>
 <div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/narmedbandit2.jpg" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+<p><img data-src="img/narmedbandit.png" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
 </figure>
 </div>
 </div>
@@ -776,11 +776,13 @@ Julien Vitay
 <li>The solution is to replace <span class="math inline">\frac{1}{t+1}</span> with a fixed parameter called the <strong>learning rate</strong> (or <strong>step size</strong>) <span class="math inline">\alpha</span>:</li>
 </ul>
 <p><span class="math display">
-\begin{aligned}
-    Q_{t+1}(a) &amp; = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a)) \\
-                &amp; \\
-                &amp; = (1 - \alpha) \, Q_t(a) + \alpha \, r_{t+1}
-\end{aligned}
+    Q_{t+1}(a) = Q_t(a) + \alpha \, (r_{t+1} - Q_t(a))
+</span></p>
+<ul>
+<li>Equivalent formulation:</li>
+</ul>
+<p><span class="math display">
+    Q_{t+1}(a) = (1 - \alpha) \, Q_t(a) + \alpha \, r_{t+1}
 </span></p>
 </div><div class="column">
 <div class="quarto-figure quarto-figure-center">
@@ -1004,7 +1006,7 @@ Julien Vitay
 <p>where <span class="math inline">\tau</span> is a positive parameter called the <strong>temperature</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/bandit-estimates-softmax.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/bandit-estimates-softmax.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 </section>
@@ -1138,7 +1140,7 @@ Julien Vitay
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/bandit-scheduling.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/bandit-scheduling.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 </section>
