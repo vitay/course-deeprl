@@ -208,7 +208,7 @@ $$
 ::: {.columns}
 ::: {.column width=100%}
 
-![](img/sarsa-sequence.png){width=50%}
+![](img/rl-sequence.png){width=50%}
 
 :::
 ::: {.column width=0%}
@@ -237,7 +237,7 @@ $$
 # SARSA: On-policy TD control
 
 :::{}
-![](img/sarsa-sequence.png){width=50%}
+![](img/rl-sequence.png){width=50%}
 :::
 
 * **while** True:
@@ -276,7 +276,7 @@ $$
 
 * As the learned policy is stochastic, the Q-value of the next action will have a **high variance**.
 
-![](img/epsilonggreedy-example.png)
+![](img/epsilonggreedy-example.png){width=40%}
 
 * The greedy action in the next state, the one with the highest Q-value, will not change from sample to sample: it can provide a more stable (less variance) estimate of the return:
 

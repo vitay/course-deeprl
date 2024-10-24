@@ -17,7 +17,7 @@ resources: pdf/3.3-PG.pdf
 ::: {.columns}
 ::: {.column width=60%}
 
-![](img/discrete.png)
+![](img/valuebased-agent.png)
 
 :::
 ::: {.column width=40%}
@@ -422,11 +422,13 @@ $$
 * For each state-action pair $(s_t, a_t)$ encountered during the episode, the gradient of the log-policy is multiplied by the complete return of the episode:
 
 :::columns
+
 :::column
 $$R(\tau) = \sum_{t'=0}^T \gamma^{t'} \, r_{t'+1}$$
 :::
+
 :::column
-![](img/sarsa-sequence.png)
+![](img/rl-sequence.png)
 :::
 :::
 
@@ -545,10 +547,6 @@ $$
     \mathcal{L}(\varphi) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[(Q^{\pi_\theta}(s, a) - Q_\varphi(s, a))^2]
 $$
 
-::: {.columns}
-::: {.column width=50%}
-
-
 * We obtain an **actor-critic** architecture:
 
     * the **actor** $\pi_\theta(s, a)$ implements the policy and selects an action $a$ in a state $s$.
@@ -556,14 +554,6 @@ $$
     * the **critic** $Q_\varphi(s, a)$ estimates the value of that action and drives learning in the actor.
 
 
-:::
-::: {.column width=50%}
-
-
-![](img/actorcritic.png){width=40%}
-
-:::
-:::
 
 
 ::: footer
@@ -571,46 +561,13 @@ $$
 :::
 
 
-# Function approximators to learn the Q-values
-
-There are two possibilities to approximate Q-values $Q_\theta(s, a)$:
-
-::: {.columns}
-::: {.column width=50%}
-
-* The DNN approximates the Q-value of a single $(s, a)$ pair.
-
-![](img/functionapproximation1.jpeg)
-
-* The action space can be continuous.
-
-:::
-::: {.column width=50%}
-
-
-* The DNN approximates the Q-value of all actions $a$ in a state $s$.
-
-![](img/functionapproximation2.jpeg)
-
-* The action space must be discrete (one neuron per action).
-
-:::
-:::
-
-
-::: footer
-Source: <https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677>
-:::
-
 
 # Policy Gradient : Actor-critic
 
-![](img/policygradient.svg)
+![](img/policygradient.png)
 
 # Policy Gradient : Actor-critic
 
-
-![](img/policygradient.svg){width=40%}
 
 
 * But how to train the critic? We do not know $Q^{\pi_\theta}(s, a)$. As always, we can estimate it through **sampling**:
@@ -634,26 +591,6 @@ Source: <https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-gr
         \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
     $$
 
-
-
-# Policy Gradient : Actor-critic
-
-
-![](img/policygradient.svg){width=40%}
-
-* The policy gradient (PG) theorem implies an **actor-critic** architecture.
-
-* The **actor** learns using the PG theorem:
-
-$$
-    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q_\varphi(s, a) ]
-$$
-
-* The **critic** learns using Q-learning:
- 
-$$
-    \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
-$$
 
 # Policy Gradient : reducing the variance
 

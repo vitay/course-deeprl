@@ -159,7 +159,7 @@ $$
 $$
 
 ::: {}
-![](img/dpg-chainrule.svg){width=80%}
+![](img/dpg-chainrule.png){width=80%}
 :::
 
 
@@ -200,9 +200,7 @@ $$\mathcal{L}(\varphi) = \mathbb{E}_{s \sim \rho_\theta}[(r(s, \mu_\theta(s)) + 
 
 # Deterministic Policy Gradient as an actor-critic architecture
 
-![](img/dpg.svg){width=90%}
-
-
+![](img/dpg.png){width=90%}
 
 **Training the actor:**
 
@@ -285,7 +283,7 @@ $$\varphi' \leftarrow \tau \varphi + (1-\tau) \, \varphi'$$
 
 # DDPG: Deep Deterministic Policy Gradient
 
-![](img/ddpg.svg)
+![](img/ddpg.png){width=70%}
 
 * A deterministic actor is good for learning (less variance), but not for exploring.
 
@@ -368,7 +366,7 @@ $$ dx_t = \theta (\mu - x_t) dt + \sigma dW_t \qquad \text{with} \qquad dW_t = \
 
 # DDPG: Deep Deterministic Policy Gradient
 
-![](img/ddpg.svg){width=100%}
+![](img/ddpg.png){width=70%}
 
 * DDPG allows to learn continuous policies: there can be one tanh output neuron per joint in a robot.
 

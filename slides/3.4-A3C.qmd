@@ -12,38 +12,15 @@ resources: pdf/3.4-A3C.pdf
 
 # Advantage actor-critic
 
-:::columns
-:::column
 
 * Let's consider an **n-step advantage actor-critic**:
 
 $$
-\begin{aligned}
-A^n_t &= R_t^n - V_\varphi (s_t)\\
-      &= \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V_\varphi(s_{t+n}) - V_\varphi (s_t)\\
-\end{aligned}
-$$
-
-:::
-:::column
-
-![](img/a2c.svg)
-
-:::
-:::
-
-* The **actor** $\pi_\theta(s, a)$ uses the PG theorem to learn the policy:
-
-$$
-    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R_t^n - V_\varphi(s_t)) ]
+A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V_\varphi(s_{t+n}) - V_\varphi (s_t)
 $$
 
 
-* The **critic** $V_\varphi(s)$ approximates the value of each state:
-
-$$
-    \mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[(R^n_t - V_\varphi(s_t))^2]
-$$
+![](img/a2c.png){width=70%}
 
 
 
@@ -71,7 +48,7 @@ $$
 
 * We cannot get an uncorrelated batch of transitions by acting **sequentially** with a single agent.
 
-![](img/sarsa-sequence.png)
+![](img/rl-sequence.png){width=65%}
 
 * A simple solution is to have **multiple actors** with the same weights $\theta$ interacting **in parallel** with different copies of the environment.
 
@@ -176,7 +153,7 @@ $$
 
 
 
-![](img/a3c.svg)
+![](img/a2c.png)
 
 :::
 ::: {.column width=50%}
@@ -403,7 +380,7 @@ but much faster!
 
 * We have considered that actor-critic architectures consist of two separate neural networks, both taking the state $s$ (or observation $o$) as an input.
 
-![](img/a2c.svg)
+![](img/a2c.png){width=70%}
 
 * Each of these networks have their own loss function. They share nothing except the "data".
 
