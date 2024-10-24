@@ -385,36 +385,17 @@ Julien Vitay
 
 <section id="advantage-actor-critic" class="title-slide slide level1 center">
 <h1>Advantage actor-critic</h1>
-<div class="columns">
-<div class="column">
 <ul>
 <li>Let’s consider an <strong>n-step advantage actor-critic</strong>:</li>
 </ul>
 <p><span class="math display">
-\begin{aligned}
-A^n_t &amp;= R_t^n - V_\varphi (s_t)\\
-      &amp;= \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V_\varphi(s_{t+n}) - V_\varphi (s_t)\\
-\end{aligned}
+A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V_\varphi(s_{t+n}) - V_\varphi (s_t)
 </span></p>
-</div><div class="column">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/a2c.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/a2c.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
 </figure>
 </div>
-</div></div>
-<ul>
-<li>The <strong>actor</strong> <span class="math inline">\pi_\theta(s, a)</span> uses the PG theorem to learn the policy:</li>
-</ul>
-<p><span class="math display">
-    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (R_t^n - V_\varphi(s_t)) ]
-</span></p>
-<ul>
-<li>The <strong>critic</strong> <span class="math inline">V_\varphi(s)</span> approximates the value of each state:</li>
-</ul>
-<p><span class="math display">
-    \mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[(R^n_t - V_\varphi(s_t))^2]
-</span></p>
 </section>
 
 <section id="advantage-actor-critic-1" class="title-slide slide level1 center">
@@ -445,7 +426,7 @@ A^n_t &amp;= R_t^n - V_\varphi (s_t)\\
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/sarsa-sequence.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/rl-sequence.png" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
 </figure>
 </div>
 <ul>
@@ -565,7 +546,7 @@ A^n_t &amp;= R_t^n - V_\varphi (s_t)\\
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/a3c.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/a2c.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
@@ -788,7 +769,7 @@ A^n_t &amp;= R_t^n - V_\varphi (s_t)\\
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/a2c.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/a2c.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
 </figure>
 </div>
 <ul>

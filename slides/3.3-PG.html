@@ -389,7 +389,7 @@ Julien Vitay
 <div class="column" style="width:60%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/discrete.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/valuebased-agent.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div><div class="column" style="width:40%;">
@@ -791,7 +791,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 </div><div class="column">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/sarsa-sequence.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/rl-sequence.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div></div>
@@ -899,8 +899,6 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <p><span class="math display">
     \mathcal{L}(\varphi) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[(Q^{\pi_\theta}(s, a) - Q_\varphi(s, a))^2]
 </span></p>
-<div class="columns">
-<div class="column" style="width:50%;">
 <ul>
 <li><p>We obtain an <strong>actor-critic</strong> architecture:</p>
 <ul>
@@ -908,49 +906,8 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <li><p>the <strong>critic</strong> <span class="math inline">Q_\varphi(s, a)</span> estimates the value of that action and drives learning in the actor.</p></li>
 </ul></li>
 </ul>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/actorcritic.png" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
-</figure>
-</div>
-</div></div>
 <div class="footer">
 <p><span class="citation" data-cites="Sutton1999">Sutton et al. (<a href="#/references" role="doc-biblioref" onclick="">1999</a>)</span> Policy gradient methods for reinforcement learning with function approximation. NIPS.</p>
-</div>
-</section>
-
-<section id="function-approximators-to-learn-the-q-values" class="title-slide slide level1 center">
-<h1>Function approximators to learn the Q-values</h1>
-<p>There are two possibilities to approximate Q-values <span class="math inline">Q_\theta(s, a)</span>:</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>The DNN approximates the Q-value of a single <span class="math inline">(s, a)</span> pair.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/functionapproximation1.jpeg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-<ul>
-<li>The action space can be continuous.</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<ul>
-<li>The DNN approximates the Q-value of all actions <span class="math inline">a</span> in a state <span class="math inline">s</span>.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/functionapproximation2.jpeg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-<ul>
-<li>The action space must be discrete (one neuron per action).</li>
-</ul>
-</div></div>
-<div class="footer">
-<p>Source: <a href="https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677" class="uri">https://towardsdatascience.com/qrash-course-deep-q-networks-from-the-ground-up-1bbda41d3677</a></p>
 </div>
 </section>
 
@@ -958,18 +915,13 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <h1>Policy Gradient : Actor-critic</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/policygradient.svg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/policygradient.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </section>
 
 <section id="policy-gradient-actor-critic-1" class="title-slide slide level1 center">
 <h1>Policy Gradient : Actor-critic</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/policygradient.svg" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
-</figure>
-</div>
 <ul>
 <li><p>But how to train the critic? We do not know <span class="math inline">Q^{\pi_\theta}(s, a)</span>. As always, we can estimate it through <strong>sampling</strong>:</p>
 <ul>
@@ -991,28 +943,6 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
       \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
   </span></p></li>
 </ul>
-</section>
-
-<section id="policy-gradient-actor-critic-2" class="title-slide slide level1 center">
-<h1>Policy Gradient : Actor-critic</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/policygradient.svg" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
-</figure>
-</div>
-<ul>
-<li><p>The policy gradient (PG) theorem implies an <strong>actor-critic</strong> architecture.</p></li>
-<li><p>The <strong>actor</strong> learns using the PG theorem:</p></li>
-</ul>
-<p><span class="math display">
-    \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[\nabla_\theta \log \pi_\theta(s, a) \, Q_\varphi(s, a) ]
-</span></p>
-<ul>
-<li>The <strong>critic</strong> learns using Q-learning:</li>
-</ul>
-<p><span class="math display">
-    \mathcal{L}(\varphi) =  \mathbb{E}_{s, s' \sim \rho_\theta, a \sim \pi_\theta}[(r + \gamma \, \max_{a'} Q_\varphi(s', a') - Q_\varphi(s, a))^2]
-</span></p>
 </section>
 
 <section id="policy-gradient-reducing-the-variance" class="title-slide slide level1 center">
