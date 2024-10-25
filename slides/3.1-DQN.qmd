@@ -437,10 +437,11 @@ $$\theta' \leftarrow \theta$$
 
 * For pixel-based problems (e.g. video games), convolutional neural networks (without max-pooling) are the weapon of choice.
 
-![](img/DeepQNetwork.jpg){width=70%}
+![](img/dqn.png){width=80%}
+
 
 ::: footer
-@Mnih2013 Playing Atari with Deep Reinforcement Learning. <http://arxiv.org/abs/1312.5602>
+Source: @Mnih2015 Human-level control through deep reinforcement learning. Nature 518, 529–533. doi:10.1038/nature14236.
 :::
 
 # Why no max-pooling?
@@ -493,97 +494,6 @@ Source: <https://medium.com/emergent-future/simple-reinforcement-learning-with-t
 
 
 ![](img/DQNBreakoutBlocks.png)
-
-
-
-
-# DQN code in Keras
-
-* Creating the CNN in keras / tensorflow / pytorch is straightforward:
-
-```python
-model = Sequential()
-
-model.add(Input((4, 84, 84)))
-
-model.add(Conv2D(16, (8, 8), strides=(4, 4)), activation='relu'))
-
-model.add(Conv2D(32, (4, 4), strides=(2, 2), activation='relu'))
-
-model.add(Flatten())
-
-model.add(Dense(256, activation='relu'))
-
-model.add(Dense(nb_actions, activation='linear'))
-
-optimizer = RMSprop(lr=0.00025, rho=0.95, epsilon=0.01)
-
-model.compile(optimizer, loss='mse')
-```
-
-::: footer
-<https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26>
-:::
-
-# DQN code in Keras
-
-* Each step of the algorithm follows the GPI approach:
-
-```python
-def q_iteration(env, model, state, memory):
-
-    # Choose the action with epsilon-greedy
-    if np.random.random() < epsilon:
-        action = env.action_space.sample()
-    else:
-        # Predict the Q-values for the current state and take the greedy action
-        values = model.predict([state])[0]
-        action = values.argmax()
-
-    # Play one game iteration
-    new_state, reward, terminal, truncated, info = env.step(action)
-
-    # Append the transition to the replay buffer 
-    memory.add(state, action, new_state, reward, terminal or truncated)
-
-    # Sample a minibatch from the memory and fit the DQN
-    s, a, r, s_, t = memory.sample_batch(32)
-    fit_batch(model, s, a, r, s_, t)
-```
-
-::: footer
-<https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26>
-:::
-
-
-# DQN code in Keras
-
-* The only slight difficulty is actually to compute the targets for learning:
-
-```python
-def fit_batch(model, states, actions, rewards, next_states, terminals)
-
-    # Predict the Q-values in the current state
-    Q_values = model.predict(states)
-    
-    # Predict the Q-values in the next state using the target model
-    next_Q_value = target_model.predict(next_states).max(axis=1)
-    
-    # Terminal states have a value of 0
-    next_Q_value[terminals] = 0.0
-    
-    # Compute the target
-    targets = Q_values.copy()
-    for i in range(batch_size):
-        targets[i, actions[i]] = rewards[i] + self.gamma * next_Q_value[i]
-        
-    # Train the model on the minibatch
-    self.model.fit(states, targets, epochs=1, batch_size=batch_size, verbose=0)
-```
-
-::: footer
-<https://becominghuman.ai/lets-build-an-atari-ai-part-1-dqn-df57e8ff3b26>
-:::
 
 
 
@@ -993,7 +903,7 @@ $$
 ::: {.column width=50%}
 
 
-![](img/DeepQNetwork.jpg){width=80%}
+![](img/dqn.png){width=100%}
 
 :::
 ::: {.column width=50%}
@@ -1007,8 +917,6 @@ $$
 
 :::
 :::
-
-
 
 $$\mathcal{L}(\theta) = \mathbb{E}_\mathcal{D} [(r + \gamma \, Q_{\theta'}(s´, \text{argmax}_{a'} Q_{\theta}(s', a')) - Q_\theta(s, a))^2]$$ 
 
