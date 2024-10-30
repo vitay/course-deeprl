@@ -602,7 +602,7 @@ Julien Vitay
 
 <section id="reinforce-algorithm" class="title-slide slide level1 center">
 <h1>REINFORCE algorithm</h1>
-<p>The REINFORCE algorithm is a policy-based variant of Monte-Carlo control:</p>
+<p>The REINFORCE algorithm is a policy-based variant of Monte Carlo control:</p>
 <ul>
 <li><p><strong>while</strong> not converged:</p>
 <ul>
@@ -925,7 +925,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <ul>
 <li><p>But how to train the critic? We do not know <span class="math inline">Q^{\pi_\theta}(s, a)</span>. As always, we can estimate it through <strong>sampling</strong>:</p>
 <ul>
-<li><strong>Monte-Carlo</strong> critic: sampling the complete episode.</li>
+<li><strong>Monte Carlo</strong> critic: sampling the complete episode.</li>
 </ul>
 <p><span class="math display">
       \mathcal{L}(\varphi) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[(R(s, a) - Q_\varphi(s, a))^2]

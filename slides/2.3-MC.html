@@ -345,7 +345,7 @@
 
 <section id="title-slide" data-background-image="img/tuc-new-large.png" data-background-opacity="1" data-background-position="top" data-background-size="30%" class="quarto-title-block center">
   <h1 class="title">Deep Reinforcement Learning</h1>
-  <p class="subtitle">Monte-Carlo methods</p>
+  <p class="subtitle">Monte Carlo methods</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -377,7 +377,7 @@ Julien Vitay
 <li><p>For a given policy <span class="math inline">\pi</span>, the value of all states <span class="math inline">V^\pi(s)</span> or all state-action pairs <span class="math inline">Q^\pi(s, a)</span> is calculated, either based on:</p>
 <ul>
 <li><p>the Bellman equations (Dynamic Programming)</p></li>
-<li><p>sampled experience (Monte-Carlo and Temporal Difference)</p></li>
+<li><p>sampled experience (Monte Carlo and Temporal Difference)</p></li>
 </ul></li>
 </ul></li>
 <li><p><strong>Policy improvement</strong></p>
@@ -396,7 +396,7 @@ Julien Vitay
 </section>
 
 <section id="principle-of-monte-carlo-mc-methods" class="title-slide slide level1 center">
-<h1>Principle of Monte-Carlo (MC) methods</h1>
+<h1>Principle of Monte Carlo (MC) methods</h1>
 <div class="columns">
 <div class="column" style="width:80%;">
 <ul>
@@ -411,19 +411,19 @@ Julien Vitay
 </div>
 </div></div>
 <ul>
-<li>Instead of solving the Bellman equations, <strong>Monte-Carlo methods</strong> (MC) approximate this mathematical expectation by <strong>sampling</strong> <span class="math inline">M</span> trajectories <span class="math inline">\tau_i</span> starting from <span class="math inline">s</span> and computing the sampling average of the obtained returns:</li>
+<li>Instead of solving the Bellman equations, <strong>Monte Carlo methods</strong> (MC) approximate this mathematical expectation by <strong>sampling</strong> <span class="math inline">M</span> trajectories <span class="math inline">\tau_i</span> starting from <span class="math inline">s</span> and computing the sampling average of the obtained returns:</li>
 </ul>
 <p><span class="math display">
     V^{\pi}(s) = \mathbb{E}_{\rho_\pi} (R_t | s_t = s) \approx \frac{1}{M} \sum_{i=1}^M R(\tau_i)
 </span></p>
 <ul>
 <li><p>If you have enough trajectories, the sampling average is an unbiased estimator of the value function.</p></li>
-<li><p>The advantage of Monte-Carlo methods is that they require only <strong>experience</strong>, not the complete dynamics <span class="math inline">p(s' | s,a)</span> and <span class="math inline">r(s, a, s')</span>.</p></li>
+<li><p>The advantage of Monte Carlo methods is that they require only <strong>experience</strong>, not the complete dynamics <span class="math inline">p(s' | s,a)</span> and <span class="math inline">r(s, a, s')</span>.</p></li>
 </ul>
 </section>
 
 <section id="monte-carlo-policy-evaluation" class="title-slide slide level1 center">
-<h1>Monte-Carlo policy evaluation</h1>
+<h1>Monte Carlo policy evaluation</h1>
 <ul>
 <li>The idea of MC policy evaluation is to repeatedly sample <strong>episodes</strong> starting from each possible state <span class="math inline">s_0</span> and maintain a <strong>running average</strong> of the obtained returns for each state:</li>
 </ul>
@@ -456,7 +456,7 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-policy-evaluation-of-action-values" class="title-slide slide level1 center">
-<h1>Monte-Carlo policy evaluation of action values</h1>
+<h1>Monte Carlo policy evaluation of action values</h1>
 <div class="columns">
 <div class="column" style="width:15%;">
 <div class="quarto-figure quarto-figure-center">
@@ -490,7 +490,7 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-policy-improvement" class="title-slide slide level1 center">
-<h1>Monte-Carlo policy improvement</h1>
+<h1>Monte Carlo policy improvement</h1>
 <div class="columns">
 <div class="column" style="width:70%;">
 <ul>
@@ -516,9 +516,9 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-control-1" class="title-slide slide level1 center">
-<h1>Monte-Carlo control</h1>
+<h1>Monte Carlo control</h1>
 <ul>
-<li><p><strong>Monte-Carlo control</strong> alternates between <strong>MC policy evaluation</strong> and <strong>policy improvement</strong> until the optimal policy is found.</p></li>
+<li><p><strong>Monte Carlo control</strong> alternates between <strong>MC policy evaluation</strong> and <strong>policy improvement</strong> until the optimal policy is found.</p></li>
 <li><p><strong>while</strong> True:</p>
 <ol type="1">
 <li><p>Select an initial state <span class="math inline">s_0</span>.</p></li>
@@ -624,7 +624,7 @@ Julien Vitay
 </section>
 
 <section id="on-policy-monte-carlo-control-1" class="title-slide slide level1 center">
-<h1>On-policy Monte-Carlo control</h1>
+<h1>On-policy Monte Carlo control</h1>
 <ul>
 <li><p>In <strong>on-policy</strong> control methods, the learned policy has to be <span class="math inline">\epsilon</span>-soft, which means all actions have a probability of at least <span class="math inline">\frac{\epsilon}{|\mathcal{A}|}</span> to be visited. <span class="math inline">\epsilon</span>-greedy and softmax policies meet this criteria.</p></li>
 <li><p>Each sample episode is generated using this policy, which ensures exploration, while the control method still converges towards the optimal <span class="math inline">\epsilon</span>-policy.</p></li>
@@ -654,7 +654,7 @@ Julien Vitay
 </section>
 
 <section id="off-policy-monte-carlo-control-1" class="title-slide slide level1 center">
-<h1>Off-policy Monte-Carlo control</h1>
+<h1>Off-policy Monte Carlo control</h1>
 <ul>
 <li><p>Another option to ensure exploration is to generate the sample episodes using a <strong>behavior policy</strong> <span class="math inline">b(s, a)</span> different from the <strong>learned policy</strong> <span class="math inline">\pi(s, a)</span> of the agent.</p></li>
 <li><p>The <strong>behavior policy</strong> <span class="math inline">b(s, a)</span> used to generate the episodes is only required to select at least occasionally the same actions as the <strong>learned policy</strong> <span class="math inline">\pi(s, a)</span> (coverage assumption).</p></li>
@@ -827,7 +827,7 @@ Julien Vitay
 </section>
 
 <section id="off-policy-monte-carlo-control-2" class="title-slide slide level1 center">
-<h1>Off-policy Monte-Carlo control</h1>
+<h1>Off-policy Monte Carlo control</h1>
 <ul>
 <li><p>In <strong>off-policy MC control</strong>, we generate episodes using the behavior policy <span class="math inline">b</span> and update <strong>greedily</strong> the learned policy <span class="math inline">\pi</span>.</p></li>
 <li><p>For the state <span class="math inline">s_t</span>, the obtained returns just need to be weighted by the relative probability of occurrence of the <strong>rest of the episode</strong> following the policies <span class="math inline">\pi</span> and <span class="math inline">b</span>:</p></li>
@@ -850,7 +850,7 @@ Julien Vitay
 </section>
 
 <section id="off-policy-monte-carlo-control-3" class="title-slide slide level1 center">
-<h1>Off-policy Monte-Carlo control</h1>
+<h1>Off-policy Monte Carlo control</h1>
 <ul>
 <li><p><strong>while</strong> True:</p>
 <ol type="1">
@@ -874,7 +874,7 @@ Julien Vitay
 </section>
 
 <section id="off-policy-monte-carlo-control-4" class="title-slide slide level1 center">
-<h1>Off-policy Monte-Carlo control</h1>
+<h1>Off-policy Monte Carlo control</h1>
 <ul>
 <li><strong>Problem 1:</strong> if the learned policy is greedy, the IS weight becomes quickly 0 for a non-greedy action <span class="math inline">a_t</span>:</li>
 </ul>
@@ -904,9 +904,9 @@ Julien Vitay
 </section>
 
 <section id="properties-of-monte-carlo-methods" class="title-slide slide level1 center">
-<h1>Properties of Monte-Carlo methods</h1>
+<h1>Properties of Monte Carlo methods</h1>
 <ul>
-<li><p>Monte-Carlo evaluation estimates value functions via <strong>sampling</strong> of entire episodes.</p></li>
+<li><p>Monte Carlo evaluation estimates value functions via <strong>sampling</strong> of entire episodes.</p></li>
 <li><p>MC for action values is <strong>model-free</strong>: you do not need to know <span class="math inline">p(s' | s, a)</span> to learn the optimal policy, you just sample transitions (trial and error).</p></li>
 <li><p>MC only applies to <strong>episodic tasks</strong>: as you learn at the end of an episode, it is not possible to learn continuing tasks.</p></li>
 </ul>
@@ -918,7 +918,7 @@ Julien Vitay
 <li><p><strong>on-policy</strong> MC learns a stochastic policy (<span class="math inline">\epsilon</span>-greedy, softmax) to ensure exploration.</p></li>
 <li><p><strong>off-policy</strong> MC learns a greedy policy, but explores via a behavior policy (importance sampling).</p></li>
 </ul></li>
-<li><p>Monte-Carlo methods have:</p>
+<li><p>Monte Carlo methods have:</p>
 <ul>
 <li><p>a <strong>small bias</strong>: with enough sampled episodes, the estimated values converge to the true values.</p></li>
 <li><p>a <strong>huge variance</strong>: the slightest change of the policy can completely change the episode and its return. You will need a lot of samples to form correct estimates: <strong>sample complexity</strong>.</p></li>

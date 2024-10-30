@@ -685,7 +685,7 @@ Julien Vitay
 <section id="no-need-for-importance-sampling-in-q-learning" class="title-slide slide level1 center">
 <h1>No need for importance sampling in Q-learning</h1>
 <ul>
-<li>In off-policy Monte-Carlo, Q-values are estimated using the return of the rest of the episode on average:</li>
+<li>In off-policy Monte Carlo, Q-values are estimated using the return of the rest of the episode on average:</li>
 </ul>
 <p><span class="math display">Q^\pi(s, a) = \mathbb{E}_{\tau \sim \rho_b}[\rho_{0:T-1} \, R(\tau) | s_0 = s, a_0=a]</span></p>
 <ul>
@@ -968,7 +968,7 @@ p(s_t, a_t) \leftarrow p(s_t, a_t) + \beta \, \delta_t \\
 <li><p>Optimally, we would like a trade-off between:</p>
 <ul>
 <li><p>TD (only one state/action is updated each time, small variance but significant bias)</p></li>
-<li><p>Monte-Carlo (all states/actions in an episode are updated, no bias but huge variance).</p></li>
+<li><p>Monte Carlo (all states/actions in an episode are updated, no bias but huge variance).</p></li>
 </ul></li>
 <li><p>In <strong>n-step TD prediction</strong>, the next <span class="math inline">n</span> rewards are used to estimate the return, the rest is approximated.</p></li>
 </ul>

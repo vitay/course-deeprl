@@ -466,7 +466,7 @@ Julien Vitay
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/gotree.png"></p>
-<figcaption>Source: <a href="https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias" class="uri">https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias</a></figcaption>
+<figcaption>Source: &lt;https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte Carlo-tree-search/answer/Kostis-Gourgoulias&gt;</figcaption>
 </figure>
 </div>
 </section>
@@ -492,7 +492,7 @@ Julien Vitay
 <li><p>The <strong>RL policy network</strong> uses <strong>self-play</strong> and reinforcement learning to learn new strategies.</p></li>
 <li><p>The <strong>value network</strong> learns to predict the outcome of a game (win/lose) from the current state.</p></li>
 </ul></li>
-<li><p>The rollout policy and the value network are used to guide stochastic tree exploration in <strong>Monte-Carlo Tree Search (MCTS)</strong> (MPC-like planning algorithm).</p></li>
+<li><p>The rollout policy and the value network are used to guide stochastic tree exploration in <strong>Monte Carlo Tree Search (MCTS)</strong> (MPC-like planning algorithm).</p></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -594,14 +594,14 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-tree-search" class="title-slide slide level1 center">
-<h1>Monte-Carlo Tree Search</h1>
+<h1>Monte Carlo Tree Search</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/mcts.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 <ul>
-<li><p>The final AlphaGo player uses <strong>Monte-Carlo Tree Search</strong> (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions.</p></li>
+<li><p>The final AlphaGo player uses <strong>Monte Carlo Tree Search</strong> (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions.</p></li>
 <li><p>The game tree is traversed depth-first from the current state, but the order of the visits depends on the value of the transition.</p></li>
 <li><p>MCTS was previously the standard approach for Go AIs, but based on expert moves only, not deep networks.</p></li>
 </ul>
@@ -611,7 +611,7 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-tree-search-1" class="title-slide slide level1 center">
-<h1>Monte-Carlo Tree Search</h1>
+<h1>Monte Carlo Tree Search</h1>
 <ul>
 <li>In the <strong>selection phase</strong>, a path is found in the tree of possible actions using <strong>Upper Confidence Bound</strong> (UCB).</li>
 </ul>
@@ -639,7 +639,7 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-tree-search-2" class="title-slide slide level1 center">
-<h1>Monte-Carlo Tree Search</h1>
+<h1>Monte Carlo Tree Search</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -655,7 +655,7 @@ Julien Vitay
 </ul>
 <p><span class="math display">s_{t+1} = f(s_t, a_t)</span></p>
 <ul>
-<li>The tree therefore grows every time a <strong>Monte-Carlo sampling</strong> (“episode”) is done.</li>
+<li>The tree therefore grows every time a <strong>Monte Carlo sampling</strong> (“episode”) is done.</li>
 </ul>
 </div></div>
 <div class="footer">
@@ -664,7 +664,7 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-tree-search-3" class="title-slide slide level1 center">
-<h1>Monte-Carlo Tree Search</h1>
+<h1>Monte Carlo Tree Search</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
@@ -693,7 +693,7 @@ Julien Vitay
 </section>
 
 <section id="monte-carlo-tree-search-4" class="title-slide slide level1 center">
-<h1>Monte-Carlo Tree Search</h1>
+<h1>Monte Carlo Tree Search</h1>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
@@ -719,7 +719,7 @@ Julien Vitay
 
 <section>
 <section id="monte-carlo-tree-search-5" class="title-slide slide level1 center">
-<h1>Monte-Carlo Tree Search</h1>
+<h1>Monte Carlo Tree Search</h1>
 <ul>
 <li><p>The four phases are then repeated as long as possible (time is limited in Go), to expand the game tree as efficiently as possible.</p></li>
 <li><p>The game tree is repeatedly sampled and grows after each sample.</p></li>

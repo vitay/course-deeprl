@@ -722,9 +722,18 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <li><p>It defines the <strong>present value of future rewards</strong>.</p></li>
 <li><p>Receiving 10 euros now has a higher <strong>value</strong> than receiving 10 euros in ten years, although the reward is the same: you do not have to wait.</p></li>
 <li><p>The value of receiving a reward <span class="math inline">r</span> after <span class="math inline">k+1</span> time steps is <span class="math inline">\gamma^k \, r</span>.</p></li>
-<li><p><strong>Immediate rewards</strong> are better than <strong>delayed rewards</strong>.</p></li>
+</ul></li>
+<li><p><span class="math inline">\gamma</span> determines the relative importance of future rewards for the behavior:</p>
+<ul>
+<li><p>if <span class="math inline">\gamma</span> is close to 0, only the immediately available rewards will count: the agent is greedy or <strong>myopic</strong>.</p></li>
+<li><p>if <span class="math inline">\gamma</span> is close to 1, even far-distance rewards will be taken into account: the agent is <strong>farsighted</strong>.</p></li>
 </ul></li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/eligibility-forward-view.png" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
+</figure>
+</div>
 </section>
 
 <section id="discount-factor-1" class="title-slide slide level1 center">
@@ -761,22 +770,6 @@ s_t = (o_0, a_0, o_1, a_1, \ldots, a_{t-1}, o_t)
 <p><span class="math display">
     R_t = \sum_{k=0}^{\infty} \gamma^k \, r_{t+k+1}
 </span></p>
-</section>
-
-<section id="discount-rate" class="title-slide slide level1 center">
-<h1>Discount rate</h1>
-<ul>
-<li><p>The discount rate <span class="math inline">\gamma</span> determines the relative importance of future rewards for the behavior:</p>
-<ul>
-<li><p>if <span class="math inline">\gamma</span> is close to 0, only the immediately available rewards will count: the agent is greedy or <strong>myopic</strong>.</p></li>
-<li><p>if <span class="math inline">\gamma</span> is close to 1, even far-distance rewards will be taken into account: the agent is <strong>farsighted</strong>.</p></li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/eligibility-forward-view.png" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
 </section>
 
 <section id="why-the-reward-on-the-long-term" class="title-slide slide level1 center">
@@ -1398,7 +1391,7 @@ $$
 
 * **Dynamic programming** solves exactly the Bellman equations.
 
-* **Monte-Carlo** and **temporal-difference** methods approximate them.
+* **Monte Carlo** and **temporal-difference** methods approximate them.
 
 
 # Key idea of Reinforcement learning: Generalized Policy Iteration
@@ -1420,7 +1413,7 @@ $$
 
             * the Bellman equations (Dynamic Programming)
 
-            * sampled experience (Monte-Carlo and Temporal Difference)
+            * sampled experience (Monte Carlo and Temporal Difference)
 
     2. **Policy improvement**
 
