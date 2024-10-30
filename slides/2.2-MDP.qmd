@@ -371,7 +371,14 @@ $$
 
     * The value of receiving a reward $r$ after $k+1$ time steps is $\gamma^k \, r$.
 
-    * **Immediate rewards** are better than **delayed rewards**.
+
+* $\gamma$ determines the relative importance of future rewards for the behavior:
+
+    * if $\gamma$ is close to 0, only the immediately available rewards will count: the agent is greedy or **myopic**.
+
+    * if $\gamma$ is close to 1, even far-distance rewards will be taken into account: the agent is **farsighted**.
+
+![](img/eligibility-forward-view.png){width=40%}
 
 # Discount factor
 
@@ -401,15 +408,6 @@ $$
     R_t = \sum_{k=0}^{\infty} \gamma^k \, r_{t+k+1}
 $$
 
-# Discount rate
-
-* The discount rate $\gamma$ determines the relative importance of future rewards for the behavior:
-
-    * if $\gamma$ is close to 0, only the immediately available rewards will count: the agent is greedy or **myopic**.
-
-    * if $\gamma$ is close to 1, even far-distance rewards will be taken into account: the agent is **farsighted**.
-
-![](img/eligibility-forward-view.png)
 
 # Why the reward on the long term?
 
@@ -970,7 +968,7 @@ $$
 
 * **Dynamic programming** solves exactly the Bellman equations.
 
-* **Monte-Carlo** and **temporal-difference** methods approximate them.
+* **Monte Carlo** and **temporal-difference** methods approximate them.
 
 
 # Key idea of Reinforcement learning: Generalized Policy Iteration
@@ -992,7 +990,7 @@ $$
 
             * the Bellman equations (Dynamic Programming)
 
-            * sampled experience (Monte-Carlo and Temporal Difference)
+            * sampled experience (Monte Carlo and Temporal Difference)
 
     2. **Policy improvement**
 

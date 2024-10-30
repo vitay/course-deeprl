@@ -909,7 +909,7 @@ time before humans take control.
     1. Bandits
     2. Markov Decision Process
     3. Dynamic programming
-    4. Monte-Carlo control
+    4. Monte Carlo control
     5. Temporal difference, Eligibility traces
     6. Function approximation
     7. Deep learning

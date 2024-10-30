@@ -234,7 +234,7 @@ $$
 
 # REINFORCE algorithm
 
-The REINFORCE algorithm is a policy-based variant of Monte-Carlo control:
+The REINFORCE algorithm is a policy-based variant of Monte Carlo control:
 
 * **while** not converged:
 
@@ -573,7 +573,7 @@ $$
 * But how to train the critic? We do not know $Q^{\pi_\theta}(s, a)$. As always, we can estimate it through **sampling**:
 
 
-    * **Monte-Carlo** critic: sampling the complete episode.
+    * **Monte Carlo** critic: sampling the complete episode.
 
     $$
         \mathcal{L}(\varphi) =  \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta}[(R(s, a) - Q_\varphi(s, a))^2]

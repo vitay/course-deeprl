@@ -314,9 +314,9 @@ $$
 
 * The problem is that we do not know $V^\pi(s)$, as it is what we are trying to estimate.
 
-* We can replace $V^\pi(s)$ by a sampled estimate using Monte-Carlo or TD:
+* We can replace $V^\pi(s)$ by a sampled estimate using Monte Carlo or TD:
 
-    * **Monte-Carlo** function approximation:
+    * **Monte Carlo** function approximation:
 
     $$
         \Delta \varphi = \eta \, (R_t - V_\varphi(s)) \, \nabla_\varphi V_\varphi(s)
@@ -357,7 +357,7 @@ $$\mathcal{L}(\varphi) = \mathbb{E}_{s \in \mathcal{S}} [ (r_{t+1} + \gamma \, V
                 \Delta \varphi = \eta \, (R_t - V_\varphi(s_t)) \, \nabla_\varphi V_\varphi(s_t)
             $$
 
-* Gradient Monte-Carlo has no bias (real returns) but a high variance.
+* Gradient Monte Carlo has no bias (real returns) but a high variance.
 
 # Semi-gradient Temporal Difference Algorithm for value estimation
 

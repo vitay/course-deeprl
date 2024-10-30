@@ -1,6 +1,6 @@
 ---
 title: Deep Reinforcement Learning
-subtitle: Monte-Carlo methods
+subtitle: Monte Carlo methods
 
 author: Julien Vitay
 institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
@@ -27,7 +27,7 @@ resources: pdf/2.3-MC.pdf
 
             * the Bellman equations (Dynamic Programming)
 
-            * sampled experience (Monte-Carlo and Temporal Difference)
+            * sampled experience (Monte Carlo and Temporal Difference)
 
     2. **Policy improvement**
 
@@ -41,7 +41,7 @@ resources: pdf/2.3-MC.pdf
 
 # 1 - Monte Carlo control
 
-# Principle of Monte-Carlo (MC) methods
+# Principle of Monte Carlo (MC) methods
 
 ::: {.columns}
 ::: {.column width=80%}
@@ -63,7 +63,7 @@ $$  V^{\pi} (s) = \mathbb{E}_{\rho_\pi} ( R_t | s_t = s) = \mathbb{E}_{\rho_\pi}
 :::
 
 
-* Instead of solving the Bellman equations, **Monte-Carlo methods** (MC) approximate this mathematical expectation by **sampling** $M$ trajectories $\tau_i$ starting from $s$ and computing the sampling average of the obtained returns:
+* Instead of solving the Bellman equations, **Monte Carlo methods** (MC) approximate this mathematical expectation by **sampling** $M$ trajectories $\tau_i$ starting from $s$ and computing the sampling average of the obtained returns:
 
 $$
     V^{\pi}(s) = \mathbb{E}_{\rho_\pi} (R_t | s_t = s) \approx \frac{1}{M} \sum_{i=1}^M R(\tau_i)
@@ -71,9 +71,9 @@ $$
 
 * If you have enough trajectories, the sampling average is an unbiased estimator of the value function.
 
-* The advantage of Monte-Carlo methods is that they require only **experience**, not the complete dynamics $p(s' | s,a)$ and $r(s, a, s')$.
+* The advantage of Monte Carlo methods is that they require only **experience**, not the complete dynamics $p(s' | s,a)$ and $r(s, a, s')$.
 
-# Monte-Carlo policy evaluation
+# Monte Carlo policy evaluation
 
 * The idea of MC policy evaluation is to repeatedly sample **episodes** starting from each possible state $s_0$ and maintain a **running average** of the obtained returns for each state:
 
@@ -110,7 +110,7 @@ $$
 
 
 
-# Monte-Carlo policy evaluation of action values
+# Monte Carlo policy evaluation of action values
 
 
 
@@ -150,7 +150,7 @@ $$
 
 * There are much more values to estimate (one per state-action pair), but the policy will be easier to derive.
 
-# Monte-Carlo policy improvement
+# Monte Carlo policy improvement
 
 :::columns
 :::{.column width=70%}
@@ -178,9 +178,9 @@ $$
 
 * Estimating the Q-values allows to act greedily, while estimating the V-values still requires the dynamics  $p(s' | s,a)$ and $r(s, a, s')$.
 
-# Monte-Carlo control
+# Monte Carlo control
 
-* **Monte-Carlo control** alternates between **MC policy evaluation** and **policy improvement** until the optimal policy is found.
+* **Monte Carlo control** alternates between **MC policy evaluation** and **policy improvement** until the optimal policy is found.
 
 * **while** True:
 
@@ -282,7 +282,7 @@ $$
 
 * $\epsilon$-greedy choses non-greedy actions randomly, while softmax favors the best alternatives.
 
-# On-policy Monte-Carlo control
+# On-policy Monte Carlo control
 
 * In **on-policy** control methods, the learned policy has to be $\epsilon$-soft, which means all actions have a probability of at least $\frac{\epsilon}{|\mathcal{A}|}$ to be visited. $\epsilon$-greedy and softmax policies meet this criteria.
 
@@ -311,7 +311,7 @@ $$
 # 3 - Off-policy Monte Carlo control
 
 
-# Off-policy Monte-Carlo control
+# Off-policy Monte Carlo control
 
 
 * Another option to ensure exploration is to generate the sample episodes using a **behavior policy** $b(s, a)$ different from the **learned policy** $\pi(s, a)$ of the agent.
@@ -465,7 +465,7 @@ $$
 
 * The importance sampling weight is simply the product over the length of the episode of the ratio between $\pi(s_t, a_t)$ and $b(s_t, a_t)$. 
 
-# Off-policy Monte-Carlo control
+# Off-policy Monte Carlo control
 
 * In **off-policy MC control**, we generate episodes using the behavior policy $b$ and update **greedily** the learned policy $\pi$.
 
@@ -490,7 +490,7 @@ $$
 * Unlikely episodes under $\pi$ are barely used for learning, likely ones are used a lot.
 
 
-# Off-policy Monte-Carlo control
+# Off-policy Monte Carlo control
 
 * **while** True:
 
@@ -515,7 +515,7 @@ $$
     $$
 
 
-# Off-policy Monte-Carlo control
+# Off-policy Monte Carlo control
 
 * **Problem 1:** if the learned policy is greedy, the IS weight becomes quickly 0 for a non-greedy action $a_t$:
 
@@ -548,9 +548,9 @@ If $\dfrac{\pi(s_k, a_k)}{b(s_k, a_k)}$ is smaller than 1, the products go to 0.
 
 * Drawback: if a good move is not explored by the behavior policy, the learned policy will never try it.
 
-# Properties of Monte-Carlo methods
+# Properties of Monte Carlo methods
 
-* Monte-Carlo evaluation estimates value functions via **sampling** of entire episodes.
+* Monte Carlo evaluation estimates value functions via **sampling** of entire episodes.
 
 * MC for action values is **model-free**: you do not need to know $p(s' | s, a)$ to learn the optimal policy, you just sample transitions (trial and error).
 
@@ -566,7 +566,7 @@ If $\dfrac{\pi(s_k, a_k)}{b(s_k, a_k)}$ is smaller than 1, the products go to 0.
 
     * **off-policy** MC learns a greedy policy, but explores via a behavior policy (importance sampling). 
 
-* Monte-Carlo methods have:
+* Monte Carlo methods have:
 
     * a **small bias**: with enough sampled episodes, the estimated values converge to the true values.
 

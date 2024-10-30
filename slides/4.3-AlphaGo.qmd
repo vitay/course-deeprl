@@ -91,7 +91,7 @@ resources: pdf/4.3-AlphaGo.pdf
 
 # Game tree of Go
 
-![Source: <https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte-Carlo-tree-search/answer/Kostis-Gourgoulias>](img/gotree.png)
+![Source: <https://www.quora.com/What-does-it-mean-that-AlphaGo-relied-on-Monte Carlo-tree-search/answer/Kostis-Gourgoulias>](img/gotree.png)
 
 
 # 1 - AlphaGo
@@ -113,7 +113,7 @@ resources: pdf/4.3-AlphaGo.pdf
 
     * The **value network** learns to predict the outcome of a game (win/lose) from the current state.
 
-* The rollout policy and the value network are used to guide stochastic tree exploration in **Monte-Carlo Tree Search (MCTS)** (MPC-like planning algorithm).
+* The rollout policy and the value network are used to guide stochastic tree exploration in **Monte Carlo Tree Search (MCTS)** (MPC-like planning algorithm).
 
 
 ![](img/alphago.png){width=80%}
@@ -226,11 +226,11 @@ where $R$ = +1 when the game is won, -1 otherwise.
 @Silver2016 Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.
 :::
 
-# Monte-Carlo Tree Search
+# Monte Carlo Tree Search
 
 ![](img/mcts.png)
 
-* The final AlphaGo player uses **Monte-Carlo Tree Search** (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions.
+* The final AlphaGo player uses **Monte Carlo Tree Search** (MCTS), which is an incremental tree search (depth-limited), biased by the Q-value of known transitions.
 
 * The game tree is traversed depth-first from the current state, but the order of the visits depends on the value of the transition.
 
@@ -240,7 +240,7 @@ where $R$ = +1 when the game is won, -1 otherwise.
 @Silver2016 Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.
 :::
 
-# Monte-Carlo Tree Search
+# Monte Carlo Tree Search
 
 * In the **selection phase**, a path is found in the tree of possible actions using **Upper Confidence Bound** (UCB).
 
@@ -273,7 +273,7 @@ $$a_t = \text{argmax}_a \, Q(s, a) + K \cdot \frac{P(s, a)}{1 + N(s, a)}$$
 :::
 
 
-# Monte-Carlo Tree Search
+# Monte Carlo Tree Search
 
 
 ::: {.columns}
@@ -294,7 +294,7 @@ $$a_t = \text{argmax}_a \, Q(s, a) + K \cdot \frac{P(s, a)}{1 + N(s, a)}$$
 
 $$s_{t+1} = f(s_t, a_t)$$
 
-* The tree therefore grows every time a **Monte-Carlo sampling** ("episode") is done.
+* The tree therefore grows every time a **Monte Carlo sampling** ("episode") is done.
 
 :::
 :::
@@ -304,7 +304,7 @@ $$s_{t+1} = f(s_t, a_t)$$
 @Silver2016 Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.
 :::
 
-# Monte-Carlo Tree Search
+# Monte Carlo Tree Search
 
 ::: {.columns}
 ::: {.column width=40%}
@@ -336,7 +336,7 @@ $$V(s_L) = (1 - \lambda)  \, \nu_\theta(s_L) + \lambda \, R_\text{rollout} $$
 @Silver2016 Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.
 :::
 
-# Monte-Carlo Tree Search
+# Monte Carlo Tree Search
 
 
 ::: {.columns}
@@ -365,7 +365,7 @@ $$Q(s, a) = \frac{1}{N(s, a)} \sum_{i=1}^{n} V(s_L^i) $$
 @Silver2016 Mastering the game of Go with deep neural networks and tree search. Nature, 529(7587):484–489, arXiv:1712.01815.
 :::
 
-# Monte-Carlo Tree Search
+# Monte Carlo Tree Search
 
 
 * The four phases are then repeated as long as possible (time is limited in Go), to expand the game tree as efficiently as possible.
