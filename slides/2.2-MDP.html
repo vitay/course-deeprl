@@ -1602,56 +1602,60 @@ V^{\pi} (s)  = \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}
 
 <section id="iterative-policy-evaluation" class="title-slide slide level1 center">
 <h1>Iterative policy evaluation</h1>
+<div class="columns">
+<div class="column" style="width:60%;">
 <ul>
 <li>The idea of <strong>iterative policy evaluation</strong> (IPE) is to consider a sequence of consecutive state-value functions which should converge from initially wrong estimates <span class="math inline">V_0(s)</span> towards the real state-value function <span class="math inline">V^{\pi}(s)</span>.</li>
 </ul>
 <p><span class="math display">
       V_0 \rightarrow V_1 \rightarrow V_2 \rightarrow \ldots \rightarrow V_k \rightarrow V_{k+1} \rightarrow \ldots \rightarrow V^\pi
 </span></p>
-<div class="columns">
-<div class="column" style="width:50%;">
+<ul>
+<li>The value function at step <span class="math inline">k+1</span> <span class="math inline">V_{k+1}(s)</span> is computed using the previous estimates <span class="math inline">V_{k}(s)</span> and the Bellman equation transformed into an <strong>update rule</strong>.</li>
+</ul>
+</div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/iterativepolicyevaluation2.png"></p>
 <figcaption>Source: David Silver. <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" class="uri">http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html</a></figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p>The value function at step <span class="math inline">k+1</span> <span class="math inline">V_{k+1}(s)</span> is computed using the previous estimates <span class="math inline">V_{k}(s)</span> and the Bellman equation transformed into an <strong>update rule</strong>.</p></li>
-<li><p>In vector notation:</p></li>
-</ul>
+</div></div>
 <p><span class="math display">
   \mathbf{V}_{k+1} = \mathbf{R}^\pi + \gamma \, \mathcal{P}^\pi \, \mathbf{V}_k
 </span></p>
-</div></div>
-</section>
-
-<section id="iterative-policy-evaluation-1" class="title-slide slide level1 center">
-<h1>Iterative policy evaluation</h1>
-<ul>
-<li><p>Let’s start with dummy (e.g.&nbsp;random) initial estimates <span class="math inline">V_0(s)</span> for the value of every state <span class="math inline">s</span>.</p></li>
-<li><p>We can obtain new estimates <span class="math inline">V_1(s)</span> which are slightly less wrong by applying once the <strong>Bellman operator</strong>:</p></li>
-</ul>
-<p><span class="math display">
-     V_{1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_0 (s') ] \quad \forall s \in \mathcal{S}
-</span></p>
-<ul>
-<li>Based on these estimates <span class="math inline">V_1(s)</span>, we can obtain even better estimates <span class="math inline">V_2(s)</span> by applying again the Bellman operator:</li>
-</ul>
-<p><span class="math display">
-     V_{2} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_1 (s') ] \quad \forall s \in \mathcal{S}
-</span></p>
-<ul>
-<li>Generally, state-value function estimates are improved iteratively through:</li>
-</ul>
 <p><span class="math display">
      V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ] \quad \forall s \in \mathcal{S}
 </span></p>
 <ul>
-<li><span class="math inline">V_\infty = V^{\pi}</span> is a fixed point of this update rule because of the uniqueness of the solution to the Bellman equation.</li>
+<li><p>We start with dummy (e.g.&nbsp;random) initial estimates <span class="math inline">V_0(s)</span> for the value of every state <span class="math inline">s</span>.</p></li>
+<li><p><span class="math inline">V_\infty = V^{\pi}</span> is a fixed point of this update rule because of the uniqueness of the solution to the Bellman equation.</p></li>
 </ul>
 <!--
+# Iterative policy evaluation
+
+* Let's start with dummy (e.g. random) initial estimates $V_0(s)$ for the value of every state $s$.
+
+* We can obtain new estimates $V_1(s)$ which are slightly less wrong by applying once the **Bellman operator**:
+
+$$
+     V_{1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_0 (s') ] \quad \forall s \in \mathcal{S}
+$$
+
+* Based on these estimates $V_1(s)$, we can obtain even better estimates $V_2(s)$ by applying again the Bellman operator:
+
+$$
+     V_{2} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_1 (s') ] \quad \forall s \in \mathcal{S}
+$$
+
+* Generally, state-value function estimates are improved iteratively through:
+
+$$
+     V_{k+1} (s) \leftarrow \sum_{a \in \mathcal{A}(s)} \pi(s, a) \, \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamma \, V_k (s') ] \quad \forall s \in \mathcal{S}
+$$
+
+* $V_\infty = V^{\pi}$ is a fixed point of this update rule because of the uniqueness of the solution to the Bellman equation. 
+
 # Bellman operator
 
 * The **Bellman operator** $\mathcal{T}^\pi$ is a mapping between two vector spaces:
@@ -1702,7 +1706,7 @@ $$
 -->
 </section>
 
-<section id="iterative-policy-evaluation-2" class="title-slide slide level1 center">
+<section id="iterative-policy-evaluation-1" class="title-slide slide level1 center">
 <h1>Iterative policy evaluation</h1>
 <ul>
 <li><p>For a fixed policy <span class="math inline">\pi</span>, initialize <span class="math inline">V(s)=0 \; \forall s \in \mathcal{S}</span>.</p></li>
@@ -1729,7 +1733,7 @@ $$
 <section id="policy-improvement" class="title-slide slide level1 center">
 <h1>Policy improvement</h1>
 <ul>
-<li>For each state <span class="math inline">s</span>, we would like to know if we should deterministically choose an action <span class="math inline">a \neq \pi(s)</span> or not in order to improve the policy.</li>
+<li>For each state <span class="math inline">s</span>, we would like to know if we should choose an action <span class="math inline">a \neq \pi(s)</span> or not in order to improve the policy.</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:80%;">
@@ -1752,38 +1756,25 @@ $$
 <p><span class="math display">Q^{\pi} (s, a) &gt; Q^{\pi} (s, \pi(s)) = V^{\pi}(s)</span></p>
 <p>then it is better to select <span class="math inline">a</span> once in <span class="math inline">s</span> and thereafter follow <span class="math inline">\pi</span>.</p>
 <ul>
-<li><p>If there is no better action, we keep the previous policy for this state.</p></li>
-<li><p>This corresponds to a <strong>greedy</strong> action selection over the Q-values, defining a <strong>deterministic</strong> policy <span class="math inline">\pi(s)</span>:</p></li>
+<li>If there is no better action, we keep the previous policy for this state.</li>
 </ul>
-<p><span class="math display">\pi(s) \leftarrow \text{argmax}_a \, Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></p>
 </section>
 
 <section id="policy-improvement-1" class="title-slide slide level1 center">
 <h1>Policy improvement</h1>
 <ul>
+<li>This corresponds to a <strong>greedy</strong> action selection over the Q-values, defining a <strong>deterministic</strong> policy <span class="math inline">\pi(s)</span>:</li>
+</ul>
+<p><span class="math display">\pi(s) \leftarrow \text{argmax}_a \, Q^{\pi} (s, a) = \text{argmax}_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></p>
+<ul>
 <li>After the policy improvement, the Q-value of each deterministic action <span class="math inline">\pi(s)</span> has increased or stayed the same.</li>
 </ul>
-<p><span class="math display">\text{argmax}_a \; Q^{\pi} (s, a) = \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ] \geq Q^\pi(s, \pi(s))</span></p>
+<p><span class="math display">\text{argmax}_a \; Q^{\pi} (s, a) \geq Q^\pi(s, \pi(s))</span></p>
 <ul>
 <li><p>This defines an <strong>improved</strong> policy <span class="math inline">\pi'</span>, where all states and actions have a higher value than previously.</p></li>
 <li><p><strong>Greedy action selection</strong> over the state value function implements policy improvement:</p></li>
 </ul>
 <p><span class="math display">\pi' \leftarrow \text{Greedy}(V^\pi)</span></p>
-<div class="callout callout-tip no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Greedy policy improvement:</strong></p>
-</div>
-<div class="callout-content">
-<ul>
-<li><p><strong>for</strong> each state <span class="math inline">s \in \mathcal{S}</span>:</p>
-<ul>
-<li><span class="math inline">\pi(s) \leftarrow \text{argmax}_a \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [r(s, a, s') + \gamma \, V^{\pi}(s') ]</span></li>
-</ul></li>
-</ul>
-</div>
-</div>
-</div>
 </section>
 
 <section id="policy-iteration" class="title-slide slide level1 center">
@@ -2047,7 +2038,7 @@ $$y = \max_a \,  \sum_{s' \in \mathcal{S}} p(s' | s, a) \, [ r(s, a, s') + \gamm
 <li><p>This principle is called <strong>Generalized Policy Iteration</strong> (GPI).</p></li>
 <li><p>Solving the <strong>Bellman equations</strong> requires the following:</p>
 <ul>
-<li><p>accurate knowledge of environment dynamics <span class="math inline">p(s' | s, a)</span> and <span class="math inline">r(s, a, s')</span> for all transitions;</p></li>
+<li><p>accurate knowledge of environment dynamics <span class="math inline">p(s' | s, a)</span> and <span class="math inline">r(s, a, s')</span> for all transitions (<strong>model-based</strong>);</p></li>
 <li><p>enough memory and time to do the computations;</p></li>
 <li><p>the Markov property.</p></li>
 </ul></li>
