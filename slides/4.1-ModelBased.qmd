@@ -81,7 +81,7 @@ $$p(s_{t+1} | s_t, a_t) \; \; r(s_t, a_t, s_{t+1})$$
 
 ::: {}
 
-![](img/learningdynamics.svg){width=60%}
+![](img/learningdynamics.png){width=60%}
 
 :::
 

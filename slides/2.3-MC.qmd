@@ -71,7 +71,7 @@ $$
 
 * If you have enough trajectories, the sampling average is an unbiased estimator of the value function.
 
-* The advantage of Monte Carlo methods is that they require only **experience**, not the complete dynamics $p(s' | s,a)$ and $r(s, a, s')$.
+* The advantage of Monte Carlo methods is that they require only **experience**, not the complete dynamics $p(s' | s,a)$ and $r(s, a, s')$ : **model-free**.
 
 # Monte Carlo policy evaluation
 
@@ -176,7 +176,9 @@ $$
 :::
 
 
-* Estimating the Q-values allows to act greedily, while estimating the V-values still requires the dynamics  $p(s' | s,a)$ and $r(s, a, s')$.
+* Estimating the Q-values allows to act greedily, while estimating the V-values still requires the dynamics  $p(s' | s,a)$ and $r(s, a, s')$ (one-step lookahead).
+
+* An approximation of these dynamics can be sufficient.
 
 # Monte Carlo control
 
@@ -215,7 +217,7 @@ $$
 # How to generate the episodes?
 
 
-* The problem with MC control is that we need a policy to generate the sample episodes, but it is that policy that we want to learn.
+* The problem with MC control is that we need a policy to generate the sample episodes, but it is also that policy that we want to learn.
 
 * We have the same **exploration/exploitation** problem as in bandits:
 
