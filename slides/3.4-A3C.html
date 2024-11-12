@@ -434,7 +434,7 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/a2c-arch.svg" style="width:80.0%"></p>
+<p><img data-src="img/a2c-arch.svg" style="width:70.0%"></p>
 <figcaption>Source: <a href="https://ray.readthedocs.io/en/latest/rllib.html" class="uri">https://ray.readthedocs.io/en/latest/rllib.html</a></figcaption>
 </figure>
 </div>
@@ -446,15 +446,6 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
 </section>
 
 <section id="distributed-rl-2" class="title-slide slide level1 center">
-<h1>Distributed RL</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/a3c-parallel.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
-</figure>
-</div>
-</section>
-
-<section id="distributed-rl-3" class="title-slide slide level1 center">
 <h1>Distributed RL</h1>
 <ul>
 <li><p>Initialize global policy or value network <span class="math inline">\theta</span>.</p></li>
@@ -478,47 +469,33 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
 <li><p>Update the global network on <span class="math inline">\mathcal{D}</span> to obtain new weights <span class="math inline">\theta</span>.</p></li>
 </ul></li>
 </ul>
-</section>
+<!--
+# Distributed RL for value-based networks (DQN variants)
 
-<section id="distributed-rl-for-value-based-networks-dqn-variants" class="title-slide slide level1 center">
-<h1>Distributed RL for value-based networks (DQN variants)</h1>
-<ul>
-<li><p>Distributed learning can be used for any deep RL algorithm, including DQN variants.</p></li>
-<li><p>Distributed DQN variants include GORILA, IMPALA, APE-X, R2D2.</p></li>
-<li><p>“All” you need is one (or more) GPU for training the global network and <span class="math inline">N</span> CPU cores for the workers.</p></li>
-<li><p>The workers fill the ERM much more quickly.</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/ape-x.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
-</figure>
-</div>
-<div class="footer">
-<p><span class="citation" data-cites="Horgan2018">Horgan et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Distributed Prioritized Experience Replay. arXiv:1803.00933.</p>
-</div>
-</section>
+* Distributed learning can be used for any deep RL algorithm, including DQN variants.
 
-<section id="distributed-rl-4" class="title-slide slide level1 center">
-<h1>Distributed RL</h1>
-<ul>
-<li><p>In practice, managing the communication between the workers and the global network through processes can be quite painful.</p></li>
-<li><p>There are some <strong>frameworks</strong> abstracting the dirty work, such as <strong>RLlib</strong>.</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/rllib.svg"></p>
-<figcaption>Source: <a href="https://ray.readthedocs.io/en/latest/rllib.html" class="uri">https://ray.readthedocs.io/en/latest/rllib.html</a></figcaption>
-</figure>
-</div>
-</section>
+* Distributed DQN variants include GORILA, IMPALA, APE-X, R2D2.
 
-<section id="distributed-rl-5" class="title-slide slide level1 center">
-<h1>Distributed RL</h1>
-<ul>
-<li><p>Having multiple workers interacting with different environments is easy in simulation (Atari games).</p></li>
-<li><p>With physical environments, working in real time, it requires lots of money…</p></li>
-</ul>
-<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/iaF43Ze1oeI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+* "All" you need is one (or more) GPU for training the global network and $N$ CPU cores for the workers.   
+
+* The workers fill the ERM much more quickly.
+
+![](img/ape-x.png){width=100%}
+
+::: footer
+@Horgan2018 Distributed Prioritized Experience Replay. arXiv:1803.00933.
+:::
+
+<!--
+# Distributed RL
+
+* In practice, managing the communication between the workers and the global network through processes can be quite painful.
+
+* There are some **frameworks** abstracting the dirty work, such as **RLlib**.
+
+![Source: <https://ray.readthedocs.io/en/latest/rllib.html>](img/rllib.svg)
+
+-->
 </section>
 
 <section id="a3c-asynchronous-advantage-actor-critic" class="title-slide slide level1 center">
@@ -570,7 +547,7 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
 <h1>A3C: Asynchronous advantage actor-critic</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/a3c-parallel.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+<p><img data-src="img/a3c-parallel.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </section>
@@ -851,25 +828,17 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
 <section id="gaussian-policies" class="title-slide slide level1 center">
 <h1>Gaussian policies</h1>
 <ul>
-<li>A Gaussian policy considers the vector <span class="math inline">\mathbf{a}</span> to be sampled from the <strong>normal distribution</strong> <span class="math inline">\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))</span>.</li>
-</ul>
-<div class="columns">
-<div class="column" style="width:65%;">
-<ul>
-<li><p>The mean <span class="math inline">\mu_\theta(s)</span> and standard deviation <span class="math inline">\sigma_\theta(s)</span> are vectors that can be the output of the <strong>actor</strong> neural network with parameters <span class="math inline">\theta</span>.</p></li>
-<li><p>If you have <span class="math inline">n</span> degrees of freedom, you just need <span class="math inline">2 n</span> output neurons.</p></li>
+<li><p>A Gaussian policy considers the vector <span class="math inline">\mathbf{a}</span> to be sampled from the <strong>normal distribution</strong> <span class="math inline">\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))</span>.</p></li>
+<li><p>The mean <span class="math inline">\mu_\theta(s)</span> and standard deviation <span class="math inline">\sigma_\theta(s)</span> are output vectors of the <strong>actor</strong> with parameters <span class="math inline">\theta</span>.</p></li>
 <li><p><strong>Sampling</strong> an action from the normal distribution is done through the <strong>reparameterization trick</strong>:</p></li>
 </ul>
 <p><span class="math display">\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi</span></p>
 <p>where <span class="math inline">\xi \sim \mathcal{N}(0, I)</span> comes from the standard normal distribution.</p>
-</div><div class="column" style="width:35%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/gaussianpolicy.png"></p>
-<figcaption><a href="https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024" class="uri">https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024</a></figcaption>
+<p><img data-src="img/reparameterizationtrick.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
 </figure>
 </div>
-</div></div>
 </section>
 
 <section id="gaussian-policies-1" class="title-slide slide level1 center">
@@ -901,11 +870,12 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
 <ul>
 <li>A Gaussian policy samples actions from the <strong>normal distribution</strong> <span class="math inline">\mathcal{N}(\mu_\theta(s), \sigma_\theta(s))</span>, with <span class="math inline">\mu_\theta(s)</span> and <span class="math inline">\sigma_\theta(s)</span> being the output of the actor.</li>
 </ul>
-<div class="columns">
-<div class="column" style="width:65%;">
+<p><span class="math display">\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi</span></p>
 <ul>
 <li>The score <span class="math inline">\nabla_\theta \log \pi_\theta (s, a)</span> can be obtained easily using the output of the actor:</li>
 </ul>
+<div class="columns">
+<div class="column" style="width:60%;">
 <p><span class="math display">
 \begin{cases}
     \nabla_{\mu_\theta(s)} \log \pi_\theta (s, a) = \dfrac{a - \mu_\theta(s)}{\sigma_\theta(s)^2} \\
@@ -913,19 +883,15 @@ A^n_t = R_t^n - V_\varphi (s_t) = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \ga
     \nabla_{\sigma_\theta(s)} \log \pi_\theta (s, a) = \dfrac{(a - \mu_\theta(s))^2}{\sigma_\theta(s)^3} - \dfrac{1}{\sigma_\theta(s)}\\
 \end{cases}
 </span></p>
-<ul>
-<li>The rest of the score (<span class="math inline">\nabla_\theta \mu_\theta(s)</span> and <span class="math inline">\nabla_\theta \sigma_\theta(s)</span>) is the problem of tensorflow/pytorch.</li>
-</ul>
-</div><div class="column" style="width:35%;">
-<p><span class="math display">\mathbf{a} = \mu_\theta(s) + \sigma_\theta(s) \, \xi</span></p>
+</div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/gaussianpolicy.png"></p>
-<figcaption>Source: <a href="https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024" class="uri">https://medium.com/@vittoriolabarbera/continuous-control-with-a2c-and-gaussian-policies-mujoco-pytorch-and-c-4221ec8ba024</a></figcaption>
+<p><img data-src="img/reparameterizationtrick.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div></div>
 <ul>
+<li><p>The rest of the score (<span class="math inline">\nabla_\theta \mu_\theta(s)</span> and <span class="math inline">\nabla_\theta \sigma_\theta(s)</span>) is the problem of tensorflow/pytorch.</p></li>
 <li><p>This is the same <strong>reparametrization trick</strong> used in variational autoencoders to allow backpropagation to work through a sampling operation.</p></li>
 <li><p><strong>Beta</strong> distributions are an even better choice to parameterize stochastic policies <span class="citation" data-cites="Chou2017">(<a href="#/references" role="doc-biblioref" onclick="">Chou et al., 2017</a>)</span>.</p></li>
 </ul>
@@ -948,9 +914,6 @@ Chou, P.-W., Maturana, D., and Scherer, S. (2017). Improving <span>Stochastic Po
 </div>
 <div id="ref-Hessel2017" class="csl-entry" role="listitem">
 Hessel, M., Modayil, J., van Hasselt, H., Schaul, T., Ostrovski, G., Dabney, W., et al. (2017). Rainbow: <span>Combining Improvements</span> in <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1710.02298">http://arxiv.org/abs/1710.02298</a>.
-</div>
-<div id="ref-Horgan2018" class="csl-entry" role="listitem">
-Horgan, D., Quan, J., Budden, D., Barth-Maron, G., Hessel, M., van Hasselt, H., et al. (2018). Distributed <span>Prioritized Experience Replay</span>. <a href="http://arxiv.org/abs/1803.00933">http://arxiv.org/abs/1803.00933</a>.
 </div>
 <div id="ref-Mnih2016" class="csl-entry" role="listitem">
 Mnih, V., Badia, A. P., Mirza, M., Graves, A., Lillicrap, T. P., Harley, T., et al. (2016). Asynchronous <span>Methods</span> for <span>Deep Reinforcement Learning</span>. in <em>Proc. <span>ICML</span></em> <a href="http://arxiv.org/abs/1602.01783">http://arxiv.org/abs/1602.01783</a>.

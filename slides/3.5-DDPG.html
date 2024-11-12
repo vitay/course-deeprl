@@ -866,8 +866,6 @@ $$
 
 <section id="td3---twin-delayed-deep-deterministic-policy-gradient-2" class="title-slide slide level1 center">
 <h1>TD3 - Twin Delayed Deep Deterministic policy gradient</h1>
-<div class="columns">
-<div class="column" style="width:65%;">
 <ul>
 <li><p>TD3 uses two critics <span class="math inline">\varphi_1</span> and <span class="math inline">\varphi_2</span> (and target critics):</p>
 <ul>
@@ -878,17 +876,7 @@ $$
 <ul>
 <li><p>One of the critic will always be less over-estimating than the other. Better than nothing…</p></li>
 <li><p>Using twin critics is called <strong>clipped double learning</strong>.</p></li>
-</ul>
-</div><div class="column" style="width:35%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/td3-twins.png"></p>
-<figcaption>Source: <a href="https://funnytimes.com/wp-content/uploads/2011/10/131986994517768.png" class="uri">https://funnytimes.com/wp-content/uploads/2011/10/131986994517768.png</a></figcaption>
-</figure>
-</div>
-</div></div>
-<ul>
-<li>Both critics learn in parallel using the same target:</li>
+<li><p>Both critics learn in parallel using the same target:</p></li>
 </ul>
 <p><span class="math display">\mathcal{L}(\varphi_1) = \mathbb{E}[(t - Q_{\varphi_1}(s, a))^2] \qquad ; \qquad \mathcal{L}(\varphi_2) = \mathbb{E}[ (t - Q_{\varphi_2}(s, a))^2]</span></p>
 <ul>
