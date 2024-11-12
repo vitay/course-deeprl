@@ -844,7 +844,7 @@ $$(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})$$
 :::
 
 
-# 5 - Distributed RL: Gorila, Ape-X, R2D2
+# 5 - Distributed learning: Gorila, Ape-X, R2D2
 
 ![](img/paper-gorila.png){width=80%}
 
@@ -855,6 +855,7 @@ $$(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})$$
 ::: footer
 @Nair2015 ; @Horgan2018 ; @Kapturowski2019
 :::
+
 
 # Gorila - General Reinforcement Learning Architecture
 
@@ -929,6 +930,14 @@ $$(s_{t-T}, a_{t-T}, r_{t-T+1}, s_{t-T+1}, \ldots, s_t, a_t, r_{t+1}, s_{t+1})$$
 :::
 :::
 
+
+# Distributed RL
+
+* Having multiple workers interacting with different environments is easy in simulation (Atari games).
+
+* With physical environments, working in real time, it requires lots of money...
+
+{{< youtube iaF43Ze1oeI >}}
 
 # Ape-X
 

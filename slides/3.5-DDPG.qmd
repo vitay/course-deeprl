@@ -485,8 +485,6 @@ $$
 
 # TD3 - Twin Delayed Deep Deterministic policy gradient
 
-::: {.columns}
-::: {.column width=65%}
 
 * TD3 uses two critics $\varphi_1$ and $\varphi_2$ (and target critics): 
 
@@ -498,14 +496,6 @@ $$t = r + \gamma \, \min(Q_{\varphi'_1}(s', \mu_{\theta'}(s')), Q_{\varphi'_2}(s
 
 * Using twin critics is called **clipped double learning**.
 
-:::
-::: {.column width=35%}
-
-![Source: <https://funnytimes.com/wp-content/uploads/2011/10/131986994517768.png>](img/td3-twins.png)
-
-
-:::
-:::
 
 
 * Both critics learn in parallel using the same target:
