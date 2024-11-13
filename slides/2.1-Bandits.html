@@ -530,6 +530,8 @@ Julien Vitay
 
 <section id="monte-carlo-sampling" class="title-slide slide level1 center">
 <h1>Monte Carlo sampling</h1>
+<div class="columns">
+<div class="column">
 <ul>
 <li>One can estimate any function of the random variable with random sampling:</li>
 </ul>
@@ -537,8 +539,16 @@ Julien Vitay
     \mathbb{E}[f(X)] = \mathbb{E}_{x \sim X} [f(x)] \approx \frac{1}{N} \, \sum_{i=1}^N f(x_i)
 </span></p>
 <ul>
-<li>Example of Monte Carlo sampling to estimate <span class="math inline">\pi/4</span>: <span class="math inline">f(x_i) = 1</span> if <span class="math inline">||x_i|| \leq 1</span>, <span class="math inline">0</span> otherwise.</li>
+<li>Example of Monte Carlo sampling to estimate <span class="math inline">\pi/4</span>:</li>
 </ul>
+<ol type="1">
+<li><p>Sample a 2D point <span class="math inline">\mathbf{x}_i</span> inside the unit square using the uniform distribution <span class="math inline">\mathcal{U}(0,1)</span>.</p></li>
+<li><p>The point is inside the circle (<span class="math inline">||\mathbf{x}_i|| \leq 1</span>) with a probability <span class="math inline">\dfrac{\pi}{4}</span>.</p></li>
+<li><p>Update the estimation of <span class="math inline">\pi</span>:</p></li>
+</ol>
+<p><span class="math display">
+    \pi \approx 4 \, \dfrac{\text{number of red points}}{\text{total number of points}}
+</span></p>
 <!--
 ::: {.columns}
 ::: {.column width=33%}
@@ -555,16 +565,20 @@ Julien Vitay
 ![](img/montecarlo-3.jpeg)
 :::
 :::
+
+::: footer
+Source: <https://towardsdatascience.com/an-overview-of-Monte Carlo-methods-675384eb1694>
+:::
+
 -->
+</div><div class="column">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/Pi_monte_carlo_all.gif" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/Pi_monte_carlo_all.gif"></p>
+<figcaption>Source: Kmhkmh - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=140013480</figcaption>
 </figure>
 </div>
-<p>By Kmhkmh - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=140013480</p>
-<div class="footer">
-<p>Source: &lt;https://towardsdatascience.com/an-overview-of-Monte Carlo-methods-675384eb1694&gt;</p>
-</div>
+</div></div>
 </section>
 
 <section id="central-limit-theorem" class="title-slide slide level1 center">

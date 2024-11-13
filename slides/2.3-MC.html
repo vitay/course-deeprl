@@ -480,7 +480,7 @@ Julien Vitay
 <li><p>Update the estimated action value <span class="math inline">Q(s_t, a_t)</span> of all encountered state-action pairs using the obtained return:</p></li>
 </ol>
 <p><span class="math display">
-      Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
+      Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
   </span></p></li>
 </ul>
 </div></div>
@@ -533,7 +533,7 @@ Julien Vitay
 <li><p>Update the estimated action value <span class="math inline">Q(s_t, a_t)</span> of all encountered state-action pairs:</p></li>
 </ol>
 <p><span class="math display">
-      Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
+      Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
   </span></p>
 <ol start="5" type="1">
 <li>For each state <span class="math inline">s_t</span> in the episode, <strong>improve</strong> the policy:</li>
@@ -635,7 +635,7 @@ Julien Vitay
 <li><p>For each state-action pair <span class="math inline">(s_t, a_t)</span> in the episode, update the estimated Q-value:</p></li>
 </ol>
 <p><span class="math display">
-      Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
+      Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
   </span></p>
 <ol start="3" type="1">
 <li>For each state <span class="math inline">s_t</span> in the episode, improve the policy (e.g.&nbsp;<span class="math inline">\epsilon</span>-greedy):</li>
@@ -839,11 +839,11 @@ Julien Vitay
 <li>This gives us the updates:</li>
 </ul>
 <p><span class="math display">
-    V(s_t) = V(s_t) + \alpha  \, \rho_{t:T-1} \, (R_t - V(s_t))
+    V(s_t) \leftarrow V(s_t) + \alpha  \, \rho_{t:T-1} \, (R_t - V(s_t))
 </span></p>
 <p>and:</p>
 <p><span class="math display">
-    Q(s_t, a_t) = Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
+    Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
 </span></p>
 <ul>
 <li>Unlikely episodes under <span class="math inline">\pi</span> are barely used for learning, likely ones are used a lot.</li>
@@ -860,7 +860,7 @@ Julien Vitay
 </ol>
 <p><span class="math display">\rho_{t:T-1} = \prod_{k=t}^{T-1} \frac{\pi(s_k, a_k)}{b(s_k, a_k)}</span></p>
 <p><span class="math display">
-      Q(s_t, a_t) = Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
+      Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
   </span></p>
 <ol start="3" type="1">
 <li>For each state <span class="math inline">s_t</span> in the episode, update the <strong>learned</strong> deterministic policy (greedy):</li>

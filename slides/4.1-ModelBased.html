@@ -533,18 +533,32 @@ Julien Vitay
 </figure>
 </div>
 <ul>
-<li><strong>Model Predictive Control</strong> iteratively plans complete trajectories, but only selects the first action.</li>
+<li>Replanning avoids accumulating errors over long horizons.</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-algo.png" style="width:70.0%"></p>
-<figcaption>Source: <a href="http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf" class="uri">http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf</a></figcaption>
-</figure>
-</div>
 </section>
 
 <section id="mpc---model-predictive-control-1" class="title-slide slide level1 center">
 <h1>MPC - Model Predictive Control</h1>
+<ul>
+<li><p>Collect transitions <span class="math inline">(s, a, r, s')</span> using a (random/expert) policy <span class="math inline">b</span> and create an initial dataset <span class="math inline">\mathcal{D} = \{(s_k, a_k, r_, s'_k\}_{k}</span>.</p></li>
+<li><p><strong>while</strong> not converged:</p>
+<ul>
+<li><p>(Re)Train the dynamics model <span class="math inline">M(s, a) = (s', r)</span> on <span class="math inline">\mathcal{D}</span> using supervised learning.</p></li>
+<li><p><strong>foreach</strong> step <span class="math inline">t</span> in the trajectory:</p>
+<ul>
+<li>Plan a trajectory from the current state <span class="math inline">s_t</span> using the model <span class="math inline">M</span>, returning a sequence of planned actions:</li>
+</ul>
+<p><span class="math display">a_{t}, a_{t+1}, \ldots, a_T</span></p>
+<ul>
+<li><p>Take the first action <span class="math inline">a_t</span>, observe the next state <span class="math inline">s_{t+1}</span>.</p></li>
+<li><p>Append the transition <span class="math inline">(s_t, a_t, s_{t+1})</span> to the dataset.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="mpc---example-with-a-neural-model" class="title-slide slide level1 center">
+<h1>MPC - Example with a neural model</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/mpc-architecture.png" class="quarto-figure quarto-figure-center"></p>
@@ -555,8 +569,8 @@ Julien Vitay
 </div>
 </section>
 
-<section id="mpc---model-predictive-control-2" class="title-slide slide level1 center">
-<h1>MPC - Model Predictive Control</h1>
+<section id="mpc---example-with-a-neural-model-1" class="title-slide slide level1 center">
+<h1>MPC - Example with a neural model</h1>
 <ul>
 <li><p>The planner can actually be anything, it does not have to be a RL algorithm.</p></li>
 <li><p>For example, it can be iLQR (Iterative Linear Quadratic Regulator), a non-linear optimization method.</p></li>
@@ -585,8 +599,8 @@ Julien Vitay
 </div>
 </section>
 
-<section id="mpc---model-predictive-control-3" class="title-slide slide level1 center">
-<h1>MPC - Model Predictive Control</h1>
+<section id="mpc---example-with-a-neural-model-2" class="title-slide slide level1 center">
+<h1>MPC - Example with a neural model</h1>
 <ul>
 <li><p>The main advantage of MPC is that you can change the reward function (the <strong>goal</strong>) on the fly: what you learn is the model, but planning is just an optimization procedure.</p></li>
 <li><p>You can set intermediary goals to the agent very flexibly: no need for a well-defined reward function.</p></li>
@@ -623,8 +637,7 @@ Julien Vitay
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/dynaq.png"></p>
-<figcaption>Source: <a href="https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8" class="uri">https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8</a></figcaption>
+<p><img data-src="img/dynaq.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
@@ -679,7 +692,7 @@ Julien Vitay
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/dynaq2.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/dynaq.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">

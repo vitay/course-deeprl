@@ -370,7 +370,7 @@ Julien Vitay
 <li>MC methods wait until the end of the episode to compute the obtained return:</li>
 </ul>
 <p><span class="math display">
-    V(s_t) = V(s_t) + \alpha (R_t - V(s_t))
+    V(s_t) \leftarrow V(s_t) + \alpha (R_t - V(s_t))
 </span></p>
 <ul>
 <li>If the episode is very long, learning might be very slow. If the task is continuing, it is impossible.</li>
@@ -406,21 +406,13 @@ Julien Vitay
 <li><strong>Temporal-Difference (TD)</strong> methods simply replace the actual return by an estimation in the update rule:</li>
 </ul>
 <p><span class="math display">
-    V(s_t) = V(s_t) + \alpha \, (r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t))
+    V(s_t) \leftarrow V(s_t) + \alpha \, (r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t))
 </span></p>
 <p>where <span class="math inline">r_{t+1} + \gamma\, V(s_{t+1})</span> is a sampled estimate of the return.</p>
 <ul>
 <li>The quantity</li>
 </ul>
 <p><span class="math display">\delta_t = r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)</span></p>
-<p>is called equivalently the <strong>reward prediction error</strong> (RPE), the <strong>TD error</strong> or the <strong>advantage</strong> of the action <span class="math inline">a_t</span>.</p>
-<ul>
-<li><p>It is the difference between:</p>
-<ul>
-<li><p>the estimated return in state <span class="math inline">s_t</span>: <span class="math inline">V(s_t)</span>.</p></li>
-<li><p>the actual return <span class="math inline">r_{t+1} + \gamma \, V(s_{t+1})</span>, computed with an estimation.</p></li>
-</ul></li>
-</ul>
 </div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -428,18 +420,14 @@ Julien Vitay
 </figure>
 </div>
 </div></div>
-</section>
-
-<section id="temporal-difference-td-learning-2" class="title-slide slide level1 center">
-<h1>Temporal-Difference (TD) learning</h1>
+<p>is called equivalently the <strong>reward prediction error</strong> (RPE), the <strong>TD error</strong> or the <strong>advantage</strong> of the action <span class="math inline">a_t</span>.</p>
 <ul>
-<li><p>TD error: <span class="math display">\delta_t = r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)</span></p></li>
-<li><p>If <span class="math inline">\delta_t &gt; 0</span>, it means that:</p>
+<li><p>It is the difference between:</p>
 <ul>
-<li><p>we received more reward <span class="math inline">r_{t+1}</span> than expected, or:</p></li>
-<li><p>we arrive in a state <span class="math inline">s_{t+1}</span> that is better than expected.</p></li>
-<li><p>we should increase the value of <span class="math inline">s_t</span> as we <strong>underestimate</strong> it.</p></li>
+<li><p>the estimated return in state <span class="math inline">s_t</span>: <span class="math inline">V(s_t)</span>.</p></li>
+<li><p>the actual return <span class="math inline">r_{t+1} + \gamma \, V(s_{t+1})</span>, computed with an estimation.</p></li>
 </ul></li>
+<li><p>If <span class="math inline">\delta_t &gt; 0</span>, it means that we received more reward <span class="math inline">r_{t+1}</span> than expected, or that we arrived in a state <span class="math inline">s_{t+1}</span> better than expected. We should increase the value of <span class="math inline">s_t</span> as we <strong>underestimate</strong> it.</p></li>
 <li><p>If <span class="math inline">\delta_t &lt; 0</span>, we should decrease the value of <span class="math inline">s_t</span> as we <strong>overestimate</strong> it.</p></li>
 </ul>
 </section>
@@ -473,7 +461,7 @@ Julien Vitay
 <li>Update the state-value function of <span class="math inline">s_t</span>:</li>
 </ul>
 <p><span class="math display">
-      V(s_t) = V(s_t) + \alpha \, \delta_t
+      V(s_t) \leftarrow V(s_t) + \alpha \, \delta_t
   </span></p>
 <ul>
 <li><strong>if</strong> <span class="math inline">s_{t+1}</span> is terminal: <strong>break</strong></li>
@@ -492,7 +480,7 @@ Julien Vitay
 <li>The <strong>TD error</strong> is used to evaluate the policy:</li>
 </ul>
 <p><span class="math display">
-    V(s_t) = V(s_t) + \alpha \, (r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)) = V(s_t) + \alpha \, \delta_t
+    V(s_t) \leftarrow V(s_t) + \alpha \, (r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)) = V(s_t) + \alpha \, \delta_t
 </span></p>
 <ul>
 <li>If <span class="math inline">\alpha</span> is small enough, the estimates converge to:</li>
@@ -527,7 +515,7 @@ Julien Vitay
 <li>Q-values can be estimated in the same way:</li>
 </ul>
 <p><span class="math display">
-    Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))
+    Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))
 </span></p>
 <ul>
 <li><p>Like for MC, the exploration/exploitation trade-off has to be managed: what is the next action <span class="math inline">a_{t+1}</span>?</p></li>
@@ -568,7 +556,7 @@ Julien Vitay
 <li>We can now update the value of <span class="math inline">(s_t, a_t)</span>:</li>
 </ul>
 <p><span class="math display">
-    Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))
+    Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))
 </span></p>
 <ul>
 <li><p>The next action <span class="math inline">a_{t+1}</span> will <strong>have to</strong> be executed next: SARSA is <strong>on-policy</strong>. You cannot change your mind and execute another <span class="math inline">a_{t+1}</span>.</p></li>
@@ -596,7 +584,7 @@ Julien Vitay
 <li><p>Select <span class="math inline">a_{t+1}</span> using the current <strong>stochastic</strong> policy <span class="math inline">\pi</span>.</p></li>
 <li><p>Update the action-value function of <span class="math inline">(s_t, a_t)</span>:</p></li>
 </ul>
-<p><span class="math display"> Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1})  - Q(s_t, a_t)) </span></p>
+<p><span class="math display"> Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, Q(s_{t+1}, a_{t+1})  - Q(s_t, a_t)) </span></p>
 <ul>
 <li>Improve the stochastic policy, e.g:</li>
 </ul>
@@ -645,7 +633,7 @@ Julien Vitay
 <ul>
 <li><strong>Q-learning</strong> approximates the optimal action-value function <span class="math inline">Q^*</span> independently of the current policy, using the greedy action in the next state.</li>
 </ul>
-<p><span class="math display">Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, \max_a Q(s_{t+1}, a) - Q(s_t, a_t))</span></p>
+<p><span class="math display">Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, \max_a Q(s_{t+1}, a) - Q(s_t, a_t))</span></p>
 <ul>
 <li><p>The next action <span class="math inline">a_{t+1}</span> can be generated by a behavior policy: Q-learning is <strong>off-policy</strong>.</p></li>
 <li><p>The learned policy can be deterministic.</p></li>
@@ -666,7 +654,7 @@ Julien Vitay
 <li><p>Apply <span class="math inline">a_t</span>, observe <span class="math inline">r_{t+1}</span> and <span class="math inline">s_{t+1}</span>.</p></li>
 <li><p>Update the action-value function of <span class="math inline">(s_t, a_t)</span>:</p></li>
 </ul>
-<p><span class="math display">Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, \max_a Q(s_{t+1}, a) - Q(s_t, a_t))</span></p>
+<p><span class="math display">Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (r_{t+1} + \gamma \, \max_a Q(s_{t+1}, a) - Q(s_t, a_t))</span></p>
 <ul>
 <li>Improve greedily the learned policy:</li>
 </ul>
@@ -745,13 +733,13 @@ Julien Vitay
 <li><strong>On-policy</strong> TD (SARSA) follows the learned stochastic policy.</li>
 </ul>
 <p><span class="math display">
-      Q(s, a) = Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, Q(s', a') - Q(s, a))
+      Q(s, a) \leftarrow Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, Q(s', a') - Q(s, a))
   </span></p>
 <ul>
 <li><strong>Off-policy</strong> TD (Q-learning) follows a behavior policy and learns a deterministic policy.</li>
 </ul>
 <p><span class="math display">
-      Q(s, a) = Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, \max_a Q(s', a) - Q(s, a))
+      Q(s, a) \leftarrow Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, \max_a Q(s', a) - Q(s, a))
   </span></p></li>
 <li><p>TD uses <strong>bootstrapping</strong> like DP: it uses other estimates to update one estimate.</p></li>
 <li><p>Q-learning is the go-to method in tabular RL.</p></li>
@@ -838,7 +826,7 @@ Julien Vitay
 \begin{cases}
 p(s_t, a_t) \leftarrow p(s_t, a_t) + \beta \, \delta_t \\
 \\
-\pi(s, a) = \frac{\exp{p(s, a)}}{\sum_b \exp{p(s, b)}} \\
+\pi(s, a) = \dfrac{\exp{p(s, a)}}{\sum_b \exp{p(s, b)}} \\
 \end{cases}
 </span></p>
 <ul>
@@ -948,7 +936,7 @@ p(s_t, a_t) \leftarrow p(s_t, a_t) + \beta \, \delta_t \\
 <li>When the reward function is sparse (e.g.&nbsp;only at the end of a game), only the last action, leading to that reward, will be updated the first time in TD.</li>
 </ul>
 <p><span class="math display">
-    Q(s, a) = Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, \max_a Q(s', a) - Q(s, a))
+    Q(s, a) \leftarrow Q(s, a) + \alpha \, (r(s, a, s') + \gamma \, \max_a Q(s', a) - Q(s, a))
 </span></p>
 <ul>
 <li><p>The previous actions, which were equally important in obtaining the reward, will only be updated the next time they are visited.</p></li>
@@ -985,7 +973,7 @@ p(s_t, a_t) \leftarrow p(s_t, a_t) + \beta \, \delta_t \\
 <li>We can update the value of the state with this n-step return:</li>
 </ul>
 <p><span class="math display">
-    V(s_t) = V(s_t) + \alpha \, (R^n_t - V (s_t))
+    V(s_t) \leftarrow V(s_t) + \alpha \, (R^n_t - V (s_t))
 </span></p>
 </section>
 
@@ -1126,7 +1114,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <li><p>Compute the TD error in <span class="math inline">s_t</span>:</p></li>
 </ul>
 <p><span class="math display">
-      \delta_t = r_{t+1} + \gamma \, V_k(s_{t+1}) - V_k(s_t)
+      \delta_t = r_{t+1} + \gamma \, V(s_{t+1}) - V(s_t)
   </span></p>
 <ul>
 <li>Increment the trace of <span class="math inline">s_t</span>:</li>
@@ -1140,7 +1128,7 @@ A^n_t = \sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \,  V(s_{t+n}) - V (
 <li>Update the state value function:</li>
 </ul>
 <p><span class="math display">
-      V_{k+1}(s) = V_k(s) + \alpha \, \delta_t \, e_t(s)
+      V(s) \leftarrow V(s) + \alpha \, \delta_t \, e_t(s)
   </span></p>
 <ul>
 <li>Decay the eligibility trace:</li>
