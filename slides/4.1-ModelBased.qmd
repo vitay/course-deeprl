@@ -142,12 +142,27 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{\tau}[R(\tau)]$$
 
 ![Source: <https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323>](img/mpc-drift2.jpeg){width=80%}
 
-* **Model Predictive Control** iteratively plans complete trajectories, but only selects the first action.
-
-![Source: <http://rail.eecs.berkeley.edu/deeprlcourse-fa17/f17docs/lecture_9_model_based_rl.pdf>](img/mpc-algo.png){width=70%}
-
+* Replanning avoids accumulating errors over long horizons. 
 
 # MPC - Model Predictive Control
+
+* Collect transitions $(s, a, r, s')$ using a (random/expert) policy $b$ and create an initial dataset $\mathcal{D} = \{(s_k, a_k, r_, s'_k\}_{k}$.
+
+* **while** not converged:
+
+    * (Re)Train the dynamics model $M(s, a) = (s', r)$ on $\mathcal{D}$ using supervised learning.
+
+    * **foreach** step $t$ in the trajectory:
+
+        * Plan a trajectory from the current state $s_t$ using the model $M$, returning a sequence of planned actions:
+
+        $$a_{t}, a_{t+1}, \ldots, a_T$$
+
+        * Take the first action $a_t$, observe the next state $s_{t+1}$.
+
+        * Append the transition $(s_t, a_t, s_{t+1})$ to the dataset.
+
+# MPC - Example with a neural model
 
 ![](img/mpc-architecture.png)
 
@@ -155,7 +170,7 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{\tau}[R(\tau)]$$
 Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.
 :::
 
-# MPC - Model Predictive Control
+# MPC - Example with a neural model
 
 * The planner can actually be anything, it does not have to be a RL algorithm.
 
@@ -190,7 +205,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 @Nagabandi2017 Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.
 :::
 
-# MPC - Model Predictive Control
+# MPC - Example with a neural model
 
 * The main advantage of MPC is that you can change the reward function (the **goal**) on the fly: what you learn is the model, but planning is just an optimization procedure.
 
@@ -229,7 +244,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 ::: {.column width=50%}
 
 
-![Source: <https://towardsdatascience.com/reinforcement-learning-model-based-planning-methods-5e99cae0abb8>](img/dynaq.png)
+![](img/dynaq.png)
 
 
 :::
@@ -292,7 +307,7 @@ Nagabandi et al. (2017). Neural Network Dynamics for Model-Based Deep Reinforcem
 ::: {.column width=50%}
 
 
-![](img/dynaq2.png)
+![](img/dynaq.png)
 
 :::
 ::: {.column width=50%}

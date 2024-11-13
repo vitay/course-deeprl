@@ -228,7 +228,7 @@ $$\mathcal{L}(\hat{\theta}) = \mathbb{E}_{s, a} [D_\text{KL}(\hat{\pi}(s, a) || 
 
 * As the network is smaller, it won't be as good as $\pi$, but its learning objective is easier.
 
-![](img/policydistillation.png){width=40%}
+![](img/policydistillation.png){width=60%}
 
 ::: footer
 @Rusu2016 Policy Distillation. arXiv:1511.06295.

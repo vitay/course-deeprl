@@ -140,7 +140,7 @@ $$
     4. Update the estimated action value $Q(s_t, a_t)$ of all encountered state-action pairs using the obtained return:
 
     $$
-        Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
+        Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
     $$
 
 
@@ -199,7 +199,7 @@ $$
     4. Update the estimated action value $Q(s_t, a_t)$ of all encountered state-action pairs:
 
     $$
-        Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
+        Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
     $$
 
     5. For each state $s_t$ in the episode, **improve** the policy:
@@ -297,7 +297,7 @@ $$
     2. For each state-action pair $(s_t, a_t)$ in the episode, update the estimated Q-value:
 
     $$
-        Q(s_t, a_t) = Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
+        Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \, (R_t - Q(s_t, a_t))
     $$
 
     3. For each state $s_t$ in the episode, improve the policy (e.g. $\epsilon$-greedy):
@@ -480,13 +480,13 @@ $$V^\pi(s_t) = \mathbb{E}_{\tau \sim \rho_b} [\rho_{t:T-1} \, R_t]$$
 * This gives us the updates:
 
 $$
-    V(s_t) = V(s_t) + \alpha  \, \rho_{t:T-1} \, (R_t - V(s_t))
+    V(s_t) \leftarrow V(s_t) + \alpha  \, \rho_{t:T-1} \, (R_t - V(s_t))
 $$
 
 and:
 
 $$
-    Q(s_t, a_t) = Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
+    Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
 $$
 
 * Unlikely episodes under $\pi$ are barely used for learning, likely ones are used a lot.
@@ -504,7 +504,7 @@ $$
     $$\rho_{t:T-1} = \prod_{k=t}^{T-1} \frac{\pi(s_k, a_k)}{b(s_k, a_k)}$$
 
     $$
-        Q(s_t, a_t) = Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
+        Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha  \, \rho_{t:T-1} \, (R_t - Q(s_t, a_t))
     $$
 
     3. For each state $s_t$ in the episode, update the **learned** deterministic policy (greedy):

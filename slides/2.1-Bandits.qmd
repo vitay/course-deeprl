@@ -158,13 +158,26 @@ $$
 
 # Monte Carlo sampling
 
+:::columns
+:::column
+
 * One can estimate any function of the random variable with random sampling:
 
 $$
     \mathbb{E}[f(X)] = \mathbb{E}_{x \sim X} [f(x)] \approx \frac{1}{N} \, \sum_{i=1}^N f(x_i)
 $$
 
-* Example of Monte Carlo sampling to estimate $\pi/4$: $f(x_i) = 1$ if $||x_i|| \leq 1$, $0$ otherwise.
+* Example of Monte Carlo sampling to estimate $\pi/4$: 
+
+1. Sample a 2D point $\mathbf{x}_i$ inside the unit square using the uniform distribution $\mathcal{U}(0,1)$.
+
+2. The point is inside the circle ($||\mathbf{x}_i|| \leq 1$) with a probability $\dfrac{\pi}{4}$.
+
+3. Update the estimation of $\pi$:
+
+$$
+    \pi \approx 4 \, \dfrac{\text{number of red points}}{\text{total number of points}}
+$$
 
 <!--
 ::: {.columns}
@@ -182,14 +195,19 @@ $$
 ![](img/montecarlo-3.jpeg)
 :::
 :::
---> 
-
-![](img/Pi_monte_carlo_all.gif)
-
-By Kmhkmh - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=140013480
 
 ::: footer
 Source: <https://towardsdatascience.com/an-overview-of-Monte Carlo-methods-675384eb1694>
+:::
+
+--> 
+
+:::
+:::column
+
+![Source: Kmhkmh - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=140013480](img/Pi_monte_carlo_all.gif)
+
+:::
 :::
 
 # Central limit theorem
