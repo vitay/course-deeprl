@@ -50,7 +50,7 @@
       margin-left: 2em;
     }  </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script defer="" src="../assets/katex/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -65,7 +65,7 @@
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link rel="stylesheet" href="../assets/katex/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -454,7 +454,7 @@ Julien Vitay
 </ul>
 </div></div>
 <ul>
-<li><p>But it does not work in Go because its branching factor (250 actions possible from each state) is to huge: the tree explodes very soon.</p>
+<li><p>But it does not work in Go because its branching factor (250 actions possible from each state) is too huge: the tree explodes very soon.</p>
 <ul>
 <li><span class="math inline">250^{6} \approx 10^{15}</span>, so even if your processor evaluates 1 billion nodes per second, it would need 11 days to evaluate a single position 6 moves away…</li>
 </ul></li>
