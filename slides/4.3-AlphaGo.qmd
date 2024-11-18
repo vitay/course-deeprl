@@ -85,7 +85,7 @@ resources: pdf/4.3-AlphaGo.pdf
 :::
 
 
-* But it does not work in Go because its branching factor (250 actions possible from each state) is to huge: the tree explodes very soon.
+* But it does not work in Go because its branching factor (250 actions possible from each state) is too huge: the tree explodes very soon.
 
     *  $250^{6} \approx 10^{15}$, so even if your processor evaluates 1 billion nodes per second, it would need 11 days to evaluate a single position 6 moves away...
 

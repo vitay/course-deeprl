@@ -2,7 +2,9 @@ format:
   revealjs: 
     theme: [default, ../assets/slides.scss]
     slide-number: c/t
-    html-math-method: katex
+    html-math-method:
+      method: katex
+      url: "../assets/katex/"
 
     auto-stretch: false
     touch: true
