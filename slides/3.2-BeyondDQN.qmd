@@ -102,6 +102,10 @@ $$Q^\pi(s, a) = \mathbb{E}_\pi [\mathcal{Z}^\pi(s, a)]$$
 # Categorical DQN
 
 
+::: {.columns}
+::: {.column width=50%}
+
+
 * The probability that the return obtained the action $(s, a)$ lies in the bin of the atom $z_i$ is noted $p_i(s, a)$.
 
 * A discrete probability dustribution can be approximated by a neural network $F$ with parameters $\theta$, using a **softmax output layer**: 
@@ -110,8 +114,6 @@ $$
     p_i(s, a; \theta) = \frac{\exp F_i(s, a; \theta)}{\sum_{j=1}^{n} \exp F_j(s, a; \theta)}
 $$
 
-::: {.columns}
-::: {.column width=50%}
 
 
 :::
@@ -290,10 +292,15 @@ $$
 
 * The KL divergence between the two distributions is:
 
-$$\text{KL}(T || X_\theta) = \mathbb{E}_{t \sim T} [- \log \, \frac{X_\theta}{T}]$$
+$$\text{KL}(X_\theta || T) = \mathbb{E}_{t \sim T} [- \log \, \frac{X_\theta}{T}]$$
 
 
-* It can be rewritten as the sum of the **cross-entropy** and the entropy of $T$:
+![](img/crossentropy.svg)
+
+# Kullback-Leibler (KL) divergence 
+
+
+* The KL divergence can be rewritten as the sum of the **cross-entropy** and the entropy of $T$:
 
 
 $$\text{KL}(X_\theta || T) = \mathbb{E}_{t \sim T} [- \log \, X_\theta + \log T] = H(X_\theta, T) - H(T)$$

@@ -44,7 +44,7 @@ $$\mathbf{y} = F_\theta (\mathbf{x})$$
 
 * **Classification:**
 
-    * The output layer uses the **softmax** operator to produce a probability distribution: $y_j = \frac{e^{z_j}}{\sum_k e^{z_k}}$
+    * The output layer uses the **softmax** operator to produce a probability distribution: $y_j = \dfrac{e^{z_j}}{\sum_k e^{z_k}}$
 
     * The network minimizes the **cross-entropy** or **negative log-likelihood** of the model on the training set:
 
@@ -68,7 +68,9 @@ $$
 
 * In supervised learning, the targets $\mathbf{t}$ are fixed **one-hot encoded vectors**.
 
-$$\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \sum_j t_j \, \log y_{j} ]$$
+$$
+    \mathcal{L}(\theta) = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \sum_j t_j \, \log y_{j} ] = \mathbb{E}_{\mathbf{x}, \mathbf{t} \in \mathcal{D}} [ - \sum_j t_j \, \log  \dfrac{e^{z_j}}{\sum_k e^{z_k}} ]
+$$
 
 * But it could be any target distribution.
 

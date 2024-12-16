@@ -47,6 +47,21 @@
   file = {/Users/vitay/Documents/Zotero/storage/UHS2TB3V/Alcorn_et_al_2019_Strike_(with)_a_Pose.pdf;/Users/vitay/Documents/Zotero/storage/HVTFIA4P/1811.html}
 }
 
+@online{Ali2024,
+  title = {The {{Hidden Attention}} of {{Mamba Models}}},
+  author = {Ali, Ameen and Zimerman, Itamar and Wolf, Lior},
+  date = {2024-03-31},
+  eprint = {2403.01590},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2403.01590},
+  url = {http://arxiv.org/abs/2403.01590},
+  urldate = {2024-12-11},
+  abstract = {The Mamba layer offers an efficient selective state space model (SSM) that is highly effective in modeling multiple domains, including NLP, long-range sequence processing, and computer vision. Selective SSMs are viewed as dual models, in which one trains in parallel on the entire sequence via an IO-aware parallel scan, and deploys in an autoregressive manner. We add a third view and show that such models can be viewed as attention-driven models. This new perspective enables us to empirically and theoretically compare the underlying mechanisms to that of the self-attention layers in transformers and allows us to peer inside the inner workings of the Mamba model with explainability methods. Our code is publicly available.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/97A6VDU4/Ali et al. - 2024 - The Hidden Attention of Mamba Models.pdf}
+}
+
 @unpublished{Arik2020,
   title = {{{TabNet}}: {{Attentive Interpretable Tabular Learning}}},
   shorttitle = {{{TabNet}}},
@@ -184,6 +199,36 @@
   langid = {english},
   keywords = {Glass,Human performance,Imaging techniques,Neural networks,Sensory perception,Sharks,Vision,Visual object recognition},
   file = {/Users/vitay/Documents/Zotero/storage/KZRZCKWA/Baker et al_2018_Deep convolutional networks do not classify based on global object shape.pdf}
+}
+
+@online{Bartosh2024a,
+  title = {Neural {{Diffusion Models}}},
+  author = {Bartosh, Grigory and Vetrov, Dmitry and Naesseth, Christian A.},
+  date = {2024-06-01},
+  eprint = {2310.08337},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2310.08337},
+  url = {http://arxiv.org/abs/2310.08337},
+  urldate = {2024-11-26},
+  abstract = {Diffusion models have shown remarkable performance on many generative tasks. Despite recent success, most diffusion models are restricted in that they only allow linear transformation of the data distribution. In contrast, broader family of transformations can potentially help train generative distributions more efficiently, simplifying the reverse process and closing the gap between the true negative log-likelihood and the variational approximation. In this paper, we present Neural Diffusion Models (NDMs), a generalization of conventional diffusion models that enables defining and learning time-dependent non-linear transformations of data. We show how to optimise NDMs using a variational bound in a simulation-free setting. Moreover, we derive a time-continuous formulation of NDMs, which allows fast and reliable inference using off-the-shelf numerical ODE and SDE solvers. Finally, we demonstrate the utility of NDMs with learnable transformations through experiments on standard image generation benchmarks, including CIFAR-10, downsampled versions of ImageNet and CelebA-HQ. NDMs outperform conventional diffusion models in terms of likelihood and produce high-quality samples.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/M74PI7W7/Bartosh et al. - 2024 - Neural Diffusion Models.pdf}
+}
+
+@online{Beck2024,
+  title = {{{xLSTM}}: {{Extended Long Short-Term Memory}}},
+  shorttitle = {{{xLSTM}}},
+  author = {Beck, Maximilian and Pöppel, Korbinian and Spanring, Markus and Auer, Andreas and Prudnikova, Oleksandra and Kopp, Michael and Klambauer, Günter and Brandstetter, Johannes and Hochreiter, Sepp},
+  date = {2024-12-06},
+  eprint = {2405.04517},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2405.04517},
+  url = {http://arxiv.org/abs/2405.04517},
+  urldate = {2024-12-11},
+  abstract = {In the 1990s, the constant error carousel and gating were introduced as the central ideas of the Long Short-Term Memory (LSTM). Since then, LSTMs have stood the test of time and contributed to numerous deep learning success stories, in particular they constituted the first Large Language Models (LLMs). However, the advent of the Transformer technology with parallelizable self-attention at its core marked the dawn of a new era, outpacing LSTMs at scale. We now raise a simple question: How far do we get in language modeling when scaling LSTMs to billions of parameters, leveraging the latest techniques from modern LLMs, but mitigating known limitations of LSTMs? Firstly, we introduce exponential gating with appropriate normalization and stabilization techniques. Secondly, we modify the LSTM memory structure, obtaining: (i) sLSTM with a scalar memory, a scalar update, and new memory mixing, (ii) mLSTM that is fully parallelizable with a matrix memory and a covariance update rule. Integrating these LSTM extensions into residual block backbones yields xLSTM blocks that are then residually stacked into xLSTM architectures. Exponential gating and modified memory structures boost xLSTM capabilities to perform favorably when compared to state-of-the-art Transformers and State Space Models, both in performance and scaling.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/6U5AQ58J/Beck et al. - 2024 - xLSTM Extended Long Short-Term Memory.pdf}
 }
 
 @online{Beitner2020,
@@ -483,6 +528,21 @@
   file = {/Users/vitay/Documents/Zotero/storage/6NCIV2LJ/Chen_et_al_2020_A_Simple_Framework_for_Contrastive_Learning_of_Visual_Representations.pdf}
 }
 
+@online{Chen2024,
+  title = {An {{Overview}} of {{Diffusion Models}}: {{Applications}}, {{Guided Generation}}, {{Statistical Rates}} and {{Optimization}}},
+  shorttitle = {An {{Overview}} of {{Diffusion Models}}},
+  author = {Chen, Minshuo and Mei, Song and Fan, Jianqing and Wang, Mengdi},
+  date = {2024-04-11},
+  eprint = {2404.07771},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2404.07771},
+  url = {http://arxiv.org/abs/2404.07771},
+  urldate = {2024-11-18},
+  abstract = {Diffusion models, a powerful and universal generative AI technology, have achieved tremendous success in computer vision, audio, reinforcement learning, and computational biology. In these applications, diffusion models provide flexible high-dimensional data modeling, and act as a sampler for generating new samples under active guidance towards task-desired properties. Despite the significant empirical success, theory of diffusion models is very limited, potentially slowing down principled methodological innovations for further harnessing and improving diffusion models. In this paper, we review emerging applications of diffusion models, understanding their sample generation under various controls. Next, we overview the existing theories of diffusion models, covering their statistical properties and sampling capabilities. We adopt a progressive routine, beginning with unconditional diffusion models and connecting to conditional counterparts. Further, we review a new avenue in high-dimensional structured optimization through conditional diffusion models, where searching for solutions is reformulated as a conditional sampling problem and solved by diffusion models. Lastly, we discuss future directions about diffusion models. The purpose of this paper is to provide a well-rounded theoretical exposure for stimulating forward-looking theories and methods of diffusion models.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/DK8DYZ4T/Chen et al. - 2024 - An Overview of Diffusion Models Applications, Guided Generation, Statistical Rates and Optimization.pdf}
+}
+
 @article{Cho2014,
   title = {Learning {{Phrase Representations}} Using {{RNN Encoder-Decoder}} for {{Statistical Machine Translation}}},
   author = {Cho, Kyunghyun and family=Merrienboer, given=Bart, prefix=van, useprefix=true and Gulcehre, Caglar and Bahdanau, Dzmitry and Bougares, Fethi and Schwenk, Holger and Bengio, Yoshua},
@@ -754,6 +814,21 @@
   file = {/Users/vitay/Documents/Zotero/storage/YBAAK7HZ/Ellenberger et al. - 2024 - Backpropagation through space, time, and the brain.pdf}
 }
 
+@online{Erickson2020,
+  title = {{{AutoGluon-Tabular}}: {{Robust}} and {{Accurate AutoML}} for {{Structured Data}}},
+  shorttitle = {{{AutoGluon-Tabular}}},
+  author = {Erickson, Nick and Mueller, Jonas and Shirkov, Alexander and Zhang, Hang and Larroy, Pedro and Li, Mu and Smola, Alexander},
+  date = {2020-03-13},
+  eprint = {2003.06505},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2003.06505},
+  url = {http://arxiv.org/abs/2003.06505},
+  urldate = {2024-11-25},
+  abstract = {We introduce AutoGluon-Tabular, an open-source AutoML framework that requires only a single line of Python to train highly accurate machine learning models on an unprocessed tabular dataset such as a CSV file. Unlike existing AutoML frameworks that primarily focus on model/hyperparameter selection, AutoGluon-Tabular succeeds by ensembling multiple models and stacking them in multiple layers. Experiments reveal that our multi-layer combination of many models offers better use of allocated training time than seeking out the best. A second contribution is an extensive evaluation of public and commercial AutoML platforms including TPOT, H2O, AutoWEKA, auto-sklearn, AutoGluon, and Google AutoML Tables. Tests on a suite of 50 classification and regression tasks from Kaggle and the OpenML AutoML Benchmark reveal that AutoGluon is faster, more robust, and much more accurate. We find that AutoGluon often even outperforms the best-in-hindsight combination of all of its competitors. In two popular Kaggle competitions, AutoGluon beat 99\% of the participating data scientists after merely 4h of training on the raw data.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/FK3X7BJZ/Erickson et al. - 2020 - AutoGluon-Tabular Robust and Accurate AutoML for Structured Data.pdf}
+}
+
 @inproceedings{Eslami2016,
   title = {Attend, {{Infer}}, {{Repeat}}: {{Fast Scene Understanding}} with {{Generative Models}}},
   author = {Eslami, S M Ali and Heess, Nicolas and Weber, Theophane and Tassa, Yuval and Szepesvari, David},
@@ -788,6 +863,21 @@
   location = {Berlin, Germany},
   eventtitle = {Workshop {{3D-NordOst}} 2021},
   isbn = {978-3-942709-27-9}
+}
+
+@online{Fawaz2020,
+  title = {{{InceptionTime}}: {{Finding AlexNet}} for {{Time Series Classification}}},
+  shorttitle = {{{InceptionTime}}},
+  author = {Fawaz, Hassan Ismail and Lucas, Benjamin and Forestier, Germain and Pelletier, Charlotte and Schmidt, Daniel F. and Weber, Jonathan and Webb, Geoffrey I. and Idoumghar, Lhassane and Muller, Pierre-Alain and Petitjean, François},
+  date = {2020-12-05},
+  eprint = {1909.04939},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.1909.04939},
+  url = {http://arxiv.org/abs/1909.04939},
+  urldate = {2024-11-21},
+  abstract = {This paper brings deep learning at the forefront of research into Time Series Classification (TSC). TSC is the area of machine learning tasked with the categorization (or labelling) of time series. The last few decades of work in this area have led to significant progress in the accuracy of classifiers, with the state of the art now represented by the HIVE-COTE algorithm. While extremely accurate, HIVE-COTE cannot be applied to many real-world datasets because of its high training time complexity in O(N2 * T4) for a dataset with N time series of length T. For example, it takes HIVE-COTE more than 8 days to learn from a small dataset with N = 1500 time series of short length T = 46. Meanwhile deep learning has received enormous attention because of its high accuracy and scalability. Recent approaches to deep learning for TSC have been scalable, but less accurate than HIVE-COTE. We introduce InceptionTime - an ensemble of deep Convolutional Neural Network (CNN) models, inspired by the Inception-v4 architecture. Our experiments show that InceptionTime is on par with HIVE-COTE in terms of accuracy while being much more scalable: not only can it learn from 1,500 time series in one hour but it can also learn from 8M time series in 13 hours, a quantity of data that is fully out of reach of HIVE-COTE.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/7EYYNH7L/Fawaz et al. - 2020 - InceptionTime Finding AlexNet for Time Series Classification.pdf}
 }
 
 @unpublished{Feng2018,
@@ -1168,6 +1258,22 @@
   file = {/Users/vitay/Documents/Zotero/storage/P6KERDDG/Gu et al_2017_Dynamic Facial Analysis.pdf;/Users/vitay/Documents/Zotero/storage/2DWZ4Y9N/8099650.html}
 }
 
+@online{Gu2024,
+  title = {Mamba: {{Linear-Time Sequence Modeling}} with {{Selective State Spaces}}},
+  shorttitle = {Mamba},
+  author = {Gu, Albert and Dao, Tri},
+  date = {2024-05-31},
+  eprint = {2312.00752},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2312.00752},
+  url = {http://arxiv.org/abs/2312.00752},
+  urldate = {2024-12-11},
+  abstract = {Foundation models, now powering most of the exciting applications in deep learning, are almost universally based on the Transformer architecture and its core attention module. Many subquadratic-time architectures such as linear attention, gated convolution and recurrent models, and structured state space models (SSMs) have been developed to address Transformers' computational inefficiency on long sequences, but they have not performed as well as attention on important modalities such as language. We identify that a key weakness of such models is their inability to perform content-based reasoning, and make several improvements. First, simply letting the SSM parameters be functions of the input addresses their weakness with discrete modalities, allowing the model to selectively propagate or forget information along the sequence length dimension depending on the current token. Second, even though this change prevents the use of efficient convolutions, we design a hardware-aware parallel algorithm in recurrent mode. We integrate these selective SSMs into a simplified end-to-end neural network architecture without attention or even MLP blocks (Mamba). Mamba enjoys fast inference (5\$\textbackslash times\$ higher throughput than Transformers) and linear scaling in sequence length, and its performance improves on real data up to million-length sequences. As a general sequence model backbone, Mamba achieves state-of-the-art performance across several modalities such as language, audio, and genomics. On language modeling, our Mamba-3B model outperforms Transformers of the same size and matches Transformers twice its size, both in pretraining and downstream evaluation.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/I8G4Q5TI/Gu and Dao - 2024 - Mamba Linear-Time Sequence Modeling with Selective State Spaces.pdf}
+}
+
 @inproceedings{Guo2017,
   title = {Deep {{Clustering}} with {{Convolutional Autoencoders}}},
   booktitle = {Neural {{Information Processing}}},
@@ -1275,6 +1381,19 @@
   langid = {english},
   keywords = {artificial intelligence,lifelong,memory,meta-learning,non-stationary},
   file = {/Users/vitay/Documents/Zotero/storage/XBWISPPP/Hadsell_et_al_2020_Embracing_Change.pdf;/Users/vitay/Documents/Zotero/storage/UGYAHNM2/S1364-6613(20)30219-9.html}
+}
+
+@online{Han2024,
+  title = {Demystify {{Mamba}} in {{Vision}}: {{A Linear Attention Perspective}}},
+  shorttitle = {Demystify {{Mamba}} in {{Vision}}},
+  author = {Han, Dongchen and Wang, Ziyi and Xia, Zhuofan and Han, Yizeng and Pu, Yifan and Ge, Chunjiang and Song, Jun and Song, Shiji and Zheng, Bo and Huang, Gao},
+  date = {2024-05-26},
+  url = {https://arxiv.org/abs/2405.16605v2},
+  urldate = {2024-12-11},
+  abstract = {Mamba is an effective state space model with linear computation complexity. It has recently shown impressive efficiency in dealing with high-resolution inputs across various vision tasks. In this paper, we reveal that the powerful Mamba model shares surprising similarities with linear attention Transformer, which typically underperform conventional Transformer in practice. By exploring the similarities and disparities between the effective Mamba and subpar linear attention Transformer, we provide comprehensive analyses to demystify the key factors behind Mamba's success. Specifically, we reformulate the selective state space model and linear attention within a unified formulation, rephrasing Mamba as a variant of linear attention Transformer with six major distinctions: input gate, forget gate, shortcut, no attention normalization, single-head, and modified block design. For each design, we meticulously analyze its pros and cons, and empirically evaluate its impact on model performance in vision tasks. Interestingly, the results highlight the forget gate and block design as the core contributors to Mamba's success, while the other four designs are less crucial. Based on these findings, we propose a Mamba-Inspired Linear Attention (MILA) model by incorporating the merits of these two key designs into linear attention. The resulting model outperforms various vision Mamba models in both image classification and high-resolution dense prediction tasks, while enjoying parallelizable computation and fast inference speed. Code is available at https://github.com/LeapLabTHU/MLLA.},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/Users/vitay/Documents/Zotero/storage/VUMDPVER/Han et al. - 2024 - Demystify Mamba in Vision A Linear Attention Perspective.pdf}
 }
 
 @unpublished{Hannun2014,
@@ -2621,6 +2740,21 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   file = {/Users/vitay/Documents/Zotero/storage/5D42ZS7V/Oord_et_al_2016_WaveNet.pdf;/Users/vitay/Documents/Zotero/storage/46HMD3JN/1609.html}
 }
 
+@online{Oreshkin2020,
+  title = {N-{{BEATS}}: {{Neural}} Basis Expansion Analysis for Interpretable Time Series Forecasting},
+  shorttitle = {N-{{BEATS}}},
+  author = {Oreshkin, Boris N. and Carpov, Dmitri and Chapados, Nicolas and Bengio, Yoshua},
+  date = {2020-02-20},
+  eprint = {1905.10437},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.1905.10437},
+  url = {http://arxiv.org/abs/1905.10437},
+  urldate = {2024-11-25},
+  abstract = {We focus on solving the univariate times series point forecasting problem using deep learning. We propose a deep neural architecture based on backward and forward residual links and a very deep stack of fully-connected layers. The architecture has a number of desirable properties, being interpretable, applicable without modification to a wide array of target domains, and fast to train. We test the proposed architecture on several well-known datasets, including M3, M4 and TOURISM competition datasets containing time series from diverse domains. We demonstrate state-of-the-art performance for two configurations of N-BEATS for all the datasets, improving forecast accuracy by 11\% over a statistical benchmark and by 3\% over last year's winner of the M4 competition, a domain-adjusted hand-crafted hybrid between neural network and statistical time series models. The first configuration of our model does not employ any time-series-specific components and its performance on heterogeneous datasets strongly suggests that, contrarily to received wisdom, deep learning primitives such as residual blocks are by themselves sufficient to solve a wide range of forecasting problems. Finally, we demonstrate how the proposed architecture can be augmented to provide outputs that are interpretable without considerable loss in accuracy.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/ZFIQ87SB/Oreshkin et al. - 2020 - N-BEATS Neural basis expansion analysis for interpretable time series forecasting.pdf}
+}
+
 @article{Park2016,
   title = {Tracking {{Human-like Natural Motion Using Deep Recurrent Neural Networks}}},
   author = {Park, Youngbin and Moon, Sungphill and Suh, Il Hong},
@@ -2666,6 +2800,23 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   abstract = {We present an unsupervised visual feature learning algorithm driven by context-based pixel prediction. By analogy with auto-encoders, we propose Context Encoders -- a convolutional neural network trained to generate the contents of an arbitrary image region conditioned on its surroundings. In order to succeed at this task, context encoders need to both understand the content of the entire image, as well as produce a plausible hypothesis for the missing part(s). When training context encoders, we have experimented with both a standard pixel-wise reconstruction loss, as well as a reconstruction plus an adversarial loss. The latter produces much sharper results because it can better handle multiple modes in the output. We found that a context encoder learns a representation that captures not just appearance but also the semantics of visual structures. We quantitatively demonstrate the effectiveness of our learned features for CNN pre-training on classification, detection, and segmentation tasks. Furthermore, context encoders can be used for semantic inpainting tasks, either stand-alone or as initialization for non-parametric methods.},
   pubstate = {prepublished},
   file = {/Users/vitay/Documents/Zotero/storage/Y39N9YY6/Pathak_et_al_2016_Context_Encoders.pdf}
+}
+
+@online{Peng2024,
+  title = {Mamba or {{Transformer}} for {{Time Series Forecasting}}? {{Mixture}} of {{Universals}} ({{MoU}}) {{Is All You Need}}},
+  shorttitle = {Mamba or {{Transformer}} for {{Time Series Forecasting}}?},
+  author = {Peng, Sijia and Xiong, Yun and Zhu, Yangyong and Shen, Zhiqiang},
+  date = {2024-08-28},
+  eprint = {2408.15997},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2408.15997},
+  url = {http://arxiv.org/abs/2408.15997},
+  urldate = {2024-12-11},
+  abstract = {Time series forecasting requires balancing short-term and long-term dependencies for accurate predictions. Existing methods mainly focus on long-term dependency modeling, neglecting the complexities of short-term dynamics, which may hinder performance. Transformers are superior in modeling long-term dependencies but are criticized for their quadratic computational cost. Mamba provides a near-linear alternative but is reported less effective in time series longterm forecasting due to potential information loss. Current architectures fall short in offering both high efficiency and strong performance for long-term dependency modeling. To address these challenges, we introduce Mixture of Universals (MoU), a versatile model to capture both short-term and long-term dependencies for enhancing performance in time series forecasting. MoU is composed of two novel designs: Mixture of Feature Extractors (MoF), an adaptive method designed to improve time series patch representations for short-term dependency, and Mixture of Architectures (MoA), which hierarchically integrates Mamba, FeedForward, Convolution, and Self-Attention architectures in a specialized order to model long-term dependency from a hybrid perspective. The proposed approach achieves state-of-the-art performance while maintaining relatively low computational costs. Extensive experiments on seven real-world datasets demonstrate the superiority of MoU. Code is available at https://github.com/lunaaa95/mou/.},
+  pubstate = {prepublished},
+  version = {1},
+  file = {/Users/vitay/Documents/Zotero/storage/I4BRYF7R/Peng et al. - 2024 - Mamba or Transformer for Time Series Forecasting Mixture of Universals (MoU) Is All You Need.pdf}
 }
 
 @article{Pfrommer2018,
@@ -3067,6 +3218,22 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   file = {/Users/vitay/Documents/Zotero/storage/YUSXZQVK/Salimans_et_al_2016_Improved_Techniques_for_Training_GANs.pdf;/Users/vitay/Documents/Zotero/storage/AXILU3MN/1606.html}
 }
 
+@online{Salimans2017a,
+  title = {{{PixelCNN}}++: {{Improving}} the {{PixelCNN}} with {{Discretized Logistic Mixture Likelihood}} and {{Other Modifications}}},
+  shorttitle = {{{PixelCNN}}++},
+  author = {Salimans, Tim and Karpathy, Andrej and Chen, Xi and Kingma, Diederik P.},
+  date = {2017-01-19},
+  eprint = {1701.05517},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1701.05517},
+  url = {http://arxiv.org/abs/1701.05517},
+  urldate = {2024-12-13},
+  abstract = {PixelCNNs are a recently proposed class of powerful generative models with tractable likelihood. Here we discuss our implementation of PixelCNNs which we make available at https://github.com/openai/pixel-cnn. Our implementation contains a number of modifications to the original model that both simplify its structure and improve its performance. 1) We use a discretized logistic mixture likelihood on the pixels, rather than a 256-way softmax, which we find to speed up training. 2) We condition on whole pixels, rather than R/G/B sub-pixels, simplifying the model structure. 3) We use downsampling to efficiently capture structure at multiple resolutions. 4) We introduce additional short-cut connections to further speed up optimization. 5) We regularize the model using dropout. Finally, we present state-of-the-art log likelihood results on CIFAR-10 to demonstrate the usefulness of these modifications.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/TJYYSPYU/Salimans et al. - 2017 - PixelCNN++ Improving the PixelCNN with Discretized Logistic Mixture Likelihood and Other Modificati.pdf}
+}
+
 @article{Salinas2020,
   title = {{{DeepAR}}: {{Probabilistic}} Forecasting with Autoregressive Recurrent Networks},
   shorttitle = {{{DeepAR}}},
@@ -3098,7 +3265,7 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   location = {Singapore},
   doi = {10.1007/978-981-19-0863-7_8},
   abstract = {The emergence of deep learning has transformed mundane tasks and reduced human errors. Image Captioning is an application of deep learning which takes an image as input and gives a well-formed description for the required image based on features and objects present in it. Image Caption Generation has branched out into several applications ranging from assistive technology to agriculture and manufacturing sectors. The existing solutions use this deep learning application to aid visually impaired people by helping them understand their environment, in robotic and industrial applications by automating processes and limiting human intervention. In this paper, we present a detailed analysis of different uses of image captioning, technologies implemented, their limitations and the scope to extend utilization in other domains.},
-  isbn = {978-981-19086-3-7},
+  isbn = {978-981-19-0863-7},
   langid = {english},
   file = {/Users/vitay/Documents/Zotero/storage/CRXBP4SA/Sathe_et_al_2022_Overview_of_Image_Caption_Generators_and_Its_Applications.pdf}
 }
@@ -3193,6 +3360,21 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   file = {/Users/vitay/Documents/Zotero/storage/3IY44EX5/Sengupta et al_2019_A Review of Deep Learning with Special Emphasis on Architectures, Applications.pdf;/Users/vitay/Documents/Zotero/storage/GJMH4GEX/1905.html}
 }
 
+@online{Shchur2023,
+  title = {{{AutoGluon-TimeSeries}}: {{AutoML}} for {{Probabilistic Time Series Forecasting}}},
+  shorttitle = {{{AutoGluon-TimeSeries}}},
+  author = {Shchur, Oleksandr and Turkmen, Caner and Erickson, Nick and Shen, Huibin and Shirkov, Alexander and Hu, Tony and Wang, Yuyang},
+  date = {2023-08-10},
+  eprint = {2308.05566},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2308.05566},
+  url = {http://arxiv.org/abs/2308.05566},
+  urldate = {2024-11-25},
+  abstract = {We introduce AutoGluon-TimeSeries - an open-source AutoML library for probabilistic time series forecasting. Focused on ease of use and robustness, AutoGluon-TimeSeries enables users to generate accurate point and quantile forecasts with just 3 lines of Python code. Built on the design philosophy of AutoGluon, AutoGluon-TimeSeries leverages ensembles of diverse forecasting models to deliver high accuracy within a short training time. AutoGluon-TimeSeries combines both conventional statistical models, machine-learning based forecasting approaches, and ensembling techniques. In our evaluation on 29 benchmark datasets, AutoGluon-TimeSeries demonstrates strong empirical performance, outperforming a range of forecasting methods in terms of both point and quantile forecast accuracy, and often even improving upon the best-in-hindsight combination of prior methods.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/WHY2AI65/Shchur et al. - 2023 - AutoGluon-TimeSeries AutoML for Probabilistic Time Series Forecasting.pdf}
+}
+
 @article{Signoroni2019,
   title = {Deep {{Learning Meets Hyperspectral Image Analysis}}: {{A Multidisciplinary Review}}},
   shorttitle = {Deep {{Learning Meets Hyperspectral Image Analysis}}},
@@ -3274,6 +3456,35 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   langid = {english},
   keywords = {artificial intelligence,generalization,inductive bias,machine learning,neuroscience,robustness,sensory systems},
   file = {/Users/vitay/Documents/Zotero/storage/XMWGL96C/Sinz et al_2019_Engineering a Less Artificial Intelligence.pdf;/Users/vitay/Documents/Zotero/storage/4A85LP6L/S0896-6273(19)30740-8.html}
+}
+
+@online{Smith2023,
+  title = {Simplified {{State Space Layers}} for {{Sequence Modeling}}},
+  author = {Smith, Jimmy T. H. and Warrington, Andrew and Linderman, Scott W.},
+  date = {2023-03-03},
+  eprint = {2208.04933},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2208.04933},
+  url = {http://arxiv.org/abs/2208.04933},
+  urldate = {2024-12-11},
+  abstract = {Models using structured state space sequence (S4) layers have achieved state-of-the-art performance on long-range sequence modeling tasks. An S4 layer combines linear state space models (SSMs), the HiPPO framework, and deep learning to achieve high performance. We build on the design of the S4 layer and introduce a new state space layer, the S5 layer. Whereas an S4 layer uses many independent single-input, single-output SSMs, the S5 layer uses one multi-input, multi-output SSM. We establish a connection between S5 and S4, and use this to develop the initialization and parameterization used by the S5 model. The result is a state space layer that can leverage efficient and widely implemented parallel scans, allowing S5 to match the computational efficiency of S4, while also achieving state-of-the-art performance on several long-range sequence modeling tasks. S5 averages 87.4\% on the long range arena benchmark, and 98.5\% on the most difficult Path-X task.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/594P2FZP/Smith et al. - 2023 - Simplified State Space Layers for Sequence Modeling.pdf}
+}
+
+@online{Sohl-Dickstein2015,
+  title = {Deep {{Unsupervised Learning}} Using {{Nonequilibrium Thermodynamics}}},
+  author = {Sohl-Dickstein, Jascha and Weiss, Eric A. and Maheswaranathan, Niru and Ganguli, Surya},
+  date = {2015-11-18},
+  eprint = {1503.03585},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.1503.03585},
+  url = {http://arxiv.org/abs/1503.03585},
+  urldate = {2024-11-29},
+  abstract = {A central problem in machine learning involves modeling complex data-sets using highly flexible families of probability distributions in which learning, sampling, inference, and evaluation are still analytically or computationally tractable. Here, we develop an approach that simultaneously achieves both flexibility and tractability. The essential idea, inspired by non-equilibrium statistical physics, is to systematically and slowly destroy structure in a data distribution through an iterative forward diffusion process. We then learn a reverse diffusion process that restores structure in data, yielding a highly flexible and tractable generative model of the data. This approach allows us to rapidly learn, sample from, and evaluate probabilities in deep generative models with thousands of layers or time steps, as well as to compute conditional and posterior probabilities under the learned model. We additionally release an open source reference implementation of the algorithm.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/F3VSAP59/Sohl-Dickstein et al. - 2015 - Deep Unsupervised Learning using Nonequilibrium Thermodynamics.pdf}
 }
 
 @incollection{Sohn2015,
@@ -3913,4 +4124,10 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   abstract = {Image-to-image translation is a class of vision and graphics problems where the goal is to learn the mapping between an input image and an output image using a training set of aligned image pairs. However, for many tasks, paired training data will not be available. We present an approach for learning to translate an image from a source domain \$X\$ to a target domain \$Y\$ in the absence of paired examples. Our goal is to learn a mapping \$G: X \textbackslash rightarrow Y\$ such that the distribution of images from \$G(X)\$ is indistinguishable from the distribution \$Y\$ using an adversarial loss. Because this mapping is highly under-constrained, we couple it with an inverse mapping \$F: Y \textbackslash rightarrow X\$ and introduce a cycle consistency loss to push \$F(G(X)) \textbackslash approx X\$ (and vice versa). Qualitative results are presented on several tasks where paired training data does not exist, including collection style transfer, object transfiguration, season transfer, photo enhancement, etc. Quantitative comparisons against several prior methods demonstrate the superiority of our approach.},
   keywords = {Computer Science - Computer Vision and Pattern Recognition},
   file = {/Users/vitay/Documents/Zotero/storage/X4RJ7ZS7/Zhu_et_al_2020_Unpaired_Image-to-Image_Translation_using_Cycle-Consistent_Adversarial_Networks.pdf;/Users/vitay/Documents/Zotero/storage/MSZZ4TJB/1703.html}
+}
+
+@online{zotero-10798,
+  title = {Neural {{Diffusion Models}}},
+  url = {https://arxiv.org/html/2310.08337v3},
+  urldate = {2024-11-26}
 }

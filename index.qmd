@@ -23,19 +23,6 @@ Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEnt
 * Lecture: Wednesday 09:15-10:45 1/368a
 * Exercise: Tuesday 13:45-15:15 B202
 
- 
-The first lecture is on 16.10.24, the first exercise one day before on 15.10.24. If not done already (e.g. in Neurocomputing), register here: 
-
-<https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18086756352/CourseNode/1693276028553462004>
-
-before the first exercise to get login credentials that work in the FRIZ pool B202. 
-
-The two first exercises will be a basic introduction to python and numpy, students which are familiar with python can skip these sessions.
-:::
-
-:::callout-note
-### Exam
-
 Mock exam: [pdf](https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/HER2017.pdf)
 
 At the exam, you can bring the paper printed one-sided, with as many annotations as you want on the back of each page (including lecture notes). You should also prepare a 200 words abstract on a separate piece of paper (handwritten or printed) that you will give with the rest of your answers.
@@ -209,10 +196,10 @@ Study of on-policy Monte Carlo control on the Taxi environment.""",
 Q-learning on the Taxi environment.""",
   '10-Eligibilitytraces': """**10 - Eligibility traces**\\
 Investigation of eligibility traces for Q-learning in a gridworld environment.""",
-  '11-Keras': """**11 - Keras**\\
-Quick tutorial for Keras.""",
-  '12-DQN': """**12 - DQN**\\
-Implementation of the DQN algorithm for Cartpole from scratch.""",
+  '11-Pytorch': """**11 - Pytorch**\\
+Quick tutorial for Pytorch. It will investigate in particular why correlated inputs are bad for neural networks. The previous version using keras is available here: Notebook: [ipynb](https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/notebooks/11-Keras.ipynb), [colab](https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/notebooks/11-Keras.ipynb), Solution: [ipynb](https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/solutions/11-Keras.ipynb), [colab](https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/solutions/11-Keras.ipynb).""",
+  '12-DQN-pytorch': """**12 - DQN**\\
+Implementation of the DQN algorithm for Cartpole from scratch in pytorch. The previous version using keras is available here: Notebook: [ipynb](https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/notebooks/12-DQN-keras.ipynb), [colab](https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/notebooks/12-DQN-keras.ipynb), Solution: [ipynb](https://raw.githubusercontent.com/vitay/notebooks-deeprl/main/solutions/12-DQN-keras.ipynb), [colab](https://colab.research.google.com/github/vitay/notebooks-deeprl/blob/main/solutions/12-DQN-keras.ipynb).""",
   '13-PPO': """**13 - PPO**\\
 DQN and PPO on cartpole using the tianshou library.""",
 

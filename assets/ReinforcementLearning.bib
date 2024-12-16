@@ -836,6 +836,20 @@
   file = {/Users/vitay/Documents/Zotero/storage/VVNLK6SD/Chen_et_al_2022_You_Only_Live_Once.pdf;/Users/vitay/Documents/Zotero/storage/FH3PTRXC/2210.html}
 }
 
+@online{Chen2024a,
+  title = {Stable {{Continual Reinforcement Learning}} via {{Diffusion-based Trajectory Replay}}},
+  author = {Chen, Feng and Han, Fuguang and Guan, Cong and Yuan, Lei and Zhang, Zhilong and Yu, Yang and Zhang, Zongzhang},
+  date = {2024-11-16},
+  eprint = {2411.10809},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2411.10809},
+  url = {http://arxiv.org/abs/2411.10809},
+  urldate = {2024-11-23},
+  abstract = {Given the inherent non-stationarity prevalent in real-world applications, continual Reinforcement Learning (RL) aims to equip the agent with the capability to address a series of sequentially presented decision-making tasks. Within this problem setting, a pivotal challenge revolves around \textbackslash textit\{catastrophic forgetting\} issue, wherein the agent is prone to effortlessly erode the decisional knowledge associated with past encountered tasks when learning the new one. In recent progresses, the \textbackslash textit\{generative replay\} methods have showcased substantial potential by employing generative models to replay data distribution of past tasks. Compared to storing the data from past tasks directly, this category of methods circumvents the growing storage overhead and possible data privacy concerns. However, constrained by the expressive capacity of generative models, existing \textbackslash textit\{generative replay\} methods face challenges in faithfully reconstructing the data distribution of past tasks, particularly in scenarios with a myriad of tasks or high-dimensional data. Inspired by the success of diffusion models in various generative tasks, this paper introduces a novel continual RL algorithm DISTR (Diffusion-based Trajectory Replay) that employs a diffusion model to memorize the high-return trajectory distribution of each encountered task and wakeups these distributions during the policy learning on new tasks. Besides, considering the impracticality of replaying all past data each time, a prioritization mechanism is proposed to prioritize the trajectory replay of pivotal tasks in our method. Empirical experiments on the popular continual RL benchmark \textbackslash texttt\{Continual World\} demonstrate that our proposed method obtains a favorable balance between \textbackslash textit\{stability\} and \textbackslash textit\{plasticity\}, surpassing various existing continual RL baselines in average success rate.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/Q8FGBICC/Chen et al. - 2024 - Stable Continual Reinforcement Learning via Diffusion-based Trajectory Replay.pdf}
+}
+
 @online{Chenu2022,
   title = {Divide \& {{Conquer Imitation Learning}}},
   author = {Chenu, Alexandre and Perrin-Gilbert, Nicolas and Sigaud, Olivier},
@@ -2461,6 +2475,20 @@ Subject\_term\_id: cognitive-neuroscience;learning-algorithms;learning-and-memor
   file = {/Users/vitay/Documents/Zotero/storage/UCU2ZDMZ/Janner_et_al_2021_Reinforcement_Learning_as_One_Big_Sequence_Modeling_Problem.pdf;/Users/vitay/Documents/Zotero/storage/QNZ529XL/2106.html}
 }
 
+@online{Janner2022,
+  title = {Planning with {{Diffusion}} for {{Flexible Behavior Synthesis}}},
+  author = {Janner, Michael and Du, Yilun and Tenenbaum, Joshua B. and Levine, Sergey},
+  date = {2022-12-21},
+  eprint = {2205.09991},
+  eprinttype = {arXiv},
+  doi = {10.48550/arXiv.2205.09991},
+  url = {http://arxiv.org/abs/2205.09991},
+  urldate = {2024-11-22},
+  abstract = {Model-based reinforcement learning methods often use learning only for the purpose of estimating an approximate dynamics model, offloading the rest of the decision-making work to classical trajectory optimizers. While conceptually simple, this combination has a number of empirical shortcomings, suggesting that learned models may not be well-suited to standard trajectory optimization. In this paper, we consider what it would look like to fold as much of the trajectory optimization pipeline as possible into the modeling problem, such that sampling from the model and planning with it become nearly identical. The core of our technical approach lies in a diffusion probabilistic model that plans by iteratively denoising trajectories. We show how classifier-guided sampling and image inpainting can be reinterpreted as coherent planning strategies, explore the unusual and useful properties of diffusion-based planning methods, and demonstrate the effectiveness of our framework in control settings that emphasize long-horizon decision-making and test-time flexibility.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/NWB46UBF/Janner et al. - 2022 - Planning with Diffusion for Flexible Behavior Synthesis.pdf}
+}
+
 @online{Ji2022,
   title = {Hierarchical {{Reinforcement Learning}} for {{Precise Soccer Shooting Skills}} Using a {{Quadrupedal Robot}}},
   author = {Ji, Yandong and Li, Zhongyu and Sun, Yinan and Peng, Xue Bin and Levine, Sergey and Berseth, Glen and Sreenath, Koushil},
@@ -3492,6 +3520,22 @@ Subject\_term\_id: cognitive-neuroscience;learning-algorithms;learning-and-memor
   url = {http://arxiv.org/abs/1606.02647},
   abstract = {In this work, we take a fresh look at some old and new algorithms for off-policy, return-based reinforcement learning. Expressing these in a common form, we derive a novel algorithm, Retrace(\$\textbackslash lambda\$), with three desired properties: (1) it has low variance; (2) it safely uses samples collected from any behaviour policy, whatever its degree of "off-policyness"; and (3) it is efficient as it makes the best use of samples collected from near on-policy behaviour policies. We analyze the contractive nature of the related operator under both off-policy policy evaluation and control settings and derive online sample-based algorithms. We believe this is the first return-based off-policy control algorithm converging a.s. to \$Q\textasciicircum *\$ without the GLIE assumption (Greedy in the Limit with Infinite Exploration). As a corollary, we prove the convergence of Watkins' Q(\$\textbackslash lambda\$), which was an open problem since 1989. We illustrate the benefits of Retrace(\$\textbackslash lambda\$) on a standard suite of Atari 2600 games.},
   file = {/Users/vitay/Documents/Zotero/storage/9W5PMA6L/Munos et al_2016_Safe and Efficient Off-Policy Reinforcement Learning.pdf}
+}
+
+@online{Murphy2024,
+  title = {Reinforcement {{Learning}}: {{An Overview}}},
+  shorttitle = {Reinforcement {{Learning}}},
+  author = {Murphy, Kevin},
+  date = {2024-12-06},
+  eprint = {2412.05265},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2412.05265},
+  url = {http://arxiv.org/abs/2412.05265},
+  urldate = {2024-12-12},
+  abstract = {This manuscript gives a big-picture, up-to-date overview of the field of (deep) reinforcement learning and sequential decision making, covering value-based RL, policy-gradient methods, model-based methods, and various other topics (including a very brief discussion of RL+LLMs).},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/BA8MLJ3Q/Murphy - 2024 - Reinforcement Learning An Overview.pdf}
 }
 
 @unpublished{Nachum2017,
@@ -4661,6 +4705,21 @@ Subject\_term\_id: cognitive-neuroscience;learning-algorithms;learning-and-memor
   abstract = {In an effort to overcome limitations of reward-driven feature learning in deep reinforcement learning (RL) from images, we propose decoupling representation learning from policy learning. To this end, we introduce a new unsupervised learning (UL) task, called Augmented Temporal Contrast (ATC), which trains a convolutional encoder to associate pairs of observations separated by a short time difference, under image augmentations and using a contrastive loss. In online RL experiments, we show that training the encoder exclusively using ATC matches or outperforms end-to-end RL in most environments. Additionally, we benchmark several leading UL algorithms by pre-training encoders on expert demonstrations and using them, with weights frozen, in RL agents; we find that agents using ATC-trained encoders outperform all others. We also train multi-task encoders on data from multiple environments and show generalization to different downstream RL tasks. Finally, we ablate components of ATC, and introduce a new data augmentation to enable replay of (compressed) latent images from pre-trained encoders when RL requires augmentation. Our experiments span visually diverse RL benchmarks in DeepMind Control, DeepMind Lab, and Atari, and our complete code is available at https://github.com/astooke/rlpyt/rlpyt/ul.},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning,Statistics - Machine Learning},
   file = {/Users/vitay/Documents/Zotero/storage/Q98VQLEW/Stooke_et_al_2020_Decoupling_Representation_Learning_from_Reinforcement_Learning.pdf;/Users/vitay/Documents/Zotero/storage/W4T6AV3T/2009.html}
+}
+
+@article{Sun2024,
+  title = {Leaders and {{Collaborators}}: {{Addressing Sparse Reward Challenges}} in {{Multi-Agent Reinforcement Learning}}},
+  shorttitle = {Leaders and {{Collaborators}}},
+  author = {Sun, Shaoqi and Liu, Hui and Xu, Kele and Ding, Bo},
+  date = {2024},
+  journaltitle = {IEEE Transactions on Emerging Topics in Computational Intelligence},
+  pages = {1--14},
+  issn = {2471-285X},
+  doi = {10.1109/TETCI.2024.3488772},
+  url = {https://ieeexplore.ieee.org/abstract/document/10750496},
+  urldate = {2024-11-23},
+  abstract = {Cooperative multi-agent reinforcement learning (MARL) has emerged as an effective tool for addressing complex control tasks. However, sparse team rewards present significant challenges for MARL, leading to low exploration efficiency, slow learning speed, and homogenized behaviors among agents. To address these issues, we propose a novel Leader-Collaborator (LC) MARL framework inspired by human social collaboration. The LC framework introduces parallel online knowledge distillation for policy networks (KDPN). KDPN extracts knowledge from two policy networks with different training objectives: one aims to maximize individual rewards, while the other aims to maximize team rewards. The extracted knowledge is utilized to construct team leaders and collaborators. By effectively balancing individual and team rewards, our approach enhances exploration efficiency and promotes behavioral diversity among agents. This addresses the issue of low learning efficiency caused by the lack of objectives early in the agent's learning process and facilitates the development of more effective and differentiated team interaction policies. Additionally, we present the Self-Repairing Strategy (SRS) and Self-Augmenting Strategy (SAS) to facilitate team policies learning while preserving the initial team goal. We evaluate the effectiveness of the LC framework by conducting extensive experiments on the Multi-Agent Particle Environment (MPE), the Google Research Football (GRF), and StarCraft Multi-Agent Challenge (SMAC) with varying levels of difficulty. Our experimental results demonstrate that LC significantly improves the efficiency of the agent's exploration, achieves state-of-the-art performance, and accelerates the learning of the optimal policy. Specifically, in the SMAC scenarios, our method increases the winning rate by 21.9\%, increases the average cumulative reward by 12\%, and reduces the training time by 57\% to achieve optimal performance.},
+  eventtitle = {{{IEEE Transactions}} on {{Emerging Topics}} in {{Computational Intelligence}}}
 }
 
 @article{Sutton1981,
