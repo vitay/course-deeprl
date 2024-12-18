@@ -99,7 +99,7 @@ $$
 * The objective function is however not **model-free**, as the likelihood of a trajectory does depend on the environments dynamics:
 
 $$
-    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T, a_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) \, p(s_{t+1} | s_t, a_t)
+    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) \, p(s_{t+1} | s_t, a_t)
 $$
 
 * The objective function is furthermore **not computable**:
@@ -213,7 +213,7 @@ $$
 * The advantage of REINFORCE is that it is **model-free**:
 
 $$
-    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T, a_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) p(s_{t+1} | s_t, a_t)
+    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) p(s_{t+1} | s_t, a_t)
 $$
 
 $$
@@ -419,7 +419,7 @@ $$
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{\tau \sim \rho_\theta}[\sum_{t=0}^T \nabla_\theta \log \pi_\theta(s_t, a_t) \, R(\tau) ] =  \mathbb{E}_{\tau \sim \rho_\theta}[\sum_{t=0}^T (\nabla_\theta \log \pi_\theta(s_t, a_t)) \, (\sum_{t'=0}^T \gamma^{t'} \, r_{t'+1}) ]
 $$
 
-* For each state-action pair $(s_t, a_t)$ encountered during the episode, the gradient of the log-policy is multiplied by the complete return of the episode:
+* For each state-action pair $(s_t, a_t)$ encountered during the episode, the gradient of the log-likelihood of the policy is multiplied by the complete return of the episode:
 
 :::columns
 
@@ -570,7 +570,9 @@ $$
 
 
 
-* But how to train the critic? We do not know $Q^{\pi_\theta}(s, a)$. As always, we can estimate it through **sampling**:
+* But how to train the critic? We do not know $Q^{\pi_\theta}(s, a)$. 
+
+* As always, we can estimate it through **sampling**:
 
 
     * **Monte Carlo** critic: sampling the complete episode.
