@@ -276,7 +276,7 @@ Julien Vitay
 <li>The objective function is however not <strong>model-free</strong>, as the likelihood of a trajectory does depend on the environments dynamics:</li>
 </ul>
 <p><span class="math display">
-    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T, a_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) \, p(s_{t+1} | s_t, a_t)
+    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) \, p(s_{t+1} | s_t, a_t)
 </span></p>
 <ul>
 <li><p>The objective function is furthermore <strong>not computable</strong>:</p>
@@ -384,7 +384,7 @@ Julien Vitay
 <li>The advantage of REINFORCE is that it is <strong>model-free</strong>:</li>
 </ul>
 <p><span class="math display">
-    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T, a_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) p(s_{t+1} | s_t, a_t)
+    \rho_\theta(\tau) = p_\theta(s_0, a_0, \ldots, s_T) = p_0 (s_0) \, \prod_{t=0}^T \pi_\theta(s_t, a_t) p(s_{t+1} | s_t, a_t)
 </span></p>
 <p><span class="math display">
     \log \rho_\theta(\tau) = \log p_0 (s_0) + \sum_{t=0}^T \log \pi_\theta(s_t, a_t) + \sum_{t=0}^T \log p(s_{t+1} | s_t, a_t)
@@ -584,7 +584,7 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
     \nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{\tau \sim \rho_\theta}[\sum_{t=0}^T \nabla_\theta \log \pi_\theta(s_t, a_t) \, R(\tau) ] =  \mathbb{E}_{\tau \sim \rho_\theta}[\sum_{t=0}^T (\nabla_\theta \log \pi_\theta(s_t, a_t)) \, (\sum_{t'=0}^T \gamma^{t'} \, r_{t'+1}) ]
 </span></p>
 <ul>
-<li>For each state-action pair <span class="math inline">(s_t, a_t)</span> encountered during the episode, the gradient of the log-policy is multiplied by the complete return of the episode:</li>
+<li>For each state-action pair <span class="math inline">(s_t, a_t)</span> encountered during the episode, the gradient of the log-likelihood of the policy is multiplied by the complete return of the episode:</li>
 </ul>
 <div class="columns">
 <div class="column">
@@ -724,7 +724,8 @@ Williams, R. J. (1992). Simple statistical gradient-following algorithms for con
 <section id="policy-gradient-actor-critic-1" class="title-slide slide level1 center">
 <h1>Policy Gradient : Actor-critic</h1>
 <ul>
-<li><p>But how to train the critic? We do not know <span class="math inline">Q^{\pi_\theta}(s, a)</span>. As always, we can estimate it through <strong>sampling</strong>:</p>
+<li><p>But how to train the critic? We do not know <span class="math inline">Q^{\pi_\theta}(s, a)</span>.</p></li>
+<li><p>As always, we can estimate it through <strong>sampling</strong>:</p>
 <ul>
 <li><strong>Monte Carlo</strong> critic: sampling the complete episode.</li>
 </ul>
