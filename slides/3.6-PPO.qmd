@@ -61,7 +61,7 @@ Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Rei
 
 
 
-# 1 - TRPO: Trust Region Policy Optimization
+# 1 - TRPO: Trust Region Policy Optimization (skipped)
 
 ![](img/paper-trpo.png)
 
@@ -69,183 +69,7 @@ Oliver Lange (2019). Investigation of Model-Based Augmentation of Model-Free Rei
 @Schulman2015a Trust Region Policy Optimization. 1889–1897. <http://proceedings.mlr.press/v37/schulman15.html>.
 :::
 
-# TRPO: Trust Region Policy Optimization
 
-* We want to maximize the expected return of a policy $\pi_\theta$, which is equivalent to the Q-value of every state-action pair visited by the policy:
-
-$$\mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]$$
-
-
-* Let's note $\theta_\text{old}$ the current value of the parameters of the policy $\pi_{\theta_\text{old}}$.
-
-* @Kakade2002 have shown that the expected return of a policy $\pi_\theta$ is linked to the expected return of the current policy $\pi_{\theta_\text{old}}$ with:
-
-$$\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-where 
-
-$$A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)$$
-
-is the **advantage** of taking the action $(s, a)$ and thereafter following $\pi_\theta$, compared to following the current policy $\pi_{\theta_\text{old}}$.
-
-* The return under any policy $\theta$ is equal to the return under $\theta_\text{old}$, plus how the newly chosen actions in the rest of the trajectory improves (or worsens) the returns.
-
-<br>
-
-::: footer
-@Kakade2002 Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267--274.
-:::
-
-# TRPO: Trust Region Policy Optimization
-
-* If we can estimate the advantages and maximize them, we can find a new policy $\pi_\theta$ with a higher return than the current one.
-
-$$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-* By definition, $\mathcal{L}(\theta_\text{old}) = 0$, so the policy maximizing $\mathcal{L}(\theta)$ has positive advantages and is better than $\pi_{\theta_\text{old}}$.
-
-$$\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})$$
-
-* Maximizing the advantages ensures **monotonic improvement**: the new policy is always better than the previous one. Policy collapse is not possible!
-
-* The problem is that we have to take samples $(s, a)$ from $\pi_\theta$: we do not know it yet, as it is what we search. The only policy at our disposal to estimate the advantages is the current policy $\pi_{\theta_\text{old}}$.
-
-* We could use **importance sampling** to sample from $\pi_{\theta_\text{old}}$, but it would introduce a lot of variance:
-
-$$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)} \, A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-# TRPO: Trust Region Policy Optimization
-
-* In TRPO, we are adding a **constraint** instead: 
-
-    * the new policy $\pi_{\theta_\text{new}}$ should not be (very) different from $\pi_{\theta_\text{old}}$.
-
-    * the importance sampling weight $\frac{\pi_{\theta_\text{new}}(s, a)}{\pi_{\theta_\text{old}}(s, a)}$ will not be very different from 1, so we can omit it.
-
-* Let's define a new objective function $\mathcal{J}_{\theta_\text{old}}(\theta)$:
-
-$$\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-* The only difference with $\mathcal{J}(\theta)$ is that the visited states $s$ are now sampled by the current policy $\pi_{\theta_\text{old}}$. 
-
-* This makes the expectation tractable: we know how to visit the states, but we compute the advantage of actions taken by the new policy in those states.
-
-# TRPO: Trust Region Policy Optimization
-
-* Previous objective function:
-
-
-$$\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-* New objective function:
-
-$$\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-* It is "easy" to observe that the new objective function has the same value in $\theta_\text{old}$:
-
-$$\mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) = \mathcal{J}(\theta_\text{old})$$
-
-and that its gradient w.r.t. $\theta$ is the same in $\theta_\text{old}$:
-
-$$\nabla_\theta \mathcal{J}_{\theta_\text{old}}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \, \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}$$
-
-* At least locally, maximizing $\mathcal{J}_{\theta_\text{old}}(\theta)$ is exactly the same as maximizing $\mathcal{J}(\theta)$.
-
-* $\mathcal{J}_{\theta_\text{old}}(\theta)$ is called a **surrogate objective function**: it is not what we want to maximize, but it leads to the same result locally.
-
-
-# TRPO: Trust Region Policy Optimization
-
-![](img/trustregion1.svg)
-
-
-
-# TRPO: Trust Region Policy Optimization
-
-* How big a step can we take when maximizing $\mathcal{J}_{\theta_\text{old}}(\theta)$? $\pi_\theta$ and $\pi_{\theta_\text{old}}$ must be close from each other for the approximation to stand.
-
-* The first variant explored in the TRPO paper is a **constrained optimization** approach (Lagrange optimization):
-
-$$
-    \max_\theta \mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]
-$$
-
-$$
-    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
-$$
-
-* The KL divergence between the distributions $\pi_{\theta_\text{old}}$ and $\pi_\theta$ must be below a threshold $\delta$.
-
-* This version of TRPO uses a **hard constraint**:
-
-    * We search for a policy $\pi_\theta$ that maximizes the expected return while staying within the **trust region** around $\pi_{\theta_\text{old}}$.
-
-
-
-# TRPO: Trust Region Policy Optimization
-
-* The second approach **regularizes** the objective function with the KL divergence:
-
-$$
-    \max_\theta \mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)
-$$
-
-where $C$ is a regularization parameter controlling the importance of the **soft constraint**.
-
-* This **surrogate objective function** is a **lower bound** of the initial objective $\mathcal{J}(\theta)$:
-
-    1. The two objectives have the same value in $\theta_\text{old}$:
-
-    $$\mathcal{L}(\theta_\text{old}) = \mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_{\theta_\text{old}}) = \mathcal{J}(\theta_\text{old})$$
-
-    2. Their gradient w.r.t $\theta$ are the same in $\theta_\text{old}$:
-
-    $$\nabla_\theta \mathcal{L}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}$$
-
-    3. The surrogate objective is always smaller than the real objective, as the KL divergence is positive:
-
-    $$\mathcal{J}(\theta) \geq \mathcal{J}_{\theta_\text{old}}(\theta) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_\theta)$$
-
-
-
-# TRPO: Trust Region Policy Optimization
-
-![](img/trustregion2.svg)
-
-
-# TRPO: Trust Region Policy Optimization
-
-* The policy $\pi_\theta$ maximizing the surrogate objective $\mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)$:
-
-::: {.columns}
-::: {.column width=50%}
-
-
-1. has a higher expected return than $\pi_{\theta_\text{old}}$:
-
-$$\mathcal{J}(\theta) > \mathcal{J}(\theta_\text{old})$$
-
-2. is very close to $\pi_{\theta_\text{old}}$:
-
-$$D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \approx 0$$
-
-3. but the parameters $\theta$ are much closer to the optimal parameters $\theta^*$.
-
-:::
-::: {.column width=50%}
-
-
-![](img/trustregion2.svg)
-
-:::
-:::
-
-
-* The version with a soft constraint necessitates a prohibitively small learning rate in practice.
-
-* The implementation of TRPO uses the hard constraint with Lagrange optimization, what necessitates using conjugate gradients optimization, the Fisher Information matrix and natural gradients: very complex to implement...
-
-* However, there is a **monotonic improvement guarantee**: the successive policies can only get better over time, no policy collapse! This is the major advantage of TRPO compared to the other methods: it always works, although very slowly.
 
 # 2 - PPO: Proximal Policy Optimization
 
@@ -256,21 +80,59 @@ $$D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \approx 0$$
 :::
 
 
+
+# TRPO: Trust Region Policy Optimization
+
+* We want to maximize the expected return of a policy $\pi_\theta$, which is equivalent to maximizing the Q-value of every state-action pair visited by the policy:
+
+$$\max_\theta \, \mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]$$
+
+
+* Let's note $\theta_\text{old}$ the current value of the parameters of the policy $\pi_{\theta_\text{old}}$.
+
+* We search for a new policy $\pi_\theta$ with parameters $\theta$ which is always **better** than the current policy, i.e. where the Q-value of all actions is higher than with the current policy:
+
+$$\max_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)]$$
+
+* The quantity
+
+$$A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)$$
+
+is the **advantage** of taking the action $(s, a)$ and thereafter following $\pi_\theta$, compared to following the current policy $\pi_{\theta_\text{old}}$.
+
+
+::: footer
+Kakade, S., and Langford, J. (2002). Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267--274.
+:::
+
+# TRPO: Trust Region Policy Optimization
+
+* If we can estimate the advantages and maximize them, we can find a new policy $\pi_\theta$ with a higher return than the current one.
+
+$$
+\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]
+= \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)]
+$$
+
+* By definition, $\mathcal{L}(\theta_\text{old}) = 0$, so the policy maximizing $\mathcal{L}(\theta)$ has positive advantages and is at least better than $\pi_{\theta_\text{old}}$.
+
+$$\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})$$
+
+* Maximizing the advantages ensures **monotonic improvement**: the new policy is always better than the previous one. Policy collapse is not possible!
+
+
+
 # PPO: Proximal Policy Optimization
 
 * Let's take the unconstrained objective function of TRPO:
 
-$$\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
-
-* $\mathcal{J}(\theta_\text{old})$ does not depend on $\theta$, so we only need to maximize the advantages:
-
-$$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
+$$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
 
 * In order to avoid sampling action from the **unknown** policy $\pi_\theta$, we can use importance sampling with the current policy:
 
 $$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)]$$
 
-with $\rho(s, a) = \frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)}$ being the **importance sampling weight**.
+with $\rho(s, a) = \dfrac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)}$ being the **importance sampling weight**.
 
 * But the importance sampling weight $\rho(s, a)$ introduces a lot of variance, worsening the sample complexity.
 
@@ -580,5 +442,194 @@ Wang, Z., Bapst, V., Heess, N., Mnih, V., Munos, R., Kavukcuoglu, K., et al. (20
 Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and Efficient Off-Policy Reinforcement Learning. arXiv:1606.02647.
 :::
 -->
+
+
+
+# 1 - TRPO: Trust Region Policy Optimization (skipped)
+
+![](img/paper-trpo.png)
+
+::: footer
+@Schulman2015a Trust Region Policy Optimization. 1889–1897. <http://proceedings.mlr.press/v37/schulman15.html>.
+:::
+
+# TRPO: Trust Region Policy Optimization
+
+* We want to maximize the expected return of a policy $\pi_\theta$, which is equivalent to the Q-value of every state-action pair visited by the policy:
+
+$$\mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]$$
+
+
+* Let's note $\theta_\text{old}$ the current value of the parameters of the policy $\pi_{\theta_\text{old}}$.
+
+* @Kakade2002 have shown that the expected return of a policy $\pi_\theta$ is linked to the expected return of the current policy $\pi_{\theta_\text{old}}$ with:
+
+$$\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
+
+where 
+
+$$A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)$$
+
+is the **advantage** of taking the action $(s, a)$ and thereafter following $\pi_\theta$, compared to following the current policy $\pi_{\theta_\text{old}}$.
+
+* The return under any policy $\theta$ is equal to the return under $\theta_\text{old}$, plus how the newly chosen actions in the rest of the trajectory improves (or worsens) the returns.
+
+<br>
+
+::: footer
+@Kakade2002 Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267--274.
+:::
+
+# TRPO: Trust Region Policy Optimization
+
+* If we can estimate the advantages and maximize them, we can find a new policy $\pi_\theta$ with a higher return than the current one.
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
+
+* By definition, $\mathcal{L}(\theta_\text{old}) = 0$, so the policy maximizing $\mathcal{L}(\theta)$ has positive advantages and is better than $\pi_{\theta_\text{old}}$.
+
+$$\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})$$
+
+* Maximizing the advantages ensures **monotonic improvement**: the new policy is always better than the previous one. Policy collapse is not possible!
+
+* The problem is that we have to take samples $(s, a)$ from $\pi_\theta$: we do not know it yet, as it is what we search. The only policy at our disposal to estimate the advantages is the current policy $\pi_{\theta_\text{old}}$.
+
+* We could use **importance sampling** to sample from $\pi_{\theta_\text{old}}$, but it would introduce a lot of variance:
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)} \, A^{\pi_{\theta_\text{old}}}(s, a)]$$
+
+# TRPO: Trust Region Policy Optimization
+
+* In TRPO, we are adding a **constraint** instead: 
+
+    * the new policy $\pi_{\theta_\text{new}}$ should not be (very) different from $\pi_{\theta_\text{old}}$.
+
+    * the importance sampling weight $\frac{\pi_{\theta_\text{new}}(s, a)}{\pi_{\theta_\text{old}}(s, a)}$ will not be very different from 1, so we can omit it.
+
+* Let's define a new objective function $\mathcal{J}_{\theta_\text{old}}(\theta)$:
+
+$$\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
+
+* The only difference with $\mathcal{J}(\theta)$ is that the visited states $s$ are now sampled by the current policy $\pi_{\theta_\text{old}}$. 
+
+* This makes the expectation tractable: we know how to visit the states, but we compute the advantage of actions taken by the new policy in those states.
+
+# TRPO: Trust Region Policy Optimization
+
+* Previous objective function:
+
+
+$$\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
+
+* New objective function:
+
+$$\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]$$
+
+* It is "easy" to observe that the new objective function has the same value in $\theta_\text{old}$:
+
+$$\mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) = \mathcal{J}(\theta_\text{old})$$
+
+and that its gradient w.r.t. $\theta$ is the same in $\theta_\text{old}$:
+
+$$\nabla_\theta \mathcal{J}_{\theta_\text{old}}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \, \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}$$
+
+* At least locally, maximizing $\mathcal{J}_{\theta_\text{old}}(\theta)$ is exactly the same as maximizing $\mathcal{J}(\theta)$.
+
+* $\mathcal{J}_{\theta_\text{old}}(\theta)$ is called a **surrogate objective function**: it is not what we want to maximize, but it leads to the same result locally.
+
+
+# TRPO: Trust Region Policy Optimization
+
+![](img/trustregion1.svg)
+
+
+
+# TRPO: Trust Region Policy Optimization
+
+* How big a step can we take when maximizing $\mathcal{J}_{\theta_\text{old}}(\theta)$? $\pi_\theta$ and $\pi_{\theta_\text{old}}$ must be close from each other for the approximation to stand.
+
+* The first variant explored in the TRPO paper is a **constrained optimization** approach (Lagrange optimization):
+
+$$
+    \max_\theta \mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]
+$$
+
+$$
+    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
+$$
+
+* The KL divergence between the distributions $\pi_{\theta_\text{old}}$ and $\pi_\theta$ must be below a threshold $\delta$.
+
+* This version of TRPO uses a **hard constraint**:
+
+    * We search for a policy $\pi_\theta$ that maximizes the expected return while staying within the **trust region** around $\pi_{\theta_\text{old}}$.
+
+
+
+# TRPO: Trust Region Policy Optimization
+
+* The second approach **regularizes** the objective function with the KL divergence:
+
+$$
+    \max_\theta \mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)
+$$
+
+where $C$ is a regularization parameter controlling the importance of the **soft constraint**.
+
+* This **surrogate objective function** is a **lower bound** of the initial objective $\mathcal{J}(\theta)$:
+
+    1. The two objectives have the same value in $\theta_\text{old}$:
+
+    $$\mathcal{L}(\theta_\text{old}) = \mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_{\theta_\text{old}}) = \mathcal{J}(\theta_\text{old})$$
+
+    2. Their gradient w.r.t $\theta$ are the same in $\theta_\text{old}$:
+
+    $$\nabla_\theta \mathcal{L}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}$$
+
+    3. The surrogate objective is always smaller than the real objective, as the KL divergence is positive:
+
+    $$\mathcal{J}(\theta) \geq \mathcal{J}_{\theta_\text{old}}(\theta) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_\theta)$$
+
+
+
+# TRPO: Trust Region Policy Optimization
+
+![](img/trustregion2.svg)
+
+
+# TRPO: Trust Region Policy Optimization
+
+* The policy $\pi_\theta$ maximizing the surrogate objective $\mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)$:
+
+::: {.columns}
+::: {.column width=50%}
+
+
+1. has a higher expected return than $\pi_{\theta_\text{old}}$:
+
+$$\mathcal{J}(\theta) > \mathcal{J}(\theta_\text{old})$$
+
+2. is very close to $\pi_{\theta_\text{old}}$:
+
+$$D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \approx 0$$
+
+3. but the parameters $\theta$ are much closer to the optimal parameters $\theta^*$.
+
+:::
+::: {.column width=50%}
+
+
+![](img/trustregion2.svg)
+
+:::
+:::
+
+
+* The version with a soft constraint necessitates a prohibitively small learning rate in practice.
+
+* The implementation of TRPO uses the hard constraint with Lagrange optimization, what necessitates using conjugate gradients optimization, the Fisher Information matrix and natural gradients: very complex to implement...
+
+* However, there is a **monotonic improvement guarantee**: the successive policies can only get better over time, no policy collapse! This is the major advantage of TRPO compared to the other methods: it always works, although very slowly.
+
 
 # References

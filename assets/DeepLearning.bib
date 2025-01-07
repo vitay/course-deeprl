@@ -528,21 +528,6 @@
   file = {/Users/vitay/Documents/Zotero/storage/6NCIV2LJ/Chen_et_al_2020_A_Simple_Framework_for_Contrastive_Learning_of_Visual_Representations.pdf}
 }
 
-@online{Chen2024,
-  title = {An {{Overview}} of {{Diffusion Models}}: {{Applications}}, {{Guided Generation}}, {{Statistical Rates}} and {{Optimization}}},
-  shorttitle = {An {{Overview}} of {{Diffusion Models}}},
-  author = {Chen, Minshuo and Mei, Song and Fan, Jianqing and Wang, Mengdi},
-  date = {2024-04-11},
-  eprint = {2404.07771},
-  eprinttype = {arXiv},
-  doi = {10.48550/arXiv.2404.07771},
-  url = {http://arxiv.org/abs/2404.07771},
-  urldate = {2024-11-18},
-  abstract = {Diffusion models, a powerful and universal generative AI technology, have achieved tremendous success in computer vision, audio, reinforcement learning, and computational biology. In these applications, diffusion models provide flexible high-dimensional data modeling, and act as a sampler for generating new samples under active guidance towards task-desired properties. Despite the significant empirical success, theory of diffusion models is very limited, potentially slowing down principled methodological innovations for further harnessing and improving diffusion models. In this paper, we review emerging applications of diffusion models, understanding their sample generation under various controls. Next, we overview the existing theories of diffusion models, covering their statistical properties and sampling capabilities. We adopt a progressive routine, beginning with unconditional diffusion models and connecting to conditional counterparts. Further, we review a new avenue in high-dimensional structured optimization through conditional diffusion models, where searching for solutions is reformulated as a conditional sampling problem and solved by diffusion models. Lastly, we discuss future directions about diffusion models. The purpose of this paper is to provide a well-rounded theoretical exposure for stimulating forward-looking theories and methods of diffusion models.},
-  pubstate = {prepublished},
-  file = {/Users/vitay/Documents/Zotero/storage/DK8DYZ4T/Chen et al. - 2024 - An Overview of Diffusion Models Applications, Guided Generation, Statistical Rates and Optimization.pdf}
-}
-
 @article{Cho2014,
   title = {Learning {{Phrase Representations}} Using {{RNN Encoder-Decoder}} for {{Statistical Machine Translation}}},
   author = {Cho, Kyunghyun and family=Merrienboer, given=Bart, prefix=van, useprefix=true and Gulcehre, Caglar and Bahdanau, Dzmitry and Bougares, Fethi and Schwenk, Holger and Bengio, Yoshua},
@@ -2343,6 +2328,21 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   langid = {english},
   pubstate = {prepublished},
   file = {/Users/vitay/Documents/Zotero/storage/FSKJNMNV/Liu et al. - 2024 - KAN Kolmogorov-Arnold Networks.pdf}
+}
+
+@online{Ma2024,
+  title = {A {{Mamba Foundation Model}} for {{Time Series Forecasting}}},
+  author = {Ma, Haoyu and Chen, Yushu and Zhao, Wenlai and Yang, Jinzhe and Ji, Yingsheng and Xu, Xinghua and Liu, Xiaozhu and Jing, Hao and Liu, Shengzhuo and Yang, Guangwen},
+  date = {2024-11-05},
+  eprint = {2411.02941},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2411.02941},
+  url = {http://arxiv.org/abs/2411.02941},
+  urldate = {2024-12-18},
+  abstract = {Time series foundation models have demonstrated strong performance in zero-shot learning, making them well-suited for predicting rapidly evolving patterns in real-world applications where relevant training data are scarce. However, most of these models rely on the Transformer architecture, which incurs quadratic complexity as input length increases. To address this, we introduce TSMamba, a linear-complexity foundation model for time series forecasting built on the Mamba architecture. The model captures temporal dependencies through both forward and backward Mamba encoders, achieving high prediction accuracy. To reduce reliance on large datasets and lower training costs, TSMamba employs a two-stage transfer learning process that leverages pretrained Mamba LLMs, allowing effective time series modeling with a moderate training set. In the first stage, the forward and backward backbones are optimized via patch-wise autoregressive prediction; in the second stage, the model trains a prediction head and refines other components for long-term forecasting. While the backbone assumes channel independence to manage varying channel numbers across datasets, a channel-wise compressed attention module is introduced to capture cross-channel dependencies during fine-tuning on specific multivariate datasets. Experiments show that TSMamba's zero-shot performance is comparable to state-of-the-art time series foundation models, despite using significantly less training data. It also achieves competitive or superior full-shot performance compared to task-specific prediction models. The code will be made publicly available.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/NS3SJ9MM/Ma et al. - 2024 - A Mamba Foundation Model for Time Series Forecasting.pdf}
 }
 
 @inproceedings{Maas2013,
