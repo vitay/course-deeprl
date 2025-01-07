@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0626ff4d7a71b55c8707dcae1d04a9b6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.39">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.40">
 
   <meta name="author" content="Julien Vitay">
   <title>Deep Reinforcement Learning</title>
@@ -240,8 +240,8 @@ Julien Vitay
 </div>
 </section>
 
-<section id="trpo-trust-region-policy-optimization" class="title-slide slide level1 center">
-<h1>1 - TRPO: Trust Region Policy Optimization</h1>
+<section id="trpo-trust-region-policy-optimization-skipped" class="title-slide slide level1 center">
+<h1>1 - TRPO: Trust Region Policy Optimization (skipped)</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/paper-trpo.png" class="quarto-figure quarto-figure-center"></p>
@@ -250,183 +250,6 @@ Julien Vitay
 <div class="footer">
 <p><span class="citation" data-cites="Schulman2015a">Schulman et al. (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span> Trust Region Policy Optimization. 1889–1897. <a href="http://proceedings.mlr.press/v37/schulman15.html" class="uri">http://proceedings.mlr.press/v37/schulman15.html</a>.</p>
 </div>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-1" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li>We want to maximize the expected return of a policy <span class="math inline">\pi_\theta</span>, which is equivalent to the Q-value of every state-action pair visited by the policy:</li>
-</ul>
-<p><span class="math display">\mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]</span></p>
-<ul>
-<li><p>Let’s note <span class="math inline">\theta_\text{old}</span> the current value of the parameters of the policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
-<li><p><span class="citation" data-cites="Kakade2002">Kakade and Langford (<a href="#/references" role="doc-biblioref" onclick="">2002</a>)</span> have shown that the expected return of a policy <span class="math inline">\pi_\theta</span> is linked to the expected return of the current policy <span class="math inline">\pi_{\theta_\text{old}}</span> with:</p></li>
-</ul>
-<p><span class="math display">\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<p>where</p>
-<p><span class="math display">A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)</span></p>
-<p>is the <strong>advantage</strong> of taking the action <span class="math inline">(s, a)</span> and thereafter following <span class="math inline">\pi_\theta</span>, compared to following the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p>
-<ul>
-<li>The return under any policy <span class="math inline">\theta</span> is equal to the return under <span class="math inline">\theta_\text{old}</span>, plus how the newly chosen actions in the rest of the trajectory improves (or worsens) the returns.</li>
-</ul>
-<p><br></p>
-<div class="footer">
-<p><span class="citation" data-cites="Kakade2002">Kakade and Langford (<a href="#/references" role="doc-biblioref" onclick="">2002</a>)</span> Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267–274.</p>
-</div>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-2" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li>If we can estimate the advantages and maximize them, we can find a new policy <span class="math inline">\pi_\theta</span> with a higher return than the current one.</li>
-</ul>
-<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<ul>
-<li>By definition, <span class="math inline">\mathcal{L}(\theta_\text{old}) = 0</span>, so the policy maximizing <span class="math inline">\mathcal{L}(\theta)</span> has positive advantages and is better than <span class="math inline">\pi_{\theta_\text{old}}</span>.</li>
-</ul>
-<p><span class="math display">\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})</span></p>
-<ul>
-<li><p>Maximizing the advantages ensures <strong>monotonic improvement</strong>: the new policy is always better than the previous one. Policy collapse is not possible!</p></li>
-<li><p>The problem is that we have to take samples <span class="math inline">(s, a)</span> from <span class="math inline">\pi_\theta</span>: we do not know it yet, as it is what we search. The only policy at our disposal to estimate the advantages is the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
-<li><p>We could use <strong>importance sampling</strong> to sample from <span class="math inline">\pi_{\theta_\text{old}}</span>, but it would introduce a lot of variance:</p></li>
-</ul>
-<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)} \, A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-3" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li><p>In TRPO, we are adding a <strong>constraint</strong> instead:</p>
-<ul>
-<li><p>the new policy <span class="math inline">\pi_{\theta_\text{new}}</span> should not be (very) different from <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
-<li><p>the importance sampling weight <span class="math inline">\frac{\pi_{\theta_\text{new}}(s, a)}{\pi_{\theta_\text{old}}(s, a)}</span> will not be very different from 1, so we can omit it.</p></li>
-</ul></li>
-<li><p>Let’s define a new objective function <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span>:</p></li>
-</ul>
-<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<ul>
-<li><p>The only difference with <span class="math inline">\mathcal{J}(\theta)</span> is that the visited states <span class="math inline">s</span> are now sampled by the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
-<li><p>This makes the expectation tractable: we know how to visit the states, but we compute the advantage of actions taken by the new policy in those states.</p></li>
-</ul>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-4" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li>Previous objective function:</li>
-</ul>
-<p><span class="math display">\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<ul>
-<li>New objective function:</li>
-</ul>
-<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<ul>
-<li>It is “easy” to observe that the new objective function has the same value in <span class="math inline">\theta_\text{old}</span>:</li>
-</ul>
-<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) = \mathcal{J}(\theta_\text{old})</span></p>
-<p>and that its gradient w.r.t. <span class="math inline">\theta</span> is the same in <span class="math inline">\theta_\text{old}</span>:</p>
-<p><span class="math display">\nabla_\theta \mathcal{J}_{\theta_\text{old}}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \, \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}</span></p>
-<ul>
-<li><p>At least locally, maximizing <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span> is exactly the same as maximizing <span class="math inline">\mathcal{J}(\theta)</span>.</p></li>
-<li><p><span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span> is called a <strong>surrogate objective function</strong>: it is not what we want to maximize, but it leads to the same result locally.</p></li>
-</ul>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-5" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/trustregion1.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-6" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li><p>How big a step can we take when maximizing <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span>? <span class="math inline">\pi_\theta</span> and <span class="math inline">\pi_{\theta_\text{old}}</span> must be close from each other for the approximation to stand.</p></li>
-<li><p>The first variant explored in the TRPO paper is a <strong>constrained optimization</strong> approach (Lagrange optimization):</p></li>
-</ul>
-<p><span class="math display">
-    \max_\theta \mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]
-</span></p>
-<p><span class="math display">
-    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
-</span></p>
-<ul>
-<li><p>The KL divergence between the distributions <span class="math inline">\pi_{\theta_\text{old}}</span> and <span class="math inline">\pi_\theta</span> must be below a threshold <span class="math inline">\delta</span>.</p></li>
-<li><p>This version of TRPO uses a <strong>hard constraint</strong>:</p>
-<ul>
-<li>We search for a policy <span class="math inline">\pi_\theta</span> that maximizes the expected return while staying within the <strong>trust region</strong> around <span class="math inline">\pi_{\theta_\text{old}}</span>.</li>
-</ul></li>
-</ul>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-7" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li>The second approach <strong>regularizes</strong> the objective function with the KL divergence:</li>
-</ul>
-<p><span class="math display">
-    \max_\theta \mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)
-</span></p>
-<p>where <span class="math inline">C</span> is a regularization parameter controlling the importance of the <strong>soft constraint</strong>.</p>
-<ul>
-<li><p>This <strong>surrogate objective function</strong> is a <strong>lower bound</strong> of the initial objective <span class="math inline">\mathcal{J}(\theta)</span>:</p>
-<ol type="1">
-<li>The two objectives have the same value in <span class="math inline">\theta_\text{old}</span>:</li>
-</ol>
-<p><span class="math display">\mathcal{L}(\theta_\text{old}) = \mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_{\theta_\text{old}}) = \mathcal{J}(\theta_\text{old})</span></p>
-<ol start="2" type="1">
-<li>Their gradient w.r.t <span class="math inline">\theta</span> are the same in <span class="math inline">\theta_\text{old}</span>:</li>
-</ol>
-<p><span class="math display">\nabla_\theta \mathcal{L}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}</span></p>
-<ol start="3" type="1">
-<li>The surrogate objective is always smaller than the real objective, as the KL divergence is positive:</li>
-</ol>
-<p><span class="math display">\mathcal{J}(\theta) \geq \mathcal{J}_{\theta_\text{old}}(\theta) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_\theta)</span></p></li>
-</ul>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-8" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/trustregion2.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</section>
-
-<section id="trpo-trust-region-policy-optimization-9" class="title-slide slide level1 center">
-<h1>TRPO: Trust Region Policy Optimization</h1>
-<ul>
-<li>The policy <span class="math inline">\pi_\theta</span> maximizing the surrogate objective <span class="math inline">\mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)</span>:</li>
-</ul>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ol type="1">
-<li>has a higher expected return than <span class="math inline">\pi_{\theta_\text{old}}</span>:</li>
-</ol>
-<p><span class="math display">\mathcal{J}(\theta) &gt; \mathcal{J}(\theta_\text{old})</span></p>
-<ol start="2" type="1">
-<li>is very close to <span class="math inline">\pi_{\theta_\text{old}}</span>:</li>
-</ol>
-<p><span class="math display">D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \approx 0</span></p>
-<ol start="3" type="1">
-<li>but the parameters <span class="math inline">\theta</span> are much closer to the optimal parameters <span class="math inline">\theta^*</span>.</li>
-</ol>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/trustregion2.svg" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div></div>
-<ul>
-<li><p>The version with a soft constraint necessitates a prohibitively small learning rate in practice.</p></li>
-<li><p>The implementation of TRPO uses the hard constraint with Lagrange optimization, what necessitates using conjugate gradients optimization, the Fisher Information matrix and natural gradients: very complex to implement…</p></li>
-<li><p>However, there is a <strong>monotonic improvement guarantee</strong>: the successive policies can only get better over time, no policy collapse! This is the major advantage of TRPO compared to the other methods: it always works, although very slowly.</p></li>
-</ul>
 </section>
 
 <section id="ppo-proximal-policy-optimization" class="title-slide slide level1 center">
@@ -441,21 +264,56 @@ Julien Vitay
 </div>
 </section>
 
+<section id="trpo-trust-region-policy-optimization" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>We want to maximize the expected return of a policy <span class="math inline">\pi_\theta</span>, which is equivalent to maximizing the Q-value of every state-action pair visited by the policy:</li>
+</ul>
+<p><span class="math display">\max_\theta \, \mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]</span></p>
+<ul>
+<li><p>Let’s note <span class="math inline">\theta_\text{old}</span> the current value of the parameters of the policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>We search for a new policy <span class="math inline">\pi_\theta</span> with parameters <span class="math inline">\theta</span> which is always <strong>better</strong> than the current policy, i.e.&nbsp;where the Q-value of all actions is higher than with the current policy:</p></li>
+</ul>
+<p><span class="math display">\max_\theta \, \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)]</span></p>
+<ul>
+<li>The quantity</li>
+</ul>
+<p><span class="math display">A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)</span></p>
+<p>is the <strong>advantage</strong> of taking the action <span class="math inline">(s, a)</span> and thereafter following <span class="math inline">\pi_\theta</span>, compared to following the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p>
+<div class="footer">
+<p>Kakade, S., and Langford, J. (2002). Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267–274.</p>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-1" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>If we can estimate the advantages and maximize them, we can find a new policy <span class="math inline">\pi_\theta</span> with a higher return than the current one.</li>
+</ul>
+<p><span class="math display">
+\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]
+= \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)]
+</span></p>
+<ul>
+<li>By definition, <span class="math inline">\mathcal{L}(\theta_\text{old}) = 0</span>, so the policy maximizing <span class="math inline">\mathcal{L}(\theta)</span> has positive advantages and is at least better than <span class="math inline">\pi_{\theta_\text{old}}</span>.</li>
+</ul>
+<p><span class="math display">\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})</span></p>
+<ul>
+<li>Maximizing the advantages ensures <strong>monotonic improvement</strong>: the new policy is always better than the previous one. Policy collapse is not possible!</li>
+</ul>
+</section>
+
 <section id="ppo-proximal-policy-optimization-1" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <ul>
 <li>Let’s take the unconstrained objective function of TRPO:</li>
 </ul>
-<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<ul>
-<li><span class="math inline">\mathcal{J}(\theta_\text{old})</span> does not depend on <span class="math inline">\theta</span>, so we only need to maximize the advantages:</li>
-</ul>
-<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
 <ul>
 <li>In order to avoid sampling action from the <strong>unknown</strong> policy <span class="math inline">\pi_\theta</span>, we can use importance sampling with the current policy:</li>
 </ul>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
-<p>with <span class="math inline">\rho(s, a) = \frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)}</span> being the <strong>importance sampling weight</strong>.</p>
+<p>with <span class="math inline">\rho(s, a) = \dfrac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)}</span> being the <strong>importance sampling weight</strong>.</p>
 <ul>
 <li><p>But the importance sampling weight <span class="math inline">\rho(s, a)</span> introduces a lot of variance, worsening the sample complexity.</p></li>
 <li><p>Is there another way to make sure that <span class="math inline">\pi_\theta</span> is not very different from <span class="math inline">\pi_{\theta_\text{old}}</span>, therefore reducing the variance of the importance sampling weight?</p></li>
@@ -809,6 +667,195 @@ Wang, Z., Bapst, V., Heess, N., Mnih, V., Munos, R., Kavukcuoglu, K., et al. (20
 Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and Efficient Off-Policy Reinforcement Learning. arXiv:1606.02647.
 :::
 -->
+</section>
+
+<section id="trpo-trust-region-policy-optimization-skipped-1" class="title-slide slide level1 center">
+<h1>1 - TRPO: Trust Region Policy Optimization (skipped)</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/paper-trpo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Schulman2015a">Schulman et al. (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span> Trust Region Policy Optimization. 1889–1897. <a href="http://proceedings.mlr.press/v37/schulman15.html" class="uri">http://proceedings.mlr.press/v37/schulman15.html</a>.</p>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-2" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>We want to maximize the expected return of a policy <span class="math inline">\pi_\theta</span>, which is equivalent to the Q-value of every state-action pair visited by the policy:</li>
+</ul>
+<p><span class="math display">\mathcal{J}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [Q^{\pi_\theta}(s, a)]</span></p>
+<ul>
+<li><p>Let’s note <span class="math inline">\theta_\text{old}</span> the current value of the parameters of the policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p><span class="citation" data-cites="Kakade2002">Kakade and Langford (<a href="#/references" role="doc-biblioref" onclick="">2002</a>)</span> have shown that the expected return of a policy <span class="math inline">\pi_\theta</span> is linked to the expected return of the current policy <span class="math inline">\pi_{\theta_\text{old}}</span> with:</p></li>
+</ul>
+<p><span class="math display">\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<p>where</p>
+<p><span class="math display">A^{\pi_{\theta_\text{old}}}(s, a) = Q_\theta(s, a) - Q_{\theta_\text{old}}(s, a)</span></p>
+<p>is the <strong>advantage</strong> of taking the action <span class="math inline">(s, a)</span> and thereafter following <span class="math inline">\pi_\theta</span>, compared to following the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p>
+<ul>
+<li>The return under any policy <span class="math inline">\theta</span> is equal to the return under <span class="math inline">\theta_\text{old}</span>, plus how the newly chosen actions in the rest of the trajectory improves (or worsens) the returns.</li>
+</ul>
+<p><br></p>
+<div class="footer">
+<p><span class="citation" data-cites="Kakade2002">Kakade and Langford (<a href="#/references" role="doc-biblioref" onclick="">2002</a>)</span> Approximately Optimal Approximate Reinforcement Learning. Proc. 19th International Conference on Machine Learning, 267–274.</p>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-3" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>If we can estimate the advantages and maximize them, we can find a new policy <span class="math inline">\pi_\theta</span> with a higher return than the current one.</li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<ul>
+<li>By definition, <span class="math inline">\mathcal{L}(\theta_\text{old}) = 0</span>, so the policy maximizing <span class="math inline">\mathcal{L}(\theta)</span> has positive advantages and is better than <span class="math inline">\pi_{\theta_\text{old}}</span>.</li>
+</ul>
+<p><span class="math display">\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow \; \mathcal{J}(\theta_\text{new}) \geq \mathcal{J}(\theta_\text{old})</span></p>
+<ul>
+<li><p>Maximizing the advantages ensures <strong>monotonic improvement</strong>: the new policy is always better than the previous one. Policy collapse is not possible!</p></li>
+<li><p>The problem is that we have to take samples <span class="math inline">(s, a)</span> from <span class="math inline">\pi_\theta</span>: we do not know it yet, as it is what we search. The only policy at our disposal to estimate the advantages is the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>We could use <strong>importance sampling</strong> to sample from <span class="math inline">\pi_{\theta_\text{old}}</span>, but it would introduce a lot of variance:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)} \, A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-4" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li><p>In TRPO, we are adding a <strong>constraint</strong> instead:</p>
+<ul>
+<li><p>the new policy <span class="math inline">\pi_{\theta_\text{new}}</span> should not be (very) different from <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>the importance sampling weight <span class="math inline">\frac{\pi_{\theta_\text{new}}(s, a)}{\pi_{\theta_\text{old}}(s, a)}</span> will not be very different from 1, so we can omit it.</p></li>
+</ul></li>
+<li><p>Let’s define a new objective function <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span>:</p></li>
+</ul>
+<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<ul>
+<li><p>The only difference with <span class="math inline">\mathcal{J}(\theta)</span> is that the visited states <span class="math inline">s</span> are now sampled by the current policy <span class="math inline">\pi_{\theta_\text{old}}</span>.</p></li>
+<li><p>This makes the expectation tractable: we know how to visit the states, but we compute the advantage of actions taken by the new policy in those states.</p></li>
+</ul>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-5" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>Previous objective function:</li>
+</ul>
+<p><span class="math display">\mathcal{J}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_\theta, a \sim \pi_\theta} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<ul>
+<li>New objective function:</li>
+</ul>
+<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
+<ul>
+<li>It is “easy” to observe that the new objective function has the same value in <span class="math inline">\theta_\text{old}</span>:</li>
+</ul>
+<p><span class="math display">\mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) = \mathcal{J}(\theta_\text{old})</span></p>
+<p>and that its gradient w.r.t. <span class="math inline">\theta</span> is the same in <span class="math inline">\theta_\text{old}</span>:</p>
+<p><span class="math display">\nabla_\theta \mathcal{J}_{\theta_\text{old}}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \, \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}</span></p>
+<ul>
+<li><p>At least locally, maximizing <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span> is exactly the same as maximizing <span class="math inline">\mathcal{J}(\theta)</span>.</p></li>
+<li><p><span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span> is called a <strong>surrogate objective function</strong>: it is not what we want to maximize, but it leads to the same result locally.</p></li>
+</ul>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-6" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/trustregion1.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-7" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li><p>How big a step can we take when maximizing <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span>? <span class="math inline">\pi_\theta</span> and <span class="math inline">\pi_{\theta_\text{old}}</span> must be close from each other for the approximation to stand.</p></li>
+<li><p>The first variant explored in the TRPO paper is a <strong>constrained optimization</strong> approach (Lagrange optimization):</p></li>
+</ul>
+<p><span class="math display">
+    \max_\theta \mathcal{J}_{\theta_\text{old}}(\theta) = \mathcal{J}(\theta_\text{old}) + \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta}} [A^{\pi_{\theta_\text{old}}}(s, a)]
+</span></p>
+<p><span class="math display">
+    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
+</span></p>
+<ul>
+<li><p>The KL divergence between the distributions <span class="math inline">\pi_{\theta_\text{old}}</span> and <span class="math inline">\pi_\theta</span> must be below a threshold <span class="math inline">\delta</span>.</p></li>
+<li><p>This version of TRPO uses a <strong>hard constraint</strong>:</p>
+<ul>
+<li>We search for a policy <span class="math inline">\pi_\theta</span> that maximizes the expected return while staying within the <strong>trust region</strong> around <span class="math inline">\pi_{\theta_\text{old}}</span>.</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-8" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>The second approach <strong>regularizes</strong> the objective function with the KL divergence:</li>
+</ul>
+<p><span class="math display">
+    \max_\theta \mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)
+</span></p>
+<p>where <span class="math inline">C</span> is a regularization parameter controlling the importance of the <strong>soft constraint</strong>.</p>
+<ul>
+<li><p>This <strong>surrogate objective function</strong> is a <strong>lower bound</strong> of the initial objective <span class="math inline">\mathcal{J}(\theta)</span>:</p>
+<ol type="1">
+<li>The two objectives have the same value in <span class="math inline">\theta_\text{old}</span>:</li>
+</ol>
+<p><span class="math display">\mathcal{L}(\theta_\text{old}) = \mathcal{J}_{\theta_\text{old}}(\theta_\text{old}) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_{\theta_\text{old}}) = \mathcal{J}(\theta_\text{old})</span></p>
+<ol start="2" type="1">
+<li>Their gradient w.r.t <span class="math inline">\theta</span> are the same in <span class="math inline">\theta_\text{old}</span>:</li>
+</ol>
+<p><span class="math display">\nabla_\theta \mathcal{L}(\theta)|_{\theta = \theta_\text{old}} = \nabla_\theta \mathcal{J}(\theta)|_{\theta = \theta_\text{old}}</span></p>
+<ol start="3" type="1">
+<li>The surrogate objective is always smaller than the real objective, as the KL divergence is positive:</li>
+</ol>
+<p><span class="math display">\mathcal{J}(\theta) \geq \mathcal{J}_{\theta_\text{old}}(\theta) - C \,  D_{KL}(\pi_{\theta_\text{old}} || \pi_\theta)</span></p></li>
+</ul>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-9" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/trustregion2.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+
+<section id="trpo-trust-region-policy-optimization-10" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>The policy <span class="math inline">\pi_\theta</span> maximizing the surrogate objective <span class="math inline">\mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)</span>:</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ol type="1">
+<li>has a higher expected return than <span class="math inline">\pi_{\theta_\text{old}}</span>:</li>
+</ol>
+<p><span class="math display">\mathcal{J}(\theta) &gt; \mathcal{J}(\theta_\text{old})</span></p>
+<ol start="2" type="1">
+<li>is very close to <span class="math inline">\pi_{\theta_\text{old}}</span>:</li>
+</ol>
+<p><span class="math display">D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \approx 0</span></p>
+<ol start="3" type="1">
+<li>but the parameters <span class="math inline">\theta</span> are much closer to the optimal parameters <span class="math inline">\theta^*</span>.</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/trustregion2.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+<ul>
+<li><p>The version with a soft constraint necessitates a prohibitively small learning rate in practice.</p></li>
+<li><p>The implementation of TRPO uses the hard constraint with Lagrange optimization, what necessitates using conjugate gradients optimization, the Fisher Information matrix and natural gradients: very complex to implement…</p></li>
+<li><p>However, there is a <strong>monotonic improvement guarantee</strong>: the successive policies can only get better over time, no policy collapse! This is the major advantage of TRPO compared to the other methods: it always works, although very slowly.</p></li>
+</ul>
 </section>
 
 <section id="references" class="title-slide slide level1 smaller scrollable">
