@@ -61,6 +61,9 @@ $$
 * After the update, the workers use the new policy.
 
 
+# Distributed RL
+
+{{< youtube iaF43Ze1oeI >}}
 
 # Distributed RL
 

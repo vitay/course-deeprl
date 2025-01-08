@@ -95,7 +95,7 @@ $$
 
 * Continuous Gaussian policies are still **unimodal policies**: they mostly sample actions around the mean $\mu_\theta(s)$ and the variance $\sigma_\theta(s)$ decreases to 0 with learning.
 
-* If we want a multimodal policy that learns different solutions, we need to learn a **Softmax** distribution (Gibbs / Boltzmann) over the continuous action space.
+* If we want a multimodal policy that learns different solutions, we would need to learn a **softmax** distribution (Gibbs / Boltzmann) over the continuous action space: **untractable**
 
 ::: {.columns}
 ::: {.column width=50%}
@@ -386,7 +386,7 @@ $$
 
 * See <https://spinningup.openai.com/en/latest/algorithms/sac.html> for a detailed comparison of SAC and TD3.
 
-* The initial version of SAV additionally learned a soft V-value critic, but this turns out not to be needed.
+* The initial version of SAC additionally learned a soft V-value critic, but this turns out not to be needed.
 
 
 ::: footer
