@@ -260,7 +260,7 @@ Julien Vitay
 </span></p>
 <ul>
 <li><p>Continuous Gaussian policies are still <strong>unimodal policies</strong>: they mostly sample actions around the mean <span class="math inline">\mu_\theta(s)</span> and the variance <span class="math inline">\sigma_\theta(s)</span> decreases to 0 with learning.</p></li>
-<li><p>If we want a multimodal policy that learns different solutions, we need to learn a <strong>Softmax</strong> distribution (Gibbs / Boltzmann) over the continuous action space.</p></li>
+<li><p>If we want a multimodal policy that learns different solutions, we would need to learn a <strong>softmax</strong> distribution (Gibbs / Boltzmann) over the continuous action space: <strong>untractable</strong></p></li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -547,7 +547,7 @@ Julien Vitay
 <li><p>The next action <span class="math inline">a_{t+1}</span> comes from the current policy, no need for target networks.</p></li>
 <li><p>Unlike TD3, the learned policy is <strong>stochastic</strong>: no need for target noise as the targets are already stochastic.</p></li>
 <li><p>See <a href="https://spinningup.openai.com/en/latest/algorithms/sac.html" class="uri">https://spinningup.openai.com/en/latest/algorithms/sac.html</a> for a detailed comparison of SAC and TD3.</p></li>
-<li><p>The initial version of SAV additionally learned a soft V-value critic, but this turns out not to be needed.</p></li>
+<li><p>The initial version of SAC additionally learned a soft V-value critic, but this turns out not to be needed.</p></li>
 </ul>
 <div class="footer">
 <p><span class="citation" data-cites="Haarnoja2018a">Haarnoja et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Soft Actor-Critic Algorithms and Applications. arXiv:1812.05905</p>

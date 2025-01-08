@@ -240,12 +240,12 @@ $$
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><p>It is equivalent to say that we want the value of <strong>all</strong> states visited by the policy <span class="math inline">\pi_\theta</span> to be maximal:</p>
-<ul>
-<li>a policy <span class="math inline">\pi</span> is better than another policy <span class="math inline">\pi'</span> if its expected return is greater or equal than that of <span class="math inline">\pi'</span> for all states <span class="math inline">s</span>.</li>
+<li>It is equivalent to say that we want the value of <strong>all</strong> states visited by the policy <span class="math inline">\pi_\theta</span> to be maximal:</li>
 </ul>
-<p><span class="math display">\pi &gt; \pi' \Leftrightarrow V^{\pi}(s) &gt; V^{\pi'}(s) \quad \forall s \in \mathcal{S}</span></p></li>
-</ul>
+<blockquote>
+<p>a policy <span class="math inline">\pi</span> is better than another policy <span class="math inline">\pi'</span> if its expected return is greater or equal than that of <span class="math inline">\pi'</span> for all states <span class="math inline">s</span>.</p>
+</blockquote>
+<p><span class="math display">\pi &gt; \pi' \Leftrightarrow V^{\pi}(s) &gt; V^{\pi'}(s) \quad \forall s \in \mathcal{S}</span></p>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -260,37 +260,42 @@ $$
     \mathcal{J}'(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[V^{\pi_\theta}(s)]
 </span></p>
 <p>where <span class="math inline">\rho_\theta</span> is now the <strong>state visitation distribution</strong>, i.e.&nbsp;how often a state will be visited by the policy <span class="math inline">\pi_\theta</span>.</p>
+<!--
+
+# Deterministic policy gradient theorem
+
+* The two objective functions:
+
+$$
+    \mathcal{J}(\theta) =  \mathbb{E}_{\tau \sim \rho_\theta}[R(\tau)]
+$$
+
+and:
+
+$$
+    \mathcal{J}'(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[V^{\pi_\theta}(s)]
+$$
+
+are not the same: $\mathcal{J}$ has different values than $\mathcal{J}'$.
+
+* However, they have a maximum for the same **optimal policy** $\pi^*$ and their gradients are the same:
+
+$$
+    \nabla_\theta \, \mathcal{J}(\theta) =  \nabla_\theta \, \mathcal{J}'(\theta)
+$$
+
+* If a change in the policy $\pi_\theta$ increases the return of all trajectories, it also increases the value of the visited states. 
+
+* Take-home message: their **policy gradient** is the same, we have the right to re-define the problem like this.
+
+$$
+   g = \nabla_\theta \, \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[\nabla_\theta \, V^{\pi_\theta}(s)]
+$$
+
+-->
 </section>
 
 <section id="deterministic-policy-gradient-theorem-2" class="title-slide slide level1 center">
-<h1>Deterministic policy gradient theorem</h1>
-<ul>
-<li>The two objective functions:</li>
-</ul>
-<p><span class="math display">
-    \mathcal{J}(\theta) =  \mathbb{E}_{\tau \sim \rho_\theta}[R(\tau)]
-</span></p>
-<p>and:</p>
-<p><span class="math display">
-    \mathcal{J}'(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[V^{\pi_\theta}(s)]
-</span></p>
-<p>are not the same: <span class="math inline">\mathcal{J}</span> has different values than <span class="math inline">\mathcal{J}'</span>.</p>
-<ul>
-<li>However, they have a maximum for the same <strong>optimal policy</strong> <span class="math inline">\pi^*</span> and their gradients are the same:</li>
-</ul>
-<p><span class="math display">
-    \nabla_\theta \, \mathcal{J}(\theta) =  \nabla_\theta \, \mathcal{J}'(\theta)
-</span></p>
-<ul>
-<li><p>If a change in the policy <span class="math inline">\pi_\theta</span> increases the return of all trajectories, it also increases the value of the visited states.</p></li>
-<li><p>Take-home message: their <strong>policy gradient</strong> is the same, we have the right to re-define the problem like this.</p></li>
-</ul>
-<p><span class="math display">
-   g = \nabla_\theta \, \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[\nabla_\theta \, V^{\pi_\theta}(s)]
-</span></p>
-</section>
-
-<section id="deterministic-policy-gradient-theorem-3" class="title-slide slide level1 center">
 <h1>Deterministic policy gradient theorem</h1>
 <ul>
 <li>When introducing Q-values, we obtain the following policy gradient:</li>
@@ -299,10 +304,10 @@ $$
    g = \nabla_\theta \, \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[\nabla_\theta \, V^{\pi_\theta}(s)] =  \mathbb{E}_{s \sim \rho_\theta}[\sum_a \nabla_\theta \, \pi_\theta(s, a) \, Q^{\pi_\theta}(s, a)]
 </span></p>
 <ul>
-<li><p>This formulation necessitates to integrate overall possible actions.</p>
+<li><p>This formulation necessitates to integrate overall possible actions:</p>
 <ul>
-<li><p>Not possible with continuous action spaces.</p></li>
-<li><p>The stochastic policy adds a lot of variance.</p></li>
+<li><p>It is not possible with continuous action spaces (integral).</p></li>
+<li><p>The stochastic policy adds a lot of variance: sample complexity.</p></li>
 </ul></li>
 <li><p>But let’s suppose that the policy is <strong>deterministic</strong>, i.e.&nbsp;it takes a single action in state <span class="math inline">s</span>.</p></li>
 <li><p>We can note this deterministic policy <span class="math inline">\mu_\theta(s)</span>, with:</p></li>
@@ -315,7 +320,7 @@ $$
 </span></p>
 </section>
 
-<section id="deterministic-policy-gradient-theorem-4" class="title-slide slide level1 center">
+<section id="deterministic-policy-gradient-theorem-3" class="title-slide slide level1 center">
 <h1>Deterministic policy gradient theorem</h1>
 <ul>
 <li>The policy gradient for the deterministic policy <span class="math inline">\mu_\theta(s)</span> becomes:</li>
@@ -323,12 +328,10 @@ $$
 <p><span class="math display">
    g = \nabla_\theta \, \mathcal{J}(\theta) =  \mathbb{E}_{s \sim \rho_\theta}[\nabla_\theta \, Q^{\mu_\theta}(s, \mu_\theta(s))]
 </span></p>
-<div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/dpg-chainrule.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+<p><img data-src="img/dpg-chainrule.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
 </figure>
-</div>
 </div>
 <ul>
 <li>We can now use the chain rule to decompose the gradient of <span class="math inline">Q^{\mu_\theta}(s, \mu_\theta(s))</span>:</li>
@@ -346,7 +349,7 @@ $$
 </ul>
 </section>
 
-<section id="deterministic-policy-gradient-theorem-5" class="title-slide slide level1 center">
+<section id="deterministic-policy-gradient-theorem-4" class="title-slide slide level1 center">
 <h1>Deterministic policy gradient theorem</h1>
 <blockquote>
 <p>For any MDP, the <strong>deterministic policy gradient</strong> is:</p>
