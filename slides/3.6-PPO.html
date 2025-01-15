@@ -303,8 +303,8 @@ Julien Vitay
 </ul>
 </section>
 
-<section id="ppo-proximal-policy-optimization-1" class="title-slide slide level1 center">
-<h1>PPO: Proximal Policy Optimization</h1>
+<section id="trpo-trust-region-policy-optimization-2" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li>Let’s take the unconstrained objective function of TRPO:</li>
 </ul>
@@ -320,10 +320,29 @@ Julien Vitay
 </ul>
 </section>
 
-<section id="ppo-proximal-policy-optimization-2" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-3" class="title-slide slide level1 center">
+<h1>TRPO: Trust Region Policy Optimization</h1>
+<ul>
+<li>TRPO introduces a <strong>constrained optimization</strong> approach (Lagrange optimization):</li>
+</ul>
+<p><span class="math display">
+    \max_\theta \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [A^{\pi_{\theta_\text{old}}}(s, a)]
+</span></p>
+<p><span class="math display">
+    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
+</span></p>
+<ul>
+<li><p>The KL divergence between the distributions <span class="math inline">\pi_{\theta_\text{old}}</span> and <span class="math inline">\pi_\theta</span> must be below a threshold <span class="math inline">\delta</span>.</p></li>
+<li><p>We can neglect the importance sampling weight as long as the two policies are not very different (trust region).</p></li>
+<li><p>However, TRPO is very computationally expensive, as the constrained optimization problem involves conjugate gradients optimization, the Fisher Information matrix and natural gradients.</p></li>
+<li><p>The major interest of TRPO is the monotonic improvement guarantee.</p></li>
+</ul>
+</section>
+
+<section id="ppo-proximal-policy-optimization-1" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <ul>
-<li>The solution introduced by PPO is simply to <strong>clip</strong> the importance sampling weight when it is too different from 1:</li>
+<li>The alternative solution introduced by PPO is simply to <strong>clip</strong> the importance sampling weight when it is too different from 1:</li>
 </ul>
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\min(\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a), \text{clip}(\rho(s, a), 1-\epsilon, 1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a))]</span></p>
 <ul>
@@ -340,7 +359,7 @@ Julien Vitay
 </div>
 </section>
 
-<section id="ppo-proximal-policy-optimization-3" class="title-slide slide level1 center">
+<section id="ppo-proximal-policy-optimization-2" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -375,7 +394,7 @@ Julien Vitay
 </div>
 </section>
 
-<section id="ppo-proximal-policy-optimization-4" class="title-slide slide level1 center">
+<section id="ppo-proximal-policy-optimization-3" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -403,7 +422,7 @@ Julien Vitay
 </div>
 </section>
 
-<section id="ppo-proximal-policy-optimization-5" class="title-slide slide level1 center">
+<section id="ppo-proximal-policy-optimization-4" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <ul>
 <li>The PPO <strong>clipped objective</strong> ensures than the importance sampling weight stays around one, so the new policy is not very different from the old one. It can learn from single transitions.</li>
@@ -423,7 +442,7 @@ Julien Vitay
 </div>
 </section>
 
-<section id="ppo-proximal-policy-optimization-6" class="title-slide slide level1 center">
+<section id="ppo-proximal-policy-optimization-5" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <ul>
 <li><p>Initialize an actor <span class="math inline">\pi_\theta</span> and a critic <span class="math inline">V_\varphi</span> with random weights.</p></li>
@@ -447,7 +466,7 @@ Julien Vitay
 </ul>
 </section>
 
-<section id="ppo-proximal-policy-optimization-7" class="title-slide slide level1 center">
+<section id="ppo-proximal-policy-optimization-6" class="title-slide slide level1 center">
 <h1>PPO: Proximal Policy Optimization</h1>
 <ul>
 <li><p>PPO is an <strong>on-policy actor-critic</strong> PG algorithm, using distributed learning.</p></li>
@@ -485,8 +504,8 @@ Julien Vitay
 </section>
 
 <section>
-<section id="ppo-chatgpt" class="title-slide slide level1 center">
-<h1>PPO: ChatGPT</h1>
+<section id="ppo-fine-tuning-and-alignment-of-chatgpt" class="title-slide slide level1 center">
+<h1>PPO: Fine-tuning and alignment of ChatGPT</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/ChatGPT.svg" class="quarto-figure quarto-figure-center"></p>
@@ -681,7 +700,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </div>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-2" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-4" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li>We want to maximize the expected return of a policy <span class="math inline">\pi_\theta</span>, which is equivalent to the Q-value of every state-action pair visited by the policy:</li>
@@ -704,7 +723,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </div>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-3" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-5" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li>If we can estimate the advantages and maximize them, we can find a new policy <span class="math inline">\pi_\theta</span> with a higher return than the current one.</li>
@@ -722,7 +741,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 <p><span class="math display">\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\frac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)} \, A^{\pi_{\theta_\text{old}}}(s, a)]</span></p>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-4" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-6" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li><p>In TRPO, we are adding a <strong>constraint</strong> instead:</p>
@@ -739,7 +758,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </ul>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-5" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-7" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li>Previous objective function:</li>
@@ -761,7 +780,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </ul>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-6" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-8" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -770,7 +789,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </div>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-7" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-9" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li><p>How big a step can we take when maximizing <span class="math inline">\mathcal{J}_{\theta_\text{old}}(\theta)</span>? <span class="math inline">\pi_\theta</span> and <span class="math inline">\pi_{\theta_\text{old}}</span> must be close from each other for the approximation to stand.</p></li>
@@ -791,7 +810,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </ul>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-8" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-10" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li>The second approach <strong>regularizes</strong> the objective function with the KL divergence:</li>
@@ -817,7 +836,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </ul>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-9" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-11" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -826,7 +845,7 @@ Munos, R., Stepleton, T., Harutyunyan, A., and Bellemare, M. G. (2016). Safe and
 </div>
 </section>
 
-<section id="trpo-trust-region-policy-optimization-10" class="title-slide slide level1 center">
+<section id="trpo-trust-region-policy-optimization-12" class="title-slide slide level1 center">
 <h1>TRPO: Trust Region Policy Optimization</h1>
 <ul>
 <li>The policy <span class="math inline">\pi_\theta</span> maximizing the surrogate objective <span class="math inline">\mathcal{L}(\theta) = \mathcal{J}_{\theta_\text{old}}(\theta) - C \, D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta)</span>:</li>
