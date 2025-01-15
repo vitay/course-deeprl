@@ -8,6 +8,23 @@ institute: Professur für Künstliche Intelligenz - Fakultät für Informatik
 resources: pdf/4.1-ModelBased.pdf
 ---
 
+# Summary of model-free methods
+
+* Model-free methods allow to solve MDPs without knowing anything about the model. They differ regarding the type of action spaces they allow, their method of exploration and learning (on- or  off-policy), their sample efficiency, learning stability and optimality.
+
+| Algorithm | Action Space         | Exploration | On- or Off-Policy | Sample Efficiency | Learning Stability | Policy Optimality |
+|-----------|----------------------|-------------|-------------------|-------------------|--------------------|-------------------|
+| **DQN**   | Discrete                | $\epsilon$-greedy | Off-policy   | +             | -                  | +                 |
+| **A3C**   | Discrete and Continuous | Gaussian policy   | On-policy    | -             | -                  | +                 |
+| **DDPG**  | Continuous              | Exploration noise | Off-policy   | +             | -                  | +                 |
+| **TD3**   | Continuous              | Exploration noise | Off-policy   | ++            | +                  | +++               |
+| **PPO**   | Discrete and Continuous | Gaussian policy   | On-policy    | -             | +++                | +++               |
+| **SAC**   | Continuous              | Soft policy       | Off-policy   | +++           | -                  | +++               |
+
+
+* In practice, you should use PPO if you do not really care about sample efficiency and prefer learning stability (ChatGPT). For continuous robotics, you should prefer TD3 or SAC, TD3 being less computationally expensive, but SAC being more sample efficient.
+
+
 # 1 - Model-based RL
 
 # Model-free vs. model-based RL

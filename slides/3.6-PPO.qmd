@@ -121,8 +121,7 @@ $$\theta_\text{new} = \text{argmax}_\theta \; \mathcal{L}(\theta) \; \Rightarrow
 * Maximizing the advantages ensures **monotonic improvement**: the new policy is always better than the previous one. Policy collapse is not possible!
 
 
-
-# PPO: Proximal Policy Optimization
+# TRPO: Trust Region Policy Optimization
 
 * Let's take the unconstrained objective function of TRPO:
 
@@ -138,9 +137,32 @@ with $\rho(s, a) = \dfrac{\pi_{\theta}(s, a)}{\pi_{\theta_\text{old}}(s, a)}$ be
 
 * Is there another way to make sure that $\pi_\theta$ is not very different from $\pi_{\theta_\text{old}}$, therefore reducing the variance of the importance sampling weight?
 
+
+# TRPO: Trust Region Policy Optimization
+
+
+* TRPO introduces a **constrained optimization** approach (Lagrange optimization):
+
+$$
+    \max_\theta \mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [A^{\pi_{\theta_\text{old}}}(s, a)]
+$$
+
+$$
+    \text{such that:} \; D_\text{KL} (\pi_{\theta_\text{old}}||\pi_\theta) \leq \delta
+$$
+
+* The KL divergence between the distributions $\pi_{\theta_\text{old}}$ and $\pi_\theta$ must be below a threshold $\delta$.
+
+* We can neglect the importance sampling weight as long as the two policies are not very different (trust region).
+
+* However, TRPO is very computationally expensive, as the constrained optimization problem involves conjugate gradients optimization, the Fisher Information matrix and natural gradients.
+
+* The major interest of TRPO is the monotonic improvement guarantee.
+
+
 # PPO: Proximal Policy Optimization
 
-* The solution introduced by PPO is simply to **clip** the importance sampling weight when it is too different from 1:
+* The alternative solution introduced by PPO is simply to **clip** the importance sampling weight when it is too different from 1:
 
 
 $$\mathcal{L}(\theta) = \mathbb{E}_{s \sim \rho_{\theta_\text{old}}, a \sim \pi_{\theta_\text{old}}} [\min(\rho(s, a) \, A^{\pi_{\theta_\text{old}}}(s, a), \text{clip}(\rho(s, a), 1-\epsilon, 1+\epsilon) \, A^{\pi_{\theta_\text{old}}}(s, a))]$$
@@ -303,7 +325,7 @@ Check more robotic videos at: <https://openai.com/blog/openai-baselines-ppo/>{ta
 
 {{< youtube jwSbzNHGflM >}} 
 
-# PPO: ChatGPT
+# PPO: Fine-tuning and alignment of ChatGPT
 
 ![](img/ChatGPT.svg)
 
