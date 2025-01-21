@@ -2853,6 +2853,21 @@ Subject\_term\_id: computational-biophysics;machine-learning;protein-structure-p
   file = {/Users/vitay/Documents/Zotero/storage/EVR6WEPN/Phuong_Hutter_2022_Formal_Algorithms_for_Transformers.pdf;/Users/vitay/Documents/Zotero/storage/B23MHSCG/2207.html}
 }
 
+@online{Prieto2025,
+  title = {Grokking at the {{Edge}} of {{Numerical Stability}}},
+  author = {Prieto, Lucas and Barsbey, Melih and Mediano, Pedro A. M. and Birdal, Tolga},
+  date = {2025-01-08},
+  eprint = {2501.04697},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2501.04697},
+  url = {http://arxiv.org/abs/2501.04697},
+  urldate = {2025-01-17},
+  abstract = {Grokking, the sudden generalization that occurs after prolonged overfitting, is a surprising phenomenon challenging our understanding of deep learning. Although significant progress has been made in understanding grokking, the reasons behind the delayed generalization and its dependence on regularization remain unclear. In this work, we argue that without regularization, grokking tasks push models to the edge of numerical stability, introducing floating point errors in the Softmax function, which we refer to as Softmax Collapse (SC). We demonstrate that SC prevents grokking and that mitigating SC enables grokking without regularization. Investigating the root cause of SC, we find that beyond the point of overfitting, the gradients strongly align with what we call the na\textbackslash "ive loss minimization (NLM) direction. This component of the gradient does not alter the model's predictions but decreases the loss by scaling the logits, typically by scaling the weights along their current direction. We show that this scaling of the logits explains the delay in generalization characteristic of grokking and eventually leads to SC, halting further learning. To validate our hypotheses, we introduce two key contributions that address the challenges in grokking tasks: StableMax, a new activation function that prevents SC and enables grokking without regularization, and \$\textbackslash perp\$Grad, a training algorithm that promotes quick generalization in grokking tasks by preventing NLM altogether. These contributions provide new insights into grokking, elucidating its delayed generalization, reliance on regularization, and the effectiveness of existing grokking-inducing methods. Code for this paper is available at https://github.com/LucasPrietoAl/grokking-at-the-edge-of-numerical-stability.},
+  pubstate = {prepublished},
+  file = {/Users/vitay/Documents/Zotero/storage/A9I5ZF69/Prieto et al. - 2025 - Grokking at the Edge of Numerical Stability.pdf}
+}
+
 @unpublished{Qi2016,
   title = {{{PointNet}}: {{Deep Learning}} on {{Point Sets}} for {{3D Classification}} and {{Segmentation}}},
   shorttitle = {{{PointNet}}},
