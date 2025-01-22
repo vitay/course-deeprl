@@ -666,8 +666,7 @@ Julien Vitay
 <section id="policy-distillation" class="title-slide slide level1 center">
 <h1>Policy distillation</h1>
 <ul>
-<li><p>The <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span> is trained using <strong>policy distillation</strong> of the trained policy <span class="math inline">\pi</span>.</p></li>
-<li><p>The small rollout policy network with weights <span class="math inline">\hat{\theta}</span> tries to copy the outputs <span class="math inline">\pi(s, a)</span> of the bigger policy network (A3C).</p></li>
+<li><p>The <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span> is trained using <strong>policy distillation</strong> of the trained policy <span class="math inline">\pi</span>. The small rollout policy network with weights <span class="math inline">\hat{\theta}</span> tries to copy the outputs <span class="math inline">\pi(s, a)</span> of the bigger policy network (A3C).</p></li>
 <li><p>This is a supervised learning task: just minimize the KL divergence between the two policies:</p></li>
 </ul>
 <p><span class="math display">\mathcal{L}(\hat{\theta}) = \mathbb{E}_{s, a} [D_\text{KL}(\hat{\pi}(s, a) || \pi(s, a))]</span></p>
@@ -692,7 +691,7 @@ Julien Vitay
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/distral.png" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/distral.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 <div class="footer">
