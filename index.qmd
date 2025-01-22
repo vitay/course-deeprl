@@ -120,12 +120,12 @@ table_lecture(lecs)
 ```{python} 
 lecs = {
     '4.1-ModelBased': """**4.1 - Model-based RL**\\
-Two main paradigms in model-based RL: model-based augmentation of model-free learning (Dyna architectures) and planning (model predictive control, MPC)""",
-    '4.2-LearnedModels': """**4.2 - Learned World models**\\
-Learning a world model from data is much easier than learning the optimal policy, as it is just supervised learning. Modern model-based algorithms (TDM, World models, PlaNet, Dreamer) make use of this property to reduce the sample complexity.""",
+Model-based RL uses a world model to emulate the future. Dyna-like architectures use  these rollouts to augment MF algorithms. """,
+    '4.2-LearnedModels': """**4.2 - Planning with learned World models**\\
+Learning a world model from data and planning the optimal sequence of actions using model-predictive control is much easier than learning the optimal policy directly. Modern model-based algorithms (World models, PlaNet, Dreamer) make use of this property to reduce the sample complexity.""",
     '4.3-AlphaGo': """**4.3 - AlphaGo**\\
 AlphaGo surprised the world in 2016 by beating Lee Seedol, the world champion of Go. It combines model-free learning through policy gradient and self-play with model-based planning using MCTS (Monte Carlo Tree Search).""",
-    '4.4-SR': """**4.4 - Successor representations**\\
+    '4.4-SR': """**4.4 - Successor representations (optional)**\\
 Successor representations provide a trade-off between model-free and model-based learning.""",
 }
 table_lecture(lecs)
@@ -139,7 +139,7 @@ table_lecture(lecs)
 ```{python} 
 lecs = {
     '5.1-Outlook': """**5.1 - Outlook**\\
-Current RL research investigates many different directions: inverse RL, intrinsic motivation, hierarchical RL, meta RL, offline RL, multi-agent RL, etc.""",
+Current RL research investigates many different directions: inverse RL, intrinsic motivation, hierarchical RL, meta RL, offline RL, multi-agent RL (MARL), etc.""",
 }
 table_lecture(lecs)
 ```
