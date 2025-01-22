@@ -165,7 +165,7 @@
 
 <section id="title-slide" data-background-image="img/tuc-new-large.png" data-background-opacity="1" data-background-position="top" data-background-size="30%" class="quarto-title-block center">
   <h1 class="title">Deep Reinforcement Learning</h1>
-  <p class="subtitle">Model-based RL</p>
+  <p class="subtitle">Model-based RL, augmentation</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -182,7 +182,7 @@ Julien Vitay
 <section id="summary-of-model-free-methods" class="title-slide slide level1 center">
 <h1>Summary of model-free methods</h1>
 <ul>
-<li>Model-free methods allow to solve MDPs without knowing anything about the model. They differ regarding the type of action spaces they allow, their method of exploration and learning (on- or off-policy), their sample efficiency, learning stability and optimality.</li>
+<li>Model-free methods allow to solve MDPs without knowing anything about the model.</li>
 </ul>
 <table class="caption-top" style="width:100%;">
 <colgroup>
@@ -247,7 +247,7 @@ Julien Vitay
 <td>Discrete and Continuous</td>
 <td>Gaussian policy</td>
 <td>On-policy</td>
-<td>-</td>
+<td>+</td>
 <td>+++</td>
 <td>+++</td>
 </tr>
@@ -263,7 +263,8 @@ Julien Vitay
 </tbody>
 </table>
 <ul>
-<li>In practice, you should use PPO if you do not really care about sample efficiency and prefer learning stability (ChatGPT). For continuous robotics, you should prefer TD3 or SAC, TD3 being less computationally expensive, but SAC being more sample efficient.</li>
+<li>In practice, you should use PPO if you do not really care about sample efficiency and prefer learning stability (ChatGPT). It works well for both discrete and continuous spaces.</li>
+<li>For continuous ction spaces (robotics), you should prefer TD3 or SAC, TD3 being less computationally expensive, but SAC being more sample efficient.</li>
 </ul>
 </section>
 
@@ -275,26 +276,27 @@ Julien Vitay
 <section id="model-free-vs.-model-based-rl" class="title-slide slide level1 center">
 <h1>Model-free vs.&nbsp;model-based RL</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/modelbased2.png"></p>
 <figcaption>Source: <span class="citation" data-cites="Dayan2008">Dayan and Niv (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> Reinforcement learning: The Good, The Bad and The Ugly. Current Opinion in Neurobiology, Cognitive neuroscience 18:185–196. doi:10.1016/j.conb.2008.08.003</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:60%;">
 <ul>
 <li>In <strong>model-free RL</strong> (MF) methods, we do not need to know anything about the dynamics of the environment to start learning a policy:</li>
 </ul>
-<p><span class="math display">p(s_{t+1} | s_t, a_t) \; \; r(s_t, a_t, s_{t+1})</span></p>
+<p><span class="math display">p(s' | s, a) \; \; r(s, a, s)</span></p>
 <ul>
-<li><p>We just sample transitions <span class="math inline">(s, a, r, s')</span> and update Q-values or a policy network.</p></li>
+<li><p>We just sample transitions <span class="math inline">(s, a, r, s')</span> from the environment and update either Q-values or a policy network.</p></li>
 <li><p>The main advantage is that the agent does not need to “think” when acting: just select the action with highest Q-value (<strong>reflexive behavior</strong>).</p></li>
 <li><p>The other advantage is that you can use MF methods on <strong>any</strong> MDP: you do not need to know anything about them.</p></li>
 </ul>
 </div></div>
 <ul>
-<li>But MF methods are very slow (sample complexity): as they make no assumption, they have to learn everything by trial-and-error from scratch.</li>
+<li><p>MF methods are very slow (<strong>sample complexity</strong>): as they make no assumption, they have to learn everything by trial-and-error from scratch.</p></li>
+<li><p>MF methods are <strong>not safe</strong>: it is very hard to use external knowledge to avoid exploring dangerous actions.</p></li>
 </ul>
 </section>
 
@@ -337,24 +339,41 @@ Julien Vitay
 </div>
 </section>
 
-<section id="model-predictive-control" class="title-slide slide level1 center">
-<h1>2 - Model Predictive Control</h1>
+<section id="learning-the-world-model" class="title-slide slide level1 center">
+<h1>2 - Learning the world model</h1>
 
 </section>
 
-<section id="learning-the-world-model" class="title-slide slide level1 center">
+<section id="learning-the-world-model-1" class="title-slide slide level1 center">
 <h1>Learning the world model</h1>
 <ul>
 <li><p>Learning the world model is not complicated in theory.</p></li>
 <li><p>We just need to collect <em>enough</em> transitions <span class="math inline">s_t, a_t, s_{t+1}, r_{t+1}</span> using a random agent (or during learning) and train a <strong>supervised</strong> model to predict the next state and reward.</p></li>
 </ul>
-<div>
+<div class="columns">
+<div class="column">
+<p><span class="math display">s', r = M(s, a)</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/learningdynamics.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+<p><img data-src="img/learningdynamics.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
+</div><div class="column">
+<div class="callout callout-note no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Training in imagination</strong></p>
 </div>
+<div class="callout-content">
+<ol type="1">
+<li>Collect transitions <span class="math inline">(s, a, r, s')</span> using a (random/expert) policy <span class="math inline">b</span> and create a dataset <span class="math inline">\mathcal{D} = \{(s_k, a_k, r_, s'_k\}_{k}</span>.</li>
+<li>Train the model <span class="math inline">M(s, a) = (s', r)</span> on <span class="math inline">\mathcal{D}</span> using supervised learning.</li>
+<li>Optimize the policy <span class="math inline">\pi</span> on rollouts <span class="math inline">\tau</span> generated by the model.</li>
+</ol>
+</div>
+</div>
+</div>
+</div></div>
 <ul>
 <li><p>Such a model is called the <strong>dynamics model</strong>, the <strong>transition model</strong> or the <strong>forward model</strong>.</p>
 <ul>
@@ -368,150 +387,31 @@ Julien Vitay
 <section id="learning-from-imaginary-rollouts" class="title-slide slide level1 center">
 <h1>Learning from imaginary rollouts</h1>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/mpc-rollout.png" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:60%;">
 <ul>
-<li>Once you have a good transition model, you can generate <strong>rollouts</strong>, i.e.&nbsp;imaginary trajectories / episodes using the model.</li>
+<li><p>Once you have a good transition model, you can generate <strong>rollouts</strong>, i.e.&nbsp;imaginary trajectories / episodes using the model.</p></li>
+<li><p>Given an initial state <span class="math inline">s_0</span> and a policy <span class="math inline">\pi</span>, you can unroll the future using the model <span class="math inline">s', r = M(s, a)</span>.</p></li>
 </ul>
-<p><span class="math display">\tau = (s_o, a_o, r_ 1, s_1, a_1, \ldots, s_T)</span></p>
+<p><span class="math display">
+    \tau = s_0  \xrightarrow[\pi]{} a_0 \xrightarrow[M]{} s_1  \xrightarrow[\pi]{} a_1 \xrightarrow[\pi]{} s_2 \xrightarrow[]{} \ldots \xrightarrow[M]{} s_T
+</span></p>
 <ul>
-<li>You can then feed these trajectories to any model-free algorithm (value-based, policy-gradient) that will learn to maximize the returns.</li>
+<li>You can then feed these trajectories to any optimizer (classical or model-free RL algorithm) that will learn to maximize the returns.</li>
 </ul>
 <p><span class="math display">\mathcal{J}(\theta) = \mathbb{E}_{\tau}[R(\tau)]</span></p>
+</div></div>
 <ul>
 <li><p>The only sample complexity is the one needed to train the model: the rest is <strong>emulated</strong>.</p></li>
-<li><p>Drawback: This can only work when the model is close to perfect, especially for long trajectories or probabilistic MDPs.</p></li>
+<li><p>Drawback: This can only work when the model is close to perfect, especially for long trajectories or probabilistic MDPs. See MPC in the next chapter.</p></li>
 </ul>
-</div></div>
 <div class="footer">
 <p><span class="citation" data-cites="Kurutach2018">Kurutach et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Model-Ensemble Trust-Region Policy Optimization. arXiv:1802.10592.</p>
-</div>
-</section>
-
-<section id="imperfect-model" class="title-slide slide level1 center">
-<h1>Imperfect model</h1>
-<ul>
-<li>For long horizons, the slightest imperfection in the model can accumulate (<strong>drift</strong>) and lead to completely wrong trajectories.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-drift1.jpeg"></p>
-<figcaption>Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption>
-</figure>
-</div>
-<ul>
-<li><p>The emulated trajectory will have a biased return, the algorithm does not converge to the optimal policy.</p></li>
-<li><p>If you have a perfect model, you should not be using RL anyway, as classical control methods would be much faster (but see AlphaGo).</p></li>
-</ul>
-</section>
-
-<section id="mpc---model-predictive-control" class="title-slide slide level1 center">
-<h1>MPC - Model Predictive Control</h1>
-<ul>
-<li>The solution is to <strong>replan</strong> at each time step and execute only the first planned action <strong>in the real environment</strong>.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-drift2.jpeg" style="width:80.0%"></p>
-<figcaption>Source: <a href="https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323" class="uri">https://medium.com/@jonathan_hui/rl-model-based-reinforcement-learning-3c2b6f0aa323</a></figcaption>
-</figure>
-</div>
-<ul>
-<li>Replanning avoids accumulating errors over long horizons.</li>
-</ul>
-</section>
-
-<section id="mpc---model-predictive-control-1" class="title-slide slide level1 center">
-<h1>MPC - Model Predictive Control</h1>
-<ul>
-<li><p>Collect transitions <span class="math inline">(s, a, r, s')</span> using a (random/expert) policy <span class="math inline">b</span> and create an initial dataset <span class="math inline">\mathcal{D} = \{(s_k, a_k, r_, s'_k\}_{k}</span>.</p></li>
-<li><p><strong>while</strong> not converged:</p>
-<ul>
-<li><p>(Re)Train the dynamics model <span class="math inline">M(s, a) = (s', r)</span> on <span class="math inline">\mathcal{D}</span> using supervised learning.</p></li>
-<li><p><strong>foreach</strong> step <span class="math inline">t</span> in the trajectory:</p>
-<ul>
-<li>Plan a trajectory from the current state <span class="math inline">s_t</span> using the model <span class="math inline">M</span>, returning a sequence of planned actions:</li>
-</ul>
-<p><span class="math display">a_{t}, a_{t+1}, \ldots, a_T</span></p>
-<ul>
-<li><p>Take the first action <span class="math inline">a_t</span>, observe the next state <span class="math inline">s_{t+1}</span>.</p></li>
-<li><p>Append the transition <span class="math inline">(s_t, a_t, s_{t+1})</span> to the dataset.</p></li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-
-<section id="mpc---example-with-a-neural-model" class="title-slide slide level1 center">
-<h1>MPC - Example with a neural model</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-architecture.png" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-<div class="footer">
-<p>Nagabandi et al.&nbsp;(2017). Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.</p>
-</div>
-</section>
-
-<section id="mpc---example-with-a-neural-model-1" class="title-slide slide level1 center">
-<h1>MPC - Example with a neural model</h1>
-<ul>
-<li><p>The planner can actually be anything, it does not have to be a RL algorithm.</p></li>
-<li><p>For example, it can be iLQR (Iterative Linear Quadratic Regulator), a non-linear optimization method.</p></li>
-</ul>
-<p><a href="https://jonathan-hui.medium.com/rl-lqr-ilqr-linear-quadratic-regulator-a5de5104c750" class="uri">https://jonathan-hui.medium.com/rl-lqr-ilqr-linear-quadratic-regulator-a5de5104c750</a>.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-example.png"></p>
-<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a></figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p>Alternatively, one can use <strong>random-sampling shooting</strong>:</p>
-<ol type="1">
-<li><p>in the current state, select a set of possible actions.</p></li>
-<li><p>generate rollouts with these actions and compute their returns using the model.</p></li>
-<li><p>select the action whose rollout has the highest return.</p></li>
-</ol></li>
-</ul>
-</div></div>
-<div class="footer">
-<p><span class="citation" data-cites="Nagabandi2017">Nagabandi et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.</p>
-</div>
-</section>
-
-<section id="mpc---example-with-a-neural-model-2" class="title-slide slide level1 center">
-<h1>MPC - Example with a neural model</h1>
-<ul>
-<li><p>The main advantage of MPC is that you can change the reward function (the <strong>goal</strong>) on the fly: what you learn is the model, but planning is just an optimization procedure.</p></li>
-<li><p>You can set intermediary goals to the agent very flexibly: no need for a well-defined reward function.</p></li>
-<li><p>Model imperfection is not a problem as you replan all the time. The model can adapt to changes in the environment (slippery terrain, simulation to real-world).</p></li>
-</ul>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-application1.gif"></p>
-<figcaption>Source: <a href="https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/" class="uri">https://bair.berkeley.edu/blog/2017/11/30/model-based-rl/</a></figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/mpc-application2.gif" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div></div>
-<div class="footer">
-<p><span class="citation" data-cites="Nagabandi2017">Nagabandi et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning. arXiv:1708.02596.</p>
 </div>
 </section>
 
@@ -531,7 +431,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><p>Another approach to MB RL is to <strong>augment</strong> MF methods with MB rollouts.</p></li>
+<li><p>A simple approach to MB RL is to <strong>augment</strong> MF methods with MB rollouts.</p></li>
 <li><p>The MF algorithm (e.g.&nbsp;Q-learning) learns from transitions <span class="math inline">(s, a, r, s')</span> sampled either with:</p>
 <ul>
 <li><p><strong>real experience</strong>: interaction with the environment.</p></li>
@@ -601,6 +501,241 @@ Julien Vitay
 </div>
 </section>
 
+<section id="i2a---imagination-augmented-agents" class="title-slide slide level1 center">
+<h1>4 - I2A - Imagination-augmented agents</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/paper-i2a.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<p><a href="https://deepmind.com/blog/article/agents-imagine-and-plan" class="uri">https://deepmind.com/blog/article/agents-imagine-and-plan</a></p>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-1" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<ul>
+<li>I2A is a <strong>model-based augmented model-free method</strong>: it trains a MF algorithm (A3C) with the help of <strong>rollouts</strong> generated by a MB model.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-sokoban.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<ul>
+<li><p>They showcase their algorithm on the puzzle environment <strong>Sokoban</strong>, where you need to move boxes to specified locations.</p></li>
+<li><p>Sokoban is a quite hard game, as actions are irreversible (you can get stuck) and the solution requires many actions (sparse rewards).</p></li>
+<li><p>MF methods are bad at this game as they learn through trials-and-(many)-errors.</p></li>
+</ul>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="sokoban" class="title-slide slide level1 center">
+<h1>Sokoban</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/fg8QImlvB-k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="i2a---imagination-augmented-agents-2" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<ul>
+<li>The <strong>model</strong> learns to predict the next frame and the next reward based on the four last frames and the chosen action.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-model.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<ul>
+<li><p>It is a <strong>convolutional autoencoder</strong>, taking additionally an action <span class="math inline">a</span> as input and predicting the next reward.</p></li>
+<li><p>It can be pretrained using a random policy, and later fine-tuned during training.</p></li>
+</ul>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-3" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-architecture.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-4" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-architecture1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<ul>
+<li><p>The <strong>imagination core</strong> is composed of the environment model <span class="math inline">M(s, a)</span> and a <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span>.</p></li>
+<li><p>As Sokoban is a POMDP (partially observable), the notation uses <strong>observation</strong> <span class="math inline">o_t</span> instead of states <span class="math inline">s_t</span>, but it does not really matter here.</p></li>
+<li><p>The <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span> is a simple and fast policy. It does not have to be the trained policy <span class="math inline">\pi</span>.</p></li>
+<li><p>It could even be a random policy, or a pretrained policy using for example A3C directly.</p></li>
+<li><p>In I2A, it is a <strong>distilled policy</strong> from the trained policy <span class="math inline">\pi</span> (see later).</p></li>
+<li><p>Take home message: given the current observation <span class="math inline">o_t</span> and a policy <span class="math inline">\hat{\pi}</span>, we can predict the next observation <span class="math inline">\hat{o}_{t+1}</span> and the next reward <span class="math inline">\hat{r}_{t+1}</span>.</p></li>
+</ul>
+</div></div>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-5" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-architecture2.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>The <strong>imagination rollout module</strong> uses the imagination core to predict iteratively the next <span class="math inline">\tau</span> frames and rewards using the current frame <span class="math inline">o_t</span> and the rollout policy:</li>
+</ul>
+<p><span class="math display">o_t \rightarrow \hat{o}_{t+1} \rightarrow \hat{o}_{t+2} \rightarrow \ldots \rightarrow \hat{o}_{t+\tau}</span></p>
+<ul>
+<li><p>The <span class="math inline">\tau</span> frames and rewards are passed <strong>backwards</strong> to a convolutional LSTM (from <span class="math inline">t+\tau</span> to <span class="math inline">t</span>) which produces an embedding / encoding of the rollout.</p></li>
+<li><p>The output of the imagination rollout module is a vector <span class="math inline">e_i</span> (the final state of the LSTM) representing the whole rollout, including the (virtually) obtained rewards.</p></li>
+<li><p>Note that because of the stochasticity of the rollout policy <span class="math inline">\hat{\pi}</span>, different rollouts can lead to different encoding vectors.</p></li>
+</ul>
+</div></div>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-6" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-architecture3.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<ul>
+<li><p>For the current observation <span class="math inline">o_t</span>, we then generate one <strong>rollout</strong> per possible action (5 in Sokoban):</p>
+<ul>
+<li>What would happen if I do action 1?</li>
+<li>What would happen if I do action 2?</li>
+<li>etc.</li>
+</ul></li>
+<li><p>The resulting vectors are concatenated to the output of <strong>model-free</strong> path (a convolutional neural network taking the current observation as input).</p></li>
+<li><p>Altogether, we have a huge NN with weights <span class="math inline">\theta</span> (model, encoder, MF path) producing an input <span class="math inline">s_t</span> to the <strong>A3C</strong> module.</p></li>
+</ul>
+</div></div>
+<ul>
+<li>We can then learn the policy <span class="math inline">\pi</span> and value function <span class="math inline">V</span> based on this input to maximize the returns:</li>
+</ul>
+<p><span class="math display">\nabla_\theta \mathcal{J}(\theta) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[\nabla_\theta \log \pi_\theta (s_t, a_t) \, (\sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_t)) ]</span></p>
+<p><span class="math display">\mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}[(\sum_{k=0}^{n-1} \gamma^{k} \, r_{t+k+1} + \gamma^n \, V_\varphi(s_{t+n}) - V_\varphi(s_t))^2]</span></p>
+</section>
+
+<section id="i2a---imagination-augmented-agents-7" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<ul>
+<li><p>The complete architecture may seem complex, but everything is differentiable so we can apply backpropagation and train the network <strong>end-to-end</strong> using multiple workers.</p></li>
+<li><p>It is the A3C algorithm (MF), but <strong>augmented</strong> by MB rollouts, i.e.&nbsp;with explicit information about the future.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-architecture.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Weber2017">Weber et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Imagination-Augmented Agents for Deep Reinforcement Learning. arXiv:1707.06203.</p>
+</div>
+</section>
+
+<section id="policy-distillation" class="title-slide slide level1 center">
+<h1>Policy distillation</h1>
+<ul>
+<li><p>The <strong>rollout policy</strong> <span class="math inline">\hat{\pi}</span> is trained using <strong>policy distillation</strong> of the trained policy <span class="math inline">\pi</span>.</p></li>
+<li><p>The small rollout policy network with weights <span class="math inline">\hat{\theta}</span> tries to copy the outputs <span class="math inline">\pi(s, a)</span> of the bigger policy network (A3C).</p></li>
+<li><p>This is a supervised learning task: just minimize the KL divergence between the two policies:</p></li>
+</ul>
+<p><span class="math display">\mathcal{L}(\hat{\theta}) = \mathbb{E}_{s, a} [D_\text{KL}(\hat{\pi}(s, a) || \pi(s, a))]</span></p>
+<ul>
+<li>As the network is smaller, it won’t be as good as <span class="math inline">\pi</span>, but its learning objective is easier.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/policydistillation.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Rusu2016">Rusu et al. (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span> Policy Distillation. arXiv:1511.06295.</p>
+</div>
+</section>
+
+<section id="distral-distill-and-transfer-learning" class="title-slide slide level1 center">
+<h1>Distral : distill and transfer learning</h1>
+<ul>
+<li><p>FYI: distillation can be used to ensure generalization over different environments.</p></li>
+<li><p>Each learning algorithms learns its own task, but tries not to diverge too much from a <strong>shared policy</strong>, which turns out to be good at all tasks.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/distral.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Teh2017">Teh et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-8" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<ul>
+<li><p>Unsurprisingly, I2A performs better than A3C on Sokoban.</p></li>
+<li><p>The deeper the rollout, the better.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-results.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Teh2017">Teh et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175</p>
+</div>
+</section>
+
+<section id="i2a---imagination-augmented-agents-9" class="title-slide slide level1 center">
+<h1>I2A - Imagination-augmented agents</h1>
+<ul>
+<li>The model does not even have to be perfect: the MF path can compensate for imperfections.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/i2a-results2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Teh2017">Teh et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175</p>
+</div>
+</section>
+
+<section id="i2a---sokoban" class="title-slide slide level1 center">
+<h1>I2A - Sokoban</h1>
+<p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/llwAwE7ItdM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>
 
@@ -612,11 +747,17 @@ Dayan, P., and Niv, Y. (2008). Reinforcement learning: <span>The Good</span>, <s
 <div id="ref-Kurutach2018" class="csl-entry" role="listitem">
 Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018). Model-<span>Ensemble Trust-Region Policy Optimization</span>. <a href="http://arxiv.org/abs/1802.10592">http://arxiv.org/abs/1802.10592</a>.
 </div>
-<div id="ref-Nagabandi2017" class="csl-entry" role="listitem">
-Nagabandi, A., Kahn, G., Fearing, R. S., and Levine, S. (2017). Neural <span>Network Dynamics</span> for <span>Model-Based Deep Reinforcement Learning</span> with <span>Model-Free Fine-Tuning</span>. <a href="http://arxiv.org/abs/1708.02596">http://arxiv.org/abs/1708.02596</a>.
+<div id="ref-Rusu2016" class="csl-entry" role="listitem">
+Rusu, A. A., Colmenarejo, S. G., Gulcehre, C., Desjardins, G., Kirkpatrick, J., Pascanu, R., et al. (2016). Policy <span>Distillation</span>. <a href="http://arxiv.org/abs/1511.06295">http://arxiv.org/abs/1511.06295</a>.
 </div>
 <div id="ref-Sutton1990" class="csl-entry" role="listitem">
 Sutton, R. S. (1990). Integrated <span>Architectures</span> for <span>Learning</span>, <span>Planning</span>, and <span>Reacting Based</span> on <span>Approximating Dynamic Programming</span>. <em>Machine Learning Proceedings 1990</em>, 216–224. doi:<a href="https://doi.org/10.1016/B978-1-55860-141-3.50030-4">10.1016/B978-1-55860-141-3.50030-4</a>.
+</div>
+<div id="ref-Teh2017" class="csl-entry" role="listitem">
+Teh, Y. W., Bapst, V., Czarnecki, W. M., Quan, J., Kirkpatrick, J., Hadsell, R., et al. (2017). Distral: <span>Robust Multitask Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1707.04175">http://arxiv.org/abs/1707.04175</a>.
+</div>
+<div id="ref-Weber2017" class="csl-entry" role="listitem">
+Weber, T., Racanière, S., Reichert, D. P., Buesing, L., Guez, A., Rezende, D. J., et al. (2017). Imagination-<span>Augmented Agents</span> for <span>Deep Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1707.06203">http://arxiv.org/abs/1707.06203</a>.
 </div>
 </div>
 </section>
