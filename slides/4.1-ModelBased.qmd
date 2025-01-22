@@ -433,9 +433,7 @@ $$\mathcal{L}(\varphi) =  \mathbb{E}_{s_t \sim \rho_\theta, a_t \sim \pi_\theta}
 
 # Policy distillation
 
-* The **rollout policy** $\hat{\pi}$ is trained using **policy distillation** of the trained policy $\pi$.
-
-* The small rollout policy network with weights $\hat{\theta}$ tries to copy the outputs $\pi(s, a)$ of the bigger policy network (A3C).
+* The **rollout policy** $\hat{\pi}$ is trained using **policy distillation** of the trained policy $\pi$. The small rollout policy network with weights $\hat{\theta}$ tries to copy the outputs $\pi(s, a)$ of the bigger policy network (A3C).
 
 * This is a supervised learning task: just minimize the KL divergence between the two policies:
 
@@ -455,7 +453,7 @@ $$\mathcal{L}(\hat{\theta}) = \mathbb{E}_{s, a} [D_\text{KL}(\hat{\pi}(s, a) || 
 
 * Each learning algorithms learns its own task, but tries not to diverge too much from a **shared policy**, which turns out to be good at all tasks.
 
-![](img/distral.png)
+![](img/distral.png){width=80%}
 
 ::: footer
 @Teh2017 Distral: Robust Multitask Reinforcement Learning. arXiv:1707.04175
