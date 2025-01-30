@@ -705,15 +705,19 @@ Julien Vitay
 </figure>
 </div>
 </div></div>
-<ul>
-<li>The loss function to train this <strong>recurrent state-space model</strong> (RSSM), with a deterministic component in the transition model (RNN) and stochastic components is not shown here.</li>
-</ul>
 </section>
 
 <section id="planet-latent-dynamics-model-2" class="title-slide slide level1 center">
 <h1>PlaNet: latent dynamics model</h1>
 <ul>
-<li>Training sequences <span class="math inline">(o_1, a_1, o_2, \ldots, o_T)</span> can be generated <strong>off-policy</strong> (e.g.&nbsp;from demonstrations) or on-policy.</li>
+<li>The loss function to train this <strong>recurrent state-space model</strong> (RSSM) simply adds up the three learning objectives (VAE + world model + reward).</li>
+</ul>
+<p><span class="math display">
+    \mathcal{L}(\theta) = \mathcal{L}_\text{reconstruction}(\theta) + \mathcal{L}_\text{prediction}(\theta) + \mathcal{L}_\text{reward}(\theta)
+</span></p>
+<ul>
+<li><p>Training sequences <span class="math inline">(o_1, a_1, o_2, \ldots, o_T)</span> can be generated <strong>off-policy</strong> (e.g.&nbsp;from demonstrations) or on-policy.</p></li>
+<li><p>Backpropagation through time (BPTT) can be applied on complete (or partial) sequences.</p></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -923,6 +927,27 @@ Julien Vitay
 <section id="daydreamer-1" class="title-slide slide level1 center">
 <h1>DayDreamer</h1>
 <p></p><div id="youtube-frame" style="position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0;"><iframe width="100%" height="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/xAXvfVTgqr0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+
+<section id="dreamer-v3" class="title-slide slide level1 center">
+<h1>Dreamer v3</h1>
+<ul>
+<li><p>The third iteration of Dreamer established SoTA performance on more than 150 benchmarks.</p></li>
+<li><p>It is the first algorithm to collect diamonds in Minecraft from scratch without human data or curricula.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/dreamerv3-tasks.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/dreamerv3-results.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Hafner2024">Hafner et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> Mastering Diverse Domains through World Models. doi:10.48550/arXiv.2301.04104. <a href="https://danijar.com/project/dreamerv3/" class="uri">https://danijar.com/project/dreamerv3/</a></p>
+</div>
 </section>
 
 <section id="temporal-difference-models---tdm-skipped" class="title-slide slide level1 center">
@@ -1221,6 +1246,9 @@ Hafner, D., Lillicrap, T., Ba, J., and Norouzi, M. (2020). Dream to <span>Contro
 </div>
 <div id="ref-Hafner2019" class="csl-entry" role="listitem">
 Hafner, D., Lillicrap, T., Fischer, I., Villegas, R., Ha, D., Lee, H., et al. (2019). Learning <span>Latent Dynamics</span> for <span>Planning</span> from <span>Pixels</span>. <a href="http://arxiv.org/abs/1811.04551">http://arxiv.org/abs/1811.04551</a>.
+</div>
+<div id="ref-Hafner2024" class="csl-entry" role="listitem">
+Hafner, D., Pasukonis, J., Ba, J., and Lillicrap, T. (2024). Mastering <span>Diverse Domains</span> through <span>World Models</span>. doi:<a href="https://doi.org/10.48550/arXiv.2301.04104">10.48550/arXiv.2301.04104</a>.
 </div>
 <div id="ref-Kurutach2018" class="csl-entry" role="listitem">
 Kurutach, T., Clavera, I., Duan, Y., Tamar, A., and Abbeel, P. (2018). Model-<span>Ensemble Trust-Region Policy Optimization</span>. <a href="http://arxiv.org/abs/1802.10592">http://arxiv.org/abs/1802.10592</a>.
