@@ -495,9 +495,12 @@ $$p(\hat{o}_t | s_t)$$
 
 $$p(s_{t+1} | s_t, a_t)$$
 
+
+
 4. A **reward model** predicting the immediate reward.
 
 $$p(r_t | s_t)$$
+
 
 :::
 ::: {.column width=50%}
@@ -505,17 +508,24 @@ $$p(r_t | s_t)$$
 ![Source: <https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html>](img/planet-model.png)
 
 
+
 :::
 :::
-
-
-* The loss function to train this **recurrent state-space model** (RSSM), with a deterministic component in the transition model (RNN) and stochastic components is not shown here. 
 
 
 # PlaNet: latent dynamics model
 
 
+* The loss function to train this **recurrent state-space model** (RSSM) simply adds up the three learning objectives (VAE + world model + reward). 
+
+$$
+    \mathcal{L}(\theta) = \mathcal{L}_\text{reconstruction}(\theta) + \mathcal{L}_\text{prediction}(\theta) + \mathcal{L}_\text{reward}(\theta)
+$$
+
+
 * Training sequences $(o_1, a_1, o_2, \ldots, o_T)$ can be generated **off-policy** (e.g. from demonstrations) or on-policy. 
+
+* Backpropagation through time (BPTT) can be applied on complete (or partial) sequences.
 
 ![Source: <https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html>](img/dreamer-model.gif)
 
@@ -677,7 +687,19 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{s_t, a_t \sim \pi_\theta} [\sum_{t'=t}^T V_\
 
 {{< youtube xAXvfVTgqr0 >}}
 
+# Dreamer v3
 
+* The third iteration of Dreamer established SoTA performance on more than 150 benchmarks. 
+
+* It is the first algorithm to collect diamonds in Minecraft from scratch without human data or curricula.
+
+![](img/dreamerv3-tasks.png){width=70%}
+
+![](img/dreamerv3-results.png){width=70%}
+
+::: footer
+@Hafner2024 Mastering Diverse Domains through World Models. doi:10.48550/arXiv.2301.04104. <https://danijar.com/project/dreamerv3/>
+:::
 
 # 5 - Temporal difference models - TDM (skipped)
 
