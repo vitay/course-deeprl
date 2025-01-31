@@ -25,6 +25,15 @@ Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEnt
 
 Mock exam: [pdf](https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/HER2017.pdf)
 
+Exam on 05.03.25, 09:00, 1/204. 
+
+Research paper:  [pdf](https://arxiv.org/pdf/1712.00948)
+
+> Levy, Konidaris, Platt, and Saenko (2019). Learning Multi-Level Hierarchies with Hindsight. ICLR 2019. [arXiv:1712.00948](https://arxiv.org/abs/1712.00948)
+
+Additional resources: [http://bigai.cs.brown.edu/2019/09/03/hac.html](http://bigai.cs.brown.edu/2019/09/03/hac.html) and [https://www.youtube.com/watch?v=DYcVTveeNK0](https://www.youtube.com/watch?v=DYcVTveeNK0)
+
+
 At the exam, you can bring the paper printed one-sided, with as many annotations as you want on the back of each page (including lecture notes). You should also prepare a 200 words abstract on a separate piece of paper (handwritten or printed) that you will give with the rest of your answers.
 
 :::
