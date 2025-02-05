@@ -29,7 +29,7 @@ resources: pdf/5.1-Outlook.pdf
 ::: {.column width=50%}
 
 
-* **Model-free methods** (DQN, A3C, DDPG, PPO, SAC) are able to find optimal policies in complex MDPs by just **sampling** transitions.
+* **Model-free methods** (DQN, A3C, DDPG, PPO, SAC) are able to find optimal policies in complex sequential decision-making problems (MDPs) by just **sampling** transitions: blackbox optimizer.
 
 * They suffer however from a high **sample complexity**, i.e. they need ridiculous amounts of samples to converge.
 
@@ -353,7 +353,7 @@ where $f(s_t, a_t)$ is a **forward model** predicting the sensory consequences o
 * The feature representation $\phi(s_t)$ is trained using an **inverse model** predicting the action leading from $s_t$ to $s_{t+1}$.
 
 
-![](img/icm.jpg)
+![](img/icm.jpg){width=80%}
 
 ::: footer
 @Pathak2017 Curiosity-driven Exploration by Self-supervised Prediction. arXiv:170505363.
@@ -650,6 +650,7 @@ where $f(s_t, a_t)$ is a **forward model** predicting the sensory consequences o
 :::
 :::
 
+
 # Transformers as World models
 
 ![](img/transformer-rl1.png){width=70%}
@@ -657,7 +658,22 @@ where $f(s_t, a_t)$ is a **forward model** predicting the sensory consequences o
 ![](img/transformer-rl2.png){width=60%}
 
 ::: footer
-@Micheli2022 Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588
+@Micheli2022 Transformers are Sample Efficient World Models. arXiv:2209.00588
+:::
+
+
+# Diffusion policy
+
+* The latest tool in generative AI (learning distributions like in GAN and VAE) is **diffusion models**, which learn to generate data (images) by iteratively denoising noisy samples.
+
+* They are extremely easy to train and allow to model action sequences from demonstrations. 
+
+
+![](img/diffusionpolicy.png)
+
+
+:::footer
+@Chi2024 Diffusion Policy: Visuomotor Policy Learning via Action Diffusion. arXiv:2303.04137 
 :::
 
 # Additional readings
