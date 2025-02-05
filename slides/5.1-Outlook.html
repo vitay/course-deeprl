@@ -206,7 +206,7 @@ Julien Vitay
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><p><strong>Model-free methods</strong> (DQN, A3C, DDPG, PPO, SAC) are able to find optimal policies in complex MDPs by just <strong>sampling</strong> transitions.</p></li>
+<li><p><strong>Model-free methods</strong> (DQN, A3C, DDPG, PPO, SAC) are able to find optimal policies in complex sequential decision-making problems (MDPs) by just <strong>sampling</strong> transitions: blackbox optimizer.</p></li>
 <li><p>They suffer however from a high <strong>sample complexity</strong>, i.e.&nbsp;they need ridiculous amounts of samples to converge.</p></li>
 <li><p><strong>Model-based methods</strong> (I2A, Dreamer, MuZero) use <strong>learned dynamics</strong> to predict the future and plan the consequences of an action.</p></li>
 <li><p>The sample complexity is lower, but learning a good model can be challenging. Inference times can be prohibitive.</p></li>
@@ -512,7 +512,7 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/icm.jpg" class="quarto-figure quarto-figure-center"></p>
+<p><img data-src="img/icm.jpg" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 <div class="footer">
@@ -844,7 +844,23 @@ Deep RL is popular because it's the only area in ML where it's socially acceptab
 </figure>
 </div>
 <div class="footer">
-<p><span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span> Transformers are Sample Efficient World Models (arXiv:2209.00588). https://doi.org/10.48550/arXiv.2209.00588</p>
+<p><span class="citation" data-cites="Micheli2022">Micheli et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span> Transformers are Sample Efficient World Models. arXiv:2209.00588</p>
+</div>
+</section>
+
+<section id="diffusion-policy" class="title-slide slide level1 center">
+<h1>Diffusion policy</h1>
+<ul>
+<li><p>The latest tool in generative AI (learning distributions like in GAN and VAE) is <strong>diffusion models</strong>, which learn to generate data (images) by iteratively denoising noisy samples.</p></li>
+<li><p>They are extremely easy to train and allow to model action sequences from demonstrations.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/diffusionpolicy.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+<div class="footer">
+<p><span class="citation" data-cites="Chi2024">Chi et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> Diffusion Policy: Visuomotor Policy Learning via Action Diffusion. arXiv:2303.04137</p>
 </div>
 </section>
 
@@ -878,6 +894,9 @@ Bojarski, M., Del Testa, D., Dworakowski, D., Firner, B., Flepp, B., Goyal, P., 
 </div>
 <div id="ref-Burda2018" class="csl-entry" role="listitem">
 Burda, Y., Edwards, H., Pathak, D., Storkey, A., Darrell, T., and Efros, A. A. (2018). Large-<span>Scale Study</span> of <span>Curiosity-Driven Learning</span>. <a href="http://arxiv.org/abs/1808.04355">http://arxiv.org/abs/1808.04355</a>.
+</div>
+<div id="ref-Chi2024" class="csl-entry" role="listitem">
+Chi, C., Xu, Z., Feng, S., Cousineau, E., Du, Y., Burchfiel, B., et al. (2024). Diffusion <span>Policy</span>: <span>Visuomotor Policy Learning</span> via <span>Action Diffusion</span>. doi:<a href="https://doi.org/10.48550/arXiv.2303.04137">10.48550/arXiv.2303.04137</a>.
 </div>
 <div id="ref-Duan2016a" class="csl-entry" role="listitem">
 Duan, Y., Schulman, J., Chen, X., Bartlett, P. L., Sutskever, I., and Abbeel, P. (2016). <span>RL</span>$^2$: <span>Fast Reinforcement Learning</span> via <span>Slow Reinforcement Learning</span>. <a href="http://arxiv.org/abs/1611.02779">http://arxiv.org/abs/1611.02779</a>.
