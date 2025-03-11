@@ -12,33 +12,6 @@ abstract: This website contains the materials for the module **Deep Reinforcemen
 echo: false
 ---
 
-## Information
-
-Registration on [OPAL](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/21637267457) to receive updates per email.
-
-
-:::callout-note
-### Winter semester 2024-25
-
-* Lecture: Wednesday 09:15-10:45 1/368a
-* Exercise: Tuesday 13:45-15:15 B202
-
-Mock exam: [pdf](https://www.tu-chemnitz.de/informatik/KI/edu/deeprl/HER2017.pdf)
-
-Exam on 05.03.25, 09:00, 1/204. 
-
-Consultation on 19.02.25, 13:45, 1/368a. 
-
-Research paper:  [pdf](https://arxiv.org/pdf/1712.00948)
-
-> Levy, Konidaris, Platt, and Saenko (2019). Learning Multi-Level Hierarchies with Hindsight. ICLR 2019. [arXiv:1712.00948](https://arxiv.org/abs/1712.00948)
-
-Additional resources: [http://bigai.cs.brown.edu/2019/09/03/hac.html](http://bigai.cs.brown.edu/2019/09/03/hac.html) and [https://www.youtube.com/watch?v=DYcVTveeNK0](https://www.youtube.com/watch?v=DYcVTveeNK0)
-
-
-At the exam, you can bring the paper printed one-sided, with as many annotations as you want on the back of each page (including lecture notes). You should also prepare a 200 words abstract on a separate piece of paper (handwritten or printed) that you will give with the rest of your answers.
-
-:::
 
 ## Lectures
 
